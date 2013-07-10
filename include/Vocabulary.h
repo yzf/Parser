@@ -1,3 +1,5 @@
+#include "struts.h"
+
 class Vocabulary{
 private:
 	int num_variable;
@@ -22,6 +24,7 @@ private:
         
         int num_names_domain;
         char* names_domain[MAX_NUM_DOMAIN];
+        
 
 public:
 	void init_vocabulary();
