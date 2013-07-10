@@ -1,0 +1,6 @@
+class Rule{
+private:
+
+public:
+
+};
