@@ -14,7 +14,7 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-    printf("test\n");
+    printf("yzf\n");
     return 0;
 }
 
