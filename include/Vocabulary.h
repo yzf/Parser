@@ -1,4 +1,4 @@
-#include "struts.h"
+#include "structs.h"
 
 class Vocabulary{
 private:
@@ -27,7 +27,8 @@ private:
         
 
 public:
-	void init_vocabulary();
+        Vocabulary();
+        ~Vocabulary();
 	void destory_vocabulary();
 	int add_symbol ( const char* name, SYMBOL_TYPE type, int arity );
 	int query_symbol ( const char* name, SYMBOL_TYPE type );

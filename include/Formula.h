@@ -1,29 +1,32 @@
 #include <vector>
 
+using namespace std;
+
 class Formula {
 private:
-	FORMULA_TYPE formula_type;
-	union{
-		Formula* subformula_l;
-		int predicate_id;
-	};
-	union{
-		Formula* subformula_r;
-		int variable_id;
-		Term* parameters;	
-	};
-		
+	_formula* formula;	
 	vector<int> name_domain_id;
-public:
+
+	bool is_child_universal(_formula*);
+	bool compare_formula(const _formula* phi, const _formula* psi);
+	void delete_formula (_formula* fml);
+	bool find_var_formula (const _formula* phi, int var_id);
+	void rename_var_formula (_formula* phi, int oldv, int newv);
+	Formula replace_terms_formula(_formula* fml, const vector<int>& exis, 
+				const vector<int>& replacements);
+	void output_formula(FILE* out, _formula* fml);
+public:		
+	Formula(const Formula);
+	Formula(const _formula* fml);
+	~Formula();
+
+	bool is_universal();
+	bool compare(const Formula psi);	
+	bool find_var(int var_id);
+	void rename_var(int oldv, int newv);
+	Formula replace_terms(const vector<int>& exis, 
+				const vector<int>& replacements);
+	void output(FILE* out);
 	
-	Formula* copy_formula (const Formula *fml);
-	bool compare_formula(const Formula* phi, const Formula* psi);
-	void delete_formula ( Formula* fml );
-	bool find_var_formula ( const Formula* phi, int var_id );
-	void rename_var_formula ( Formula* phi, int oldv, int newv );
-	Formula* replace_terms(Formula* fml, const std::vector<int>& exis, 
-				const std::vector<int>& replacements);
-	void output_formula(FILE* out, const Formula* phi);
-	
-	Formula* convert_prenex(Formula* fml);
+	Formulas convert_prenex(Formula fml);
 };
