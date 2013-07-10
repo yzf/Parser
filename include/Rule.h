@@ -1,6 +1,0 @@
-class Rule{
-private:
-
-public:
-
-};
