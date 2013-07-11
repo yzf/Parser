@@ -361,6 +361,106 @@ Formulas Formula::divide_CNF() {
     return outputFormulas;    
 }
 
+void Formula::lower_nagative(_formula* srcFormula) {
+    if(fml == NULL) {
+        return;
+    }
+    
+    switch (srcFormula->formula_type) {
+        case NEGA: {
+            _formula* subFor = srcFormula->subformula_l;
+            if (subFor == NULL) {
+                return;
+            }
+            switch (subFor->formula_type) {
+                case NEGA:
+                    lower_negative(subFor);
+                    if(subFor->subformula_l->formula_type == NEGA) {
+                        srcFormula.subformula_l = subFor->subformula_l->subformula_l;
+                        free(subFor->subformula_l);
+                        free(subFor);
+                        
+                    }
+                    if(subFor->subformula-l->formula_type != ATOM) {
+                        lower_negative(srcFormula);
+                    }
+                    break;
+                case CONJ:
+                case DISJ:
+                    FORMULA_TYPE ftype = subFor->formula_type == CONJ ? DISJ : CONJ;
+
+                    // reconstruct the source formula
+                    srcFormula->formula_type = ftype;
+                    srcFormula->subformula_l = composite_bool(subFor->subformula_l, NULL, NEGA);
+                    srcFormula->subformula_r = composite_bool(subFor->subformula_r, NULL, NEGA);
+
+                    free(subFor);
+                    LowerNegative(srcFormula->subformula_l, inSM);
+                    LowerNegative(srcFormula->subformula_r, inSM);
+                    break;
+
+                case UNIV:
+                case EXIS:
+                    FORMULA_TYPE ftype = subFor->formula_type == UNIV ? EXIS : UNIV;
+
+                    // reconstruct the source formula
+                    srcFormula->formula_type = ftype;
+                    srcFormula->subformula_l = composite_bool(subFor->subformula_l, NULL, NEGA);
+                    srcFormula->variable_id = subFor->variable_id;
+
+                    free(subFor);
+                    LowerNegative(srcFormula->subformula_l, inSM);
+                    break;
+
+                case IMPL:
+                    free(srcFormula);
+                    srcFormula = composite_bool(subFor->subformula_l,
+                        composite_bool(subFor->subformula_r, NULL, NEGA), 
+                        CONJ);
+                    free(subFor);
+                    LowerNegative(srcFormula, inSM);
+                    break;
+                default:
+                    break;
+            }
+            break;
+        }           
+        case CONJ:
+        case DISJ:
+            LowerNegative(srcFormula->subformula_l, inSM);
+            LowerNegative(srcFormula->subformula_r, inSM);
+            break;
+        case UNIV:
+        case EXIS:
+            LowerNegative(srcFormula->subformula_l, inSM);
+            break;
+        case IMPL:
+            if (!inSM) {
+                _formula* tmpl = srcFormula->subformula_l;
+                _formula* tmpr = srcFormula->subformula_r;
+                free(srcFormula);
+                srcFormula = composite_bool(composite_bool(tmpl, NULL, NEGA), 
+                                tmpr,
+                                DISJ);
+                LowerNegative(srcFormula, inSM);
+            }
+            break;
+        case ATOM:
+            break;
+        default:
+            break;
+    }
+}
+
+void Formula::lower_disjunction(_formula* fml) {
+    
+}
+
+void Formula::convert_CNF() {
+    lower_nagative(this->formula);
+    lower_disjunction(this->formula);
+}
+
 void Formula::output(FILE* out) {
 	output_formula(out, this->formula);
 }

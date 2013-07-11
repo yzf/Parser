@@ -15,6 +15,14 @@ private:
 	Formula replace_terms_formula(_formula* fml, const vector<int>& exis, 
 				const vector<int>& replacements);
 	void output_formula(FILE* out, _formula* fml);
+        
+        void divide_clause_formula(_formula* fml);
+        void divide_CNF_formula(_formula* fml);
+        
+        void convert_CNF_formula(_formula* fml);
+        void lower_nagative(_formula* fml);
+        void lower_disjunction(_formula* fml);
+        
 public:		
 	Formula(const Formula);
 	Formula(const _formula* fml);
@@ -27,9 +35,11 @@ public:
 	Formula replace_terms(const vector<int>& exis, 
 				const vector<int>& replacements);
 	void output(FILE* out);
-        Formulas divide_formulas(_formula* fml);
+        
         Formulas divide_clause();
         Formulas divide_CNF();
+        
+        void convert_CNF();
 	
-	Formulas convert_prenex(Formula fml);
+	void convert_prenex(Formula fml);
 };
