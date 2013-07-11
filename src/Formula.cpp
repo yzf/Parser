@@ -16,26 +16,26 @@ Formula::~Formula() {
 }
 
 bool Formula::is_child_universal(_formula* fml) {
-	if(fml != NULL) {
-		switch(fml->formula_type)
-		{
-			case ATOM:
-				return true;
-			case CONJ:
-			case DISJ:
-			case IMPL:
-				return is_universal(fml->subformula_l) && is_universal(fml->subformula_r);
-			case NEGA:
-			case UNIV:
-				return is_universal(fml->subformula_l);
-			case EXIS:
-				return false;
-			default:
-				assert(0);
-		}
-	}
-	
-	return false;
+    if(fml != NULL) {
+        switch(fml->formula_type)
+        {
+            case ATOM:
+                    return true;
+            case CONJ:
+            case DISJ:
+            case IMPL:
+                    return is_universal(fml->subformula_l) && is_universal(fml->subformula_r);
+            case NEGA:
+            case UNIV:
+                    return is_universal(fml->subformula_l);
+            case EXIS:
+                    return false;
+            default:
+                    assert(0);
+        }
+    }
+
+    return false;
 }
 
 bool Formula::is_universal() {
@@ -311,6 +311,54 @@ void Formula::output_formula (FILE* out, const _formula* phi)
     default:
         assert ( 0 );
     }
+}
+
+void Formula::divide_clause_formula(_formula* fml, Formulas& result) {
+    Formula new_formula;
+    
+    if(fml != NULL) {
+        if(fml->formula_type == CONJ && fml->subformula_l->formula_type == CONJ ) {
+            new_formula = new Formula(fml->subformula_r);  
+            result.push_formula(new_formula);
+            divide_clause_formula(fml->subformula_l, result);
+        }
+        else {
+            new_formula = new Formula(fml);
+            result.push_formula(new_formula);
+        }
+        
+    }
+}
+
+void Formula::divide_CNF_formula(_formula* fml, Formulas& result) {
+    Formula new_formula;
+    
+    if(fml != null) {
+        if(fml->formula_type == CONJ) {
+            divide_CNF_formula(fml->subformula_l, result);
+            divide_CNF_formula(fml->subformula_r, result);
+        }
+        else {
+            new_formula = new Formula(fml);
+            result.push_formula(new_formula);
+        }
+    }
+}
+
+Formulas Formula::divide_clause() {
+    Formulas outputFormulas = new Formulas();
+    
+    divide_formula(this->formula, outputFormulas);
+    
+    return outputFormulas;  
+}       
+
+Formulas Formula::divide_CNF() {
+    Formulas outputFormulas = new Formulas();
+    
+    divide_CNF_formula(this->formula, outputFormulas);
+    
+    return outputFormulas;    
 }
 
 void Formula::output(FILE* out) {

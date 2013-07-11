@@ -27,6 +27,9 @@ public:
 	Formula replace_terms(const vector<int>& exis, 
 				const vector<int>& replacements);
 	void output(FILE* out);
+        Formulas divide_formulas(_formula* fml);
+        Formulas divide_clause();
+        Formulas divide_CNF();
 	
 	Formulas convert_prenex(Formula fml);
 };

@@ -25,15 +25,15 @@ private:
         int num_names_domain;
         char* names_domain[MAX_NUM_DOMAIN];
         
-
 public:
         Vocabulary();
         ~Vocabulary();
 	void destory_vocabulary();
-	int add_symbol ( const char* name, SYMBOL_TYPE type, int arity );
-	int query_symbol ( const char* name, SYMBOL_TYPE type );
+	int add_symbol(const char* name, SYMBOL_TYPE type, int arity);
+	int query_symbol(const char* name, SYMBOL_TYPE type);
+        int set_intension_predicate(const char* name);
+        void set_domain(const char* variable, const char* domain);
 	int predicate_arity(int id);
-	int function_arity ( int id );
-	char* query_name ( int id, SYMBOL_TYPE type );
-	
+	int function_arity(int id);
+	char* query_name(int id, SYMBOL_TYPE type);	
 };
