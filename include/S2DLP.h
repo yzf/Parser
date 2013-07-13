@@ -1,3 +1,6 @@
+#ifndef _S2DLP_H_
+#define _S2DLP_H_
+
 #include "Vocabulary.h"
 #include "Formula.h"
 #include "Cabalar.h"
@@ -20,3 +23,5 @@ public:
         void set_output_file(FILE*&);
         void set_origin_formulas(_formula*);
 };
+
+#endif

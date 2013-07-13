@@ -1,3 +1,6 @@
+#ifndef _HENGZHANG_H_
+#define _HENGZHANG_H_
+
 #include <vector>
 #include <string>
 
@@ -34,3 +37,4 @@ public:
 	Formula HengZhang_createFormula_5(Formula originalFml);
 };
 
+#endif

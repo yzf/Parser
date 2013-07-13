@@ -1,3 +1,6 @@
+#ifndef _CABALAR_H_
+#define _CABALAR_H_
+
 #include "Formula.h"
 
 class Cabalar{
@@ -43,3 +46,5 @@ private:
 	static Formulas convert_Cabalar(Formulas fmls);
 
 };
+
+#endif

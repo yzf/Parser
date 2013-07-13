@@ -1,3 +1,6 @@
+#ifndef _TERM_H_
+#define _TERM_H_
+
 /* Ignoring _terms with a vector<term> to instead of it */
 
 class Term{
@@ -25,3 +28,5 @@ public:
 	
 
 };
+
+#endif
