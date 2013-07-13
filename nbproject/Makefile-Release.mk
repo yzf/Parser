@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/src/Formula.o \
 	${OBJECTDIR}/src/Formulas.o \
+	${OBJECTDIR}/src/HengZhang.o \
 	${OBJECTDIR}/src/S2DLP.o \
 	${OBJECTDIR}/src/Vocabulary.o \
 	${OBJECTDIR}/src/global.o \
@@ -79,6 +80,11 @@ ${OBJECTDIR}/src/Formulas.o: src/Formulas.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Formulas.o src/Formulas.cpp
+
+${OBJECTDIR}/src/HengZhang.o: src/HengZhang.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/HengZhang.o src/HengZhang.cpp
 
 ${OBJECTDIR}/src/S2DLP.o: src/S2DLP.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src

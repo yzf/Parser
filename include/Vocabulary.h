@@ -1,6 +1,3 @@
-#ifndef _VOCABULARY_H_
-#define _VOCABULARY_H_
-
 #include "structs.h"
 #include <cstdio>
 #pragma once
@@ -44,5 +41,3 @@ class Vocabulary {
         char* query_name(int id, SYMBOL_TYPE type);
         void dump_vocabulary(FILE* out);
 };
-
-#endif

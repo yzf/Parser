@@ -1,10 +1,16 @@
 #ifndef _HENGZHANG_H_
 #define _HENGZHANG_H_
 
+#include "structs.h"
+#include "Formula.h"
+#include "Formulas.h"
 #include <vector>
 #include <string>
 
 using namespace std;
+
+class Formula;
+class Formulas;
 
 class HengZhang{
 private:
@@ -25,16 +31,16 @@ private:
 
 public:
 	//utilities
-	int HengZhang_addSymbol(const char* name, SYMBOL_TYPE type, int arity);
-	Formula HengZhang_recordQuantifier(Formula originalFml);
+	int addSymbol(const char* name, SYMBOL_TYPE type, int arity);
+	Formula recordQuantifier(Formula originalFml);
 
 	//creators
-	static Formulas HengZhang_create(Formula originalFml);
-	Formula HengZhang_createFormula_1(Formula originalFml);
-	Formula HengZhang_createFormula_2(Formula originalFml);
-	Formula HengZhang_createFormula_3(Formula originalFml);
-	Formula HengZhang_createFormula_4(Formula originalFml);
-	Formula HengZhang_createFormula_5(Formula originalFml);
+	Formulas create(Formula originalFml);
+	Formula createFormula_1(Formula originalFml);
+	Formula createFormula_2(Formula originalFml);
+	Formula createFormula_3(Formula originalFml);
+	Formula createFormula_4(Formula originalFml);
+	Formula createFormula_5(Formula originalFml);
 };
 
 #endif

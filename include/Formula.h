@@ -54,6 +54,7 @@ public:
         void convert_CNF();
 	
 	void convert_prenex();
+        _formula* getFormula() const;
 };
 
 #endif

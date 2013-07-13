@@ -44,7 +44,10 @@ bool Formula::is_child_universal(_formula* fml) {
 
     return false;
 }
-
+/**
+ * 判断该公式是否不存在存在量词
+ * @return 
+ */
 bool Formula::is_universal() {
 	return is_child_universal(this->formula);
 }
@@ -589,4 +592,8 @@ void Formula::convert_prenex() {
 
 void Formula::output(FILE* out) {
 	output_formula(out, this->formula);
+}
+
+_formula* Formula::getFormula() const {
+    return this->formula;
 }

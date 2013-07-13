@@ -11,6 +11,8 @@
       <itemPath>include/Rule.h</itemPath>
       <itemPath>include/S2DLP.h</itemPath>
       <itemPath>include/Vocabulary.h</itemPath>
+      <itemPath>include/structs.h</itemPath>
+      <itemPath>include/utility.h</itemPath>
     </logicalFolder>
     <logicalFolder name="parse" displayName="parse" projectFiles="true">
       <itemPath>parse/clean.sh</itemPath>
@@ -30,6 +32,7 @@
     <logicalFolder name="src" displayName="src" projectFiles="true">
       <itemPath>src/Formula.cpp</itemPath>
       <itemPath>src/Formulas.cpp</itemPath>
+      <itemPath>src/HengZhang.cpp</itemPath>
       <itemPath>src/S2DLP.cpp</itemPath>
       <itemPath>src/Vocabulary.cpp</itemPath>
       <itemPath>src/global.cpp</itemPath>
@@ -84,6 +87,10 @@
       </item>
       <item path="include/Vocabulary.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/structs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/utility.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="parse/clean.sh" ex="false" tool="3" flavor2="0">
       </item>
       <item path="parse/generate.sh" ex="false" tool="3" flavor2="0">
@@ -95,6 +102,8 @@
       <item path="src/Formula.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Formulas.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/HengZhang.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/S2DLP.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -148,6 +157,10 @@
       </item>
       <item path="include/Vocabulary.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/structs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/utility.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="parse/clean.sh" ex="false" tool="3" flavor2="0">
       </item>
       <item path="parse/generate.sh" ex="false" tool="3" flavor2="0">
@@ -159,6 +172,8 @@
       <item path="src/Formula.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Formulas.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/HengZhang.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/S2DLP.cpp" ex="false" tool="1" flavor2="0">
       </item>
