@@ -1,15 +1,22 @@
 #include "Formula.h"
+#include "Formulas.h"
+#include "utility.h"
 #include <assert.h>
+#include <cstdlib>
+
+Formula::Formula() {
+    this->formula = NULL;
+}
 
 Formula::Formula(_formula* fml) {
 	this->formula = fml;
 }
 
-Formula::Formula(Formula FML) {
-	_formula* new_formula = Formula_Builder.copy_formula(FML.formula);
+/*Formula::Formula(Formula& FML) {
+	_formula* new_formula = copy_formula(FML.formula);
 	
 	this->formula = new_formula;
-}
+}*/
 
 Formula::~Formula() {
 	delete_formula(this->formula);
@@ -24,10 +31,10 @@ bool Formula::is_child_universal(_formula* fml) {
             case CONJ:
             case DISJ:
             case IMPL:
-                    return is_universal(fml->subformula_l) && is_universal(fml->subformula_r);
+                    return is_child_universal(fml->subformula_l) && is_child_universal(fml->subformula_r);
             case NEGA:
             case UNIV:
-                    return is_universal(fml->subformula_l);
+                    return is_child_universal(fml->subformula_l);
             case EXIS:
                     return false;
             default:
@@ -54,7 +61,7 @@ bool Formula::compare_formula(const _formula* phi, const _formula* psi) {
     {
     case ATOM:
         if (phi->predicate_id!=psi->predicate_id) return false;
-        k = predicate_arity(phi->predicate_id) - 1;
+        k = vocabulary.predicate_arity(phi->predicate_id) - 1;
         assert(k<0||phi->parameters);
         assert(k<0||psi->parameters);
         for ( ; k>=0; k--)
@@ -85,8 +92,8 @@ bool Formula::compare_formula(const _formula* phi, const _formula* psi) {
     return false;
 }
 
-bool Formula::compare(Formula ffc) {
-	return compare_formula(this->formula, ffc.head);
+bool Formula::compare(Formula& ffc) {
+	return compare_formula(this->formula, ffc.formula);
 }
 
 void Formula::delete_formula ( _formula* fml ) {
@@ -96,7 +103,7 @@ void Formula::delete_formula ( _formula* fml ) {
     {
     case ATOM:
         if(fml->parameters)
-			delete_terms(fml->parameters, predicate_arity(fml->variable_id));
+	delete_terms(fml->parameters, vocabulary.predicate_arity(fml->variable_id));
         break;
     case CONJ:
     case DISJ:
@@ -124,7 +131,7 @@ bool Formula::find_var_formula(const _formula* phi, int var_id) {
     switch ( phi->formula_type )
     {
     case ATOM:
-        for ( i=0; i<predicate_arity ( phi->predicate_id ); i++ )
+        for ( i = 0; i < vocabulary.predicate_arity(phi->predicate_id); i++ )
         {
             assert ( phi->parameters );
             if ( find_var_term ( phi->parameters+i, var_id ) )
@@ -164,7 +171,7 @@ void Formula::rename_var_formula(_formula* phi, int oldv, int newv) {
     {
     case ATOM:
         assert ( phi->parameters );
-        for ( i=0; i<predicate_arity ( phi->predicate_id ); i++ )
+        for ( i = 0; i < vocabulary.predicate_arity(phi->predicate_id); i++ )
         {
             rename_var_term ( phi->parameters+i, oldv, newv );
         }
@@ -197,7 +204,7 @@ _formula* Formula::replace_terms_formula(_formula* fml,
     switch(fml->formula_type)
     {
     case ATOM:
-        replace_term(fml->parameters, predicate_arity(fml->predicate_id), 
+        replace_term(fml->parameters, vocabulary.predicate_arity(fml->predicate_id), 
 					exis, replacements);
         break;
     case DISJ:
@@ -220,7 +227,7 @@ void Formula::replace_terms(const vector<int>& exis, const vector<int>& replacem
 	replace_terms_formula(this->formula, exis, replacement);
 }
 
-void Formula::output_formula (FILE* out, const _formula* phi)
+void Formula::output_formula (FILE* out, _formula* phi)
 {
     char* s_conn = NULL;
     int i;
@@ -230,10 +237,10 @@ void Formula::output_formula (FILE* out, const _formula* phi)
     switch ( phi->formula_type )
     {
     case ATOM:
-        if ( phi->predicate_id>=0 )
+        if(phi->predicate_id >= 0)
         {
-            fprintf ( out, "%s(", query_name ( phi->predicate_id, PREDICATE ) );
-            for ( i=0; i<predicate_arity ( phi->predicate_id ); i++ )
+            fprintf ( out, "%s(", vocabulary.query_name(phi->predicate_id, PREDICATE));
+            for(i = 0; i < vocabulary.predicate_arity(phi->predicate_id); i++)
             {
                 if ( i > 0 ) fprintf ( out, ", " );
                 output_term ( out, phi->parameters+i );
@@ -303,7 +310,7 @@ void Formula::output_formula (FILE* out, const _formula* phi)
         s_conn = (char*)"!";
     case EXIS:
         if ( NULL==s_conn ) s_conn = (char*)"?";
-        fprintf(out, "[%s %s] (", s_conn, query_name(phi->variable_id, VARIABLE));
+        fprintf(out, "[%s %s] (", s_conn, vocabulary.query_name(phi->variable_id, VARIABLE));
         assert ( phi->subformula_l );
         output_formula ( out, phi->subformula_l );
         fprintf ( out, ")" );
@@ -314,55 +321,54 @@ void Formula::output_formula (FILE* out, const _formula* phi)
 }
 
 void Formula::divide_clause_formula(_formula* fml, Formulas& result) {
-    Formula new_formula;
-    
+    Formula* new_formula;
     if(fml != NULL) {
         if(fml->formula_type == CONJ && fml->subformula_l->formula_type == CONJ ) {
             new_formula = new Formula(fml->subformula_r);  
-            result.push_formula(new_formula);
+            result.push_formula(*new_formula);
             divide_clause_formula(fml->subformula_l, result);
         }
         else {
             new_formula = new Formula(fml);
-            result.push_formula(new_formula);
+            result.push_formula(*new_formula);
         }
         
     }
 }
 
 void Formula::divide_CNF_formula(_formula* fml, Formulas& result) {
-    Formula new_formula;
+    Formula* new_formula;
     
-    if(fml != null) {
+    if(fml != NULL) {
         if(fml->formula_type == CONJ) {
             divide_CNF_formula(fml->subformula_l, result);
             divide_CNF_formula(fml->subformula_r, result);
         }
         else {
             new_formula = new Formula(fml);
-            result.push_formula(new_formula);
+            result.push_formula(*new_formula);
         }
     }
 }
 
 Formulas Formula::divide_clause() {
-    Formulas outputFormulas = new Formulas();
+    Formulas* outputFormulas = new Formulas();
     
-    divide_formula(this->formula, outputFormulas);
+    divide_clause_formula(this->formula, *outputFormulas);
     
-    return outputFormulas;  
+    return *outputFormulas;  
 }       
 
 Formulas Formula::divide_CNF() {
-    Formulas outputFormulas = new Formulas();
+    Formulas* outputFormulas = new Formulas();
     
-    divide_CNF_formula(this->formula, outputFormulas);
+    divide_CNF_formula(this->formula, *outputFormulas);
     
-    return outputFormulas;    
+    return *outputFormulas;    
 }
 
-void Formula::lower_nagative(_formula* srcFormula) {
-    if(fml == NULL) {
+void Formula::lower_negative(_formula* srcFormula) {
+    if(srcFormula == NULL) {
         return;
     }
     
@@ -376,49 +382,53 @@ void Formula::lower_nagative(_formula* srcFormula) {
                 case NEGA:
                     lower_negative(subFor);
                     if(subFor->subformula_l->formula_type == NEGA) {
-                        srcFormula.subformula_l = subFor->subformula_l->subformula_l;
+                        srcFormula->subformula_l = subFor->subformula_l->subformula_l;
                         free(subFor->subformula_l);
-                        free(subFor);
-                        
+                        free(subFor);                       
                     }
-                    if(subFor->subformula-l->formula_type != ATOM) {
+                    if(srcFormula->subformula_l->subformula_l->formula_type != ATOM) {
                         lower_negative(srcFormula);
                     }
                     break;
                 case CONJ:
                 case DISJ:
-                    FORMULA_TYPE ftype = subFor->formula_type == CONJ ? DISJ : CONJ;
+                {
+                    FORMULA_TYPE ftype = (subFor->formula_type == CONJ ? DISJ : CONJ);
 
                     // reconstruct the source formula
                     srcFormula->formula_type = ftype;
-                    srcFormula->subformula_l = composite_bool(subFor->subformula_l, NULL, NEGA);
-                    srcFormula->subformula_r = composite_bool(subFor->subformula_r, NULL, NEGA);
+                    srcFormula->subformula_l = composite_bool(NEGA, subFor->subformula_l, NULL);
+                    srcFormula->subformula_r = composite_bool(NEGA, subFor->subformula_r, NULL);
 
                     free(subFor);
-                    LowerNegative(srcFormula->subformula_l, inSM);
-                    LowerNegative(srcFormula->subformula_r, inSM);
+                    lower_negative(srcFormula->subformula_l);
+                    lower_negative(srcFormula->subformula_r);
                     break;
-
+                }
                 case UNIV:
                 case EXIS:
-                    FORMULA_TYPE ftype = subFor->formula_type == UNIV ? EXIS : UNIV;
+                {
+                    FORMULA_TYPE ftype = (subFor->formula_type == UNIV ? EXIS : UNIV);
 
                     // reconstruct the source formula
                     srcFormula->formula_type = ftype;
-                    srcFormula->subformula_l = composite_bool(subFor->subformula_l, NULL, NEGA);
+                    srcFormula->subformula_l = composite_bool(NEGA, subFor->subformula_l, NULL);
                     srcFormula->variable_id = subFor->variable_id;
 
                     free(subFor);
-                    LowerNegative(srcFormula->subformula_l, inSM);
+                    lower_negative(srcFormula->subformula_l);
                     break;
-
+                }
                 case IMPL:
-                    free(srcFormula);
+                    /*free(srcFormula);
                     srcFormula = composite_bool(subFor->subformula_l,
                         composite_bool(subFor->subformula_r, NULL, NEGA), 
                         CONJ);
                     free(subFor);
-                    LowerNegative(srcFormula, inSM);
+                    lower_negative(srcFormula);*/
+                    
+                    /*subFor = composite_bool(composite_bool(subFor->subformula_l, NULL, NEGA), subFor->subformula_r, CONJ);
+                    lower_negative(srcFormula);*/
                     break;
                 default:
                     break;
@@ -427,15 +437,15 @@ void Formula::lower_nagative(_formula* srcFormula) {
         }           
         case CONJ:
         case DISJ:
-            LowerNegative(srcFormula->subformula_l, inSM);
-            LowerNegative(srcFormula->subformula_r, inSM);
+            lower_negative(srcFormula->subformula_l);
+            lower_negative(srcFormula->subformula_r);
             break;
         case UNIV:
         case EXIS:
-            LowerNegative(srcFormula->subformula_l, inSM);
+            lower_negative(srcFormula->subformula_l);
             break;
         case IMPL:
-            if (!inSM) {
+           /* if (!inSM) {
                 _formula* tmpl = srcFormula->subformula_l;
                 _formula* tmpr = srcFormula->subformula_r;
                 free(srcFormula);
@@ -443,7 +453,9 @@ void Formula::lower_nagative(_formula* srcFormula) {
                                 tmpr,
                                 DISJ);
                 LowerNegative(srcFormula, inSM);
-            }
+            }*/
+            lower_negative(srcFormula->subformula_l);
+            lower_negative(srcFormula->subformula_r);
             break;
         case ATOM:
             break;
@@ -452,13 +464,117 @@ void Formula::lower_nagative(_formula* srcFormula) {
     }
 }
 
-void Formula::lower_disjunction(_formula* fml) {
+void Formula::lower_disjunction(_formula* srcFormula, int depth) {
+    if(srcFormula == NULL) {
+        return;
+    }
     
+    switch (srcFormula->formula_type)
+    {
+        case UNIV:
+        case EXIS:
+        case NEGA:
+            lower_disjunction(srcFormula->subformula_l, depth);
+            break;
+
+        case CONJ:
+            lower_disjunction(srcFormula->subformula_l, depth);
+            lower_disjunction(srcFormula->subformula_r, depth);
+            break;
+        case DISJ:
+            {
+                lower_disjunction(srcFormula->subformula_l, depth + 1);
+                lower_disjunction(srcFormula->subformula_r, depth + 1);
+                
+                if(depth < 4) {
+                    if (srcFormula->subformula_l->formula_type != CONJ && srcFormula->subformula_r->formula_type == CONJ)
+                    {
+                        _formula* temp = srcFormula->subformula_l;
+                        srcFormula->subformula_l = srcFormula->subformula_r;
+                        srcFormula->subformula_r = temp;
+                    }
+                    if (srcFormula->subformula_l->formula_type == CONJ && srcFormula->subformula_r->formula_type == CONJ)
+                    {
+                        _formula* tmpl = srcFormula->subformula_l;
+                        _formula* tmpr = srcFormula->subformula_r;
+
+                        _formula* t1 = composite_bool(DISJ, tmpl->subformula_l, tmpr->subformula_l);
+                        _formula* t2 = composite_bool(DISJ, copy_formula(tmpl->subformula_l), tmpr->subformula_r);
+                        _formula* t3 = composite_bool(DISJ, tmpl->subformula_r, copy_formula(tmpr->subformula_l));
+                        _formula* t4 = composite_bool(DISJ, copy_formula(tmpl->subformula_r), copy_formula(tmpr->subformula_r));
+
+                        srcFormula->subformula_l = composite_bool(CONJ, t1, t2);
+                        srcFormula->subformula_r = composite_bool(CONJ, t3, t4);
+
+                        srcFormula->formula_type = CONJ;
+
+                        free(tmpl);
+                        free(tmpr);
+                        lower_disjunction(srcFormula->subformula_l, depth + 1);
+                        lower_disjunction(srcFormula->subformula_r, depth + 1);
+                    }
+                    else if (srcFormula->subformula_l->formula_type == CONJ && srcFormula->subformula_r->formula_type != CONJ)
+                    {
+                        _formula* tmpl = srcFormula->subformula_l;
+                        _formula* tmpr = srcFormula->subformula_r;
+
+                        srcFormula->formula_type = CONJ;
+
+                        srcFormula->subformula_l = composite_bool(DISJ, tmpl->subformula_l, 
+                                                                    tmpr);
+                        srcFormula->subformula_r = composite_bool(DISJ, tmpl->subformula_r,
+                                                                    copy_formula(tmpr));
+                        free(tmpl);
+                        lower_disjunction(srcFormula->subformula_l, depth + 1);
+                        lower_disjunction(srcFormula->subformula_r, depth + 1);
+                    }
+                }
+            }
+            break;
+        case IMPL:
+            lower_disjunction(srcFormula->subformula_l, depth);
+            lower_disjunction(srcFormula->subformula_r, depth);
+        case ATOM:
+            break;
+        default:
+            break;
+    }
 }
 
 void Formula::convert_CNF() {
-    lower_nagative(this->formula);
-    lower_disjunction(this->formula);
+    lower_negative(this->formula);
+    lower_disjunction(this->formula, 0);
+}
+
+void Formula::convert_pernex_formula(_formula* fml) {
+    if(fml == NULL) {
+        return;
+    }
+    
+    switch(fml->formula_type) {
+        case ATOM:
+            break;
+        case NEGA:
+            convert_pernex_formula(fml->subformula_l);
+            
+            while(fml->subformula_l->formula_type == EXIS || fml->subformula_l->formula_type == UNIV) {
+                FORMULA_TYPE flt = (fml->subformula_l->formula_type == UNIV) ? EXIS : UNIV;
+                fml->formula_type = flt;
+                fml->variable_id = fml->subformula_l->variable_id;
+                fml->subformula_l->formula_type = NEGA;
+                
+                fml = fml->subformula_l;
+            }
+            break;
+        case IMPL:
+        case CONJ:
+        case DISJ:
+            
+    }
+}
+
+void Formula::convert_prenex() {
+    
 }
 
 void Formula::output(FILE* out) {

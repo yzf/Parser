@@ -31,9 +31,9 @@ void yyerror(const char* s)
 
 %union {
 	char* s;
-	_formula* f;
-	_term* t;
-        _terms* ts;
+	struct __formula* f;
+	struct __term* t;
+        struct __terms* ts;
 }
 
 %token <s> S_VARI
@@ -159,8 +159,8 @@ formula
 		assert($3);
 		assert($5);
 		
-		if ((id=query_symbol($3, VARIABLE)) < 0) {
-			id = add_symbol($3, VARIABLE, 0);
+		if ((id = vocabulary.query_symbol($3, VARIABLE)) < 0) {
+			id = vocabulary.add_symbol($3, VARIABLE, 0);
 		}
 	    $$ = composite_qntf(UNIV, $5, id);
 	    
@@ -170,8 +170,8 @@ formula
 		printf("formula exis\n");
 		assert($3);
 		assert($5);
-		if ((id=query_symbol($3, VARIABLE)) < 0) {
-			id = add_symbol($3, VARIABLE, 0);
+		if ((id = vocabulary.query_symbol($3, VARIABLE)) < 0) {
+			id = vocabulary.add_symbol($3, VARIABLE, 0);
 		}
 	    $$ = composite_qntf(EXIS, $5, id);
 	    
@@ -195,10 +195,10 @@ atom
 		
 		$$ = (_formula*)malloc(sizeof(_formula));
 
-		if ((id=query_symbol($1, PREDICATE)) < 0) {
-			id = add_symbol($1, PREDICATE, $3->num_term);
+		if ((id = vocabulary.query_symbol($1, PREDICATE)) < 0) {
+			id = vocabulary.add_symbol($1, PREDICATE, $3->num_term);
 		} 
-		else if (predicate_arity(id) != $3->num_term)
+		else if (vocabulary.predicate_arity(id) != $3->num_term)
 		{
 			sprintf(str_buf, "the predicate \"%s\" has too many definitions!", $1);
 			yyerror(str_buf);
@@ -231,10 +231,10 @@ atom
 		{
 			id = PRED_FALSE;
 		}
-		else if ((id=query_symbol($1, PREDICATE)) < 0) {
+		else if ((id = vocabulary.query_symbol($1, PREDICATE)) < 0) {
 			id = vocabulary.add_symbol($1, PREDICATE, 0);
 		} 
-		else if (predicate_arity(id) != 0)
+		else if (vocabulary.predicate_arity(id) != 0)
 		{
 			sprintf(str_buf, "the predicate \"%s\" has too many definitions!", $1);
 			yyerror(str_buf);
@@ -290,7 +290,7 @@ term
 		$$ = (_term*)malloc(sizeof(_term));
 		$$->term_type = VARI;
                 
-                id = Translator.get_vocabulary().add_symbol($1, VARIABLE, 0);
+                id = vocabulary.add_symbol($1, VARIABLE, 0);
 
 		$$->variable_id = id;
 		//free($1);

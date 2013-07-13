@@ -17,6 +17,6 @@ public:
         void output_origin_formulas();
         void output_zhangheng_formulas();
         void output_dlp_formulas();
-        void set_output_file();
+        void set_output_file(FILE*&);
         void set_origin_formulas(_formula*);
 };

@@ -1,17 +1,22 @@
+#include "Vocabulary.h"
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <assert.h>
+
 Vocabulary::Vocabulary() {
-    memset(this->names_variable, 0, sizeof (char));
-    memset(this->arities_function, 0, sizeof (int));
-    memset(this->names_function, 0, sizeof (char));
-    memset(this->arities_predicate, 0, sizeof (int));
-    memset(this->names_predicate, 0, sizeof (char));
-    memset(this->index_intension_predicate, 0, sizeof (int));
-    memset(this->names_domain, 0, sizeof (char));
+    memset(this->names_variable, 0, sizeof(char));
+    memset(this->variable_at_domain, 0, sizeof(int));
+    memset(this->arities_function, 0, sizeof(int));
+    memset(this->names_function, 0, sizeof(char));
+    memset(this->arities_predicate, 0, sizeof(int));
+    memset(this->names_predicate, 0, sizeof(char));
+    memset(this->index_intension_predicate, 0, sizeof(int));
+    memset(this->names_domain, 0, sizeof(char));
     
     this->num_variable = 0;
     this->num_function = 0;
     this->num_predicate = 0;	
-    /*this->num_stable_predicate = 0;
-    int index_stable_predicate[MAX_NUM_PREDICATE];*/
     this->num_new_variable = 0;
     this->num_new_predicate = 0;
     this->num_intension_predicate = 0;
@@ -59,10 +64,6 @@ int Vocabulary::add_symbol ( const char* name, SYMBOL_TYPE type, int arity )
                 this->names_predicate[this->num_predicate] = s;
                 this->arities_predicate[this->num_predicate] = arity;
                 return (this->num_predicate)++;
-            case INTENSION:
-                if (this->num_variable >= MAX_NUM_PREDICATE) break;
-                this->index_intension_predicate[this->num_predicate] = s;
-                return (this->num_intension_predicate)++;
         default:
             assert ( 0 );
             return -2;
@@ -116,19 +117,19 @@ int Vocabulary::query_symbol ( const char* name, SYMBOL_TYPE type )
 }
 
 int Vocabulary::set_intension_predicate(const char* name) {
-    int id = query_symbol(name, PREDICATE)
+    int id = query_symbol(name, PREDICATE);
     
     this->index_intension_predicate[this->num_intension_predicate] = id;
     
     return (this->num_intension_predicate)++;
 }
 
-void Vocabulary::set_domain(const char* variable, const char* domain) {
+void Vocabulary::set_domain(char* variable, char* domain) {
     int id = query_symbol(domain, DOMAIN);
     int vid;
     
     if(id = -1) {
-        this->names_domain[vocabulary.num_names_domain] = domain;
+        this->names_domain[this->num_names_domain] = domain;
         id = this->num_names_domain++;
     }
     if((vid = query_symbol(variable, VARIABLE)) != -1) {
@@ -138,22 +139,23 @@ void Vocabulary::set_domain(const char* variable, const char* domain) {
 
 int Vocabulary::predicate_arity(int id)
 {
-    if (id < 0)
+    if(id < 0)
     {
         return spec_pred_arities[-id-1];
     }
     else
     {
-        assert ( this->arities_predicate );
-        assert ( id < this->num_predicate );
+        assert(this->arities_predicate);
+        printf("%dHello", id);
+        assert(id < this->num_predicate);
         return this->arities_predicate[id];
     }
 }
 
-int Vocabulary::function_arity ( int id )
+int Vocabulary::function_arity(int id)
 {
-    assert ( this->arities_function );
-    assert ( id >= 0 && id < this->num_function );
+    assert(this->arities_function);
+    assert(id >= 0 && id < this->num_function);
     return this->arities_function[id];
 }
 
@@ -181,4 +183,46 @@ char* Vocabulary::query_name ( int id, SYMBOL_TYPE type )
     }
 
     return NULL;
+}
+
+void Vocabulary::dump_vocabulary(FILE* out) {
+    int n;
+    
+    fprintf(out, "variable:\n");
+    for(n = 0; n < num_variable;n++) {
+        fprintf(out, "%s ", names_variable[n]);
+    }
+    
+    fprintf(out, "\nfunction:\n");
+    for(n = 0; n < num_function; n++) {
+        fprintf(out, "%s ", names_function[n]);
+    }
+    
+    fprintf(out, "\npredicate:\n");
+    for(n = 0; n < num_predicate; n++) {
+        fprintf(out, "%s ", names_predicate[n]);
+    }
+    
+    fprintf(out, "\nintension predicate:\n");
+    for(n = 0; n < num_intension_predicate; n++) {
+        fprintf(out, "%s ", names_predicate[index_intension_predicate[n]]);
+    }
+    
+    fprintf(out, "\ndomain:\n");
+    for(n = 0; n < num_names_domain; n++) {
+        fprintf(out, "%s ", names_domain[n]);
+    }
+    for(n = 0; n < num_variable; n++) {
+        fprintf(out, "%d ", variable_at_domain[n]);
+    }
+    
+    for(n = 0; n < num_variable; n++) {
+        fprintf(out, "%s at %s", names_variable[n], names_domain[variable_at_domain[n]]);
+        if(n != num_variable - 1) {
+            fprintf(out, ", ");
+        }
+        else {
+            fprintf(out, "\n");
+        }
+    }
 }

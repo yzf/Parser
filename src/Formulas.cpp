@@ -1,5 +1,6 @@
 #include "Formulas.h"
 #include "Formula.h"
+#include <cstdlib>
 #include <deque>
 
 using namespace std;
@@ -13,7 +14,9 @@ Formulas::Formulas(deque<Formula> _fs) {
 }
 
 Formulas::~Formulas() {
-    free(this->_formulas);
+    while(!(this->_formulas.empty())) {
+        this->_formulas.pop_back();
+    }
 }
 
 deque<Formula>  Formulas::get_formulas()
@@ -22,7 +25,7 @@ deque<Formula>  Formulas::get_formulas()
 }
       
 
-void Formulas::set_formulas(deque<Formula>& fs)
+void Formulas::set_formulas(deque<Formula> fs)
 {
     this->_formulas = fs;
 }
@@ -57,7 +60,7 @@ Formula  Formulas::top_formula()
     return this->_formulas.front();
 }
         	
-void Formulas::copy_formulas(const Formulas sigma)       
+void Formulas::copy_formulas(Formulas sigma)       
 {
     this->set_formulas(sigma.get_formulas());
 }
