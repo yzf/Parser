@@ -61,6 +61,7 @@ public:
 	Formula* convert_prenex();
         
         _formula* getFormula();
+        Formula& operator = (const Formula& rhs);
 };
 
 #endif

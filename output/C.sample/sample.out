@@ -1,0 +1,10 @@
+variable:
+X Y 
+function:
+
+predicate:
+p pr f 
+intension predicate:
+p pr f 
+domain:
+X at ce, Y at b

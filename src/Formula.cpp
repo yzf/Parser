@@ -33,8 +33,21 @@ Formula::Formula(const Formula& FML) {
 
 Formula::~Formula() {
     printf("\n~Formula\n");
-    delete_formula(this->formula);
-    free(body);
+    if (this->formula != NULL) {
+        delete_formula(this->formula);
+    }
+    if (body != NULL) {
+        free(body);
+    }
+}
+
+Formula& Formula::operator = (const Formula& rhs) {
+    _formula* new_formula = copy_formula(rhs.formula);
+    this->formula = new_formula;
+    
+    this->body = NULL;
+    this->is_prenex_formula = false;
+    return *this;
 }
 
 bool Formula::is_child_universal(_formula* fml) {
@@ -118,7 +131,7 @@ void Formula::delete_formula ( _formula* fml ) {
     {
     case ATOM:
         if(fml->parameters)
-	delete_terms(fml->parameters, vocabulary.predicate_arity(fml->variable_id));
+	delete_terms(fml->parameters, vocabulary.predicate_arity(fml->predicate_id));
         break;
     case CONJ:
     case DISJ:
