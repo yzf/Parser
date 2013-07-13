@@ -21,6 +21,7 @@ Vocabulary::Vocabulary() {
     this->num_new_predicate = 0;
     this->num_intension_predicate = 0;
     this->num_names_domain = 0;
+    this->newNexName = 0;
 }
 
 Vocabulary::~Vocabulary() {
@@ -71,6 +72,17 @@ int Vocabulary::add_symbol ( const char* name, SYMBOL_TYPE type, int arity )
     }
     
     return -1;
+}
+
+int Vocabulary::add_rename_variable() {
+    char name_buf[512];
+    sprintf(name_buf, "PN_%i", this->newNexName++);
+    
+    while(query_symbol(name_buf,VARIABLE) >= 0) {
+        this->newNexName++;
+    }
+    
+    return add_symbol(name_buf,VARIABLE,0);
 }
 
 int Vocabulary::query_symbol ( const char* name, SYMBOL_TYPE type )
@@ -208,14 +220,7 @@ void Vocabulary::dump_vocabulary(FILE* out) {
         fprintf(out, "%s ", names_predicate[index_intension_predicate[n]]);
     }
     
-    fprintf(out, "\ndomain:\n");
-    for(n = 0; n < num_names_domain; n++) {
-        fprintf(out, "%s ", names_domain[n]);
-    }
-    for(n = 0; n < num_variable; n++) {
-        fprintf(out, "%d ", variable_at_domain[n]);
-    }
-    
+    fprintf(out, "\ndomain:\n");    
     for(n = 0; n < num_variable; n++) {
         fprintf(out, "%s at %s", names_variable[n], names_domain[variable_at_domain[n]]);
         if(n != num_variable - 1) {

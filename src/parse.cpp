@@ -507,7 +507,7 @@ static const yytype_uint16 yyrline[] =
 {
        0,    73,    73,    81,    84,    87,    90,    95,   102,   105,
      108,   111,   116,   123,   127,   134,   140,   146,   152,   157,
-     169,   180,   184,   191,   221,   254,   274,   287,   299,   320
+     169,   180,   184,   191,   220,   253,   273,   286,   298,   319
 };
 #endif
 
@@ -1691,7 +1691,6 @@ yyreduce:
 		} 
 		else if (vocabulary.predicate_arity(id) != (yyvsp[(3) - (4)].ts)->num_term)
 		{
-                        printf("hell");
 			sprintf(str_buf, "the predicate \"%s\" has too many definitions!", (yyvsp[(1) - (4)].s));
 			yyerror(str_buf);
 			exit(-1);
@@ -1714,7 +1713,7 @@ yyreduce:
   case 24:
 
 /* Line 1806 of yacc.c  */
-#line 221 "parse.y"
+#line 220 "parse.y"
     {
 		printf("atom no terms\n");
 		assert((yyvsp[(1) - (1)].s));
@@ -1750,7 +1749,7 @@ yyreduce:
   case 25:
 
 /* Line 1806 of yacc.c  */
-#line 254 "parse.y"
+#line 253 "parse.y"
     {
 		printf("terms comma\n");
 		assert((yyvsp[(1) - (3)].ts));
@@ -1776,7 +1775,7 @@ yyreduce:
   case 26:
 
 /* Line 1806 of yacc.c  */
-#line 274 "parse.y"
+#line 273 "parse.y"
     {
 		printf("terms single\n");
 		(yyval.ts) = (_terms*)malloc(sizeof(_terms));
@@ -1792,7 +1791,7 @@ yyreduce:
   case 27:
 
 /* Line 1806 of yacc.c  */
-#line 287 "parse.y"
+#line 286 "parse.y"
     {
 		printf("term var\n");
 		assert((yyvsp[(1) - (1)].s));
@@ -1810,7 +1809,7 @@ yyreduce:
   case 28:
 
 /* Line 1806 of yacc.c  */
-#line 299 "parse.y"
+#line 298 "parse.y"
     {
 		assert((yyvsp[(1) - (1)].s));
 		printf("term cons %s\n",(yyvsp[(1) - (1)].s));
@@ -1837,7 +1836,7 @@ yyreduce:
   case 29:
 
 /* Line 1806 of yacc.c  */
-#line 320 "parse.y"
+#line 319 "parse.y"
     {
 		printf("term func\n");
 		assert((yyvsp[(1) - (4)].s));
@@ -1868,7 +1867,7 @@ yyreduce:
 
 
 /* Line 1806 of yacc.c  */
-#line 1872 "../src/parse.cpp"
+#line 1871 "../src/parse.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2099,6 +2098,6 @@ yyreturn:
 
 
 /* Line 2067 of yacc.c  */
-#line 346 "parse.y"
+#line 345 "parse.y"
 
 

@@ -44,4 +44,5 @@ void output_extraDefinition(FILE* out);
 _formula* double_negation(_formula* phi, const int* int_preds, int num_ip);
 _formula* minimal_simu(_formula* phi, const int* int_preds, int num_ip,
 						 const _formula* reff);
+
 #endif

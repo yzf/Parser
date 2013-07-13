@@ -6,20 +6,35 @@
 
 Formula::Formula() {
     this->formula = NULL;
+    this->body = NULL;
+    this->is_prenex_formula = false;
 }
 
-Formula::Formula(_formula* fml) {
-	this->formula = fml;
+Formula::Formula(_formula* fml, bool copy) {
+    if(!copy) {
+        this->formula = fml;
+    }    
+    else {
+        _formula* f = copy_formula(fml);
+        this->formula = f;
+    }
+    this->body = NULL;
+    this->is_prenex_formula = false;
 }
 
-/*Formula::Formula(Formula& FML) {
-	_formula* new_formula = copy_formula(FML.formula);
-	
-	this->formula = new_formula;
-}*/
+Formula::Formula(const Formula& FML) {
+    printf("\nFormula(&)\n");
+    _formula* new_formula = copy_formula(FML.formula);
+    this->formula = new_formula;
+    
+    this->body = NULL;
+    this->is_prenex_formula = false;
+}
 
 Formula::~Formula() {
-	delete_formula(this->formula);
+    printf("\n~Formula\n");
+    delete_formula(this->formula);
+    free(body);
 }
 
 bool Formula::is_child_universal(_formula* fml) {
@@ -44,10 +59,7 @@ bool Formula::is_child_universal(_formula* fml) {
 
     return false;
 }
-/**
- * 判断该公式是否不存在存在量词
- * @return 
- */
+
 bool Formula::is_universal() {
 	return is_child_universal(this->formula);
 }
@@ -126,8 +138,22 @@ void Formula::delete_formula ( _formula* fml ) {
     free(fml);
 }
 
-bool Formula::find_var_formula(const _formula* phi, int var_id) {
-    int i;
+void Formula::remove_from_prenex(_formula* head, _formula* tag) {
+    _formula* sl = head->subformula_l;
+    
+    if(sl == tag) {
+        head->subformula_l = sl->subformula_l;
+        free(sl);
+        remove_from_prenex(head, tag);
+    }
+    else {
+        remove_from_prenex(sl, tag);
+    }
+    
+}
+
+_formula* Formula::find_var_formula(_formula* phi, int var_id) {
+   /* int i;
 
     assert ( phi );
 
@@ -138,9 +164,9 @@ bool Formula::find_var_formula(const _formula* phi, int var_id) {
         {
             assert ( phi->parameters );
             if ( find_var_term ( phi->parameters+i, var_id ) )
-                return true;
+                return phi;
         }
-        return false;
+        return NULL;
     case NEGA:
     case UNIV:
     case EXIS:
@@ -156,11 +182,15 @@ bool Formula::find_var_formula(const _formula* phi, int var_id) {
     default:
         assert ( 0 );
     }
-    return false;
+    return NULL;*/
 }
 
 bool Formula::find_var(int var_id) {
     return find_var_formula(this->formula, var_id);
+}
+
+void Formula::rename_node_formula(_formula* tag) {   
+    tag->variable_id = vocabulary.add_rename_variable();
 }
 
 void Formula::rename_var_formula(_formula* phi, int oldv, int newv) {
@@ -325,14 +355,15 @@ void Formula::output_formula (FILE* out, _formula* phi)
 
 void Formula::divide_clause_formula(_formula* fml, Formulas& result) {
     Formula* new_formula;
+    
     if(fml != NULL) {
         if(fml->formula_type == CONJ && fml->subformula_l->formula_type == CONJ ) {
-            new_formula = new Formula(fml->subformula_r);  
+            new_formula = new Formula(fml->subformula_r, true);  
             result.push_formula(*new_formula);
             divide_clause_formula(fml->subformula_l, result);
         }
         else {
-            new_formula = new Formula(fml);
+            new_formula = new Formula(fml, true);
             result.push_formula(*new_formula);
         }
         
@@ -348,7 +379,7 @@ void Formula::divide_CNF_formula(_formula* fml, Formulas& result) {
             divide_CNF_formula(fml->subformula_r, result);
         }
         else {
-            new_formula = new Formula(fml);
+            new_formula = new Formula(fml, true);
             result.push_formula(*new_formula);
         }
     }
@@ -413,7 +444,6 @@ void Formula::lower_negative(_formula* srcFormula) {
                 {
                     FORMULA_TYPE ftype = (subFor->formula_type == UNIV ? EXIS : UNIV);
 
-                    // reconstruct the source formula
                     srcFormula->formula_type = ftype;
                     srcFormula->subformula_l = composite_bool(NEGA, subFor->subformula_l, NULL);
                     srcFormula->variable_id = subFor->variable_id;
@@ -423,13 +453,6 @@ void Formula::lower_negative(_formula* srcFormula) {
                     break;
                 }
                 case IMPL:
-                    /*free(srcFormula);
-                    srcFormula = composite_bool(subFor->subformula_l,
-                        composite_bool(subFor->subformula_r, NULL, NEGA), 
-                        CONJ);
-                    free(subFor);
-                    lower_negative(srcFormula);*/
-                    
                     /*subFor = composite_bool(composite_bool(subFor->subformula_l, NULL, NEGA), subFor->subformula_r, CONJ);
                     lower_negative(srcFormula);*/
                     break;
@@ -448,15 +471,6 @@ void Formula::lower_negative(_formula* srcFormula) {
             lower_negative(srcFormula->subformula_l);
             break;
         case IMPL:
-           /* if (!inSM) {
-                _formula* tmpl = srcFormula->subformula_l;
-                _formula* tmpr = srcFormula->subformula_r;
-                free(srcFormula);
-                srcFormula = composite_bool(composite_bool(tmpl, NULL, NEGA), 
-                                tmpr,
-                                DISJ);
-                LowerNegative(srcFormula, inSM);
-            }*/
             lower_negative(srcFormula->subformula_l);
             lower_negative(srcFormula->subformula_r);
             break;
@@ -549,7 +563,7 @@ void Formula::convert_CNF() {
     lower_disjunction(this->formula, 0);
 }
 
-/*void Formula::convert_pernex_formula(_formula* fml) {
+void Formula::convert_prenex_formula(_formula* fml) {
     if(fml == NULL) {
         return;
     }
@@ -558,7 +572,7 @@ void Formula::convert_CNF() {
         case ATOM:
             break;
         case NEGA:
-            convert_pernex_formula(fml->subformula_l);
+            convert_prenex_formula(fml->subformula_l);
             
             while(fml->subformula_l->formula_type == EXIS || fml->subformula_l->formula_type == UNIV) {
                 FORMULA_TYPE flt = (fml->subformula_l->formula_type == UNIV) ? EXIS : UNIV;
@@ -571,29 +585,101 @@ void Formula::convert_CNF() {
             break;
         case IMPL:
         case CONJ:
-        case DISJ:
-            convert_pernex_formula(fml->subformula_l);
-            convert_pernex_formula(fml->subformula_r);
+        case DISJ: {
+            convert_prenex_formula(fml->subformula_l);
+            convert_prenex_formula(fml->subformula_r);
             
             _formula* sub_l = fml->subformula_l;
             _formula* sub_r = fml->subformula_r;
+            _formula* curr_fml = fml;
             
             if(fml->formula_type == IMPL && (sub_l->formula_type == EXIS 
                     || sub_r->formula_type == UNIV)) {
                 sub_l->formula_type = (sub_l->formula_type == UNIV) ? EXIS : UNIV;
             }
             
+            while(sub_l->formula_type == UNIV || sub_l->formula_type == EXIS || 
+                    sub_r->formula_type == UNIV || sub_r->formula_type == EXIS) {
+                FORMULA_TYPE priority_type = UNIV;
+            
+                if(sub_l->formula_type != priority_type && sub_r->formula_type != priority_type) {
+                    priority_type = EXIS;
+                }
+                if(sub_l->formula_type == priority_type || sub_l->formula_type == sub_r->formula_type) {
+                    _formula* same_variable = find_var_formula(sub_r, sub_l->variable_id);
+                    
+                    if(same_variable != NULL) {
+                        if((sub_l->formula_type == UNIV && curr_fml->formula_type == CONJ && same_variable->formula_type == UNIV)||
+                                (sub_l->formula_type == EXIS && curr_fml->formula_type == DISJ && same_variable->formula_type == EXIS)) {
+                            remove_from_prenex(curr_fml, same_variable);
+                        }
+                        else {
+                            rename_node_formula(same_variable);
+                        }
+                    }
+                    
+                    FORMULA_TYPE temp = curr_fml->formula_type;
+                 
+                    curr_fml->formula_type = sub_l->formula_type;
+                    curr_fml->variable_id = sub_l->variable_id;
+                    sub_l->formula_type = temp;
+                    sub_l->subformula_r = sub_r;
+                }
+                else {
+                    _formula* same_variable = find_var_formula(sub_l, sub_r->variable_id);
+                    
+                    if(same_variable != NULL) {
+                        if((sub_r->formula_type == UNIV && curr_fml->formula_type == CONJ && same_variable->formula_type == UNIV)||
+                                (sub_r->formula_type == EXIS && curr_fml->formula_type == DISJ && same_variable->formula_type == EXIS)) {
+                            remove_from_prenex(sub_r, same_variable);
+                        }
+                        else {
+                            rename_node_formula(same_variable);
+                        }
+                    }
+                    
+                    FORMULA_TYPE temp = curr_fml->formula_type;
+                 
+                    curr_fml->formula_type = sub_r->formula_type;
+                    curr_fml->variable_id = sub_r->variable_id;
+                    sub_r->formula_type = temp;
+                    sub_r->subformula_r = sub_l;
+                }
+                curr_fml = curr_fml->subformula_l;
+                sub_l = curr_fml->subformula_l;
+                sub_r = curr_fml->subformula_r;
+            }
+        }
+            break;
+        case UNIV:
+        case EXIS:
+            convert_prenex_formula(fml->subformula_l);
+            break;
+        default:
+            break;           
     }
-}*/
+}
 
-void Formula::convert_prenex() {
+Formula* Formula::convert_prenex() {
+    convert_prenex_formula(this->formula);
+    this->is_prenex_formula = true;
     
+    _formula* cur = this->formula;
+    while(cur->formula_type == UNIV && cur->formula_type == EXIS) {
+        cur = cur->subformula_l;
+    }
+    
+    this->body = new Formula(cur, true);
+    return this->body;
 }
 
-void Formula::output(FILE* out) {
-	output_formula(out, this->formula);
+bool Formula::is_prenex() {
+    return this->is_prenex_formula;
 }
 
-_formula* Formula::getFormula() const {
+_formula* Formula::getFormula() {
     return this->formula;
+}
+void Formula::output(FILE* out) {
+    output_formula(out, this->formula);
 }

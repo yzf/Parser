@@ -23,6 +23,6 @@ void S2DLP::output_dlp_formulas() {
     this->dlp_formulas.output_formulas(this->output_file);
 }
 void S2DLP::set_origin_formulas(_formula* input) {
-    Formula* origin = new Formula(input);
+    Formula* origin = new Formula(input, false);
     this->origin_formulas = origin->divide_clause();
 }

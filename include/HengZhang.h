@@ -1,16 +1,9 @@
-#ifndef _HENGZHANG_H_
-#define _HENGZHANG_H_
-
+#include <vector>
+#include <string>
 #include "structs.h"
 #include "Formula.h"
 #include "Formulas.h"
-#include <vector>
-#include <string>
-
 using namespace std;
-
-class Formula;
-class Formulas;
 
 class HengZhang{
 private:
@@ -43,4 +36,3 @@ public:
 	Formula createFormula_5(Formula originalFml);
 };
 
-#endif

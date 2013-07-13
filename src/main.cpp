@@ -10,11 +10,13 @@
 #include <assert.h>
 
 #include "S2DLP.h"
+#include "structs.h"
 using namespace std;
 
 extern FILE *yyin;
 extern S2DLP Translator;
 extern Vocabulary vocabulary;
+extern _formula* gformula;
 FILE* fout;
 extern int yyparse();
 
@@ -46,6 +48,7 @@ int main(int argc, char** argv) {
     }
     
     yyparse();
+    Translator.set_origin_formulas(gformula);
     vocabulary.dump_vocabulary(fout);
    // Translator.set_output_file(fout);
     //Translator.output_origin_formulas();
