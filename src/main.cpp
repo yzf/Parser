@@ -7,14 +7,47 @@
 
 #include <cstdlib>
 #include <cstdio>
+#include <assert.h>
 
+#include "S2DLP.h"
 using namespace std;
 
-/*
- * 
- */
+extern FILE* yyin;
+extern S2DLP Translator;
+FILE* fout;
+extern int yyparse();
+
+void io(const char* iPathName, const char* oPathName)
+{
+    yyin = fopen (iPathName, "r");
+	fout = fopen (oPathName, "w");
+
+    if(!yyin)
+    {
+        printf("IO Error: cannot open the input file.\n" );
+		assert(0);
+    }
+    if(!fout)
+    {
+        printf("IO Error: cannot open the output file.\n");
+        assert(0);
+    }
+}
+
 int main(int argc, char** argv) {
-    printf("test\n");
+    
+    if(argc < 3)
+    {
+            io("res/C.sample/sample.in","output/C.sample/sample.out");
+    }
+    else{
+            io(argv[1], argv[2]);
+    }
+    
+    yyparse();
+    Translator.set_output_file(fout);
+    Translator.output_origin_formulas();
+    
     return 0;
 }
 
