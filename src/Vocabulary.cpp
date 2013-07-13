@@ -21,6 +21,7 @@ Vocabulary::Vocabulary() {
     this->num_new_predicate = 0;
     this->num_intension_predicate = 0;
     this->num_names_domain = 0;
+    this->newNexName = 0;
 }
 
 Vocabulary::~Vocabulary() {
@@ -71,6 +72,17 @@ int Vocabulary::add_symbol ( const char* name, SYMBOL_TYPE type, int arity )
     }
     
     return -1;
+}
+
+int Vocabulary::add_rename_variable() {
+    char name_buf[512];
+    sprintf(name_buf, "PN_%i", this->newNexName++);
+    
+    while(query_symbol(name_buf,VARIABLE) >= 0) {
+        this->newNexName++;
+    }
+    
+    return add_symbol(name_buf,VARIABLE,0);
 }
 
 int Vocabulary::query_symbol ( const char* name, SYMBOL_TYPE type )

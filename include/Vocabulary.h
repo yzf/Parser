@@ -27,12 +27,15 @@ class Vocabulary {
 
         int num_names_domain;
         char* names_domain[MAX_NUM_DOMAIN];
-
+        
+        int newNexName;
+        
     public:
         Vocabulary();
         ~Vocabulary();
         void destory_vocabulary();
         int add_symbol(const char* name, SYMBOL_TYPE type, int arity);
+        int add_rename_variable();
         int query_symbol(const char* name, SYMBOL_TYPE type);
         int set_intension_predicate(const char* name);
         void set_domain(char* variable, char* domain);
