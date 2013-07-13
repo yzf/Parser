@@ -1,19 +1,36 @@
-#include <deque>
+#ifndef _FORMULAS_H_
+#define _FORMULAS_H_
 #include "Formula.h"
+#pragma once
+
+#include <deque>
+#include <cstdio>
+
+using namespace std;
+
+class Formula;
 
 class Formulas{
-private:
-	deque<Formula> _formulas;
-	
-public:
-	Formulas* join_formulas(Formulas* head, Formulas* tail);
-	Formulas* push_formulas(Formula* fml, Formulas* tail);
-	Formulas* pop_formulas (Formulas* fmls);//DO NOT DELETE formula
-	Formula*  top_formulas (Formulas* fmls);
-	Formulas* copy_formulas(const Formulas* sigma);
-	void	delete_formulas(Formulas* sigma);
-	int	size_formulas(Formulas* fmls);
+    private:
+        deque<Formula> _formulas;
 
-	void output_formulas(FILE* out, const Formulas* fmls);
+    public:
+        Formulas();
+        ~Formulas();
+        Formulas(deque<Formula> _formula);
 
+        deque<Formula> get_formulas();
+        void set_formulas(deque<Formula> fs);
+
+        void join_formulas(Formulas tail);
+        void push_formula(Formula tail);
+        void pop_formula ();//DO NOT DELETE formula
+        Formula top_formula ();
+        void copy_formulas(Formulas sigma);
+        void delete_formulas();
+        int size_formulas();
+
+        void output_formulas(FILE* out);
 };
+
+#endif
