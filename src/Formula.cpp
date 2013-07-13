@@ -546,7 +546,7 @@ void Formula::convert_CNF() {
     lower_disjunction(this->formula, 0);
 }
 
-void Formula::convert_pernex_formula(_formula* fml) {
+/*void Formula::convert_pernex_formula(_formula* fml) {
     if(fml == NULL) {
         return;
     }
@@ -569,9 +569,19 @@ void Formula::convert_pernex_formula(_formula* fml) {
         case IMPL:
         case CONJ:
         case DISJ:
+            convert_pernex_formula(fml->subformula_l);
+            convert_pernex_formula(fml->subformula_r);
+            
+            _formula* sub_l = fml->subformula_l;
+            _formula* sub_r = fml->subformula_r;
+            
+            if(fml->formula_type == IMPL && (sub_l->formula_type == EXIS 
+                    || sub_r->formula_type == UNIV)) {
+                sub_l->formula_type = (sub_l->formula_type == UNIV) ? EXIS : UNIV;
+            }
             
     }
-}
+}*/
 
 void Formula::convert_prenex() {
     

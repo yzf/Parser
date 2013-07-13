@@ -12,8 +12,9 @@
 #include "S2DLP.h"
 using namespace std;
 
-extern FILE* yyin;
+extern FILE *yyin;
 extern S2DLP Translator;
+extern Vocabulary vocabulary;
 FILE* fout;
 extern int yyparse();
 
@@ -45,8 +46,9 @@ int main(int argc, char** argv) {
     }
     
     yyparse();
-    Translator.set_output_file(fout);
-    Translator.output_origin_formulas();
+    vocabulary.dump_vocabulary(fout);
+   // Translator.set_output_file(fout);
+    //Translator.output_origin_formulas();
     
     return 0;
 }

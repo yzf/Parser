@@ -30,7 +30,7 @@ private:
         
         void convert_CNF_formula(_formula* fml);
         void lower_negative(_formula* fml);
-        void lower_disjunction(_formula* fml);
+        void lower_disjunction(_formula* fml, int depth);
         
         void convert_pernex_formula(_formula* fml);
         

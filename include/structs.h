@@ -17,6 +17,7 @@
 #define PRED_MIN			-4
 #define PRED_MAX			-5
 #define PRED_SUCC			-6
+
 const int spec_pred_arities[] =
 {
     0,			//PRED_TRUE
@@ -66,7 +67,7 @@ typedef struct __term {
 		int function_id;			//FUNC
 	};
 
-	Term parameters;		//FUNC
+	__term* parameters;		//FUNC
 } _term;
 
 typedef struct __terms {			// only be used in lex&yacc

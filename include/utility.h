@@ -3,12 +3,11 @@
 
 #include "structs.h"
 #include <vector>
+#include "Vocabulary.h"
+#include "cstdio"
 
-extern _vocabulary vocabulary;
-extern _formula* gformula;
-extern _formulas* gformulas;
+extern Vocabulary vocabulary;
 extern int context_flag;
-
 
 //terms operations
 ///////////////////////////////////////////////////////////////////////////////
