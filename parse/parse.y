@@ -17,7 +17,7 @@ extern "C" {
 
 extern Vocabulary vocabulary;
 extern int context_flag;
-extern gformula; 
+extern _formula* gformula; 
 
 int id;
 char str_buf[512];

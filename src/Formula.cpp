@@ -369,7 +369,7 @@ void Formula::divide_clause_formula(_formula* fml, Formulas& result) {
         if(fml->formula_type == CONJ && fml->subformula_l->formula_type == CONJ ) {
             Formula new_formula = Formula(fml->subformula_r, true);  
             result.push_formula(new_formula);
-            divide_clause_formula(fml->subformula_l, result);
+            divide_clause_formula(fml->subformula_l, result);   
         }
         else {
             Formula new_formula = Formula(fml, true);
@@ -396,9 +396,7 @@ void Formula::divide_CNF_formula(_formula* fml, Formulas& result) {
 
 Formulas Formula::divide_clause() {
     Formulas* outputFormulas = new Formulas();
-    
     divide_clause_formula(this->formula, *outputFormulas);
-    
     return *outputFormulas;  
 }       
 

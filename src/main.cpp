@@ -23,12 +23,12 @@ extern int yyparse();
 void io(const char* iPathName, const char* oPathName)
 {
     yyin = fopen (iPathName, "r");
-	fout = fopen (oPathName, "w");
+    fout = fopen (oPathName, "w");
 
     if(!yyin)
     {
         printf("IO Error: cannot open the input file.\n" );
-		assert(0);
+        assert(0);
     }
     if(!fout)
     {
@@ -49,7 +49,10 @@ int main(int argc, char** argv) {
     
     yyparse();
     Translator.set_origin_formulas(gformula);
-    vocabulary.dump_vocabulary(stdout);
+    Translator.set_output_file(stdout);
+    Translator.output_origin_formulas();
+//    Translator.output_origin_formulas();
+//    vocabulary.dump_vocabulary(stdout);
    // Translator.set_output_file(fout);
     //Translator.output_origin_formulas();
     

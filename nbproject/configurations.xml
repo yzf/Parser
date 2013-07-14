@@ -23,6 +23,32 @@
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
                    projectFiles="true">
+      <logicalFolder name="res" displayName="res" projectFiles="true">
+        <logicalFolder name="0.null" displayName="0.null" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="1.atom" displayName="1.atom" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="2.nega" displayName="2.nega" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="3.conj" displayName="3.conj" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="4.disj" displayName="4.disj" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="5.impl" displayName="5.impl" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="6.univ" displayName="6.univ" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="7.exis" displayName="7.exis" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="8.prenex" displayName="8.prenex" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="A.cabalar" displayName="A.cabalar" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="B.real" displayName="B.real" projectFiles="true">
+        </logicalFolder>
+        <logicalFolder name="C.sample" displayName="C.sample" projectFiles="true">
+        </logicalFolder>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -56,6 +82,7 @@
   <sourceRootList>
     <Elem>src</Elem>
     <Elem>parse</Elem>
+    <Elem>res</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

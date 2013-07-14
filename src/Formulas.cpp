@@ -13,10 +13,18 @@ Formulas::Formulas(deque<Formula> _fs) {
     this->_formulas = _fs;
 }
 
+Formulas::Formulas(const Formulas& rhs) {
+    this->_formulas = rhs._formulas;
+}
+
 Formulas::~Formulas() {
     while(!(this->_formulas.empty())) {
         this->_formulas.pop_back();
     }
+}
+
+Formulas& Formulas::operator = (const Formulas& rhs) {
+    this->_formulas = rhs._formulas;
 }
 
 deque<Formula>  Formulas::get_formulas()
@@ -77,11 +85,10 @@ int Formulas::size_formulas()
 
 void Formulas::output_formulas(FILE* out)       
 {
-    deque<Formula> tempfmls;
-    tempfmls = this->_formulas;
-    while(!tempfmls.empty())
-    {
-        tempfmls.front().output(out);
-        tempfmls.pop_front();
-    } 
+    for (deque<Formula>::iterator it = this->_formulas.begin();
+            it != this->_formulas.end();
+            ++ it) {
+        it->output(out);
+        fprintf(out, "\n");
+    }
 }
