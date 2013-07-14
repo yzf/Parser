@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/src/Cabalar.o \
 	${OBJECTDIR}/src/Formula.o \
 	${OBJECTDIR}/src/Formulas.o \
 	${OBJECTDIR}/src/HengZhang.o \
@@ -70,6 +71,11 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/parser: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/parser ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/src/Cabalar.o: src/Cabalar.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Cabalar.o src/Cabalar.cpp
 
 ${OBJECTDIR}/src/Formula.o: src/Formula.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src

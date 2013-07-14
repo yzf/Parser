@@ -209,7 +209,7 @@ void output_term ( FILE* out, const _term* t )
 //formula operations
 ///////////////////////////////////////////////////////////////////////////////
 _formula* composite_atom(FORMULA_TYPE formula_type,
-									const int predicate_id, _term* parameters)
+				const int predicate_id, _term* parameters)
 {
     assert(formula_type == ATOM);
 

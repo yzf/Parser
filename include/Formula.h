@@ -18,6 +18,8 @@ private:
         bool is_prenex_formula;
         Formula* body;
         
+        
+        
 	bool is_child_universal(_formula*);
 	bool compare_formula(const _formula* phi, const _formula* psi);
 	void delete_formula (_formula* fml);
@@ -60,7 +62,9 @@ public:
 	bool is_prenex();
 	Formula* convert_prenex();
         
-        _formula* getFormula();
+      //  _formula* getFormula();
+        _formula* get_formula();
+        void set_formula(_formula* f);
         Formula& operator = (const Formula& rhs);
 };
 

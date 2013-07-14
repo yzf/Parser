@@ -29,7 +29,9 @@ class Formulas{
         void copy_formulas(Formulas sigma);
         void delete_formulas();
         int size_formulas();
-
+        
+        bool equal(Formulas f);
+        
         void output_formulas(FILE* out);
 };
 

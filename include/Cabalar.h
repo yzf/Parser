@@ -1,45 +1,56 @@
 #include "Formula.h"
+#include "structs.h"
+#include "Formulas.h"
+#include "Vocabulary.h"
+#include "utility.h"
 
 class Cabalar{
 private:
-	Formula Cabalar_DLT(Formula originFml);
-	Formula Cabalar_DLF(Formula originFml);
-	Formula Cabalar_CLT(Formula originFml);
-	Formula Cabalar_CLF(Formula originFml);
+	_formula* Cabalar_DLT(_formula* originFml);
+        _formula* Cabalar_DLF(_formula* originFml);
+        _formula* Cabalar_CLT(_formula* originFml);
+        _formula* Cabalar_CLF(_formula* originFml);
 
-	Formula Cabalar_ILT(Formula originFml);
-	Formula Cabalar_ILF(Formula originFml);
-	Formula Cabalar_IRT(Formula originFml);
-	Formula Cabalar_IRF(Formula originFml);
+        _formula* Cabalar_ILT(_formula* originFml);
+        _formula* Cabalar_ILF(_formula* originFml);
+        _formula* Cabalar_IRT(_formula* originFml);
+        _formula* Cabalar_IRF(_formula* originFml);
 
-	Formula Cabalar_N1(Formula originFml);
-	Formula Cabalar_N2(Formula originFml);
-	Formula Cabalar_N3(Formula originFml);
-	Formula Cabalar_N4(Formula originFml);
-	Formula Cabalar_N5(Formula originFml);
-	Formula Cabalar_N6(Formula originFml);
+        _formula* Cabalar_N1(_formula* originFml);
+        _formula* Cabalar_N2(_formula* originFml);
+        _formula* Cabalar_N3(_formula* originFml);
+        _formula* Cabalar_N4(_formula* originFml);
+        _formula* Cabalar_N5(_formula* originFml);
+        _formula* Cabalar_N6(_formula* originFml);
 
-	Formulas Cabalar_L1(Formula originFml);
-	Formulas Cabalar_L2(Formula originFml);
-	Formulas Cabalar_L3(Formula originFml);
-	Formulas Cabalar_L4(Formula originFml);
-	Formulas Cabalar_L5(Formula originFml);
+        Formulas Cabalar_L1(_formula* originFml);
+        Formulas Cabalar_L2(_formula* originFml);
+        Formulas Cabalar_L3(_formula* originFml);
+        Formulas Cabalar_L4(_formula* originFml);
+        Formulas Cabalar_L5(_formula* originFml);
 
-	Formulas Cabalar_R1(Formula originFml);
-	Formulas Cabalar_R2(Formula originFml);
-	Formulas Cabalar_R3(Formula originFml);
-	Formulas Cabalar_R4(Formula originFml);
-	Formulas Cabalar_R5(Formula originFml);
+        Formulas Cabalar_R1(_formula* originFml);
+        Formulas Cabalar_R2(_formula* originFml);
+        Formulas Cabalar_R3(_formula* originFml);
+        Formulas Cabalar_R4(_formula* originFml);
+        Formulas Cabalar_R5(_formula* originFml);
 
-
-	 //tools
-	int Commutative_Trans(Formula root, Formula curr,
-					FORMULA_TYPE commutativeSymbol);
-
-	Formula convert_negative_normal_form(Formula fml);//Negative Normal Form
-	Formulas convert_negative_normal_forms(Formulas fmls);
-
-	Formulas Cabalar_Trans(Formula fml);
-	static Formulas convert_Cabalar(Formulas fmls);
-
+        
+        
+public:
+        Cabalar();
+        ~Cabalar();
+        
+         //tools
+        int Commutative_Trans(_formula* root, _formula* curr,
+                               FORMULA_TYPE commutativeSymbol);
+        _formula* convert_negative_normal_form(_formula* fml);//Negative Normal Form
+        Formulas convert_negative_normal_forms(Formulas fmls);
+        Formulas Cabalar_Trans(_formula* fml);
+        
+        Formulas convert_Cabalar(Formulas fmls);
+        
+        //A test function : return a Formulas for the Cabalar.
+        Formulas HengZhang_Test();
+        
 };

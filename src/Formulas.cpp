@@ -5,12 +5,14 @@
 
 using namespace std;
 
-Formulas::Formulas() {
-    
-}
 
 Formulas::Formulas(deque<Formula> _fs) {
     this->_formulas = _fs;
+}
+
+Formulas::Formulas()
+{
+    
 }
 
 Formulas::~Formulas() {
@@ -28,6 +30,35 @@ deque<Formula>  Formulas::get_formulas()
 void Formulas::set_formulas(deque<Formula> fs)
 {
     this->_formulas = fs;
+}
+
+bool Formulas::equal(Formulas f)
+{
+    if(this->_formulas.size() != f.get_formulas().size())
+        return false;
+    
+//    deque<Formula>::iterator it = this->_formulas.begin();
+//    deque<Formula>::iterator itf = f.get_formulas().begin();
+//    while(it != this->_formulas.end())
+//    {
+//        if(*it != *itf)
+//            return false;
+//        it++;
+//        itf++;
+//    }
+    
+    int size = this->_formulas.size();
+    deque<Formula> f1 = this->_formulas;
+    deque<Formula> f2 = f.get_formulas();
+    
+    for(int i = 0; i < size; i++)
+    {
+        
+        if(!f1.at(i).compare(f2.at(i)))
+            return false;
+    }
+    
+    return true;
 }
 
 void Formulas::join_formulas(Formulas tail)

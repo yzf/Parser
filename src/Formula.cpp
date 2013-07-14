@@ -41,6 +41,16 @@ Formula::~Formula() {
     }
 }
 
+_formula* Formula::get_formula()
+{
+    return this->formula;
+}
+        
+void Formula::set_formula(_formula* f)
+{
+    this->formula = f;
+}
+
 Formula& Formula::operator = (const Formula& rhs) {
     _formula* new_formula = copy_formula(rhs.formula);
     this->formula = new_formula;
@@ -124,7 +134,7 @@ bool Formula::compare(Formula& ffc) {
 	return compare_formula(this->formula, ffc.formula);
 }
 
-void Formula::delete_formula ( _formula* fml ) {
+void Formula::delete_formula( _formula* fml ) {
     assert ( fml );
 
     switch ( fml->formula_type )
@@ -690,9 +700,10 @@ bool Formula::is_prenex() {
     return this->is_prenex_formula;
 }
 
-_formula* Formula::getFormula() {
-    return this->formula;
-}
+//_formula* Formula::getFormula() {
+//    return this->formula;
+//}
+
 void Formula::output(FILE* out) {
     output_formula(out, this->formula);
 }

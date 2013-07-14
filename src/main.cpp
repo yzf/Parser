@@ -48,8 +48,19 @@ int main(int argc, char** argv) {
     }
     
     yyparse();
-    Translator.set_origin_formulas(gformula);
-    vocabulary.dump_vocabulary(fout);
+//    Translator.set_origin_formulas(gformula);
+//   vocabulary.dump_vocabulary(fout);
+    
+    
+    Cabalar cbl;
+    Formulas cbl_test;
+    cbl_test = cbl.HengZhang_Test();
+    
+    Cabalar test;
+    Formulas result;
+    result = test.convert_Cabalar(cbl_test);
+    
+    
    // Translator.set_output_file(fout);
     //Translator.output_origin_formulas();
     
