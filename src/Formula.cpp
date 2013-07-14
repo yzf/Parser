@@ -23,7 +23,6 @@ Formula::Formula(_formula* fml, bool copy) {
 }
 
 Formula::Formula(const Formula& FML) {
-    printf("\nFormula(&)\n");
     _formula* new_formula = copy_formula(FML.formula);
     this->formula = new_formula;
     
@@ -32,7 +31,6 @@ Formula::Formula(const Formula& FML) {
 }
 
 Formula::~Formula() {
-    printf("\n~Formula\n");
     if (this->formula != NULL) {
         delete_formula(this->formula);
     }

@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
     
     yyparse();
     Translator.set_origin_formulas(gformula);
-    vocabulary.dump_vocabulary(fout);
+    vocabulary.dump_vocabulary(stdout);
    // Translator.set_output_file(fout);
     //Translator.output_origin_formulas();
     

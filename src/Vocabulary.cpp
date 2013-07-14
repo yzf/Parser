@@ -158,7 +158,6 @@ int Vocabulary::predicate_arity(int id)
     else
     {
         assert(this->arities_predicate);
-        printf("%dHello", id);
         assert(id < this->num_predicate);
         return this->arities_predicate[id];
     }
