@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="89">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>include/Cabalar.h</itemPath>
+      <itemPath>include/Formula.h</itemPath>
+      <itemPath>include/Formulas.h</itemPath>
+      <itemPath>include/HengZhang.h</itemPath>
+      <itemPath>include/Rule.h</itemPath>
+      <itemPath>include/S2DLP.h</itemPath>
+      <itemPath>include/Vocabulary.h</itemPath>
+      <itemPath>include/structs.h</itemPath>
+      <itemPath>include/utility.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="parse" displayName="parse" projectFiles="true">
+      <itemPath>parse/clean.sh</itemPath>
+      <itemPath>parse/generate.sh</itemPath>
+      <itemPath>parse/lex.l</itemPath>
+      <itemPath>parse/parse.y</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+      <logicalFolder name="res" displayName="res" projectFiles="true">
+        <logicalFolder name="0.null" displayName="0.null" projectFiles="true">
+          <itemPath>res/0.null/null.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="1.atom" displayName="1.atom" projectFiles="true">
+          <itemPath>res/1.atom/0.single.in</itemPath>
+          <itemPath>res/1.atom/1.clause.in</itemPath>
+          <itemPath>res/1.atom/2.vari.1.in</itemPath>
+          <itemPath>res/1.atom/2.vari.2.in</itemPath>
+          <itemPath>res/1.atom/3.func.1.single.in</itemPath>
+          <itemPath>res/1.atom/3.func.2.clause.in</itemPath>
+          <itemPath>res/1.atom/3.func.3.vari.in</itemPath>
+          <itemPath>res/1.atom/3.func.4.double.in</itemPath>
+          <itemPath>res/1.atom/4.cascade.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="2.nega" displayName="2.nega" projectFiles="true">
+          <itemPath>res/2.nega/0.single.in</itemPath>
+          <itemPath>res/2.nega/1.double.in</itemPath>
+          <itemPath>res/2.nega/2.trible.in</itemPath>
+          <itemPath>res/2.nega/3.clause-double.in</itemPath>
+          <itemPath>res/2.nega/4.clause-trible.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="3.conj" displayName="3.conj" projectFiles="true">
+          <itemPath>res/3.conj/0.single.in</itemPath>
+          <itemPath>res/3.conj/1.cascade.in</itemPath>
+          <itemPath>res/3.conj/2.line.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="4.disj" displayName="4.disj" projectFiles="true">
+          <itemPath>res/4.disj/0.single.in</itemPath>
+          <itemPath>res/4.disj/1.cascade.in</itemPath>
+          <itemPath>res/4.disj/2.line.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="5.impl" displayName="5.impl" projectFiles="true">
+          <itemPath>res/5.impl/0.single.in</itemPath>
+          <itemPath>res/5.impl/1.cascade.in</itemPath>
+          <itemPath>res/5.impl/2.line.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="6.univ" displayName="6.univ" projectFiles="true">
+          <itemPath>res/6.univ/0.single.in</itemPath>
+          <itemPath>res/6.univ/1.cascade.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="7.exis" displayName="7.exis" projectFiles="true">
+          <itemPath>res/7.exis/0.single.in</itemPath>
+          <itemPath>res/7.exis/1.cascade.in</itemPath>
+          <itemPath>res/7.exis/2.mix.behind.in</itemPath>
+          <itemPath>res/7.exis/2.mix.front.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="8.prenex" displayName="8.prenex" projectFiles="true">
+          <itemPath>res/8.prenex/0.atom.in</itemPath>
+          <itemPath>res/8.prenex/1.univ.1.in</itemPath>
+          <itemPath>res/8.prenex/1.univ.2.in</itemPath>
+          <itemPath>res/8.prenex/2.exis.1.in</itemPath>
+          <itemPath>res/8.prenex/2.exis.2.in</itemPath>
+          <itemPath>res/8.prenex/3.exis.univ.in</itemPath>
+          <itemPath>res/8.prenex/3.univ.exis.in</itemPath>
+          <itemPath>res/8.prenex/4.nega.exis.in</itemPath>
+          <itemPath>res/8.prenex/4.nega.exis.univ.in</itemPath>
+          <itemPath>res/8.prenex/4.nega.univ.exis.in</itemPath>
+          <itemPath>res/8.prenex/4.nega.univ.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="A.cabalar" displayName="A.cabalar" projectFiles="true">
+          <itemPath>res/A.cabalar/0.normal.l1.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.l2.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.l3.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.l4.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.l5.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.r1.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.r2.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.r3.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.r4.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.r5.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="B.real" displayName="B.real" projectFiles="true">
+          <itemPath>res/B.real/0</itemPath>
+          <itemPath>res/B.real/1</itemPath>
+        </logicalFolder>
+        <logicalFolder name="C.sample" displayName="C.sample" projectFiles="true">
+          <itemPath>res/C.sample/sample-solved-hz4.txt</itemPath>
+          <itemPath>res/C.sample/sample-solved-hz5.txt</itemPath>
+          <itemPath>res/C.sample/sample.in</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>src/main.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="src" displayName="src" projectFiles="true">
+      <itemPath>src/Formula.cpp</itemPath>
+      <itemPath>src/Formulas.cpp</itemPath>
+      <itemPath>src/HengZhang.cpp</itemPath>
+      <itemPath>src/S2DLP.cpp</itemPath>
+      <itemPath>src/Vocabulary.cpp</itemPath>
+      <itemPath>src/global.cpp</itemPath>
+      <itemPath>src/lex.cpp</itemPath>
+      <itemPath>src/parse.cpp</itemPath>
+      <itemPath>src/parse.h</itemPath>
+      <itemPath>src/utility.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>src</Elem>
+    <Elem>parse</Elem>
+    <Elem>res</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <incDir>
+            <pElem>include</pElem>
+          </incDir>
+        </ccTool>
+      </compileType>
+      <item path="include/Cabalar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Formula.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Formulas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/HengZhang.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Rule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/S2DLP.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Vocabulary.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/structs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/utility.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="parse/clean.sh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="parse/generate.sh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="parse/lex.l" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="parse/parse.y" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/0.null/null.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/1.clause.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/2.vari.1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/2.vari.2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/3.func.1.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/3.func.2.clause.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/3.func.3.vari.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/3.func.4.double.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/4.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/1.double.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/2.trible.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/3.clause-double.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/4.clause-trible.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/3.conj/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/3.conj/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/3.conj/2.line.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/4.disj/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/4.disj/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/4.disj/2.line.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/5.impl/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/5.impl/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/5.impl/2.line.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/6.univ/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/6.univ/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/7.exis/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/7.exis/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/7.exis/2.mix.behind.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/7.exis/2.mix.front.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/0.atom.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/1.univ.1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/1.univ.2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/2.exis.1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/2.exis.2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/3.exis.univ.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/3.univ.exis.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/4.nega.exis.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/4.nega.exis.univ.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/4.nega.univ.exis.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/4.nega.univ.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l3.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l4.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l5.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r3.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r4.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r5.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/B.real/0" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/B.real/1" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/sample-solved-hz4.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/sample-solved-hz5.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/sample.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Formula.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Formulas.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/HengZhang.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/S2DLP.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Vocabulary.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/global.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/lex.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/parse.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/parse.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/utility.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="include/Cabalar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Formula.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Formulas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/HengZhang.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Rule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/S2DLP.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/Vocabulary.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/structs.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="include/utility.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="parse/clean.sh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="parse/generate.sh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="parse/lex.l" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="parse/parse.y" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/0.null/null.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/1.clause.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/2.vari.1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/2.vari.2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/3.func.1.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/3.func.2.clause.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/3.func.3.vari.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/3.func.4.double.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/4.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/1.double.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/2.trible.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/3.clause-double.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/4.clause-trible.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/3.conj/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/3.conj/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/3.conj/2.line.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/4.disj/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/4.disj/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/4.disj/2.line.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/5.impl/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/5.impl/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/5.impl/2.line.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/6.univ/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/6.univ/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/7.exis/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/7.exis/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/7.exis/2.mix.behind.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/7.exis/2.mix.front.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/0.atom.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/1.univ.1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/1.univ.2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/2.exis.1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/2.exis.2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/3.exis.univ.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/3.univ.exis.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/4.nega.exis.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/4.nega.exis.univ.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/4.nega.univ.exis.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/4.nega.univ.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l3.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l4.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l5.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r3.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r4.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r5.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/B.real/0" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/B.real/1" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/sample-solved-hz4.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/sample-solved-hz5.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/sample.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Formula.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Formulas.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/HengZhang.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/S2DLP.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Vocabulary.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/global.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/lex.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/parse.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/parse.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/utility.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
