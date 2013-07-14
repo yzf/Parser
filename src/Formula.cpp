@@ -365,17 +365,15 @@ void Formula::output_formula (FILE* out, _formula* phi)
 }
 
 void Formula::divide_clause_formula(_formula* fml, Formulas& result) {
-    Formula* new_formula;
-    
     if(fml != NULL) {
         if(fml->formula_type == CONJ && fml->subformula_l->formula_type == CONJ ) {
-            new_formula = new Formula(fml->subformula_r, true);  
-            result.push_formula(*new_formula);
+            Formula new_formula = Formula(fml->subformula_r, true);  
+            result.push_formula(new_formula);
             divide_clause_formula(fml->subformula_l, result);
         }
         else {
-            new_formula = new Formula(fml, true);
-            result.push_formula(*new_formula);
+            Formula new_formula = Formula(fml, true);
+            result.push_formula(new_formula);
         }
         
     }
