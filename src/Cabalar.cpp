@@ -1200,7 +1200,7 @@ Formulas Cabalar::HengZhang_Test()
     f1->subformula_l->subformula_r->parameters->term_type = VARI;
     f1->subformula_l->subformula_r->parameters->variable_id = 0;
     
-    f1->subformula_l->subformula_l = ATOM;
+    f1->subformula_l->subformula_l->formula_type = ATOM;
     f1->subformula_l->subformula_l->predicate_id = PRED_TRUE;
     f1->subformula_l->subformula_l->parameters = NULL;
     
@@ -1220,7 +1220,7 @@ Formulas Cabalar::HengZhang_Test()
     f2->subformula_l->subformula_r->parameters->term_type = VARI;
     f2->subformula_l->subformula_r->parameters->variable_id = 1;
     
-    f2->subformula_l->subformula_l = ATOM;
+    f2->subformula_l->subformula_l->formula_type = ATOM;
     f2->subformula_l->subformula_l->predicate_id = PRED_FALSE;
     f2->subformula_l->subformula_l->parameters = NULL;
    

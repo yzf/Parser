@@ -1,8 +1,14 @@
+#ifndef _CABALAR_H_
+#define _CABALAR_H_
+
 #include "Formula.h"
 #include "structs.h"
 #include "Formulas.h"
 #include "Vocabulary.h"
 #include "utility.h"
+
+class Formula;
+class FOrmulas;
 
 class Cabalar{
 private:
@@ -54,3 +60,5 @@ public:
         Formulas HengZhang_Test();
         
 };
+
+#endif

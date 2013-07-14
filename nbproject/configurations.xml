@@ -112,6 +112,7 @@
       <itemPath>src/main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="src" displayName="src" projectFiles="true">
+      <itemPath>src/Cabalar.cpp</itemPath>
       <itemPath>src/Formula.cpp</itemPath>
       <itemPath>src/Formulas.cpp</itemPath>
       <itemPath>src/HengZhang.cpp</itemPath>
@@ -150,6 +151,11 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <incDir>
+            <pElem>include</pElem>
+          </incDir>
+        </cTool>
         <ccTool>
           <incDir>
             <pElem>include</pElem>
@@ -293,6 +299,8 @@
       <item path="res/C.sample/sample-solved-hz5.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/C.sample/sample.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Formula.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -475,6 +483,8 @@
       <item path="res/C.sample/sample-solved-hz5.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/C.sample/sample.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Formula.cpp" ex="false" tool="1" flavor2="0">
       </item>

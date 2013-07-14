@@ -1,8 +1,7 @@
 #ifndef _FORMULAS_H_
 #define _FORMULAS_H_
-#include "Formula.h"
-#pragma once
 
+#include "Formula.h"
 #include <deque>
 #include <cstdio>
 

@@ -1,8 +1,7 @@
 #ifndef _FORMULA_H_
 #define _FORMULA_H_
-#include "Formulas.h"
-#pragma once
 
+#include "Formulas.h"
 #include <vector>
 #include "structs.h"
 #include <cstdio>
@@ -66,7 +65,6 @@ public:
 	bool is_prenex();
 	Formula* convert_prenex();
         
-      //  _formula* getFormula();
         _formula* get_formula();
         void set_formula(_formula* f);
         Formula& operator = (const Formula& rhs);

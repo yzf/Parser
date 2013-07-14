@@ -11,6 +11,8 @@
 
 #include "S2DLP.h"
 #include "structs.h"
+#include "Cabalar.h"
+#include "HengZhang.h"
 using namespace std;
 
 extern FILE *yyin;
@@ -41,25 +43,34 @@ int main(int argc, char** argv) {
     
     if(argc < 3)
     {
-            io("res/C.sample/sample.in","output/C.sample/sample.out");
+        io("res/C.sample/sample.in","output/C.sample/sample.out");
     }
     else{
-            io(argv[1], argv[2]);
+        io(argv[1], argv[2]);
     }
     
     yyparse();
-//    Translator.set_origin_formulas(gformula);
-//   vocabulary.dump_vocabulary(fout);
-    
-    
-    Cabalar cbl;
-    Formulas cbl_test;
-    cbl_test = cbl.HengZhang_Test();
-    
-    Cabalar test;
-    Formulas result;
-    result = test.convert_Cabalar(cbl_test);
-    
+    Translator.set_origin_formulas(gformula);
+    HengZhang hz;
+    Formulas fmls = Translator.origin_formulas;
+    while (fmls.size_formulas() != 0) {
+        Formula fml = fmls.top_formula();
+        if (!fml.is_universal()) {
+            hz.create(fml);
+        }
+        fmls.pop_formula();
+    }
+//    Formula fml;
+//    fml.get_formula();
+//    
+//    Cabalar cbl;
+//    Formulas cbl_test;
+//    cbl_test = cbl.HengZhang_Test();
+//    
+//    Cabalar test;
+//    Formulas result;
+//    result = test.convert_Cabalar(cbl_test);
+//    
     
    // Translator.set_output_file(fout);
     //Translator.output_origin_formulas();

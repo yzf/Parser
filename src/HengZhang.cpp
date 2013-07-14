@@ -39,7 +39,7 @@ Formula HengZhang::recordQuantifier(Formula originalFml) {
     terms_MAX.clear();
     
     int i = 0;
-    _formula* fml = originalFml.getFormula();
+    _formula* fml = originalFml.get_formula();
     while(fml->formula_type == UNIV)
     {
         terms_X.push_back(fml->variable_id);
@@ -126,7 +126,7 @@ Formula HengZhang::createFormula_2(Formula originalFml) {
     Formula tmp = originalFml;
     tmp.double_negation(vocabulary.index_intension_predicate,
             vocabulary.num_intension_predicate);
-    _formula* LR = copy_formula(tmp.getFormula());
+    _formula* LR = copy_formula(tmp.get_formula());
 
 
     //4
@@ -156,7 +156,7 @@ Formula HengZhang::createFormula_3(Formula originalFml) {
     //create right sub-formula theta(_X,_MIN)
     Formula tmp = Formula(originalFml);
     tmp.replace_terms(terms_Y, terms_MIN);
-    _formula* R = copy_formula(tmp.getFormula());
+    _formula* R = copy_formula(tmp.get_formula());
 
     //create structure
     _formula* F   = composite_bool(DISJ,L,R);
@@ -189,10 +189,10 @@ Formula HengZhang::createFormula_4(Formula originalFml) {
     _formula* RLL  = composite_atom(ATOM, symbol_t, RLLT);
 
     //5
-    _formula* RLR = copy_formula(originalFml.getFormula());
+    _formula* RLR = copy_formula(originalFml.get_formula());
 
     //6
-    _formula* RRL = copy_formula(originalFml.getFormula());
+    _formula* RRL = copy_formula(originalFml.get_formula());
 
     //7
     _term* RRRT = combine_terms(terms_X, terms_MAX);
@@ -232,7 +232,7 @@ Formula HengZhang::createFormula_5(Formula originalFml) {
     //3 theta(_X,_Z)
     Formula tmp = Formula(originalFml);
     tmp.replace_terms(terms_Y, terms_Z);
-    _formula* THETA= copy_formula(tmp.getFormula());
+    _formula* THETA= copy_formula(tmp.get_formula());
 
     //4 T(_X,_Z)
     _term* RLRRT = combine_terms(terms_X, terms_Z);
