@@ -3,7 +3,7 @@
 #pragma once
 
 class Vocabulary {
-    private:
+    public:
         int num_variable;
         char* names_variable[MAX_NUM_VARIABLE];
         int variable_at_domain[MAX_NUM_VARIABLE];

@@ -29,7 +29,7 @@ private:
 				const vector<int>& replacements);
 	void output_formula(FILE *out, _formula* fml);
         
-        void divide_clause_formula(_formula* fml, Formulas& result);
+        void divide_clause_formula(_formula* fml, _formula* parent, Formulas& result);
         void divide_CNF_formula(_formula* fml, Formulas& result);
         
         void convert_CNF_formula(_formula* fml);
@@ -37,7 +37,11 @@ private:
         void lower_disjunction(_formula* fml, int depth);
         
         void convert_prenex_formula(_formula* fml);
+        bool is_negative_formula(const _formula* phi, 
+			const int* sm_preds, int num_sp, bool negative);
         
+        bool in_list ( const int* list, int len, int obj );
+        _formula* double_negation_formula(_formula* phi, const int* int_preds, int num_ip);
 public:	
         Formula();
     	Formula(_formula* fml, bool copy);
@@ -62,6 +66,8 @@ public:
         
         _formula* getFormula();
         Formula& operator = (const Formula& rhs);
+        bool is_negative(const int* sm_preds, int num_sp, bool negative);
+        void double_negation(const int* int_preds, int num_ip);
 };
 
 #endif

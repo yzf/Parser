@@ -284,102 +284,102 @@ _formula* copy_formula (const _formula *fml)
 
 //other
 ///////////////////////////////////////////////////////////////////////////////
-
-/*void output_extraDefinition(FILE* out)//@TODO
-{
-	int i;
-	for(i = 0; i < vocabulary.num_predicate; i++)
-	{
-		fprintf(out,"_%s :- not %s\n",vocabulary.names_predicate[i],
-				vocabulary.names_predicate[i]);
-	}
-}
-
-_formula* double_negation(_formula* phi, const int* int_preds, int num_ip)
-{
-    assert(phi);
-
-    if (is_negative(phi, int_preds, num_ip, false))
-    {
-        return phi;
-    }
-
-    switch ( phi->formula_type )
-    {
-    case ATOM:
-        if(in_list(int_preds, num_ip, phi->predicate_id))
-        {
-            phi = composite_bool ( NEGA, phi, NULL );
-            phi = composite_bool ( NEGA, phi, NULL );
-        }
-        break;
-    case CONJ:
-    case DISJ:
-    case IMPL:
-		phi->subformula_r = double_negation(phi->subformula_r,int_preds,num_ip);
-    case NEGA:
-    case UNIV:
-    case EXIS:
-		phi->subformula_l = double_negation(phi->subformula_l,int_preds,num_ip);
-        break;
-
-    default:
-        assert ( 0 );
-    }
-
-    return phi;
-}
-
-_formula* 
-minimal_simu(_formula* phi, const int* int_preds, int num_ip,
-		 const _formula* reff )
-{
-    assert(phi);
-
-    if (num_ip <= 0)//No internal predicates, fast return.
-    {
-        return phi;
-    }
-
-    switch (phi->formula_type)
-    {
-	case ATOM:
-		return phi;
-	
-    case NEGA:
-        assert(phi->subformula_l);
-        if ( ATOM == phi->subformula_l->formula_type &&
-             in_list ( int_preds, num_ip, phi->subformula_l->predicate_id ) )
-        {			
-			phi->formula_type = IMPL;
-			phi->subformula_r = copy_formula(reff);
-        }
-        else
-        {
-            phi->subformula_l = minimal_simu(phi->subformula_l, 
-												int_preds, num_ip, reff );
-        }
-        return phi;
-		
-    case CONJ:
-    case DISJ:
-        assert ( phi->subformula_l );
-        assert ( phi->subformula_r );
-        phi->subformula_l = minimal_simu (phi->subformula_l, 
-												int_preds, num_ip, reff );
-        phi->subformula_r = minimal_simu (phi->subformula_r, 
-												int_preds, num_ip, reff );
-        return phi;
-		
-    case UNIV:
-    case EXIS:
-        assert ( phi->subformula_l );
-        phi->subformula_l = minimal_simu (phi->subformula_l, 
-												int_preds, num_ip, reff );
-        return phi;
-		
-    default:
-        assert(0);
-    }
-    return NULL;
-}*/
+//
+//void output_extraDefinition(FILE* out)//@TODO
+//{
+//	int i;
+//	for(i = 0; i < vocabulary.num_predicate; i++)
+//	{
+//		fprintf(out,"_%s :- not %s\n",vocabulary.names_predicate[i],
+//				vocabulary.names_predicate[i]);
+//	}
+//}
+//
+//_formula* double_negation(_formula* phi, const int* int_preds, int num_ip)
+//{
+//    assert(phi);
+//
+//    if (is_negative(phi, int_preds, num_ip, false))
+//    {
+//        return phi;
+//    }
+//
+//    switch ( phi->formula_type )
+//    {
+//    case ATOM:
+//        if(in_list(int_preds, num_ip, phi->predicate_id))
+//        {
+//            phi = composite_bool ( NEGA, phi, NULL );
+//            phi = composite_bool ( NEGA, phi, NULL );
+//        }
+//        break;
+//    case CONJ:
+//    case DISJ:
+//    case IMPL:
+//		phi->subformula_r = double_negation(phi->subformula_r,int_preds,num_ip);
+//    case NEGA:
+//    case UNIV:
+//    case EXIS:
+//		phi->subformula_l = double_negation(phi->subformula_l,int_preds,num_ip);
+//        break;
+//
+//    default:
+//        assert ( 0 );
+//    }
+//
+//    return phi;
+//}
+//
+//_formula* 
+//minimal_simu(_formula* phi, const int* int_preds, int num_ip,
+//		 const _formula* reff )
+//{
+//    assert(phi);
+//
+//    if (num_ip <= 0)//No internal predicates, fast return.
+//    {
+//        return phi;
+//    }
+//
+//    switch (phi->formula_type)
+//    {
+//	case ATOM:
+//		return phi;
+//	
+//    case NEGA:
+//        assert(phi->subformula_l);
+//        if ( ATOM == phi->subformula_l->formula_type &&
+//             in_list ( int_preds, num_ip, phi->subformula_l->predicate_id ) )
+//        {			
+//			phi->formula_type = IMPL;
+//			phi->subformula_r = copy_formula(reff);
+//        }
+//        else
+//        {
+//            phi->subformula_l = minimal_simu(phi->subformula_l, 
+//												int_preds, num_ip, reff );
+//        }
+//        return phi;
+//		
+//    case CONJ:
+//    case DISJ:
+//        assert ( phi->subformula_l );
+//        assert ( phi->subformula_r );
+//        phi->subformula_l = minimal_simu (phi->subformula_l, 
+//												int_preds, num_ip, reff );
+//        phi->subformula_r = minimal_simu (phi->subformula_r, 
+//												int_preds, num_ip, reff );
+//        return phi;
+//		
+//    case UNIV:
+//    case EXIS:
+//        assert ( phi->subformula_l );
+//        phi->subformula_l = minimal_simu (phi->subformula_l, 
+//												int_preds, num_ip, reff );
+//        return phi;
+//		
+//    default:
+//        assert(0);
+//    }
+//    return NULL;
+//}

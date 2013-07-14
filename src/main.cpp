@@ -51,6 +51,13 @@ int main(int argc, char** argv) {
     Translator.set_origin_formulas(gformula);
     Translator.set_output_file(stdout);
     Translator.output_origin_formulas();
+    
+    Formulas fmls = Translator.origin_formulas;
+    fmls.pop_formula();
+    Formula fml = fmls.top_formula();
+    HengZhang hz;
+    printf("\n");
+    Formulas hzs = hz.create(fml);
 //    Translator.output_origin_formulas();
 //    vocabulary.dump_vocabulary(stdout);
    // Translator.set_output_file(fout);
