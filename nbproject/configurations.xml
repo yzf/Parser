@@ -23,6 +23,88 @@
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
                    projectFiles="true">
+      <logicalFolder name="res" displayName="res" projectFiles="true">
+        <logicalFolder name="0.null" displayName="0.null" projectFiles="true">
+          <itemPath>res/0.null/null.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="1.atom" displayName="1.atom" projectFiles="true">
+          <itemPath>res/1.atom/0.single.in</itemPath>
+          <itemPath>res/1.atom/1.clause.in</itemPath>
+          <itemPath>res/1.atom/2.vari.1.in</itemPath>
+          <itemPath>res/1.atom/2.vari.2.in</itemPath>
+          <itemPath>res/1.atom/3.func.1.single.in</itemPath>
+          <itemPath>res/1.atom/3.func.2.clause.in</itemPath>
+          <itemPath>res/1.atom/3.func.3.vari.in</itemPath>
+          <itemPath>res/1.atom/3.func.4.double.in</itemPath>
+          <itemPath>res/1.atom/4.cascade.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="2.nega" displayName="2.nega" projectFiles="true">
+          <itemPath>res/2.nega/0.single.in</itemPath>
+          <itemPath>res/2.nega/1.double.in</itemPath>
+          <itemPath>res/2.nega/2.trible.in</itemPath>
+          <itemPath>res/2.nega/3.clause-double.in</itemPath>
+          <itemPath>res/2.nega/4.clause-trible.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="3.conj" displayName="3.conj" projectFiles="true">
+          <itemPath>res/3.conj/0.single.in</itemPath>
+          <itemPath>res/3.conj/1.cascade.in</itemPath>
+          <itemPath>res/3.conj/2.line.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="4.disj" displayName="4.disj" projectFiles="true">
+          <itemPath>res/4.disj/0.single.in</itemPath>
+          <itemPath>res/4.disj/1.cascade.in</itemPath>
+          <itemPath>res/4.disj/2.line.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="5.impl" displayName="5.impl" projectFiles="true">
+          <itemPath>res/5.impl/0.single.in</itemPath>
+          <itemPath>res/5.impl/1.cascade.in</itemPath>
+          <itemPath>res/5.impl/2.line.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="6.univ" displayName="6.univ" projectFiles="true">
+          <itemPath>res/6.univ/0.single.in</itemPath>
+          <itemPath>res/6.univ/1.cascade.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="7.exis" displayName="7.exis" projectFiles="true">
+          <itemPath>res/7.exis/0.single.in</itemPath>
+          <itemPath>res/7.exis/1.cascade.in</itemPath>
+          <itemPath>res/7.exis/2.mix.behind.in</itemPath>
+          <itemPath>res/7.exis/2.mix.front.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="8.prenex" displayName="8.prenex" projectFiles="true">
+          <itemPath>res/8.prenex/0.atom.in</itemPath>
+          <itemPath>res/8.prenex/1.univ.1.in</itemPath>
+          <itemPath>res/8.prenex/1.univ.2.in</itemPath>
+          <itemPath>res/8.prenex/2.exis.1.in</itemPath>
+          <itemPath>res/8.prenex/2.exis.2.in</itemPath>
+          <itemPath>res/8.prenex/3.exis.univ.in</itemPath>
+          <itemPath>res/8.prenex/3.univ.exis.in</itemPath>
+          <itemPath>res/8.prenex/4.nega.exis.in</itemPath>
+          <itemPath>res/8.prenex/4.nega.exis.univ.in</itemPath>
+          <itemPath>res/8.prenex/4.nega.univ.exis.in</itemPath>
+          <itemPath>res/8.prenex/4.nega.univ.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="A.cabalar" displayName="A.cabalar" projectFiles="true">
+          <itemPath>res/A.cabalar/0.normal.l1.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.l2.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.l3.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.l4.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.l5.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.r1.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.r2.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.r3.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.r4.in</itemPath>
+          <itemPath>res/A.cabalar/0.normal.r5.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="B.real" displayName="B.real" projectFiles="true">
+          <itemPath>res/B.real/0</itemPath>
+          <itemPath>res/B.real/1</itemPath>
+        </logicalFolder>
+        <logicalFolder name="C.sample" displayName="C.sample" projectFiles="true">
+          <itemPath>res/C.sample/sample-solved-hz4.txt</itemPath>
+          <itemPath>res/C.sample/sample-solved-hz5.txt</itemPath>
+          <itemPath>res/C.sample/sample.in</itemPath>
+        </logicalFolder>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -57,6 +139,7 @@
   <sourceRootList>
     <Elem>src</Elem>
     <Elem>parse</Elem>
+    <Elem>res</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -100,7 +183,121 @@
       </item>
       <item path="parse/parse.y" ex="false" tool="3" flavor2="0">
       </item>
+<<<<<<< HEAD
       <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
+=======
+      <item path="res/0.null/null.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/1.clause.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/2.vari.1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/2.vari.2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/3.func.1.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/3.func.2.clause.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/3.func.3.vari.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/3.func.4.double.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/4.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/1.double.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/2.trible.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/3.clause-double.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/4.clause-trible.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/3.conj/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/3.conj/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/3.conj/2.line.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/4.disj/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/4.disj/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/4.disj/2.line.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/5.impl/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/5.impl/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/5.impl/2.line.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/6.univ/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/6.univ/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/7.exis/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/7.exis/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/7.exis/2.mix.behind.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/7.exis/2.mix.front.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/0.atom.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/1.univ.1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/1.univ.2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/2.exis.1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/2.exis.2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/3.exis.univ.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/3.univ.exis.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/4.nega.exis.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/4.nega.exis.univ.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/4.nega.univ.exis.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/4.nega.univ.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l3.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l4.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l5.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r3.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r4.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r5.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/B.real/0" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/B.real/1" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/sample-solved-hz4.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/sample-solved-hz5.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/sample.in" ex="false" tool="3" flavor2="0">
+>>>>>>> branch 'beta' of https://github.com/yzf/Parser.git/
       </item>
       <item path="src/Formula.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -172,7 +369,121 @@
       </item>
       <item path="parse/parse.y" ex="false" tool="3" flavor2="0">
       </item>
+<<<<<<< HEAD
       <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
+=======
+      <item path="res/0.null/null.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/1.clause.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/2.vari.1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/2.vari.2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/3.func.1.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/3.func.2.clause.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/3.func.3.vari.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/3.func.4.double.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/1.atom/4.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/1.double.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/2.trible.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/3.clause-double.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/2.nega/4.clause-trible.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/3.conj/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/3.conj/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/3.conj/2.line.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/4.disj/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/4.disj/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/4.disj/2.line.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/5.impl/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/5.impl/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/5.impl/2.line.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/6.univ/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/6.univ/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/7.exis/0.single.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/7.exis/1.cascade.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/7.exis/2.mix.behind.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/7.exis/2.mix.front.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/0.atom.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/1.univ.1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/1.univ.2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/2.exis.1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/2.exis.2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/3.exis.univ.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/3.univ.exis.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/4.nega.exis.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/4.nega.exis.univ.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/4.nega.univ.exis.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/8.prenex/4.nega.univ.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l3.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l4.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.l5.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r3.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r4.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/A.cabalar/0.normal.r5.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/B.real/0" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/B.real/1" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/sample-solved-hz4.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/sample-solved-hz5.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/sample.in" ex="false" tool="3" flavor2="0">
+>>>>>>> branch 'beta' of https://github.com/yzf/Parser.git/
       </item>
       <item path="src/Formula.cpp" ex="false" tool="1" flavor2="0">
       </item>

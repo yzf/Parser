@@ -84,9 +84,9 @@ extern "C" {
 	extern int yylex(void);
 }
 
-extern S2DLP Translator;
 extern Vocabulary vocabulary;
 extern int context_flag;
+extern _formula* gformula; 
 
 int id;
 char str_buf[512];
@@ -1474,7 +1474,7 @@ yyreduce:
     {
             assert((yyvsp[(1) - (3)].f));
             printf("root\n");
-            Translator.set_origin_formulas((yyvsp[(1) - (3)].f));
+            gformula = (yyvsp[(1) - (3)].f);
 	}
     break;
 

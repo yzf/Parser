@@ -1,3 +1,6 @@
+#ifndef _HENGZHANG_H_
+#define _HENGZHANG_H_
+
 #include <vector>
 #include <string>
 #include "structs.h"
@@ -19,7 +22,7 @@ private:
 	int symbol_MIN;
 	int symbol_succ;
 	
-	char* succ[];
+//	char* succ[];
 	
 
 public:
@@ -35,4 +38,6 @@ public:
 	Formula createFormula_4(Formula originalFml);
 	Formula createFormula_5(Formula originalFml);
 };
+
+#endif
 

@@ -5,7 +5,7 @@
 #include "Rule.h"
 
 class S2DLP{
-private:
+public:
 	Formulas origin_formulas;
         Formulas zhangheng_formulas;
         Formulas dlp_formulas;

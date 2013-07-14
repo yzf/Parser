@@ -23,7 +23,6 @@ Formula::Formula(_formula* fml, bool copy) {
 }
 
 Formula::Formula(const Formula& FML) {
-    printf("\nFormula(&)\n");
     _formula* new_formula = copy_formula(FML.formula);
     this->formula = new_formula;
     
@@ -32,7 +31,6 @@ Formula::Formula(const Formula& FML) {
 }
 
 Formula::~Formula() {
-    printf("\n~Formula\n");
     if (this->formula != NULL) {
         delete_formula(this->formula);
     }
@@ -376,18 +374,16 @@ void Formula::output_formula (FILE* out, _formula* phi)
     }
 }
 
-void Formula::divide_clause_formula(_formula* fml, Formulas& result) {
-    Formula* new_formula;
-    
+void Formula::divide_clause_formula(_formula* fml, _formula* parent, Formulas& result) {
     if(fml != NULL) {
-        if(fml->formula_type == CONJ && fml->subformula_l->formula_type == CONJ ) {
-            new_formula = new Formula(fml->subformula_r, true);  
-            result.push_formula(*new_formula);
-            divide_clause_formula(fml->subformula_l, result);
+        if(parent == NULL || fml->formula_type == CONJ && parent->formula_type == CONJ) {
+            Formula new_formula = Formula(fml->subformula_r, true);  
+            result.push_formula(new_formula);
+            divide_clause_formula(fml->subformula_l, fml, result);   
         }
         else {
-            new_formula = new Formula(fml, true);
-            result.push_formula(*new_formula);
+            Formula new_formula = Formula(fml, true);
+            result.push_formula(new_formula);
         }
         
     }
@@ -410,9 +406,7 @@ void Formula::divide_CNF_formula(_formula* fml, Formulas& result) {
 
 Formulas Formula::divide_clause() {
     Formulas* outputFormulas = new Formulas();
-    
-    divide_clause_formula(this->formula, *outputFormulas);
-    
+    divide_clause_formula(this->formula, NULL, *outputFormulas);
     return *outputFormulas;  
 }       
 
@@ -706,4 +700,88 @@ bool Formula::is_prenex() {
 
 void Formula::output(FILE* out) {
     output_formula(out, this->formula);
+}
+
+bool Formula::is_negative (const int* sm_preds, int num_sp, bool negative ) {
+    return is_negative_formula(this->formula, sm_preds, num_sp, negative);
+}
+
+bool Formula::in_list ( const int* list, int len, int obj )
+{
+    for ( len--; len>=0; len-- )
+        if ( list[len]==obj ) return true;
+    return false;
+}
+
+bool Formula::is_negative_formula(const _formula* phi, 
+		const int* sm_preds, int num_sp, bool negative) {
+    assert ( phi );
+
+    switch ( phi->formula_type )
+    {
+    case ATOM:
+        if ( negative || !in_list ( sm_preds, num_sp, phi->predicate_id ) )
+            return true;
+        break;
+    case NEGA:
+        assert ( phi->subformula_l );
+        return is_negative_formula( phi->subformula_l, sm_preds, num_sp, !negative );
+    case CONJ:
+    case DISJ:
+        assert ( phi->subformula_l );
+        assert ( phi->subformula_r );
+        return (is_negative_formula( phi->subformula_l, sm_preds, num_sp, negative ) &&
+               is_negative_formula( phi->subformula_r, sm_preds, num_sp, negative ));
+    case IMPL:
+        assert ( phi->subformula_l );
+        assert ( phi->subformula_r );
+        return (is_negative_formula( phi->subformula_l, sm_preds, num_sp, !negative ) &&
+               is_negative_formula( phi->subformula_r, sm_preds, num_sp, negative ));
+    case UNIV:
+    case EXIS:
+        assert ( phi->subformula_l );
+        return is_negative_formula( phi->subformula_l, sm_preds, num_sp, negative );
+    default:
+        assert ( 0 );
+    }
+
+    return false;
+}
+
+_formula* Formula::double_negation_formula(_formula* phi, const int* int_preds, int num_ip) {
+    assert(phi);
+
+    if (is_negative_formula(phi, int_preds, num_ip, false))
+    {
+        return phi;
+    }
+
+    switch ( phi->formula_type )
+    {
+    case ATOM:
+        if(in_list(int_preds, num_ip, phi->predicate_id))
+        {
+            phi = composite_bool ( NEGA, phi, NULL );
+            phi = composite_bool ( NEGA, phi, NULL );
+        }
+        break;
+    case CONJ:
+    case DISJ:
+    case IMPL:
+		phi->subformula_r = double_negation_formula(phi->subformula_r,int_preds,num_ip);
+    case NEGA:
+    case UNIV:
+    case EXIS:
+		phi->subformula_l = double_negation_formula(phi->subformula_l,int_preds,num_ip);
+        break;
+
+    default:
+        assert ( 0 );
+    }
+
+    return phi;
+}
+
+void Formula::double_negation(const int* int_preds, int num_ip) {
+    this->formula = double_negation_formula(this->formula, int_preds, num_ip);
 }

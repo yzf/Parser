@@ -42,10 +42,10 @@ int Vocabulary::add_symbol ( const char* name, SYMBOL_TYPE type, int arity )
 {
 	// return value: 1. >=0 - id; 2. -1 - too many symbols; 3. -2 - type error
     char* s;
-
+    int id;
     assert (name);
     
-    if(query_symbol(name, type) < 0) {
+    if((id = query_symbol(name, type)) < 0) {
         s = (char*)malloc( (strlen(name) + 1) *sizeof(char) );
         strcpy (s, name);
 
@@ -71,7 +71,7 @@ int Vocabulary::add_symbol ( const char* name, SYMBOL_TYPE type, int arity )
         }
     }
     
-    return -1;
+    return id;
 }
 
 int Vocabulary::add_rename_variable() {
@@ -158,7 +158,6 @@ int Vocabulary::predicate_arity(int id)
     else
     {
         assert(this->arities_predicate);
-        printf("%dHello", id);
         assert(id < this->num_predicate);
         return this->arities_predicate[id];
     }

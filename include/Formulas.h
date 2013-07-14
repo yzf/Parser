@@ -18,6 +18,7 @@ class Formulas{
         Formulas();
         ~Formulas();
         Formulas(deque<Formula> _formula);
+        Formulas(const Formulas&);
 
         deque<Formula> get_formulas();
         void set_formulas(deque<Formula> fs);
@@ -33,6 +34,7 @@ class Formulas{
         bool equal(Formulas f);
         
         void output_formulas(FILE* out);
+        Formulas& operator = (const Formulas&);
 };
 
 #endif

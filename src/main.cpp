@@ -23,12 +23,12 @@ extern int yyparse();
 void io(const char* iPathName, const char* oPathName)
 {
     yyin = fopen (iPathName, "r");
-	fout = fopen (oPathName, "w");
+    fout = fopen (oPathName, "w");
 
     if(!yyin)
     {
         printf("IO Error: cannot open the input file.\n" );
-		assert(0);
+        assert(0);
     }
     if(!fout)
     {
