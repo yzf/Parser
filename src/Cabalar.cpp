@@ -1166,20 +1166,20 @@ Formulas Cabalar::convert_Cabalar(Formulas fmls)
 
     tempfmls = this->convert_negative_normal_forms(fmls);
     
-    printf("\n CNNF : ");
-    tempfmls.output_formulas(stdout);
-    printf("\n");
+//    printf("\n CNNF : ");
+//    tempfmls.output_formulas(stdout);
+ //   printf("\n");
     
     while(!tempfmls.get_formulas().empty())
     {     
         fml = tempfmls.top_formula(); 
         tempfmls.pop_formula();//pop out the head of the formulas
-	printf("\n fml : ");fml.output(stdout);printf("\n");	
+   //   printf("\n fml : ");fml.output(stdout);printf("\n");	
         
         deque<Formula> defml;
         defml.push_back(fml);
         Formulas hold(defml);
-        printf("\n hold : ");hold.output_formulas(stdout);printf("\n");
+   //     printf("\n hold : ");hold.output_formulas(stdout);printf("\n");
         
 #ifdef DEBUG
 	//	output_formula(stdout,fml);
@@ -1187,7 +1187,7 @@ Formulas Cabalar::convert_Cabalar(Formulas fmls)
 #endif
                 
         transFmls = this->Cabalar_Trans(fml.get_formula());
-        printf("\n transFmls : ");transFmls.output_formulas(stdout);printf("\n");	
+  //      printf("\n transFmls : ");transFmls.output_formulas(stdout);printf("\n");	
         
         if(transFmls.equal(hold))// no translation
         {

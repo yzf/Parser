@@ -2,6 +2,8 @@
 #include "utility.h"
 #include "S2DLP.h"
 
+//#define DEBUG
+
 extern Vocabulary vocabulary;
 /**
  * 
@@ -104,8 +106,11 @@ Formula HengZhang::createFormula_1(Formula originalFml) {
     _formula* F  = composite_bool(NEGA, L,  NULL);
     
     Formula fml = Formula(F, false);
+#ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
+#endif
+    
     return fml;
 }
 /**
@@ -139,8 +144,11 @@ Formula HengZhang::createFormula_2(Formula originalFml) {
     _formula* F   = composite_bool(IMPL,L,R);
     
     Formula fml = Formula(F, false);
+#ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
+#endif
+    
     return fml;
 }
 /**
@@ -162,8 +170,11 @@ Formula HengZhang::createFormula_3(Formula originalFml) {
     _formula* F   = composite_bool(DISJ,L,R);
     
     Formula fml = Formula(F, false);
+    #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
+#endif
+    
     return fml;
 }
 /**
@@ -209,8 +220,11 @@ Formula HengZhang::createFormula_4(Formula originalFml) {
     _formula* F   = composite_bool(IMPL,L,R);
     
     Formula fml = Formula(F, false);
+   #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
+#endif
+    
     return fml;
 }
 /**
@@ -260,7 +274,10 @@ Formula HengZhang::createFormula_5(Formula originalFml) {
     _formula* F = composite_bool(IMPL, SUCC, FF);
     
     Formula fml = Formula(F, false);
+    #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
+#endif
+    
     return fml;
 }
