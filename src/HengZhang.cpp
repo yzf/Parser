@@ -51,14 +51,14 @@ Formula HengZhang::recordQuantifier(Formula originalFml) {
         }
         else {
             terms_Y.push_back(fml->variable_id);
-        terms_MIN.push_back(symbol_MIN);
-        terms_MAX.push_back(symbol_MAX);
+            terms_MIN.push_back(symbol_MIN);
+            terms_MAX.push_back(symbol_MAX);
 
-        sprintf(str_buf,"NV_%d",i++);
-        terms_Z.push_back(addSymbol(str_buf, VARIABLE, 0));
+            sprintf(str_buf,"NV_%d",i++);
+            terms_Z.push_back(addSymbol(str_buf, VARIABLE, 0));
 
-        fml_temp = fml;
-        fml = fml->subformula_l;
+            fml_temp = fml;
+            fml = fml->subformula_l;
         }
     }
 
