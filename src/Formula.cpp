@@ -632,15 +632,15 @@ void Formula::convert_prenex_formula(_formula* fml) {
             
             _formula* sub_l = fml->subformula_l;
             _formula* sub_r = fml->subformula_r;
-            _formula* curr_fml = fml;
-            
-            if(fml->formula_type == IMPL && (sub_l->formula_type == EXIS 
-                    || sub_l->formula_type == UNIV)) {
-                sub_l->formula_type = (sub_l->formula_type == UNIV) ? EXIS : UNIV;
-            }
+            _formula* curr_fml = fml;                      
             
             while(sub_l->formula_type == UNIV || sub_l->formula_type == EXIS || 
                     sub_r->formula_type == UNIV || sub_r->formula_type == EXIS) {
+                
+                if(curr_fml->formula_type == IMPL && (sub_l->formula_type == EXIS 
+                        || sub_l->formula_type == UNIV)) {
+                    sub_l->formula_type = (sub_l->formula_type == UNIV) ? EXIS : UNIV;
+                }
                 FORMULA_TYPE priority_type = UNIV;
             
                 if(sub_l->formula_type != priority_type && sub_r->formula_type != priority_type) {
