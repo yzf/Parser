@@ -182,7 +182,7 @@ void Formula::remove_from_prenex(_formula* parent, int d, _formula* tag) {
 }
 
 _formula* Formula::find_prenex_quanlifier(_formula* fml, int var_id) {
-    if(fml == NULL) {
+    if(fml == NULL || (fml->formula_type != UNIV && fml->formula_type != EXIS)) {
         return NULL;
     }
     if(fml->variable_id == var_id) {
