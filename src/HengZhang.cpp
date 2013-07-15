@@ -42,15 +42,15 @@ Formula HengZhang::recordQuantifier(Formula originalFml) {
     
     int i = 0;
     _formula* fml = originalFml.get_formula();
-    while(fml->formula_type == UNIV)
+    while(fml->formula_type == UNIV | fml->formula_type == EXIS)
     {
-        terms_X.push_back(fml->variable_id);
-        fml_temp = fml;
-        fml = fml->subformula_l;
-    }
-    while(fml->formula_type == EXIS)
-    {
-        terms_Y.push_back(fml->variable_id);
+        if (fml->formula_type == UNIV) {
+            terms_X.push_back(fml->variable_id);
+            fml_temp = fml;
+            fml = fml->subformula_l;
+        }
+        else {
+            terms_Y.push_back(fml->variable_id);
         terms_MIN.push_back(symbol_MIN);
         terms_MAX.push_back(symbol_MAX);
 
@@ -59,6 +59,7 @@ Formula HengZhang::recordQuantifier(Formula originalFml) {
 
         fml_temp = fml;
         fml = fml->subformula_l;
+        }
     }
 
     return Formula(fml, true);
