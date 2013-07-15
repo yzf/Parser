@@ -86,7 +86,7 @@ void Formulas::join_formulas(Formulas tail)
 
 void Formulas::push_formula(Formula tail)
 {  
-    this->_formulas.push_front(tail);
+    this->_formulas.push_back(tail);
 }
 	
 void Formulas::pop_formula()//DO NOT DELETE formula

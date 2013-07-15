@@ -52,14 +52,38 @@ int main(int argc, char** argv) {
     yyparse();
     Translator.set_origin_formulas(gformula);
     HengZhang hz;
+    Formulas hz_result;
     Formulas fmls = Translator.origin_formulas;
     while (fmls.size_formulas() != 0) {
         Formula fml = fmls.top_formula();
         if (!fml.is_universal()) {
-            hz.create(fml);
+            hz_result = hz.create(fml);
         }
         fmls.pop_formula();
     }
+    
+     Cabalar test;
+    Formulas result;
+    deque<Formula> fml_in;
+    
+//  hz_result.pop_formula();
+//    hz_result.pop_formula();
+//   hz_result.pop_formula();
+    hz_result.pop_formula();
+    
+    fml_in.push_back(hz_result.top_formula());
+    Formulas tempin(fml_in);
+    
+    printf("\n\n tempin : ");
+    tempin.output_formulas(stdout);
+    printf("\n\n");
+    
+    result = test.convert_Cabalar(tempin);
+    printf("\n\n result : ");
+    result.output_formulas(stdout);
+    printf("\n\n"); 
+    
+    
 //    Formula fml;
 //    fml.get_formula();
 //    

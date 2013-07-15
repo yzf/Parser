@@ -490,9 +490,7 @@ Formulas Cabalar::Cabalar_L5(_formula* originFml)
     _formula* K = originFml->subformula_r;
 
     //-F ^ H -> K
-    _formula* _F = convert_negative_normal_form(
-						composite_bool(NEGA, copy_formula(F), NULL) 
-				   );
+    _formula* _F = convert_negative_normal_form(composite_bool(NEGA, copy_formula(F), NULL));
     _formula* f1_L = composite_bool(CONJ, _F, copy_formula(H));
     _formula* f1   = composite_bool(IMPL, f1_L, copy_formula(K));
 
@@ -802,11 +800,11 @@ Formulas Cabalar::Cabalar_Trans(_formula* fml)
         _formula* subformula_l = fml->subformula_l;
         _formula* subformula_r = fml->subformula_r;
 
-		Commutative_Trans(subformula_l,subformula_l,CONJ);
-		Commutative_Trans(subformula_r,subformula_r,DISJ);
+        Commutative_Trans(subformula_l,subformula_l,CONJ);
+        Commutative_Trans(subformula_r,subformula_r,DISJ);
 		
-		_formula* CD_l = subformula_l->subformula_l;
-		_formula* CD_r = subformula_r->subformula_l;
+	_formula* CD_l = subformula_l->subformula_l;
+	_formula* CD_r = subformula_r->subformula_l;
         
         if(subformula_l->formula_type == CONJ)
         {
@@ -823,12 +821,13 @@ Formulas Cabalar::Cabalar_Trans(_formula* fml)
                     return Cabalar_L2(fml);
                 }
             }
-			//L3
-			if(CD_l->formula_type == NEGA && 
-					CD_l->subformula_l->formula_type == NEGA)
-			{
-				return Cabalar_L3(fml);
-			}
+	    
+            //L3
+	    if(CD_l->formula_type == NEGA && 
+			CD_l->subformula_l->formula_type == NEGA)
+	    {
+		return Cabalar_L3(fml);
+	    }
             //L4
             if(CD_l->formula_type == DISJ)
             {
@@ -857,12 +856,13 @@ Formulas Cabalar::Cabalar_Trans(_formula* fml)
                     return Cabalar_R2(fml);
                 }
             }
-			//R3
-			if(CD_r->formula_type == NEGA &&
-					CD_r->subformula_l->formula_type == NEGA)
-			{
-				return Cabalar_R3(fml);
-			}
+	    
+            //R3
+	    if(CD_r->formula_type == NEGA &&
+			CD_r->subformula_l->formula_type == NEGA)
+	    {
+		return Cabalar_R3(fml);
+	    }
             //R4
             if(CD_r->formula_type == CONJ)
             {
@@ -876,27 +876,27 @@ Formulas Cabalar::Cabalar_Trans(_formula* fml)
         }//end of Cabalar Right Translation(full pattern)
 
 		
-		//start of Commutative missing Translation
-		if(subformula_l->formula_type == ATOM)
-		{
-		//L1 TRUE->G ------> G
-			if(subformula_l->predicate_id == PRED_TRUE)
-			{
+	//start of Commutative missing Translation
+	if(subformula_l->formula_type == ATOM)
+	{
+            //L1 TRUE->G ------> G
+	    if(subformula_l->predicate_id == PRED_TRUE)
+	    {
 				//return push_formulas(Cabalar_ILT(fml),NULL); 
 				//// convert_rules() does this.
 				//// may also product problem like Cabalar_IRF()
-			}
-		//L2 FALSE->G ------> ALWAYS BE TRUE
-			if(subformula_l->predicate_id == PRED_FALSE)
-			{
-                            _formula* temp1 = Cabalar_ILF(fml);
-                            Formula temp2(temp1, true);
-                            Formulas ffs;
-                            ffs.push_formula(temp2);
-                            return ffs;
+	    }
+	    //L2 FALSE->G ------> ALWAYS BE TRUE
+	    if(subformula_l->predicate_id == PRED_FALSE)
+	    {
+                   _formula* temp1 = Cabalar_ILF(fml);
+                   Formula temp2(temp1, true);
+                   Formulas ffs;
+                   ffs.push_formula(temp2);
+                   return ffs;
                         //  return push_formulas(Cabalar_ILF(fml),NULL);
-			}
-		}
+	    }
+	}
 		//L3
 		if(subformula_l->formula_type == NEGA &&
 				subformula_l->subformula_l->formula_type == NEGA)
@@ -964,21 +964,20 @@ Formulas Cabalar::Cabalar_Trans(_formula* fml)
         //R5
         if(subformula_r->formula_type == IMPL)
         {
-			fml->subformula_r = composite_bool(DISJ,subformula_r,NULL);
-			fml->subformula_r
-					->subformula_r = composite_atom(ATOM,PRED_FALSE,NULL);
+            fml->subformula_r = composite_bool(DISJ,subformula_r,NULL);
+	    fml->subformula_r->subformula_r = composite_atom(ATOM,PRED_FALSE,NULL);
             return Cabalar_R5(fml);
         }
-	}
+    }
 	
-	//start of imply missing
-	if(fml->formula_type == CONJ)
-	{
-		Commutative_Trans(fml,fml, CONJ);
-		_formula* CD_o = fml->subformula_l;
+    //start of imply missing
+    if(fml->formula_type == CONJ)
+    {
+	Commutative_Trans(fml,fml, CONJ);
+	_formula* CD_o = fml->subformula_l;
 		
-		//L1
-		if(CD_o->formula_type == ATOM && 
+	//L1
+	if(CD_o->formula_type == ATOM && 
 				CD_o->predicate_id == PRED_TRUE)
 		{
                     _formula* temp1 = Cabalar_CLT(fml);
@@ -1069,12 +1068,13 @@ _formula* Cabalar::convert_negative_normal_form(_formula* fml)
 		   fml->formula_type == IMPL);
 
     //Cabalar. (2005)
-	if(fml->formula_type == ATOM)
-	{
+    if(fml->formula_type == ATOM)
+    {
 		//do nothing
-	}
-	else if(fml->formula_type == NEGA)
-        {
+    }
+	
+    else if(fml->formula_type == NEGA)
+    {
         _formula* subformula_l = fml->subformula_l;
 
         if(subformula_l->formula_type == ATOM)
@@ -1090,6 +1090,7 @@ _formula* Cabalar::convert_negative_normal_form(_formula* fml)
                 return Cabalar_N2(fml);
             }
         }
+        
         if(subformula_l->formula_type == NEGA)
         {
             //N3
@@ -1114,13 +1115,15 @@ _formula* Cabalar::convert_negative_normal_form(_formula* fml)
             return Cabalar_N6(fml);
         }
     }
-	else//if(fml->formula_type == CONJ || 
+    
+    
+    else//if(fml->formula_type == CONJ || 
 		//   fml->formula_type == DISJ ||
 		//   fml->formula_type == IMPL)
-	{
-		fml->subformula_l = convert_negative_normal_form(fml->subformula_l);
-		fml->subformula_r = convert_negative_normal_form(fml->subformula_r);
-	}
+    {
+        fml->subformula_l = convert_negative_normal_form(fml->subformula_l);
+	fml->subformula_r = convert_negative_normal_form(fml->subformula_r);
+    }
     
     return fml;
 }
@@ -1129,11 +1132,14 @@ Formulas Cabalar::convert_negative_normal_forms(Formulas fmls)
 {
     Formulas currFml = fmls;
     _formula* tempfml;
+    
    // while(currFml.get_formulas() != NULL)
    // {
      //   currFml->curr_formula = convert_negative_normal_form(currFml->curr_formula);
       //  currFml = currFml->remained_formulas;    
   //  }
+    
+    
     for(int i = 0; i < currFml.get_formulas().size(); i++)
     {
         tempfml = convert_negative_normal_form(currFml.get_formulas().at(i).get_formula());
@@ -1155,22 +1161,33 @@ Formulas Cabalar::convert_Cabalar(Formulas fmls)
     Formulas transFmls;
     Formulas finalFmls;
     Formulas tempfmls;
-    Formulas hold;
+    
     Formula fml;
 
     tempfmls = this->convert_negative_normal_forms(fmls);
-	
+    
+    printf("\n CNNF : ");
+    tempfmls.output_formulas(stdout);
+    printf("\n");
+    
     while(!tempfmls.get_formulas().empty())
-    {
-        fml = tempfmls.top_formula();
+    {     
+        fml = tempfmls.top_formula(); 
         tempfmls.pop_formula();//pop out the head of the formulas
-		
+	printf("\n fml : ");fml.output(stdout);printf("\n");	
+        
+        deque<Formula> defml;
+        defml.push_back(fml);
+        Formulas hold(defml);
+        printf("\n hold : ");hold.output_formulas(stdout);printf("\n");
+        
 #ifdef DEBUG
-		output_formula(stdout,fml);
-		printf("\n");
+	//	output_formula(stdout,fml);
+	//	printf("\n");
 #endif
-        hold.copy_formulas(transFmls);
+                
         transFmls = this->Cabalar_Trans(fml.get_formula());
+        printf("\n transFmls : ");transFmls.output_formulas(stdout);printf("\n");	
         
         if(transFmls.equal(hold))// no translation
         {
@@ -1178,157 +1195,11 @@ Formulas Cabalar::convert_Cabalar(Formulas fmls)
 	}
         else
 	{
-		transFmls.join_formulas(tempfmls);
+		tempfmls.join_formulas(transFmls);
         }
+       
     }
-
+    
+    
     return finalFmls;
-}
-
-
-
-Formulas Cabalar::HengZhang_Test()
-{
-    deque<Formula> result(5);
-    
-    //TRUE ^ F --> G
-    _formula* f1;
-    f1->formula_type = IMPL;
-    f1->subformula_l->formula_type = CONJ;
-    f1->subformula_l->subformula_r->formula_type = ATOM;
-    f1->subformula_l->subformula_r->predicate_id = 0;           //the first predicate.
-    f1->subformula_l->subformula_r->parameters->term_type = VARI;
-    f1->subformula_l->subformula_r->parameters->variable_id = 0;
-    
-    f1->subformula_l->subformula_l->formula_type = ATOM;
-    f1->subformula_l->subformula_l->predicate_id = PRED_TRUE;
-    f1->subformula_l->subformula_l->parameters = NULL;
-    
-    f1->subformula_r->formula_type = ATOM;
-    f1->subformula_r->predicate_id = 1;
-    f1->subformula_r->parameters->term_type = VARI;
-    f1->subformula_r->parameters->variable_id = 0;
-    
-     Formula F1(f1, true);
-    
-    //FALSE ^ F --> G
-    _formula* f2;
-    f2->formula_type = IMPL;
-    f2->subformula_l->formula_type = CONJ;
-    f2->subformula_l->subformula_r->formula_type = ATOM;
-    f2->subformula_l->subformula_r->predicate_id = 2;           //the first predicate.
-    f2->subformula_l->subformula_r->parameters->term_type = VARI;
-    f2->subformula_l->subformula_r->parameters->variable_id = 1;
-    
-    f2->subformula_l->subformula_l->formula_type = ATOM;
-    f2->subformula_l->subformula_l->predicate_id = PRED_FALSE;
-    f2->subformula_l->subformula_l->parameters = NULL;
-   
-    f2->subformula_r->formula_type = ATOM;
-    f2->subformula_r->predicate_id = 3;
-    f2->subformula_r->parameters->term_type = VARI;
-    f2->subformula_r->parameters->variable_id = 1;
-    
-     Formula F2(f2, true);
-    
-     
-    //~~F ^ G --> H
-    _formula* f3;
-    
-    f3->formula_type = IMPL;
-    
-    //Left
-    f3->subformula_l->formula_type = CONJ;
-  
-    f3->subformula_l->subformula_l->formula_type = NEGA;
-    f3->subformula_l->subformula_l->subformula_l->formula_type = NEGA;
-    f3->subformula_l->subformula_l->subformula_l->subformula_l->formula_type = ATOM;
-    f3->subformula_l->subformula_l->subformula_l->subformula_l->predicate_id = 4;
-    f3->subformula_l->subformula_l->subformula_l->subformula_l->parameters->term_type = VARI;
-    f3->subformula_l->subformula_l->subformula_l->subformula_l->parameters->variable_id = 2;
-    
-    f3->subformula_l->subformula_r->formula_type = ATOM;
-    f3->subformula_l->subformula_r->predicate_id = 5;
-    f3->subformula_l->subformula_r->parameters->term_type = VARI;
-    f3->subformula_l->subformula_r->parameters->variable_id = 2;
-    
-    //Right 
-    f3->subformula_r->formula_type = ATOM;
-    f3->subformula_r->predicate_id = 6;
-    f3->subformula_r->parameters->term_type = VARI;
-    f3->subformula_r->parameters->variable_id = 2;
-    
-    Formula F3(f3, true);
-    
-    
-    //(F | G) ^ H --> K
-    _formula* f4;
-    f4->formula_type = IMPL;
-    
-    //Left
-    f4->subformula_l->formula_type = CONJ;
-    f4->subformula_l->subformula_l->formula_type = DISJ;
-    f4->subformula_l->subformula_l->subformula_l->formula_type = ATOM;
-    f4->subformula_l->subformula_l->subformula_l->predicate_id = 7;
-    f4->subformula_l->subformula_l->subformula_l->parameters->term_type = VARI;
-    f4->subformula_l->subformula_l->subformula_l->parameters->variable_id = 3;
-    
-    f4->subformula_l->subformula_l->subformula_r->formula_type = ATOM;
-    f4->subformula_l->subformula_l->subformula_r->predicate_id = 8;
-    f4->subformula_l->subformula_l->subformula_r->parameters->term_type = VARI;
-    f4->subformula_l->subformula_l->subformula_r->parameters->variable_id = 3;
-    
-    
-    f4->subformula_l->subformula_r->formula_type = ATOM;
-    f4->subformula_l->subformula_r->predicate_id = 9;
-    f4->subformula_l->subformula_r->parameters->term_type = VARI;
-    f4->subformula_l->subformula_r->parameters->variable_id = 3;
-    
-    //Right
-    f4->subformula_r->formula_type = ATOM;
-    f4->subformula_r->predicate_id = 10;
-    f4->subformula_r->parameters->term_type = VARI;
-    f4->subformula_r->parameters->variable_id = 3;
-    
-    
-    Formula F4(f4, true);
-    
-    //(F --> G) ^ H --> K
-    _formula* f5;
-    f5->formula_type = IMPL;
-    f5->subformula_l->formula_type = CONJ;
-    
-    f5->subformula_l->subformula_l->formula_type = IMPL;
-    f5->subformula_l->subformula_l->subformula_l->formula_type = ATOM;
-    f5->subformula_l->subformula_l->subformula_l->predicate_id = 11;
-    f5->subformula_l->subformula_l->subformula_l->parameters->term_type = VARI;
-    f5->subformula_l->subformula_l->subformula_l->parameters->variable_id = 4;
-    f5->subformula_l->subformula_l->subformula_r->formula_type = ATOM;
-    f5->subformula_l->subformula_l->subformula_r->predicate_id = 12;
-    f5->subformula_l->subformula_l->subformula_r->parameters->term_type = VARI;
-    f5->subformula_l->subformula_l->subformula_r->parameters->variable_id = 4;
-    
-    f5->subformula_l->subformula_r->formula_type = ATOM;
-    f5->subformula_l->subformula_r->predicate_id = 13;
-    f5->subformula_l->subformula_r->parameters->term_type = VARI;
-    f5->subformula_l->subformula_r->parameters->variable_id = 4;
-      
-    f5->subformula_r->formula_type = ATOM;
-    f5->subformula_r->predicate_id = 14;
-    f5->subformula_r->parameters->term_type = VARI;
-    f5->subformula_r->parameters->variable_id = 4;
-        
-    Formula F5(f5, true);
-    
-    
-    //Use these five formula as input to test Cabalar.
-    result.push_back(F1);
-    result.push_back(F2);
-    result.push_back(F3);
-    result.push_back(F4);
-    result.push_back(F5);
-    
-    Formulas fmls_result(result);
-    
-    return fmls_result;
 }
