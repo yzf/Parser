@@ -2,7 +2,7 @@
 #include "utility.h"
 #include "S2DLP.h"
 
-//#define DEBUG
+#define DEBUG
 
 extern Vocabulary vocabulary;
 /**
@@ -86,7 +86,8 @@ Formulas HengZhang::create(Formula fml) {
     fmls.push_formula(createFormula_1(originalFml));
     fmls.push_formula(createFormula_2(originalFml));
     fmls.push_formula(createFormula_3(originalFml));
-    fmls.push_formula(createFormula_4(originalFml));
+    fmls.push_formula(createFormula_4_1(originalFml));
+    fmls.push_formula(createFormula_4_2(originalFml));
     fmls.push_formula(createFormula_5(originalFml));
 
     return fmls;
@@ -170,7 +171,7 @@ Formula HengZhang::createFormula_3(Formula originalFml) {
     _formula* F   = composite_bool(DISJ,L,R);
     
     Formula fml = Formula(F, false);
-    #ifdef DEBUG
+#ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
 #endif
@@ -178,49 +179,93 @@ Formula HengZhang::createFormula_3(Formula originalFml) {
     return fml;
 }
 /**
- * 章衡量词消去公式四    -(_succ(_Y,_Z)) v -(S(_X,_Z)) -> ( t(_T,_MAX)->theta(_X,_Y)
+ * 章衡量词消去公式四_1    S(_X,_Y) ^ ~S(_X,_Z) ^ succ(_Y,_Z) 
+ *                      -> ( (T(_X,_MAX) -> theta(_X,_Y)) 
+ *                            ^ (theta(_X,_Y) -> T(_X,_MAX)) )
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::createFormula_4(Formula originalFml) {
-    //create atom formulas
-    _term* LLLLT = combine_terms(terms_Y, terms_Z);
-    _formula* LLLL  = composite_atom(ATOM, symbol_succ, LLLLT);
+Formula HengZhang::createFormula_4_1(Formula originalFml) {
+    //1 S(_X,_Y)
+    _term* term_x_y = combine_terms(terms_X, terms_Y);
+    _formula* s_x_y = composite_atom(ATOM, symbol_s, term_x_y);
 
-    //2
-    _term* LLRLT = combine_terms(terms_X,terms_Z);
-    _formula* LLRL  = composite_atom(ATOM, symbol_s, LLRLT);
+    //2 ~S(_X,_Z)
+    _term* term_x_z = combine_terms(terms_X,terms_Z);
+    _formula* s_x_z  = composite_atom(ATOM, symbol_s, term_x_z);
+    _formula* _s_x_z = composite_bool(NEGA, s_x_z, NULL);
 
-    //3
-    _term* LRT = combine_terms(terms_X, terms_Y);
-    _formula* LR  = composite_atom(ATOM, symbol_s, LRT);
+    //3 succ(_Y,_Z)
+    _term* term_y_z = combine_terms(terms_Y, terms_Z);
+    _formula* succ_y_z = composite_atom(ATOM, symbol_succ, term_y_z);
 
-    //4
-    _term* RLLT = combine_terms(terms_X, terms_MAX);
-    _formula* RLL  = composite_atom(ATOM, symbol_t, RLLT);
+    //4 T(_X,_MAX)
+    _term* term_x_max = combine_terms(terms_X, terms_MAX);
+    _formula* t_x_max  = composite_atom(ATOM, symbol_t, term_x_max);
 
-    //5
-    _formula* RLR = copy_formula(originalFml.get_formula());
+    //5 theta(_X,_Y)
+    Formula tmp_formula_1 = Formula(originalFml);
+    _formula* theta_x_y  = copy_formula(tmp_formula_1.get_formula());
 
-    //6
-    _formula* RRL = copy_formula(originalFml.get_formula());
-
-    //7
-    _term* RRRT = combine_terms(terms_X, terms_MAX);
-    _formula* RRR  = composite_atom(ATOM, symbol_t, RRRT);
+    //6 theta(_X,_Y)
+    Formula tmp_formula_2 = Formula(originalFml);
+    _formula* theta_x_y_2  = copy_formula(tmp_formula_2.get_formula());
+    
+    //7 T(_X,_MAX)
+    _term* term_x_max_2 = combine_terms(terms_X, terms_MAX);
+    _formula* t_x_max_2  = composite_atom(ATOM, symbol_t, term_x_max_2);
 
     //create structure
-    _formula* LLL = composite_bool(NEGA,LLLL,NULL);
-    _formula* LLR = composite_bool(NEGA,LLRL,NULL);
-    _formula* LL  = composite_bool(DISJ,LLL,LLR);
-    _formula* L   = composite_bool(CONJ,LL,LR);
-    _formula* RL  = composite_bool(IMPL,RLL,RLR);
-    _formula* RR  = composite_bool(IMPL,RRL,RRR);
-    _formula* R   = composite_bool(CONJ,RL,RR);
-    _formula* F   = composite_bool(IMPL,L,R);
+    // S(_X,_Y) ^ ~S(_X,_Z) ^ succ(_Y,_Z) 
+    _formula* left = composite_bool(CONJ, s_x_y, _s_x_z);
+    left = composite_bool(CONJ, left, succ_y_z);
+    // (T(_X,_MAX) -> theta(_X,_Y)
+    _formula* right_left = composite_bool(IMPL, t_x_max, theta_x_y);
+    // (theta(_X,_Y) -> T(_X,_MAX)
+    _formula* right_right = composite_bool(IMPL, theta_x_y_2, t_x_max_2);
+    _formula* right = composite_bool(CONJ, right_left, right_right);
+    
+    _formula* F = composite_bool(IMPL, left, right);
     
     Formula fml = Formula(F, false);
-   #ifdef DEBUG
+#ifdef DEBUG
+    fml.output(stdout);
+    fprintf(stdout, "\n");
+#endif
+    
+    return fml;
+}
+/**
+ * 章衡量词消去公式四_2    ( T(_X,_MAX) -> theta(_X,_MAX) ) 
+ *                        ^ ( theta(_X,_MAX) -> T(_X,_MAX) ) 
+ * @param originalFml 一阶语句
+ * @return 
+ */
+Formula HengZhang::createFormula_4_2(Formula originalFml) {
+    //1 T(_X,_MAX)
+    _term* term_x_max = combine_terms(terms_X, terms_MAX);
+    _formula* t_x_max  = composite_atom(ATOM, symbol_t, term_x_max);
+
+    //2 theta(_X,_MAX)
+    Formula tmp_formula_1 = Formula(originalFml);
+    tmp_formula_1.replace_terms(terms_Y, terms_MAX);
+    _formula* theta_x_max  = copy_formula(tmp_formula_1.get_formula());
+    
+    //3 theta(_X,_MAX)
+    Formula tmp_formula_2 = Formula(originalFml);
+    tmp_formula_2.replace_terms(terms_Y, terms_MAX);
+    _formula* theta_x_max_2 = copy_formula(tmp_formula_2.get_formula());
+    
+    //4 T(_X,_MAX)
+    _term* term_x_max_2 = combine_terms(terms_X, terms_MAX);
+    _formula* t_x_max_2  = composite_atom(ATOM, symbol_t, term_x_max_2);
+    
+    _formula* left = composite_bool(IMPL, t_x_max, theta_x_max);
+    _formula* right = composite_bool(IMPL, theta_x_max_2, t_x_max_2);
+    _formula* F = composite_bool(CONJ, left, right);
+    
+    Formula fml = Formula(F, false);
+#ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
 #endif
@@ -246,7 +291,7 @@ Formula HengZhang::createFormula_5(Formula originalFml) {
     //3 theta(_X,_Z)
     Formula tmp_formula_1 = Formula(originalFml);
     tmp_formula_1.replace_terms(terms_Y, terms_Z);
-    _formula* THETA_1= copy_formula(tmp_formula_1.get_formula());
+    _formula* THETA_1 = copy_formula(tmp_formula_1.get_formula());
 
     //4 T(_X,_Z)
     _term* tmp_term_3 = combine_terms(terms_X, terms_Z);
@@ -274,7 +319,7 @@ Formula HengZhang::createFormula_5(Formula originalFml) {
     _formula* F = composite_bool(IMPL, SUCC, FF);
     
     Formula fml = Formula(F, false);
-    #ifdef DEBUG
+#ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
 #endif

@@ -35,7 +35,8 @@ public:
 	Formula createFormula_1(Formula originalFml);
 	Formula createFormula_2(Formula originalFml);
 	Formula createFormula_3(Formula originalFml);
-	Formula createFormula_4(Formula originalFml);
+	Formula createFormula_4_1(Formula originalFml);
+        Formula createFormula_4_2(Formula originalFml);
 	Formula createFormula_5(Formula originalFml);
 };
 
