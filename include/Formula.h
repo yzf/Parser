@@ -22,8 +22,9 @@ private:
 	bool is_child_universal(_formula*);
 	bool compare_formula(const _formula* phi, const _formula* psi);
 	void delete_formula (_formula* fml);
-        void remove_from_prenex(_formula* phi, _formula* tag);
-	_formula* find_var_formula (_formula* phi, int var_id);
+         void remove_from_prenex(_formula* parent, int d, _formula* tag);
+        _formula* find_prenex_quanlifier(_formula* fml, int var_id);
+	bool find_var_formula (_formula* phi, int var_id);
 	void rename_var_formula (_formula* phi, int oldv, int newv);
         void rename_node_formula( _formula* tag);
 	_formula* replace_terms_formula(_formula* fml, const vector<int>& exis, 

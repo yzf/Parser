@@ -159,22 +159,45 @@ void Formula::delete_formula( _formula* fml ) {
     free(fml);
 }
 
-void Formula::remove_from_prenex(_formula* head, _formula* tag) {
-    _formula* sl = head->subformula_l;
+void Formula::remove_from_prenex(_formula* parent, int d, _formula* tag) {    
+    _formula* sf;
     
-    if(sl == tag) {
-        head->subformula_l = sl->subformula_l;
-        free(sl);
-        remove_from_prenex(head, tag);
+    if(d == 0) sf = parent->subformula_l;
+    else sf = parent->subformula_r;
+    
+    if(sf == NULL || (sf->formula_type != UNIV && sf->formula_type != EXIS)) {
+        return;
+    }
+    
+    if(sf == tag) {
+        if(d == 0) parent->subformula_l = sf->subformula_l;
+        else parent->subformula_r = sf->subformula_l;
+        free(sf);
+        remove_from_prenex(sf, 0, tag);
     }
     else {
-        remove_from_prenex(sl, tag);
+        remove_from_prenex(sf, 0, tag);
     }
     
 }
 
-_formula* Formula::find_var_formula(_formula* phi, int var_id) {
-   /* int i;
+_formula* Formula::find_prenex_quanlifier(_formula* fml, int var_id) {
+    if(fml == NULL) {
+        return NULL;
+    }
+    if(fml->variable_id == var_id) {
+        return fml;
+    }
+    else if(fml->subformula_l->formula_type == UNIV || fml->subformula_l->formula_type == EXIS) {
+        return find_prenex_quanlifier(fml->subformula_l, var_id);
+    }
+    else {
+        return NULL;
+    }
+}
+
+bool Formula::find_var_formula(_formula* phi, int var_id) {
+    int i;
 
     assert ( phi );
 
@@ -203,7 +226,7 @@ _formula* Formula::find_var_formula(_formula* phi, int var_id) {
     default:
         assert ( 0 );
     }
-    return NULL;*/
+    return NULL;
 }
 
 bool Formula::find_var(int var_id) {
@@ -296,7 +319,7 @@ void Formula::output_formula (FILE* out, _formula* phi)
             fprintf ( out, "%s(", vocabulary.query_name(phi->predicate_id, PREDICATE));
             for(i = 0; i < vocabulary.predicate_arity(phi->predicate_id); i++)
             {
-                if ( i > 0 ) fprintf ( out, ", " );
+                if ( i > 0 ) fprintf ( out, "," );
                 output_term ( out, phi->parameters+i );
             }
         }
@@ -314,7 +337,7 @@ void Formula::output_formula (FILE* out, _formula* phi)
                 fprintf ( out, "(" );
                 assert ( phi->parameters );
                 output_term ( out, phi->parameters );
-                fprintf ( out, " = " );
+                fprintf ( out, "=" );
                 output_term ( out, phi->parameters+1 );
                 break;
 			case PRED_MIN:
@@ -341,17 +364,16 @@ void Formula::output_formula (FILE* out, _formula* phi)
         fprintf ( out, ")" );
         break;
     case NEGA:
-        fprintf ( out, "~ (" );
+        fprintf ( out, "~" );
         assert ( phi->subformula_l );
         output_formula ( out, phi->subformula_l );
-        fprintf ( out, ")" );
         break;
     case CONJ:
-        s_conn = (char*)" & ";
+        s_conn = (char*)"&";
     case DISJ:
-        if ( NULL==s_conn ) s_conn = (char*)" | ";
+        if ( NULL==s_conn ) s_conn = (char*)"|";
     case IMPL:
-        if ( NULL==s_conn ) s_conn = (char*)" -> ";
+        if ( NULL==s_conn ) s_conn = (char*)"->";
         fprintf ( out, "(" );
         assert ( phi->subformula_l );
         output_formula ( out, phi->subformula_l );
@@ -364,7 +386,7 @@ void Formula::output_formula (FILE* out, _formula* phi)
         s_conn = (char*)"!";
     case EXIS:
         if ( NULL==s_conn ) s_conn = (char*)"?";
-        fprintf(out, "[%s %s] (", s_conn, vocabulary.query_name(phi->variable_id, VARIABLE));
+        fprintf(out, "[%s%s](", s_conn, vocabulary.query_name(phi->variable_id, VARIABLE));
         assert ( phi->subformula_l );
         output_formula ( out, phi->subformula_l );
         fprintf ( out, ")" );
@@ -376,7 +398,8 @@ void Formula::output_formula (FILE* out, _formula* phi)
 
 void Formula::divide_clause_formula(_formula* fml, _formula* parent, Formulas& result) {
     if(fml != NULL) {
-        if(parent == NULL || fml->formula_type == CONJ && parent->formula_type == CONJ) {
+        if((parent == NULL || parent->formula_type == CONJ) && fml->formula_type == CONJ) {
+            
             Formula new_formula = Formula(fml->subformula_r, true);  
             result.push_formula(new_formula);
             divide_clause_formula(fml->subformula_l, fml, result);   
@@ -432,12 +455,13 @@ void Formula::lower_negative(_formula* srcFormula) {
             switch (subFor->formula_type) {
                 case NEGA:
                     lower_negative(subFor);
-                    if(subFor->subformula_l->formula_type == NEGA) {
+                    subFor = srcFormula->subformula_l;
+                    if(subFor->formula_type == NEGA && subFor->subformula_l->formula_type == NEGA) {
                         srcFormula->subformula_l = subFor->subformula_l->subformula_l;
                         free(subFor->subformula_l);
                         free(subFor);                       
                     }
-                    if(srcFormula->subformula_l->subformula_l->formula_type != ATOM) {
+                    if(srcFormula->subformula_l->formula_type != ATOM && srcFormula->subformula_l->subformula_l->formula_type != ATOM) {
                         lower_negative(srcFormula);
                     }
                     break;
@@ -611,7 +635,7 @@ void Formula::convert_prenex_formula(_formula* fml) {
             _formula* curr_fml = fml;
             
             if(fml->formula_type == IMPL && (sub_l->formula_type == EXIS 
-                    || sub_r->formula_type == UNIV)) {
+                    || sub_l->formula_type == UNIV)) {
                 sub_l->formula_type = (sub_l->formula_type == UNIV) ? EXIS : UNIV;
             }
             
@@ -623,44 +647,49 @@ void Formula::convert_prenex_formula(_formula* fml) {
                     priority_type = EXIS;
                 }
                 if(sub_l->formula_type == priority_type || sub_l->formula_type == sub_r->formula_type) {
-                    _formula* same_variable = find_var_formula(sub_r, sub_l->variable_id);
+                    _formula* same_variable = find_prenex_quanlifier(sub_r, sub_l->variable_id);
                     
                     if(same_variable != NULL) {
                         if((sub_l->formula_type == UNIV && curr_fml->formula_type == CONJ && same_variable->formula_type == UNIV)||
                                 (sub_l->formula_type == EXIS && curr_fml->formula_type == DISJ && same_variable->formula_type == EXIS)) {
-                            remove_from_prenex(curr_fml, same_variable);
+                            remove_from_prenex(curr_fml, 1, same_variable);
                         }
                         else {
-                            rename_node_formula(same_variable);
+                            int new_id = vocabulary.add_rename_variable();
+                            rename_var_formula(sub_r, sub_l->variable_id, new_id);
                         }
                     }
                     
                     FORMULA_TYPE temp = curr_fml->formula_type;
-                 
+                    sub_r = curr_fml->subformula_r;
                     curr_fml->formula_type = sub_l->formula_type;
                     curr_fml->variable_id = sub_l->variable_id;
                     sub_l->formula_type = temp;
                     sub_l->subformula_r = sub_r;
                 }
                 else {
-                    _formula* same_variable = find_var_formula(sub_l, sub_r->variable_id);
+                    _formula* same_variable = find_prenex_quanlifier(sub_l, sub_r->variable_id);
                     
                     if(same_variable != NULL) {
                         if((sub_r->formula_type == UNIV && curr_fml->formula_type == CONJ && same_variable->formula_type == UNIV)||
                                 (sub_r->formula_type == EXIS && curr_fml->formula_type == DISJ && same_variable->formula_type == EXIS)) {
-                            remove_from_prenex(sub_r, same_variable);
+                            remove_from_prenex(curr_fml, 0, same_variable);
                         }
                         else {
-                            rename_node_formula(same_variable);
+                            int new_id = vocabulary.add_rename_variable();
+                            rename_var_formula(sub_r, sub_l->variable_id, new_id);
                         }
                     }
                     
                     FORMULA_TYPE temp = curr_fml->formula_type;
-                 
+                    sub_l = curr_fml->subformula_l;
+                    _formula* r_sub_l = sub_r->subformula_l;
                     curr_fml->formula_type = sub_r->formula_type;
                     curr_fml->variable_id = sub_r->variable_id;
+                    curr_fml->subformula_l = sub_r;
                     sub_r->formula_type = temp;
-                    sub_r->subformula_r = sub_l;
+                    sub_r->subformula_l = sub_l;
+                    sub_r->subformula_r = r_sub_l;
                 }
                 curr_fml = curr_fml->subformula_l;
                 sub_l = curr_fml->subformula_l;
@@ -681,12 +710,12 @@ Formula* Formula::convert_prenex() {
     convert_prenex_formula(this->formula);
     this->is_prenex_formula = true;
     
-    _formula* cur = this->formula;
-    while(cur->formula_type == UNIV && cur->formula_type == EXIS) {
+   /* _formula* cur = this->formula;
+    while(cur->formula_type == UNIV || cur->formula_type == EXIS) {
         cur = cur->subformula_l;
     }
     
-    this->body = new Formula(cur, true);
+    this->body = new Formula(cur, true);*/
     return this->body;
 }
 
