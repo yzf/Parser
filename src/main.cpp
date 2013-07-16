@@ -66,11 +66,12 @@ int main(int argc, char** argv) {
         fml.convert_prenex();
         fml.output(stdout);
         printf("\n");
-//        if (!fml.is_universal()) {
-//            hz_result = hz.create(fml);
+        if (!fml.is_universal()) {
+            hz_result = hz.create(fml);
+            hz_result.output_formulas(stdout);
 //            result = test.convert_Cabalar(hz_result);
-//            result.output_formulas(stdout);printf("\n");
-//        }
+ //           result.output_formulas(stdout);printf("\n");
+        }
         fmls.pop_formula();
     }
 //    

@@ -311,6 +311,9 @@ void Formula::output_formula (FILE* out, _formula* phi)
     switch ( phi->formula_type )
     {
     case ATOM:
+        if(phi->parameters->term_type != 0 || phi->parameters->term_type != 1)
+            fprintf ( out, "%s", vocabulary.query_name(phi->predicate_id, PREDICATE));
+        else{
         if(phi->predicate_id >= 0)
         {
             fprintf ( out, "%s(", vocabulary.query_name(phi->predicate_id, PREDICATE));
@@ -359,6 +362,7 @@ void Formula::output_formula (FILE* out, _formula* phi)
             }
         }
         fprintf ( out, ")" );
+        }
         break;
     case NEGA:
         fprintf ( out, "~" );
