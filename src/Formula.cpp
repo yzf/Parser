@@ -719,6 +719,7 @@ bool Formula::is_prenex() {
 
 void Formula::output(FILE* out) {
     output_formula(out, this->formula);
+    fprintf(out, "\n");
 }
 
 bool Formula::is_negative (const int* sm_preds, int num_sp, bool negative ) {

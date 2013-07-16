@@ -127,6 +127,5 @@ void Formulas::output_formulas(FILE* out)
             it != this->_formulas.end();
             ++ it) {
         it->output(out);
-        fprintf(out, "\n");
     }
 }
