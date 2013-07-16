@@ -22,6 +22,8 @@ class Formulas{
         deque<Formula> get_formulas();
         void set_formulas(deque<Formula> fs);
 
+        bool is_empty();
+        
         void join_formulas(Formulas tail);
         void push_formula(Formula tail);
         void pop_formula ();//DO NOT DELETE formula

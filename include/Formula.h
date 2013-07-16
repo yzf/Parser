@@ -15,7 +15,6 @@ private:
 	_formula* formula;	
 	vector<int> name_domain_id;
         bool is_prenex_formula;
-        Formula* body;
         
         
         
@@ -64,7 +63,7 @@ public:
         
         void convert_CNF();
 	bool is_prenex();
-	Formula* convert_prenex();
+	void convert_prenex();
         
         _formula* get_formula();
         void set_formula(_formula* f);

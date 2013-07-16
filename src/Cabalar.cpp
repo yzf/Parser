@@ -1130,20 +1130,22 @@ _formula* Cabalar::convert_negative_normal_form(_formula* fml)
 
 Formulas Cabalar::convert_negative_normal_forms(Formulas fmls)
 {
-    Formulas currFml = fmls;
-    _formula* tempfml;
+//    Formulas currFml = fmls;
+//    _formula* tempfml;
+//     
+//    for(int i = 0; i < currFml.get_formulas().size(); i++)
+//    {
+//        tempfml = convert_negative_normal_form(currFml.get_formulas().at(i).get_formula());
+//        currFml.get_formulas().at(i).set_formula(tempfml);
+//    }
     
-   // while(currFml.get_formulas() != NULL)
-   // {
-     //   currFml->curr_formula = convert_negative_normal_form(currFml->curr_formula);
-      //  currFml = currFml->remained_formulas;    
-  //  }
-    
-    
-    for(int i = 0; i < currFml.get_formulas().size(); i++)
+    Formulas currFml;
+    while(fmls.size_formulas() > 0)
     {
-        tempfml = convert_negative_normal_form(currFml.get_formulas().at(i).get_formula());
-        currFml.get_formulas().at(i).set_formula(tempfml);
+        Formula fml = fmls.top_formula();
+        Formula new_fml = Formula(convert_negative_normal_form(fml.get_formula()), true);
+        currFml.push_formula(new_fml);
+        fmls.pop_formula();
     }
     
     return currFml;

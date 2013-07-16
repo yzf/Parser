@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
     
     if(argc < 3)
     {
-        io("res/C.sample/sample.in","output/C.sample/sample.out");
+        io("res/C.sample/2clique.in","output/C.sample/sample.out");
     }
     else{
         io(argv[1], argv[2]);
@@ -51,6 +51,7 @@ int main(int argc, char** argv) {
     
     yyparse();
     Translator.set_origin_formulas(gformula);
+    
     HengZhang hz;
     
     Formulas hz_result;
@@ -62,11 +63,14 @@ int main(int argc, char** argv) {
     Formulas fmls = Translator.origin_formulas;
     while (fmls.size_formulas() != 0) {
         Formula fml = fmls.top_formula();
-        if (!fml.is_universal()) {
-            hz_result = hz.create(fml);
-            result = test.convert_Cabalar(hz_result);
-            result.output_formulas(stdout);printf("\n");
-        }
+        fml.convert_prenex();
+        fml.output(stdout);
+        printf("\n");
+//        if (!fml.is_universal()) {
+//            hz_result = hz.create(fml);
+//            result = test.convert_Cabalar(hz_result);
+//            result.output_formulas(stdout);printf("\n");
+//        }
         fmls.pop_formula();
     }
 //    

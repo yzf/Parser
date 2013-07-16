@@ -6,7 +6,6 @@
 
 Formula::Formula() {
     this->formula = NULL;
-    this->body = NULL;
     this->is_prenex_formula = false;
 }
 
@@ -18,7 +17,7 @@ Formula::Formula(_formula* fml, bool copy) {
         _formula* f = copy_formula(fml);
         this->formula = f;
     }
-    this->body = NULL;
+
     this->is_prenex_formula = false;
 }
 
@@ -26,7 +25,7 @@ Formula::Formula(const Formula& FML) {
     _formula* new_formula = copy_formula(FML.formula);
     this->formula = new_formula;
     
-    this->body = NULL;
+ 
     this->is_prenex_formula = false;
 }
 
@@ -34,9 +33,7 @@ Formula::~Formula() {
     if (this->formula != NULL) {
         delete_formula(this->formula);
     }
-    if (body != NULL) {
-        free(body);
-    }
+    
 }
 
 _formula* Formula::get_formula()
@@ -53,7 +50,7 @@ Formula& Formula::operator = (const Formula& rhs) {
     _formula* new_formula = copy_formula(rhs.formula);
     this->formula = new_formula;
     
-    this->body = NULL;
+   
     this->is_prenex_formula = false;
     return *this;
 }
@@ -706,17 +703,10 @@ void Formula::convert_prenex_formula(_formula* fml) {
     }
 }
 
-Formula* Formula::convert_prenex() {
+void Formula::convert_prenex() {
     convert_prenex_formula(this->formula);
     this->is_prenex_formula = true;
-    
-   /* _formula* cur = this->formula;
-    while(cur->formula_type == UNIV || cur->formula_type == EXIS) {
-        cur = cur->subformula_l;
-    }
-    
-    this->body = new Formula(cur, true);*/
-    return this->body;
+   
 }
 
 bool Formula::is_prenex() {

@@ -1,11 +1,8 @@
+[?X]pr(X) | p(x) | f.
 [?X]~~p(X).
-[?X]pr(X).
 [!X](f->(p(X)|~p(X))).
 [!Y]pr(Y).
 
 {p,pr,f}
 
 <Y@b;X@ce>
-
-
-

@@ -69,6 +69,13 @@ bool Formulas::equal(Formulas f)
     return true;
 }
 
+
+bool Formulas::is_empty()
+{
+    return (this->_formulas.size() == 0);
+}
+
+
 void Formulas::join_formulas(Formulas tail)
 {
     
