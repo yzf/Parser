@@ -10,34 +10,38 @@ using namespace std;
 
 class HengZhang{
 private:
-	vector<int> terms_X;
-	vector<int> terms_Y;
-	vector<int> terms_Z;
-	vector<int> terms_MIN;//waste space
-	vector<int> terms_MAX;//waste space
+    vector<int> terms_X;
+    vector<int> terms_Y;
+    vector<int> terms_Z;
+    vector<int> terms_MIN;//waste space
+    vector<int> terms_MAX;//waste space
 
-	int symbol_s;
-	int symbol_t;
-	int symbol_MAX;
-	int symbol_MIN;
-	int symbol_succ;
-	
+    int symbol_s;
+    int symbol_t;
+    int symbol_MAX;
+    int symbol_MIN;
+    int symbol_succ;
+
 //	char* succ[];
-	
+    static int num_s;
+    static int num_t;
+    static int num_MAX;
+    static int num_MIN;
+    static int num_succ;
 
 public:
-	//utilities
-	int addSymbol(const char* name, SYMBOL_TYPE type, int arity);
-	Formula recordQuantifier(Formula originalFml);
+    //utilities
+    int addSymbol(const char* name, SYMBOL_TYPE type, int arity);
+    Formula recordQuantifier(Formula originalFml);
 
-	//creators
-	Formulas create(Formula originalFml);
-	Formula createFormula_1(Formula originalFml);
-	Formula createFormula_2(Formula originalFml);
-	Formula createFormula_3(Formula originalFml);
-	Formula createFormula_4_1(Formula originalFml);
-        Formula createFormula_4_2(Formula originalFml);
-	Formula createFormula_5(Formula originalFml);
+    //creators
+    Formulas create(Formula originalFml);
+    Formula createFormula_1(Formula originalFml);
+    Formula createFormula_2(Formula originalFml);
+    Formula createFormula_3(Formula originalFml);
+    Formula createFormula_4_1(Formula originalFml);
+    Formula createFormula_4_2(Formula originalFml);
+    Formula createFormula_5(Formula originalFml);
 };
 
 #endif

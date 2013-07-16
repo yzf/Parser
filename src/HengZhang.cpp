@@ -1,10 +1,18 @@
 #include "HengZhang.h"
 #include "utility.h"
 #include "S2DLP.h"
+#include <string>
+#include <cstring>
 
-#define DEBUG
+//#define DEBUG
 
 extern Vocabulary vocabulary;
+
+int HengZhang::num_s = 0;
+int HengZhang::num_t = 0;
+int HengZhang::num_MAX = 0;
+int HengZhang::num_MIN = 0;
+int HengZhang::num_succ = 0;
 /**
  * 
  * @param name
@@ -13,17 +21,7 @@ extern Vocabulary vocabulary;
  * @return 
  */
 int HengZhang::addSymbol(const char* name, SYMBOL_TYPE type, int arity) {
-    char name_buf[512];
-    int i = 0;
-
-    sprintf(name_buf,"%s",name);
-
-    while( vocabulary.query_symbol(name_buf,type) >= 0) // symbol exist
-    {
-        sprintf(name_buf,"%s_%d",name,i);
-    }
-
-    return vocabulary.add_symbol(name_buf,type,arity);
+    return vocabulary.add_symbol(name,type,arity);
 }
 /**
  * 把量词保存到对应的vector
@@ -65,9 +63,12 @@ Formula HengZhang::recordQuantifier(Formula originalFml) {
     return Formula(fml, true);
 }
 
-Formulas HengZhang::create(Formula fml) {
-    symbol_MAX = addSymbol("MAX", VARIABLE, 0);
-    symbol_MIN = addSymbol("MIN", VARIABLE, 0);
+Formulas HengZhang::create(Formula fml) {    
+    char name_buf[512];
+    sprintf(name_buf, "MAX_%d", num_MAX ++);
+    symbol_MAX = addSymbol(name_buf, VARIABLE, 0);
+    sprintf(name_buf, "MIN_%d", num_MIN ++);
+    symbol_MIN = addSymbol(name_buf, VARIABLE, 0);
     
     Formula originalFml = recordQuantifier(fml);
 
@@ -78,11 +79,19 @@ Formulas HengZhang::create(Formula fml) {
         return fmls;
     }
 
+    sprintf(name_buf, "s_%d", num_s ++);
+    symbol_s = addSymbol(name_buf, PREDICATE, terms_X.size()+terms_Y.size());
+    sprintf(name_buf, "t_%d", num_t ++);
+    symbol_t = addSymbol(name_buf, PREDICATE, terms_X.size()+terms_Y.size());
+    string succ_name = "succ";
+    for (int i = 0; i < terms_Y.size(); ++ i) {
+        succ_name += string("_") + vocabulary.names_domain[vocabulary.variable_at_domain[terms_Y[i]]];
+    }
+    symbol_succ = addSymbol(succ_name.c_str(), PREDICATE, terms_Y.size()+terms_Z.size());
 
-    symbol_s = addSymbol("s", PREDICATE, terms_X.size()+terms_Y.size());
-    symbol_t = addSymbol("t", PREDICATE, terms_X.size()+terms_Y.size());
-    symbol_succ = addSymbol("succ", PREDICATE, terms_Y.size()+terms_Z.size());
-	
+    
+
+    
     Formulas fmls;
     fmls.push_formula(createFormula_1(originalFml));
     fmls.push_formula(createFormula_2(originalFml));
