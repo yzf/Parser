@@ -1,8 +1,6 @@
 #include "HengZhang.h"
 #include "utility.h"
 #include "S2DLP.h"
-#include <string>
-#include <cstring>
 
 //#define DEBUG
 
@@ -13,6 +11,7 @@ int HengZhang::num_t = 0;
 int HengZhang::num_MAX = 0;
 int HengZhang::num_MIN = 0;
 int HengZhang::num_succ = 0;
+vector<string> HengZhang::succ_names;
 /**
  * 
  * @param name
@@ -20,7 +19,7 @@ int HengZhang::num_succ = 0;
  * @param arity
  * @return 
  */
-int HengZhang::addSymbol(const char* name, SYMBOL_TYPE type, int arity) {
+int HengZhang::add_symbol(const char* name, SYMBOL_TYPE type, int arity) {
     return vocabulary.add_symbol(name,type,arity);
 }
 /**
@@ -28,7 +27,7 @@ int HengZhang::addSymbol(const char* name, SYMBOL_TYPE type, int arity) {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::recordQuantifier(Formula originalFml) {
+Formula HengZhang::record_quantifier(Formula originalFml) {
     char str_buf[512];
     _formula* fml_temp;
 
@@ -49,11 +48,19 @@ Formula HengZhang::recordQuantifier(Formula originalFml) {
         }
         else {
             terms_Y.push_back(fml->variable_id);
-            terms_MIN.push_back(symbol_MIN);
-            terms_MAX.push_back(symbol_MAX);
+            
+            char* domain = vocabulary.names_domain[vocabulary.variable_at_domain[fml->variable_id]];
+            string name = string("MIN_") + domain;
+            int id_min = add_symbol(name.c_str(), VARIABLE, 0);
+            
+            terms_MIN.push_back(id_min);
+            
+            name = string("MAX_") + domain;
+            int id_max = add_symbol(name.c_str(), VARIABLE, 0);
+            terms_MAX.push_back(id_max);
 
             sprintf(str_buf,"NV_%d",i++);
-            terms_Z.push_back(addSymbol(str_buf, VARIABLE, 0));
+            terms_Z.push_back(add_symbol(str_buf, VARIABLE, 0));
 
             fml_temp = fml;
             fml = fml->subformula_l;
@@ -63,14 +70,24 @@ Formula HengZhang::recordQuantifier(Formula originalFml) {
     return Formula(fml, true);
 }
 
+void HengZhang::save_succ_name(string succ_name) {
+    //保存succ名字
+    bool flag = true;
+    for (vector<string>::iterator it = HengZhang::succ_names.begin();
+            it != HengZhang::succ_names.end(); it ++) {
+        if (*it == succ_name) {
+            flag = false;
+            break;
+        }
+    }
+    if (flag) {
+        HengZhang::succ_names.push_back(succ_name);
+    }
+}
+
 Formulas HengZhang::create(Formula fml) {    
-    char name_buf[512];
-    sprintf(name_buf, "MAX_%d", num_MAX ++);
-    symbol_MAX = addSymbol(name_buf, VARIABLE, 0);
-    sprintf(name_buf, "MIN_%d", num_MIN ++);
-    symbol_MIN = addSymbol(name_buf, VARIABLE, 0);
     
-    Formula originalFml = recordQuantifier(fml);
+    Formula originalFml = record_quantifier(fml);
 
     if(terms_Y.size() == 0)
     {
@@ -78,27 +95,25 @@ Formulas HengZhang::create(Formula fml) {
         fmls.push_formula(fml);
         return fmls;
     }
-
+    char name_buf[512];
     sprintf(name_buf, "s_%d", num_s ++);
-    symbol_s = addSymbol(name_buf, PREDICATE, terms_X.size()+terms_Y.size());
+    symbol_s = add_symbol(name_buf, PREDICATE, terms_X.size()+terms_Y.size());
     sprintf(name_buf, "t_%d", num_t ++);
-    symbol_t = addSymbol(name_buf, PREDICATE, terms_X.size()+terms_Y.size());
+    symbol_t = add_symbol(name_buf, PREDICATE, terms_X.size()+terms_Y.size());
     string succ_name = "succ";
     for (int i = 0; i < terms_Y.size(); ++ i) {
         succ_name += string("_") + vocabulary.names_domain[vocabulary.variable_at_domain[terms_Y[i]]];
     }
-    symbol_succ = addSymbol(succ_name.c_str(), PREDICATE, terms_Y.size()+terms_Z.size());
-
-    
-
+    symbol_succ = add_symbol(succ_name.c_str(), PREDICATE, terms_Y.size()+terms_Z.size());
+    save_succ_name(succ_name);
     
     Formulas fmls;
-    fmls.push_formula(createFormula_1(originalFml));
-    fmls.push_formula(createFormula_2(originalFml));
-    fmls.push_formula(createFormula_3(originalFml));
-    fmls.push_formula(createFormula_4_1(originalFml));
-    fmls.push_formula(createFormula_4_2(originalFml));
-    fmls.push_formula(createFormula_5(originalFml));
+    fmls.push_formula(create_formula_1(originalFml));
+    fmls.push_formula(create_formula_2(originalFml));
+    fmls.push_formula(create_formula_3(originalFml));
+    fmls.push_formula(create_formula_4_1(originalFml));
+    fmls.push_formula(create_formula_4_2(originalFml));
+    fmls.push_formula(create_formula_5(originalFml));
 
     return fmls;
 }
@@ -107,7 +122,7 @@ Formulas HengZhang::create(Formula fml) {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::createFormula_1(Formula originalFml) {
+Formula HengZhang::create_formula_1(Formula originalFml) {
     // Add S(_X, _MIN)
     _term* LLT   = combine_terms(terms_X, terms_MIN);
     _formula* LL = composite_atom(ATOM, symbol_s, LLT);
@@ -129,7 +144,7 @@ Formula HengZhang::createFormula_1(Formula originalFml) {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::createFormula_2(Formula originalFml) {
+Formula HengZhang::create_formula_2(Formula originalFml) {
     //create atom formulas
     _term* LLLT = combine_terms(terms_Y, terms_Z);
     _formula* LLL = composite_atom(ATOM, symbol_succ, LLLT);
@@ -167,7 +182,7 @@ Formula HengZhang::createFormula_2(Formula originalFml) {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::createFormula_3(Formula originalFml) {
+Formula HengZhang::create_formula_3(Formula originalFml) {
     //create left sub-formula t(_X,_MIN)
     _term* LT = combine_terms(terms_X, terms_MIN);
     _formula* L   = composite_atom(ATOM, symbol_t, LT );
@@ -195,7 +210,7 @@ Formula HengZhang::createFormula_3(Formula originalFml) {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::createFormula_4_1(Formula originalFml) {
+Formula HengZhang::create_formula_4_1(Formula originalFml) {
     //1 S(_X,_Y)
     _term* term_x_y = combine_terms(terms_X, terms_Y);
     _formula* s_x_y = composite_atom(ATOM, symbol_s, term_x_y);
@@ -251,7 +266,7 @@ Formula HengZhang::createFormula_4_1(Formula originalFml) {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::createFormula_4_2(Formula originalFml) {
+Formula HengZhang::create_formula_4_2(Formula originalFml) {
     //1 T(_X,_MAX)
     _term* term_x_max = combine_terms(terms_X, terms_MAX);
     _formula* t_x_max  = composite_atom(ATOM, symbol_t, term_x_max);
@@ -289,7 +304,7 @@ Formula HengZhang::createFormula_4_2(Formula originalFml) {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::createFormula_5(Formula originalFml) {
+Formula HengZhang::create_formula_5(Formula originalFml) {
     //1 _succ(_Y,_Z)
     _term* tmp_term_1 = combine_terms(terms_Y, terms_Z);
     _formula* SUCC  = composite_atom(ATOM, symbol_succ, tmp_term_1);
