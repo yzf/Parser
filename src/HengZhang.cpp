@@ -261,33 +261,38 @@ Formula HengZhang::create_formula_4_1(Formula originalFml) {
     return fml;
 }
 /**
- * 章衡量词消去公式四_2    ( T(_X,_MAX) -> theta(_X,_MAX) ) 
- *                        ^ ( theta(_X,_MAX) -> T(_X,_MAX) ) 
+ * 章衡量词消去公式四_2    S(_X,_MAX) -> 
+ *                     ( ( T(_X,_MAX) -> theta(_X,_MAX) ) 
+ *                        ^ ( theta(_X,_MAX) -> T(_X,_MAX) ) ) 
  * @param originalFml 一阶语句
  * @return 
  */
 Formula HengZhang::create_formula_4_2(Formula originalFml) {
-    //1 T(_X,_MAX)
     _term* term_x_max = combine_terms(terms_X, terms_MAX);
-    _formula* t_x_max  = composite_atom(ATOM, symbol_t, term_x_max);
+    _formula* s_x_max = composite_atom(ATOM, symbol_s, term_x_max);
+    //2 T(_X,_MAX)
+    _term* term_x_max_2 = combine_terms(terms_X, terms_MAX);
+    _formula* t_x_max  = composite_atom(ATOM, symbol_t, term_x_max_2);
 
-    //2 theta(_X,_MAX)
+    //3 theta(_X,_MAX)
     Formula tmp_formula_1 = Formula(originalFml);
     tmp_formula_1.replace_terms(terms_Y, terms_MAX);
     _formula* theta_x_max  = copy_formula(tmp_formula_1.get_formula());
     
-    //3 theta(_X,_MAX)
+    //4 theta(_X,_MAX)
     Formula tmp_formula_2 = Formula(originalFml);
     tmp_formula_2.replace_terms(terms_Y, terms_MAX);
     _formula* theta_x_max_2 = copy_formula(tmp_formula_2.get_formula());
     
-    //4 T(_X,_MAX)
-    _term* term_x_max_2 = combine_terms(terms_X, terms_MAX);
-    _formula* t_x_max_2  = composite_atom(ATOM, symbol_t, term_x_max_2);
+    //5 T(_X,_MAX)
+    _term* term_x_max_3 = combine_terms(terms_X, terms_MAX);
+    _formula* t_x_max_2  = composite_atom(ATOM, symbol_t, term_x_max_3);
     
-    _formula* left = composite_bool(IMPL, t_x_max, theta_x_max);
-    _formula* right = composite_bool(IMPL, theta_x_max_2, t_x_max_2);
-    _formula* F = composite_bool(CONJ, left, right);
+    _formula* left = s_x_max;
+    _formula* right_left = composite_bool(IMPL, t_x_max, theta_x_max);
+    _formula* right_right = composite_bool(IMPL, theta_x_max_2, t_x_max_2);
+    _formula* right = composite_bool(CONJ, right_left, right_right);
+    _formula* F = composite_bool(IMPL, left, right);
     
     Formula fml = Formula(F, false);
 #ifdef DEBUG
