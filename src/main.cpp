@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
     Formulas result;
     Cabalar test;
     
-    printf("\nResult after Cabalar : \n");
+    
     
     Formulas fmls = Translator.origin_formulas;
     while (fmls.size_formulas() != 0) {
@@ -69,8 +69,11 @@ int main(int argc, char** argv) {
         if (!fml.is_universal()) {
             hz_result = hz.create(fml);
             hz_result.output_formulas(stdout);
-//            result = test.convert_Cabalar(hz_result);
- //           result.output_formulas(stdout);printf("\n");
+            
+            printf("\nResult after Cabalar : \n");
+            
+            result = test.convert_Cabalar(hz_result);
+            result.output_formulas(stdout);printf("\n");
         }
         fmls.pop_formula();
     }

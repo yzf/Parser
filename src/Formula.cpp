@@ -311,17 +311,19 @@ void Formula::output_formula (FILE* out, _formula* phi)
     switch ( phi->formula_type )
     {
     case ATOM:
-        if(phi->parameters->term_type != 0 && phi->parameters->term_type != 1)
-            fprintf ( out, "%s", vocabulary.query_name(phi->predicate_id, PREDICATE));
+        if(phi->predicate_id >= 0 && vocabulary.predicate_arity(phi->predicate_id) == 0)
+               fprintf ( out, "%s", vocabulary.query_name(phi->predicate_id, PREDICATE));
         else{
         if(phi->predicate_id >= 0)
         {
-            fprintf ( out, "%s(", vocabulary.query_name(phi->predicate_id, PREDICATE));
-            for(i = 0; i < vocabulary.predicate_arity(phi->predicate_id); i++)
-            {
-                if ( i > 0 ) fprintf ( out, "," );
-                output_term ( out, phi->parameters+i );
-            }
+            
+                fprintf ( out, "%s(", vocabulary.query_name(phi->predicate_id, PREDICATE));
+                for(i = 0; i < vocabulary.predicate_arity(phi->predicate_id); i++)
+                {
+                    if ( i > 0 ) fprintf ( out, "," );
+                    output_term ( out, phi->parameters+i );
+                }
+            
         }
         else
         {
