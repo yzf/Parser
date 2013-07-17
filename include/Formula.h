@@ -14,12 +14,9 @@ class Formula {
 private:
 	_formula* formula;	
 	vector<int> name_domain_id;
-        bool is_prenex_formula;
-        
-        
+        bool is_prenex_formula;                
         
 	bool is_child_universal(_formula*);
-	bool compare_formula(const _formula* phi, const _formula* psi);
 	void delete_formula (_formula* fml);
          void remove_from_prenex(_formula* parent, int d, _formula* tag);
         _formula* find_prenex_quanlifier(_formula* fml, int var_id);
@@ -50,8 +47,7 @@ public:
         
 	~Formula();
 
-	bool is_universal();
-	bool compare(Formula& psi);	
+	bool is_universal();	
 	bool find_var(int var_id);
 	void rename_var(int oldv, int newv);
 	void replace_terms(const vector<int>& exis, 

@@ -82,53 +82,6 @@ bool Formula::is_universal() {
 	return is_child_universal(this->formula);
 }
 
-bool Formula::compare_formula(const _formula* phi, const _formula* psi) {
-    int k;
-
-    assert(phi);
-    assert(psi);
-
-    if (phi->formula_type!=psi->formula_type) return false;
-
-    switch (phi->formula_type)
-    {
-    case ATOM:
-        if (phi->predicate_id!=psi->predicate_id) return false;
-        k = vocabulary.predicate_arity(phi->predicate_id) - 1;
-        assert(k<0||phi->parameters);
-        assert(k<0||psi->parameters);
-        for ( ; k>=0; k--)
-        {
-            if (!compare_term(phi->parameters+k,psi->parameters+k))
-                return FALSE;
-        }
-        return true;
-    case UNIV:
-    case EXIS:
-        if (phi->variable_id!=psi->variable_id) return false;
-    case NEGA:
-        assert(phi->subformula_l);
-        assert(psi->subformula_l);
-        return compare_formula(phi->subformula_l,psi->subformula_l);
-    case CONJ:
-    case DISJ:
-    case IMPL:
-        assert(phi->subformula_l);
-        assert(psi->subformula_l);
-        assert(phi->subformula_r);
-        assert(psi->subformula_r);
-        return (compare_formula(phi->subformula_l,psi->subformula_l)
-            && compare_formula(phi->subformula_r,psi->subformula_r));
-    default:
-        assert(0);
-    }
-    return false;
-}
-
-bool Formula::compare(Formula& ffc) {
-	return compare_formula(this->formula, ffc.formula);
-}
-
 void Formula::delete_formula( _formula* fml ) {
     assert ( fml );
 
@@ -312,18 +265,16 @@ void Formula::output_formula (FILE* out, _formula* phi)
     {
     case ATOM:
         if(phi->predicate_id >= 0 && vocabulary.predicate_arity(phi->predicate_id) == 0)
-               fprintf ( out, "%s", vocabulary.query_name(phi->predicate_id, PREDICATE));
+            fprintf ( out, "%s", vocabulary.query_name(phi->predicate_id, PREDICATE));
         else{
         if(phi->predicate_id >= 0)
         {
-            
-                fprintf ( out, "%s(", vocabulary.query_name(phi->predicate_id, PREDICATE));
-                for(i = 0; i < vocabulary.predicate_arity(phi->predicate_id); i++)
-                {
-                    if ( i > 0 ) fprintf ( out, "," );
-                    output_term ( out, phi->parameters+i );
-                }
-            
+            fprintf ( out, "%s(", vocabulary.query_name(phi->predicate_id, PREDICATE));
+            for(i = 0; i < vocabulary.predicate_arity(phi->predicate_id); i++)
+            {
+                if ( i > 0 ) fprintf ( out, "," );
+                output_term ( out, phi->parameters+i );
+            }
         }
         else
         {

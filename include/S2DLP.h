@@ -7,13 +7,14 @@
 #include "Cabalar.h"
 #include "HengZhang.h"
 #include "Rule.h"
+#include <vector>
 
 class S2DLP{
 public:
 	Formulas origin_formulas;
         Formulas zhangheng_formulas;
         Formulas dlp_formulas;
-	Rule dlp_rules;
+	vector<Rule> dlp_rules;
         FILE* output_file;
 public:
 	S2DLP();

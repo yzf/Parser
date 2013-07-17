@@ -116,6 +116,7 @@
       <itemPath>src/Formula.cpp</itemPath>
       <itemPath>src/Formulas.cpp</itemPath>
       <itemPath>src/HengZhang.cpp</itemPath>
+      <itemPath>src/Rule.cpp</itemPath>
       <itemPath>src/S2DLP.cpp</itemPath>
       <itemPath>src/Vocabulary.cpp</itemPath>
       <itemPath>src/global.cpp</itemPath>
@@ -308,6 +309,8 @@
       </item>
       <item path="src/HengZhang.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/Rule.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/S2DLP.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Vocabulary.cpp" ex="false" tool="1" flavor2="0">
@@ -491,6 +494,8 @@
       <item path="src/Formulas.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/HengZhang.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/Rule.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/S2DLP.cpp" ex="false" tool="1" flavor2="0">
       </item>

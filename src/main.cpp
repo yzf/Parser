@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
     
     if(argc < 3)
     {
-        io("res/C.sample/2clique.in","output/C.sample/sample.out");
+        io("res/C.sample/sample.in","output/C.sample/sample.out");
     }
     else{
         io(argv[1], argv[2]);
@@ -59,8 +59,10 @@ int main(int argc, char** argv) {
     Cabalar test;
     
     
-    
     Formulas fmls = Translator.origin_formulas;
+    Formula fml = fmls.top_formula();
+//    Rule r = Rule(fml);
+//    r.output(stdout);
     while (fmls.size_formulas() != 0) {
         Formula fml = fmls.top_formula();
         fml.convert_prenex();
@@ -71,50 +73,12 @@ int main(int argc, char** argv) {
             hz_result.output_formulas(stdout);
             
             printf("\nResult after Cabalar : \n");
-            
             result = test.convert_Cabalar(hz_result);
             result.output_formulas(stdout);printf("\n");
         }
         fmls.pop_formula();
     }
-//    
-//     Cabalar test;
-//    Formulas result;
-//    deque<Formula> fml_in;
-//    
-////  hz_result.pop_formula();
-////    hz_result.pop_formula();
-////   hz_result.pop_formula();
-////    hz_result.pop_formula();
-//    
-//    fml_in.push_back(hz_result.top_formula());
-//    Formulas tempin(fml_in);
-//    
-//    printf("\n\n tempin : ");
-//    tempin.output_formulas(stdout);
-//    printf("\n\n");
-//    
-//    result = test.convert_Cabalar(tempin);
-//    printf("\n\n result : ");
-//    result.output_formulas(stdout);
-//    printf("\n\n"); 
-    
-    
-//    Formula fml;
-//    fml.get_formula();
-//    
-//    Cabalar cbl;
-//    Formulas cbl_test;
-//    cbl_test = cbl.HengZhang_Test();
-//    
-//    Cabalar test;
-//    Formulas result;
-//    result = test.convert_Cabalar(cbl_test);
-//    
-    
-   // Translator.set_output_file(fout);
-    //Translator.output_origin_formulas();
-    
+
     return 0;
 }
 

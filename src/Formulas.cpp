@@ -2,6 +2,7 @@
 #include "Formula.h"
 #include <cstdlib>
 #include <deque>
+#include "utility.h"
 
 using namespace std;
 
@@ -62,7 +63,7 @@ bool Formulas::equal(Formulas f)
     for(int i = 0; i < size; i++)
     {
         
-        if(!f1.at(i).compare(f2.at(i)))
+        if(!compare_formula(f1.at(i).get_formula(), f2.at(i).get_formula()))
             return false;
     }
     

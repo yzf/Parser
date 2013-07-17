@@ -128,6 +128,15 @@ int Vocabulary::query_symbol ( const char* name, SYMBOL_TYPE type )
     return -1;
 }
 
+bool Vocabulary::is_intension_predicate(int var_id) {
+    for(int i = 0; i < this->num_intension_predicate; i++) {
+        if(this->index_intension_predicate[i] == var_id) {
+            return true;
+        }
+    }
+    return false;
+}
+
 int Vocabulary::set_intension_predicate(const char* name) {
     int id = query_symbol(name, PREDICATE);
     

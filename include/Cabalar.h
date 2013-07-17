@@ -8,7 +8,7 @@
 #include "utility.h"
 
 class Formula;
-class FOrmulas;
+class Formulas;
 
 class Cabalar{
 private:
