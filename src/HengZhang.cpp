@@ -39,32 +39,31 @@ Formula HengZhang::record_quantifier(Formula originalFml) {
     
     int i = 0;
     _formula* fml = originalFml.get_formula();
-    while(fml->formula_type == UNIV | fml->formula_type == EXIS)
+    while(fml->formula_type == UNIV)
     {
-        if (fml->formula_type == UNIV) {
-            terms_X.push_back(fml->variable_id);
-            fml_temp = fml;
-            fml = fml->subformula_l;
-        }
-        else {
-            terms_Y.push_back(fml->variable_id);
+        terms_X.push_back(fml->variable_id);
+        fml_temp = fml;
+        fml = fml->subformula_l;
+    }
+    while (fml->formula_type == EXIS) 
+    {
+        terms_Y.push_back(fml->variable_id);
             
-            char* domain = vocabulary.names_domain[vocabulary.variable_at_domain[fml->variable_id]];
-            string name = string("MIN_") + domain;
-            int id_min = add_symbol(name.c_str(), VARIABLE, 0);
-            
-            terms_MIN.push_back(id_min);
-            
-            name = string("MAX_") + domain;
-            int id_max = add_symbol(name.c_str(), VARIABLE, 0);
-            terms_MAX.push_back(id_max);
+        char* domain = vocabulary.names_domain[vocabulary.variable_at_domain[fml->variable_id]];
+        string name = string("MIN_") + domain;
+        int id_min = add_symbol(name.c_str(), VARIABLE, 0);
 
-            sprintf(str_buf,"NV_%d",i++);
-            terms_Z.push_back(add_symbol(str_buf, VARIABLE, 0));
+        terms_MIN.push_back(id_min);
 
-            fml_temp = fml;
-            fml = fml->subformula_l;
-        }
+        name = string("MAX_") + domain;
+        int id_max = add_symbol(name.c_str(), VARIABLE, 0);
+        terms_MAX.push_back(id_max);
+
+        sprintf(str_buf,"NV_%d",i++);
+        terms_Z.push_back(add_symbol(str_buf, VARIABLE, 0));
+
+        fml_temp = fml;
+        fml = fml->subformula_l;
     }
 
     return Formula(fml, true);
