@@ -100,6 +100,10 @@
           <itemPath>res/B.real/1</itemPath>
         </logicalFolder>
         <logicalFolder name="C.sample" displayName="C.sample" projectFiles="true">
+          <itemPath>res/C.sample/2clique.in</itemPath>
+          <itemPath>res/C.sample/prenex.in</itemPath>
+          <itemPath>res/C.sample/qbf_cnf.in</itemPath>
+          <itemPath>res/C.sample/qbf_dnf.in</itemPath>
           <itemPath>res/C.sample/sample-solved-hz4.txt</itemPath>
           <itemPath>res/C.sample/sample-solved-hz5.txt</itemPath>
           <itemPath>res/C.sample/sample.in</itemPath>
@@ -295,6 +299,14 @@
       </item>
       <item path="res/B.real/1" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/C.sample/2clique.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/prenex.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/qbf_cnf.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/qbf_dnf.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/C.sample/sample-solved-hz4.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/C.sample/sample-solved-hz5.txt" ex="false" tool="3" flavor2="0">
@@ -480,6 +492,14 @@
       <item path="res/B.real/0" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/B.real/1" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/2clique.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/prenex.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/qbf_cnf.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/qbf_dnf.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/C.sample/sample-solved-hz4.txt" ex="false" tool="3" flavor2="0">
       </item>

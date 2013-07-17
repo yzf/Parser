@@ -34,6 +34,7 @@ public:
 private:
     //utilities
     int add_symbol(const char* name, SYMBOL_TYPE type, int arity);
+    Formulas transform(Formula fml);
     Formula record_quantifier(Formula originalFml);
     Formula create_formula_1(Formula originalFml);
     Formula create_formula_2(Formula originalFml);
@@ -45,7 +46,7 @@ private:
 
 public:
     //creators
-    Formulas create(Formula originalFml);
+    Formulas create(Formulas fmls);
     
 };
 

@@ -56,9 +56,6 @@ public:
         
         Formulas convert_Cabalar(Formulas fmls);
         
-        //A test function : return a Formulas for the Cabalar.
-        Formulas HengZhang_Test();
-        
 };
 
 #endif

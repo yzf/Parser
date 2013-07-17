@@ -85,8 +85,29 @@ void HengZhang::save_succ_name(string succ_name) {
     }
 }
 
-Formulas HengZhang::create(Formula fml) {    
+Formulas HengZhang::create(Formulas fmls) {    
     
+    Formulas temp_fmls = fmls;
+    Formulas final_fmls;
+    
+    while (temp_fmls.size_formulas() != 0) {
+        Formula cur_fml = temp_fmls.top_formula();
+        temp_fmls.pop_formula();
+        cur_fml.convert_prenex();
+        if (cur_fml.is_universal()) {
+            final_fmls.push_formula(cur_fml);
+        }
+        else {
+            Formulas hz_result = transform(cur_fml);
+            temp_fmls.join_formulas(hz_result);
+        }
+    }
+    
+
+    return final_fmls;
+}
+
+Formulas HengZhang::transform(Formula fml) {
     Formula originalFml = record_quantifier(fml);
 
     if(terms_Y.size() == 0)

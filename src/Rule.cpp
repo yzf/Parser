@@ -63,7 +63,7 @@ void Rule::asp_modify() {
         while(cur->formula_type != ATOM) {
             cur = cur->subformula_l;
         }
-        if(head_part->formula_type == NEGA || !vocabulary.is_intension_predicate(cur->variable_id)) {
+        if(head_part->formula_type == NEGA || !vocabulary.is_intension_predicate(cur->predicate_id)) {
             head_part = composite_bool(NEGA, head_part, NULL);
             head.erase(iter);            
             body.push_back(head_part);
@@ -94,10 +94,12 @@ void Rule::output(FILE* out) {
         if(head_part->formula_type == ATOM && head_part->predicate_id != PRED_FALSE 
                 && head_part->predicate_id != PRED_TRUE) {
             printAtom(head_part, out);
-        }
-        
-        if(iter != body.end() - 1) fprintf(out, "|");
+            
+            if(iter != head.end() - 1) fprintf(out, "|");
+        }               
     }
+    
+    bool body_begin = true;
     
     for(vector<_formula*>::iterator iter = body.begin(); iter != body.end(); iter++) {
         _formula* body_part = *iter;
@@ -108,7 +110,10 @@ void Rule::output(FILE* out) {
         }
         
         if(cur->predicate_id != PRED_TRUE && cur->predicate_id != PRED_FALSE) {
-            if(iter == body.begin()) fprintf(out, ":-");
+            if(body_begin) {
+                fprintf(out, ":-");
+                body_begin = false;
+            }
             
             if(body_part->formula_type == NEGA) {
                 fprintf(out, "not ");
@@ -125,10 +130,7 @@ void Rule::output(FILE* out) {
     
     fprintf(out, ".\n"); 
     
-    for(vector<_formula*>::iterator iter = nega_atoms.begin(); iter != nega_atoms.end(); iter++) {       
-        if(iter == nega_atoms.begin()) {
-            fprintf(out, "\n");
-        }
+    for(vector<_formula*>::iterator iter = nega_atoms.begin(); iter != nega_atoms.end(); iter++) {
         fprintf(out, ":-");
         printAtom(*iter, out);
         fprintf(out, ", _");
