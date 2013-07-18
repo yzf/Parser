@@ -100,8 +100,6 @@ Formulas HengZhang::create(Formulas fmls) {
         else {
             Formulas hz_result = transform(cur_fml);
             temp_fmls.join_formulas(hz_result);
-            hz_result.output_formulas(stdout);
-            break;
         }
     }
     
