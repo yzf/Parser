@@ -13,6 +13,7 @@ int HengZhang::num_MAX = 0;
 int HengZhang::num_MIN = 0;
 int HengZhang::num_succ = 0;
 vector<string> HengZhang::succ_names;
+vector< vector<string> > HengZhang::domain_names;
 /**
  * 
  * @param name
@@ -70,7 +71,7 @@ Formula HengZhang::record_quantifier(Formula originalFml) {
     return Formula(fml, true);
 }
 
-void HengZhang::save_succ_name(string succ_name) {
+void HengZhang::save_succ_name(string succ_name, vector<string> domain_name) {
     //保存succ名字
     bool flag = true;
     for (vector<string>::iterator it = HengZhang::succ_names.begin();
@@ -82,6 +83,7 @@ void HengZhang::save_succ_name(string succ_name) {
     }
     if (flag) {
         HengZhang::succ_names.push_back(succ_name);
+        HengZhang::domain_names.push_back(domain_name);
     }
 }
 
@@ -126,12 +128,14 @@ Formulas HengZhang::transform(Formula fml) {
     vocabulary.set_intension_predicate(name_buf);
  
     string succ_name = "succ";
+    vector<string> domain_name;
     for (int i = 0; i < terms_Y.size(); ++ i) {
         succ_name += string("_") + vocabulary.names_domain[vocabulary.variable_at_domain[terms_Y[i]]];
+        domain_name.push_back(vocabulary.names_domain[vocabulary.variable_at_domain[terms_Y[i]]]);
     }
     symbol_succ = add_symbol(succ_name.c_str(), PREDICATE, terms_Y.size()+terms_Z.size());
     vocabulary.set_intension_predicate(succ_name.c_str());
-    save_succ_name(succ_name);
+    save_succ_name(succ_name, domain_name);
     
     Formulas fmls;
     fmls.push_formula(create_formula_1(originalFml));
