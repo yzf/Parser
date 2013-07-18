@@ -1065,7 +1065,7 @@ _formula* Cabalar::convert_negative_normal_form(_formula* fml)
     assert(fml);
 	assert(fml->formula_type == ATOM || fml->formula_type == NEGA ||
 		   fml->formula_type == DISJ || fml->formula_type == CONJ ||
-		   fml->formula_type == IMPL);
+		   fml->formula_type == IMPL || fml->formula_type == UNIV);
 
     //Cabalar. (2005)
     if(fml->formula_type == ATOM)
@@ -1116,6 +1116,9 @@ _formula* Cabalar::convert_negative_normal_form(_formula* fml)
         }
     }
     
+    else if (fml->formula_type == UNIV) {
+        fml->subformula_l = convert_negative_normal_form(fml->subformula_l);
+    }
     
     else//if(fml->formula_type == CONJ || 
 		//   fml->formula_type == DISJ ||

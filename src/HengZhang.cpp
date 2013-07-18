@@ -1,6 +1,7 @@
 #include "HengZhang.h"
 #include "utility.h"
 #include "S2DLP.h"
+#include <stdlib.h>
 
 //#define DEBUG
 
@@ -99,6 +100,8 @@ Formulas HengZhang::create(Formulas fmls) {
         else {
             Formulas hz_result = transform(cur_fml);
             temp_fmls.join_formulas(hz_result);
+            hz_result.output_formulas(stdout);
+            break;
         }
     }
     
@@ -118,21 +121,27 @@ Formulas HengZhang::transform(Formula fml) {
     char name_buf[512];
     sprintf(name_buf, "s_%d", num_s ++);
     symbol_s = add_symbol(name_buf, PREDICATE, terms_X.size()+terms_Y.size());
+    vocabulary.set_intension_predicate(name_buf);
+ 
     sprintf(name_buf, "t_%d", num_t ++);
     symbol_t = add_symbol(name_buf, PREDICATE, terms_X.size()+terms_Y.size());
+    vocabulary.set_intension_predicate(name_buf);
+ 
     string succ_name = "succ";
     for (int i = 0; i < terms_Y.size(); ++ i) {
         succ_name += string("_") + vocabulary.names_domain[vocabulary.variable_at_domain[terms_Y[i]]];
     }
     symbol_succ = add_symbol(succ_name.c_str(), PREDICATE, terms_Y.size()+terms_Z.size());
+    vocabulary.set_intension_predicate(succ_name.c_str());
     save_succ_name(succ_name);
     
     Formulas fmls;
     fmls.push_formula(create_formula_1(originalFml));
     fmls.push_formula(create_formula_2(originalFml));
     fmls.push_formula(create_formula_3(originalFml));
-    fmls.push_formula(create_formula_4_1(originalFml));
-    fmls.push_formula(create_formula_4_2(originalFml));
+    fmls.push_formula(create_formula_4(originalFml));
+//    fmls.push_formula(create_formula_4_1(originalFml));
+//    fmls.push_formula(create_formula_4_2(originalFml));
     fmls.push_formula(create_formula_5(originalFml));
 
     return fmls;
@@ -160,7 +169,7 @@ Formula HengZhang::create_formula_1(Formula originalFml) {
     return fml;
 }
 /**
- * 章衡量词消去公式二    (_succ(_Y,_Z) ^ s(_X,_Z)) v theta__(_X,_Y) -> s(_X,_Y)
+ * 章衡量词消去公式二    (succ(_Y,_Z) ^ s(_X,_Z)) v theta__(_X,_Y) -> s(_X,_Y)
  * @param originalFml 一阶语句
  * @return 
  */
@@ -222,6 +231,68 @@ Formula HengZhang::create_formula_3(Formula originalFml) {
 #endif
     
     return fml;
+}
+/**
+ * 章衡量词消去公式四   S(_X,_Y) ^ ( ( ~S(_X,_Z) ^ succ(_Y,_Z) ) | max_domian(_Y) )
+ *                               -> ( ( T(_X,_MAX) -> theta(_X,_Y) ) ^ 
+ *                                      ( theta(_X,_Y) -> T(_X,_MAX) ) )
+ *    max_domain(Y) = max_domain1(Y1) ^ max_domain2(Y2) ^ ... ^ max_domainN(YN)
+ * @param original_fml
+ * @return 
+ */
+Formula HengZhang::create_formula_4(Formula original_fml) {
+    
+    // 1 S(_X,_Y)
+    _term* term_x_y = combine_terms(terms_X, terms_Y);
+    _formula* s_x_y = composite_atom(ATOM, symbol_s, term_x_y);
+    // 2 ( ~S(_X,_Z)
+    _term* term_x_z = combine_terms(terms_X, terms_Z);
+    _formula* s_x_z = composite_atom(ATOM, symbol_s, term_x_z);
+    _formula* _s_x_z = composite_bool(NEGA, s_x_z, NULL);
+    // 3 succ(_Y,_Z)
+    _term* term_y_z = combine_terms(terms_Y, terms_Z);
+    _formula* succ_y_z = composite_atom(ATOM, symbol_succ, term_y_z);
+    // 4 max_domian(_Y)
+    vector<Formula> max_ys;
+    for (int i = 0; i < terms_Y.size(); ++ i) {
+        string name = string("max_") + vocabulary.names_domain[vocabulary.variable_at_domain[terms_Y[i]]];
+        _term* term_yi = (_term*)malloc(sizeof(_term));
+        term_yi->term_type = VARI;
+        term_yi->variable_id = terms_Y[i];
+        int pre_id = add_symbol(name.c_str(), PREDICATE, 1);
+        _formula* max_yi = composite_atom(ATOM, pre_id, term_yi);
+        max_ys.push_back(Formula(max_yi, false));
+    }
+    _formula* max_y = copy_formula(max_ys[0].get_formula());
+    for (int i = 1; i < max_ys.size(); ++ i) {
+        max_y = composite_bool(CONJ, max_y, copy_formula(max_ys[i].get_formula()));
+    }
+    // 5 T(_X,_MAX)
+    _term* term_x_max = combine_terms(terms_X, terms_MAX);
+    _formula* t_x_max  = composite_atom(ATOM, symbol_t, term_x_max);
+    // 6 theta(_X,_Y)
+    _formula* theta_x_y  = copy_formula(original_fml.get_formula());
+    // 7 theta(_X,_Y)
+    _formula* theta_x_y_2  = copy_formula(original_fml.get_formula());
+    // 8 T(_X,_MAX)
+    _term* term_x_max_2 = combine_terms(terms_X, terms_MAX);
+    _formula* t_x_max_2  = composite_atom(ATOM, symbol_t, term_x_max_2);
+    
+    _formula* lrl = composite_bool(CONJ, _s_x_z, succ_y_z);
+    _formula* lr = composite_bool(DISJ, lrl, max_y);
+    _formula* l = composite_bool(CONJ, s_x_y, lr);
+    _formula* rl = composite_bool(IMPL, t_x_max, theta_x_y);
+    _formula* rr = composite_bool(IMPL, theta_x_y_2, t_x_max_2);
+    _formula* r = composite_bool(CONJ, rl, rr);
+    _formula* F = composite_bool(IMPL, l, r);
+    
+    Formula fml = Formula(F, false);
+#ifdef DEBUG
+    fml.output(stdout);
+    fprintf(stdout, "\n");
+#endif
+    
+    return fml; 
 }
 /**
  * 章衡量词消去公式四_1    S(_X,_Y) ^ ~S(_X,_Z) ^ succ(_Y,_Z) 
