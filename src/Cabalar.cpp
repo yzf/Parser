@@ -794,6 +794,11 @@ Formulas Cabalar::Cabalar_Trans(_formula* fml)
 {
     assert(fml);
 
+    while(fml->formula_type == UNIV)
+    {
+        fml = fml->subformula_l;
+    }
+    
     // Cabalar. (2005) Left/Right side rules
     if(fml->formula_type == IMPL)
     {
