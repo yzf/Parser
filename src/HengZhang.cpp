@@ -155,12 +155,12 @@ Formulas HengZhang::transform(Formula fml) {
  */
 Formula HengZhang::create_formula_1(Formula originalFml) {
     // Add S(_X, _MIN)
-    _term* LLT   = combine_terms(terms_X, terms_MIN);
-    _formula* LL = composite_atom(ATOM, symbol_s, LLT);
+    _term* term_x_min   = combine_terms(terms_X, terms_MIN);
+    _formula* s_x_min = composite_atom(ATOM, symbol_s, term_x_min);
 
     // create structure
-    _formula* L  = composite_bool(NEGA, LL, NULL);
-    _formula* F  = composite_bool(NEGA, L,  NULL);
+    _formula* F  = composite_bool(NEGA, s_x_min, NULL);
+    F  = composite_bool(NEGA, F,  NULL);
     
     Formula fml = Formula(F, false);
 #ifdef DEBUG
@@ -175,30 +175,31 @@ Formula HengZhang::create_formula_1(Formula originalFml) {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::create_formula_2(Formula originalFml) {
+Formula HengZhang::create_formula_2(Formula original_fml) {
     //create atom formulas
-    _term* LLLT = combine_terms(terms_Y, terms_Z);
-    _formula* LLL = composite_atom(ATOM, symbol_succ, LLLT);
+    //1 (succ(_Y,_Z)
+    _term* term_y_z = combine_terms(terms_Y, terms_Z);
+    _formula* succ_y_z = composite_atom(ATOM, symbol_succ, term_y_z);
 
-    //2
-    _term* LLRT = combine_terms(terms_X, terms_Z);
-    _formula* LLR = composite_atom(ATOM, symbol_s, LLRT);
+    //2 s(_X,_Z)
+    _term* term_x_z = combine_terms(terms_X, terms_Z);
+    _formula* s_x_z = composite_atom(ATOM, symbol_s, term_x_z);
 
-    //3
-    Formula tmp = originalFml;
-    tmp.double_negation(vocabulary.index_intension_predicate,
+    //3 theta__(_X,_Y)
+    original_fml.double_negation(vocabulary.index_intension_predicate,
             vocabulary.num_intension_predicate);
-    _formula* LR = copy_formula(tmp.get_formula());
+    _formula* theta__ = copy_formula(original_fml.get_formula());
 
 
-    //4
-    _term* RT = combine_terms(terms_X, terms_Y);
-    _formula* R   = composite_atom(ATOM, symbol_s, RT);
+    //4 s(_X,_Y)
+    _term* term_x_y = combine_terms(terms_X, terms_Y);
+    _formula* s_x_y   = composite_atom(ATOM, symbol_s, term_x_y);
 
     //create structure
-    _formula* LL  = composite_bool(CONJ,LLL,LLR);
-    _formula* L   = composite_bool(DISJ,LL,LR);
-    _formula* F   = composite_bool(IMPL,L,R);
+    _formula* ll = composite_bool(CONJ, succ_y_z, s_x_z);
+    _formula* l = composite_bool(DISJ, ll, theta__);
+    _formula* r = s_x_y;
+    _formula* F = composite_bool(IMPL, l, r);
     
     Formula fml = Formula(F, false);
 #ifdef DEBUG
@@ -213,18 +214,17 @@ Formula HengZhang::create_formula_2(Formula originalFml) {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::create_formula_3(Formula originalFml) {
+Formula HengZhang::create_formula_3(Formula original_fml) {
     //create left sub-formula t(_X,_MIN)
-    _term* LT = combine_terms(terms_X, terms_MIN);
-    _formula* L   = composite_atom(ATOM, symbol_t, LT );
+    _term* term_x_min = combine_terms(terms_X, terms_MIN);
+    _formula* t_x_min   = composite_atom(ATOM, symbol_t, term_x_min);
 
     //create right sub-formula theta(_X,_MIN)
-    Formula tmp = Formula(originalFml);
-    tmp.replace_terms(terms_Y, terms_MIN);
-    _formula* R = copy_formula(tmp.get_formula());
+    original_fml.replace_terms(terms_Y, terms_MIN);
+    _formula* theta_x_min = copy_formula(original_fml.get_formula());
 
     //create structure
-    _formula* F   = composite_bool(DISJ,L,R);
+    _formula* F   = composite_bool(DISJ, t_x_min, theta_x_min);
     
     Formula fml = Formula(F, false);
 #ifdef DEBUG
@@ -404,42 +404,42 @@ Formula HengZhang::create_formula_4_2(Formula originalFml) {
  */
 Formula HengZhang::create_formula_5(Formula originalFml) {
     //1 _succ(_Y,_Z)
-    _term* tmp_term_1 = combine_terms(terms_Y, terms_Z);
-    _formula* SUCC  = composite_atom(ATOM, symbol_succ, tmp_term_1);
+    _term* term_y_z = combine_terms(terms_Y, terms_Z);
+    _formula* succ_y_z  = composite_atom(ATOM, symbol_succ, term_y_z);
 
     //2 T(_X,_Y)
-    _term* tmp_term_2 = combine_terms(terms_X, terms_Y);
-    _formula* TXY_1  = composite_atom(ATOM, symbol_t, tmp_term_2);
+    _term* term_x_y = combine_terms(terms_X, terms_Y);
+    _formula* t_x_y  = composite_atom(ATOM, symbol_t, term_x_y);
 
     //3 theta(_X,_Z)
     Formula tmp_formula_1 = Formula(originalFml);
     tmp_formula_1.replace_terms(terms_Y, terms_Z);
-    _formula* THETA_1 = copy_formula(tmp_formula_1.get_formula());
+    _formula* theta_x_z = copy_formula(tmp_formula_1.get_formula());
 
     //4 T(_X,_Z)
-    _term* tmp_term_3 = combine_terms(terms_X, terms_Z);
-    _formula* TXZ_1 = composite_atom(ATOM, symbol_t, tmp_term_3);
+    _term* term_x_z = combine_terms(terms_X, terms_Z);
+    _formula* t_x_z = composite_atom(ATOM, symbol_t, term_x_z);
     
     //5 theta(_X,_Z)
     Formula tmp_formula_2 = Formula(originalFml);
     tmp_formula_2.replace_terms(terms_Y, terms_Z);
-    _formula* THETA_2= copy_formula(tmp_formula_2.get_formula());
+    _formula* theta_y_z_2 = copy_formula(tmp_formula_2.get_formula());
     
     //6 T(_X,_Z)
-    _term* tmp_term_4 = combine_terms(terms_X, terms_Z);
-    _formula* TXZ_2 = composite_atom(ATOM, symbol_t, tmp_term_4);
+    _term* term_x_z_2 = combine_terms(terms_X, terms_Z);
+    _formula* t_x_z_2 = composite_atom(ATOM, symbol_t, term_x_z_2);
 
     //7 T(_X,_Y)
-    _term* tmp_term_5 = combine_terms(terms_X, terms_Y);
-    _formula* TXY_2  = composite_atom(ATOM, symbol_t, tmp_term_5);
+    _term* term_x_y_2 = combine_terms(terms_X, terms_Y);
+    _formula* t_x_y_2  = composite_atom(ATOM, symbol_t, term_x_y_2);
 
     //create structure
-    _formula* RLR = composite_bool(DISJ, THETA_1, TXZ_1);
-    _formula* RL = composite_bool(IMPL, TXY_1, RLR);
-    _formula* RRL = composite_bool(DISJ, THETA_2, TXZ_2);
-    _formula* RR = composite_bool(IMPL, RRL, TXY_2);
-    _formula* FF = composite_bool(CONJ, RL, RR);
-    _formula* F = composite_bool(IMPL, SUCC, FF);
+    _formula* rlr = composite_bool(DISJ, theta_x_z, t_x_z);
+    _formula* rl = composite_bool(IMPL, t_x_y, rlr);
+    _formula* rrl = composite_bool(DISJ, theta_y_z_2, t_x_z_2);
+    _formula* rr = composite_bool(IMPL, theta_y_z_2, t_x_y_2);
+    _formula* ff = composite_bool(CONJ, rl, rr);
+    _formula* F = composite_bool(IMPL, succ_y_z, ff);
     
     Formula fml = Formula(F, false);
 #ifdef DEBUG
