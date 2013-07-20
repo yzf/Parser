@@ -102,12 +102,12 @@ Formulas HengZhang::create(Formulas fmls) {
             cur_fml.fix_universal_quantifier();
             Formulas hz_result = transform(cur_fml);
             temp_fmls.join_formulas(hz_result);
-#ifdef DEBUG
+//#ifdef DEBUG
             printf("prenex:\n");
             cur_fml.output(stdout);
             printf("hengzhang:\n");
             hz_result.output_formulas(stdout);
-#endif
+//#endif
         }
     }
     
@@ -403,7 +403,7 @@ Formula HengZhang::create_formula_4_2(Formula originalFml) {
     return fml;
 }
 /**
- * 章衡量词消去公式五    _succ(_Y,_Z) -> 
+ * 章衡量词消去公式五    succ(_Y,_Z) -> 
  *      ( ( T(_X,_Y)-> (theta(_X,_Z) | T(_X,_Z)) ) ^ 
  *         ( (theta(_X,_Z) | T(_X,_Z)) -> T(_X,_Y) ) )
  * @param originalFml 一阶语句
@@ -430,7 +430,7 @@ Formula HengZhang::create_formula_5(Formula originalFml) {
     //5 theta(_X,_Z)
     Formula tmp_formula_2 = Formula(originalFml);
     tmp_formula_2.replace_terms(terms_Y, terms_Z);
-    _formula* theta_y_z_2 = copy_formula(tmp_formula_2.get_formula());
+    _formula* theta_x_z_2 = copy_formula(tmp_formula_2.get_formula());
     
     //6 T(_X,_Z)
     _term* term_x_z_2 = combine_terms(terms_X, terms_Z);
@@ -443,8 +443,8 @@ Formula HengZhang::create_formula_5(Formula originalFml) {
     //create structure
     _formula* rlr = composite_bool(DISJ, theta_x_z, t_x_z);
     _formula* rl = composite_bool(IMPL, t_x_y, rlr);
-    _formula* rrl = composite_bool(DISJ, theta_y_z_2, t_x_z_2);
-    _formula* rr = composite_bool(IMPL, theta_y_z_2, t_x_y_2);
+    _formula* rrl = composite_bool(DISJ, theta_x_z_2, t_x_z_2);
+    _formula* rr = composite_bool(IMPL, rrl, t_x_y_2);
     _formula* ff = composite_bool(CONJ, rl, rr);
     _formula* F = composite_bool(IMPL, succ_y_z, ff);
     

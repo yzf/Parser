@@ -1,8 +1,10 @@
 #include "Formula.h"
 #include "Formulas.h"
 #include "utility.h"
+#include <algorithm>
 #include <assert.h>
 #include <cstdlib>
+#include <cstring>
 
 Formula::Formula() {
     this->formula = NULL;
@@ -787,12 +789,22 @@ void Formula::mark_quantifier_variable_ids(map<int, bool> &vari_flag, _formula* 
 
 void Formula::fix_universal_quantifier() {
     map<int, bool> variables_flag;
+    vector<int> variables;
     mark_parameter_variable_ids(variables_flag, this->formula);
     mark_quantifier_variable_ids(variables_flag, this->formula);
     for (map<int, bool>::iterator it = variables_flag.begin(); 
             it != variables_flag.end(); ++ it) {
         if (it->second) {
-            this->formula = composite_qntf(UNIV, this->formula, it->first);
+            variables.push_back(-(it->first));
         }
+    }
+    sort(variables.begin(), variables.end());
+    for (vector<int>::iterator it = variables.begin();
+            it != variables.end(); ++ it) {
+        if (strncmp("MAX", vocabulary.names_variable[-(*it)], 3) == 0 ||
+                strncmp("MIN", vocabulary.names_variable[-(*it)], 3) == 0) {
+            continue;
+        }
+        this->formula = composite_qntf(UNIV, this->formula, -(*it));
     }
 }
