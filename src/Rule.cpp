@@ -2,6 +2,7 @@
 #include "Formula.h"
 #include "Vocabulary.h"
 #include "utility.h"
+#include "S2DLP.h"
 #include <cstdlib>
 
 Rule::Rule(Formula cabalar) {
@@ -73,7 +74,7 @@ void Rule::asp_modify() {
         while(cur->formula_type != ATOM) {
             cur = cur->subformula_l;
         }
-        if(head_part->formula_type == NEGA || !vocabulary.is_intension_predicate(cur->predicate_id)) {
+        if(head_part->formula_type == NEGA/* || !vocabulary.is_intension_predicate(cur->predicate_id)*/) {
             _formula* new_head_part = composite_bool(NEGA, copy_formula(head_part), NULL);
             head.erase(iter);            
             body.push_back(Formula(new_head_part, false));
@@ -103,10 +104,10 @@ void Rule::output(FILE* out) {
         
         if(head_part->formula_type == ATOM && head_part->predicate_id != PRED_FALSE 
                 && head_part->predicate_id != PRED_TRUE) {
-            printAtom(head_part, out);
-            
-            if(iter != head.end() - 1) fprintf(out, "|");
-        }               
+            printAtom(head_part, out);       
+            if(iter != head.end() - 1 && (iter+1)->get_formula()->predicate_id != PRED_FALSE &&
+                (iter+1)->get_formula()->predicate_id != PRED_TRUE) fprintf(out, "|");
+        }        
     }
     
     bool body_begin = true;
@@ -117,9 +118,9 @@ void Rule::output(FILE* out) {
         
         while(cur->formula_type != ATOM) {
             cur = cur->subformula_l;
-        }
+        }                
         
-        if(cur->predicate_id != PRED_TRUE && cur->predicate_id != PRED_FALSE) {
+        if(cur->predicate_id != PRED_TRUE && cur->predicate_id != PRED_FALSE) {            
             if(body_begin) {
                 fprintf(out, ":-");
                 body_begin = false;
@@ -130,19 +131,21 @@ void Rule::output(FILE* out) {
                 body_part = body_part->subformula_l;
                 if(body_part->formula_type == NEGA) {
                     bool exis = false;
-                    for(vector<Formula>::iterator it = nega_atoms.begin(); 
-                            it != nega_atoms.end();it++) {
+                    for(vector<Formula>::iterator it = S2DLP::instance().nega_predicates.begin(); 
+                            it != S2DLP::instance().nega_predicates.end();it++) {
                         if((it->get_formula())->predicate_id == body_part->subformula_l->predicate_id)
                             exis = true;
                     }
-                    if(!exis)
-                        nega_atoms.push_back(Formula(body_part->subformula_l, true));
+                    if(!exis) {
+                        S2DLP::instance().nega_predicates.push_back(Formula(body_part->subformula_l, true));  
+                    }
                     fprintf(out, "_");
                 }
             }            
             printAtom(cur, out);
-            if(iter != body.end() - 1) fprintf(out, ", "); 
-        }                      
+            if(iter != body.end() - 1 && (iter+1)->get_formula()->predicate_id != PRED_FALSE &&
+                (iter+1)->get_formula()->predicate_id != PRED_TRUE) fprintf(out, ",");            
+        }
     }  
     
     fprintf(out, ".\n");    

@@ -13,6 +13,7 @@
                 <sourceRootElem>src</sourceRootElem>
                 <sourceRootElem>parse</sourceRootElem>
                 <sourceRootElem>res</sourceRootElem>
+                <sourceRootElem>output</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

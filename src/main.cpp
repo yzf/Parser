@@ -55,7 +55,17 @@ int main(int argc, char** argv) {
     Translator.set_output_file(fout);
     Translator.convert();
     Translator.output_asp();
-
+    
+//    fflush(fout);
+//    
+//    FILE* file = popen("sort output/C.sample/sample.out | uniq", "r");
+//    FILE* final_output = fopen("output/C.sample/final.out", "w+");
+//    char line[1024];
+//    while (fgets(line, 1024, file) != NULL) {
+//        fprintf(final_output, "%s", line);
+//    }
+//    pclose(file);
+//    fclose(final_output);
 
     return 0;
 }

@@ -1,8 +1,5 @@
-[!X](cvr(X) -> i(X)).
-[!X][!Y][?Z]((i(X) -> set(X,Y)) -> (cvr(Z) -> set(Z,Y))).
+[?X][!Y]p(X, Y).
 
-{cvr, i, set}
+{p}
 
-<X@a; Y@b; Z@c>
-
-
+<X@a;Y@a>

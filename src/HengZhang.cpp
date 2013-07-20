@@ -264,6 +264,7 @@ Formula HengZhang::create_formula_4(Formula original_fml) {
         int pre_id = add_symbol(name.c_str(), PREDICATE, 1);
         _formula* max_yi = composite_atom(ATOM, pre_id, term_yi);
         max_ys.push_back(Formula(max_yi, false));
+        vocabulary.set_intension_predicate(name.c_str());
     }
     _formula* max_y = copy_formula(max_ys[0].get_formula());
     for (int i = 1; i < max_ys.size(); ++ i) {

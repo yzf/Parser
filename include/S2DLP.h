@@ -27,6 +27,7 @@ public:
     void set_origin_formulas(_formula*);
     void output_addition();
     void output_asp();
+    ~S2DLP();
     
 private:
     S2DLP();

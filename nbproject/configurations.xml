@@ -23,6 +23,14 @@
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
                    projectFiles="true">
+      <logicalFolder name="output" displayName="output" projectFiles="true">
+        <logicalFolder name="C.sample" displayName="C.sample" projectFiles="true">
+          <itemPath>output/C.sample/final.out</itemPath>
+          <itemPath>output/C.sample/ptree.out</itemPath>
+          <itemPath>output/C.sample/sample.d</itemPath>
+          <itemPath>output/C.sample/sample.out</itemPath>
+        </logicalFolder>
+      </logicalFolder>
       <logicalFolder name="res" displayName="res" projectFiles="true">
         <logicalFolder name="0.null" displayName="0.null" projectFiles="true">
           <itemPath>res/0.null/null.in</itemPath>
@@ -145,6 +153,7 @@
     <Elem>src</Elem>
     <Elem>parse</Elem>
     <Elem>res</Elem>
+    <Elem>output</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -184,6 +193,14 @@
       <item path="include/structs.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utility.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="output/C.sample/final.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="output/C.sample/ptree.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="output/C.sample/sample.d" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="output/C.sample/sample.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="parse/clean.sh" ex="false" tool="3" flavor2="0">
       </item>
@@ -378,6 +395,14 @@
       <item path="include/structs.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/utility.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="output/C.sample/final.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="output/C.sample/ptree.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="output/C.sample/sample.d" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="output/C.sample/sample.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="parse/clean.sh" ex="false" tool="3" flavor2="0">
       </item>

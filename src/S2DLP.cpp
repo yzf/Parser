@@ -1,12 +1,15 @@
 #include "S2DLP.h"
 #include <assert.h>
 
-S2DLP::S2DLP() {
-   /* this->origin_formulas = NULL;
-    this->zhangheng_formulas = NULL;
-    this->dlp_formulas = NULL;
-    this->dlp_rules = NULL;*/
+S2DLP::S2DLP() : output_file(NULL){
 }
+
+S2DLP::~S2DLP() {
+    if (this->output_file != NULL) {
+        fclose(this->output_file);
+    }
+}
+
 S2DLP& S2DLP::instance() {
     static S2DLP the_instance;
     return the_instance;
@@ -28,14 +31,17 @@ void S2DLP::set_output_file(FILE*& f) {
     this->output_file = f;
 }
 void S2DLP::output_origin_formulas() {
+    assert(this->output_file != NULL);
     fprintf(this->output_file, "origin_formulas:\n");
     this->origin_formulas.output_formulas(this->output_file);
 }
 void S2DLP::output_zhangheng_formulas() {    
+    assert(this->output_file != NULL);
     fprintf(this->output_file, "zhangheng_formulas:\n");
     this->zhangheng_formulas.output_formulas(this->output_file);
 }
 void S2DLP::output_dlp_formulas() {   
+    assert(this->output_file != NULL);
     fprintf(this->output_file, "dlp_formulas:\n");
     this->dlp_formulas.output_formulas(this->output_file);
 }
@@ -45,11 +51,12 @@ void S2DLP::set_origin_formulas(_formula* input) {
 }
 void S2DLP::output_addition() {
     fprintf(this->output_file, "%%NEW variable define\n");
-    for(vector<Formula>::iterator iter = nega_predicates.begin(); iter != nega_predicates.end(); iter++) {
-        fprintf(this->output_file, ":-");
+    for(vector<Formula>::iterator iter = S2DLP::instance().nega_predicates.begin(); 
+            iter != S2DLP::instance().nega_predicates.end(); iter++) {
+        fprintf(this->output_file, "_");
         printAtom(iter->get_formula(), this->output_file);
-        fprintf(this->output_file, ", _");
-        printAtom(iter->get_formula(), this->output_file);
+        fprintf(this->output_file, ":- not ");
+        printAtom(iter->get_formula(), this->output_file);        
         fprintf(this->output_file, ".\n");
     } 
     fprintf(this->output_file, "%%MIN and MAX domain\n");
@@ -60,7 +67,7 @@ void S2DLP::output_addition() {
     
     fprintf(this->output_file, "%%Variable domain\n");
     for(int i = 0; i < vocabulary.num_variable; i++) {
-        fprintf(this->output_file, "#domain %s(%s).\n", vocabulary.names_variable[i], vocabulary.names_domain[vocabulary.variable_at_domain[i]]);
+        fprintf(this->output_file, "#domain %s(%s).\n", vocabulary.names_domain[vocabulary.variable_at_domain[i]], vocabulary.names_variable[i]);
     }
     
     fprintf(this->output_file, "%%Addition rule for not intension\n");
@@ -82,7 +89,7 @@ void S2DLP::output_addition() {
         }
     }
     
-    fprintf(this->output_file, "%%Succ predicate definition\n");
+    fprintf(this->output_file, "\n%%Succ predicate definition\n");
     
     for(vector< vector<string> >::iterator itr = HengZhang::instance().domain_names.begin(); itr != HengZhang::instance().domain_names.end(); itr++) {
         addSucc(*itr);
@@ -97,7 +104,7 @@ void S2DLP::addSucc(vector<string> domains) {
         for(int i = 0; i < size; i++) {
             fprintf(this->output_file, "_%s", domains.at(i).c_str());
         }
-        fprintf(this->output_file, "%s(A1, A2):-A1==A2-1,%s(A1),%s(A2).\n", domains.at(0).c_str(), domains.at(0).c_str(), domains.at(0).c_str());
+        fprintf(this->output_file, "(A1, A2):-A1==A2-1,%s(A1),%s(A2).\n", domains.at(0).c_str(), domains.at(0).c_str());
     }
     else {
         for(int i = 0; i < size; i++) {
