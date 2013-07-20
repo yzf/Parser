@@ -39,7 +39,6 @@ Formula HengZhang::record_quantifier(Formula originalFml) {
     terms_MIN.clear();
     terms_MAX.clear();
     
-    int i = 0;
     _formula* fml = originalFml.get_formula();
     while(fml->formula_type == UNIV)
     {
@@ -61,7 +60,7 @@ Formula HengZhang::record_quantifier(Formula originalFml) {
         int id_max = add_symbol(name.c_str(), VARIABLE, 0);
         terms_MAX.push_back(id_max);
 
-        sprintf(str_buf,"NV_%d",i++);
+        sprintf(str_buf,"NV_%d", this->num_NV ++);
         terms_Z.push_back(add_symbol(str_buf, VARIABLE, 0));
 
         fml_temp = fml;
@@ -100,8 +99,15 @@ Formulas HengZhang::create(Formulas fmls) {
             final_fmls.push_formula(cur_fml);
         }
         else {
+            cur_fml.fix_universal_quantifier();
             Formulas hz_result = transform(cur_fml);
             temp_fmls.join_formulas(hz_result);
+#ifdef DEBUG
+            printf("prenex:\n");
+            cur_fml.output(stdout);
+            printf("hengzhang:\n");
+            hz_result.output_formulas(stdout);
+#endif
         }
     }
     

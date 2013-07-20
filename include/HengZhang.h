@@ -27,6 +27,7 @@ private:
     int num_MAX;
     int num_MIN;
     int num_succ;
+    int num_NV;
     
 public:
     vector<string> succ_names;

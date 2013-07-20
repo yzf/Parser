@@ -6,6 +6,7 @@
 #include "structs.h"
 #include <cstdio>
 #include "utility.h"
+#include <map>
 
 using namespace std;
 
@@ -40,6 +41,8 @@ private:
         
         bool in_list ( const int* list, int len, int obj );
         _formula* double_negation_formula(_formula* phi, const int* int_preds, int num_ip);
+        void mark_parameter_variable_ids(map<int, bool> &vari_flag, _formula* fml);
+        void mark_quantifier_variable_ids(map<int, bool> &vari_flag, _formula* fml);
 public:	
         Formula();
     	Formula(_formula* fml, bool copy);
@@ -66,6 +69,7 @@ public:
         Formula& operator = (const Formula& rhs);
         bool is_negative(const int* sm_preds, int num_sp, bool negative);
         void double_negation(const int* int_preds, int num_ip);
+        void fix_universal_quantifier();
 };
 
 #endif
