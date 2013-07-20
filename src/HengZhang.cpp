@@ -102,12 +102,12 @@ Formulas HengZhang::create(Formulas fmls) {
             cur_fml.fix_universal_quantifier();
             Formulas hz_result = transform(cur_fml);
             temp_fmls.join_formulas(hz_result);
-//#ifdef DEBUG
+#ifdef DEBUG
             printf("prenex:\n");
             cur_fml.output(stdout);
             printf("hengzhang:\n");
             hz_result.output_formulas(stdout);
-//#endif
+#endif
         }
     }
     

@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
     Translator.set_output_file(fout);
     Translator.convert();
 //    Translator.output_zhangheng_formulas();
-//    Translator.output_asp();
+    Translator.output_asp();
     
 //    fflush(fout);
 //    
