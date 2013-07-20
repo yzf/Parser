@@ -28,7 +28,7 @@ Rule& Rule::operator = (const Rule& rhs) {
 
 void Rule::divide_body(_formula* body) {
     if(body->formula_type != CONJ) {
-        this->head.push_back(Formula(body, true));
+        this->body.push_back(Formula(body, true));
     }
     else {
         divide_body(body->subformula_l);
@@ -74,7 +74,7 @@ void Rule::asp_modify() {
         while(cur->formula_type != ATOM) {
             cur = cur->subformula_l;
         }
-        if(head_part->formula_type == NEGA/* || !vocabulary.is_intension_predicate(cur->predicate_id)*/) {
+        if(head_part->formula_type == NEGA || (!vocabulary.is_intension_predicate(cur->predicate_id) && cur->predicate_id > 0)) {
             _formula* new_head_part = composite_bool(NEGA, copy_formula(head_part), NULL);
             head.erase(iter);            
             body.push_back(Formula(new_head_part, false));
@@ -86,15 +86,27 @@ void Rule::asp_modify() {
         _formula* body_part = iter->get_formula();
         _formula* cur = body_part;
         
-        while(cur->formula_type == NEGA && cur->subformula_l->formula_type != ATOM 
-                && cur->subformula_l->subformula_l->formula_type != ATOM) {
-            _formula* sub = cur->subformula_l;
-            if(sub->formula_type == NEGA && sub->subformula_l->formula_type == NEGA) {
-                cur->subformula_l = sub->subformula_l->subformula_l;
-                free(sub);
-                free(sub->subformula_l);
-            }
+        while(cur->formula_type != ATOM) {
+            cur = cur->subformula_l;
         }
+        
+       /* if(!vocabulary.is_intension_predicate(cur->predicate_id)) {
+            while(body_part->formula_type == NEGA && body_part->subformula_l->formula_type != ATOM) {
+                body_part = body_part->subformula_l->subformula_l;
+            }
+           // iter->set_formula(copy_formula(body_part));
+        }
+        else {*/
+            while(body_part->formula_type == NEGA && body_part->subformula_l->formula_type != ATOM 
+                && body_part->subformula_l->subformula_l->formula_type != ATOM) {
+                _formula* sub = body_part->subformula_l;
+                if(sub->formula_type == NEGA && sub->subformula_l->formula_type == NEGA) {
+                    body_part->subformula_l = sub->subformula_l->subformula_l;
+                    free(sub);
+                    free(sub->subformula_l);
+                }
+            }
+       // }
     }
 }
 
@@ -144,11 +156,14 @@ void Rule::output(FILE* out) {
             }            
             printAtom(cur, out);
             if(iter != body.end() - 1 && (iter+1)->get_formula()->predicate_id != PRED_FALSE &&
-                (iter+1)->get_formula()->predicate_id != PRED_TRUE) fprintf(out, ",");            
+                (iter+1)->get_formula()->predicate_id != PRED_TRUE) 
+                fprintf(out, ",");            
         }
+        fflush(out);
     }  
     
     fprintf(out, ".\n");    
+    fflush(out);
 }
 
 void Rule::printAtom(_formula* atom, FILE* out) {

@@ -140,7 +140,7 @@ Formulas HengZhang::transform(Formula fml) {
         domain_name.push_back(vocabulary.names_domain[vocabulary.variable_at_domain[terms_Y[i]]]);
     }
     symbol_succ = add_symbol(succ_name.c_str(), PREDICATE, terms_Y.size()+terms_Z.size());
-    vocabulary.set_intension_predicate(succ_name.c_str());
+//    vocabulary.set_intension_predicate(succ_name.c_str());
     save_succ_name(succ_name, domain_name);
     
     Formulas fmls;

@@ -739,48 +739,31 @@ void Formula::double_negation(const int* int_preds, int num_ip) {
     this->formula = double_negation_formula(this->formula, int_preds, num_ip);
 }
 
-void Formula::mark_parameter_variable_ids(map<int, bool> &variables_flag, _formula* fml) {
+void Formula::get_no_quantifier_variables(map<int, bool> &flag, vector<int> &varis, _formula* fml) {
     assert(fml);
     switch (fml->formula_type) {
+        case NEGA:
+            break;
         case UNIV:
         case EXIS:
-        case NEGA:
-            mark_parameter_variable_ids(variables_flag, fml->subformula_l);
+            flag[fml->variable_id] = true;
+            get_no_quantifier_variables(flag, varis, fml->subformula_l);
             break;
         case IMPL:
         case CONJ:
         case DISJ:
-            mark_parameter_variable_ids(variables_flag, fml->subformula_l);
-            mark_parameter_variable_ids(variables_flag, fml->subformula_r);
+            get_no_quantifier_variables(flag, varis, fml->subformula_l);
+            get_no_quantifier_variables(flag, varis, fml->subformula_r);
             break;
         case ATOM:
             for(int i = 0; i < vocabulary.predicate_arity(fml->predicate_id); ++ i)
             {
                 _term* term = fml->parameters + i;
-                variables_flag[term->variable_id] = true;
+                if (! flag[term->variable_id]) {
+                    flag[term->variable_id] = true;
+                    varis.push_back(-(term->variable_id));
+                }
             }
-            break;
-        default:
-            assert(0);
-    }
-}
-
-void Formula::mark_quantifier_variable_ids(map<int, bool> &vari_flag, _formula* fml) {
-    assert(fml);
-    switch (fml->formula_type) {
-        case UNIV:
-        case EXIS:
-            vari_flag[fml->variable_id] = false;
-            mark_quantifier_variable_ids(vari_flag, fml->subformula_l);
-            break;
-        case IMPL:
-        case CONJ:
-        case DISJ:
-            mark_quantifier_variable_ids(vari_flag, fml->subformula_l);
-            mark_quantifier_variable_ids(vari_flag, fml->subformula_r);
-            break;
-        case NEGA:
-        case ATOM:
             break;
         default:
             assert(0);
@@ -790,14 +773,7 @@ void Formula::mark_quantifier_variable_ids(map<int, bool> &vari_flag, _formula* 
 void Formula::fix_universal_quantifier() {
     map<int, bool> variables_flag;
     vector<int> variables;
-    mark_parameter_variable_ids(variables_flag, this->formula);
-    mark_quantifier_variable_ids(variables_flag, this->formula);
-    for (map<int, bool>::iterator it = variables_flag.begin(); 
-            it != variables_flag.end(); ++ it) {
-        if (it->second) {
-            variables.push_back(-(it->first));
-        }
-    }
+    get_no_quantifier_variables(variables_flag, variables, this->formula);
     sort(variables.begin(), variables.end());
     for (vector<int>::iterator it = variables.begin();
             it != variables.end(); ++ it) {

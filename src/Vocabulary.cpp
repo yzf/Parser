@@ -149,7 +149,7 @@ void Vocabulary::set_domain(char* variable, char* domain) {
     int id = query_symbol(domain, DOMAIN);
     int vid;
     
-    if(id = -1) {
+    if(id == -1) {
         this->names_domain[this->num_names_domain] = domain;
         id = this->num_names_domain++;
     }

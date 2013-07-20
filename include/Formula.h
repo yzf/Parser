@@ -41,8 +41,7 @@ private:
         
         bool in_list ( const int* list, int len, int obj );
         _formula* double_negation_formula(_formula* phi, const int* int_preds, int num_ip);
-        void mark_parameter_variable_ids(map<int, bool> &vari_flag, _formula* fml);
-        void mark_quantifier_variable_ids(map<int, bool> &vari_flag, _formula* fml);
+        void get_no_quantifier_variables(map<int, bool> &flag, vector<int> &varis, _formula* fml);
 public:	
         Formula();
     	Formula(_formula* fml, bool copy);

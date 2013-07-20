@@ -50,15 +50,6 @@ void S2DLP::set_origin_formulas(_formula* input) {
     this->origin_formulas = origin->divide_clause();
 }
 void S2DLP::output_addition() {
-    fprintf(this->output_file, "%%NEW variable define\n");
-    for(vector<Formula>::iterator iter = S2DLP::instance().nega_predicates.begin(); 
-            iter != S2DLP::instance().nega_predicates.end(); iter++) {
-        fprintf(this->output_file, "_");
-        printAtom(iter->get_formula(), this->output_file);
-        fprintf(this->output_file, ":- not ");
-        printAtom(iter->get_formula(), this->output_file);        
-        fprintf(this->output_file, ".\n");
-    } 
     fprintf(this->output_file, "%%MIN and MAX domain\n");
     for(int i = 0; i < vocabulary.num_names_domain; i++) {
         fprintf(this->output_file, "#domain min_%s(MIN_%s).\n", vocabulary.names_domain[i], vocabulary.names_domain[i]);
@@ -170,8 +161,19 @@ void S2DLP::printAtom(_formula* atom, FILE* out) {
 
 void S2DLP::output_asp() {
     assert(this->output_file != NULL);
+    output_addition();
+    
     for(vector<Rule>::iterator it = this->dlp_rules.begin(); it != this->dlp_rules.end(); it++) {
         (*it).output(this->output_file);
     }
-    output_addition();
+    
+    fprintf(this->output_file, "%%NEW variable define\n");
+    for(vector<Formula>::iterator iter = S2DLP::instance().nega_predicates.begin(); 
+            iter != S2DLP::instance().nega_predicates.end(); iter++) {
+        fprintf(this->output_file, "_");
+        printAtom(iter->get_formula(), this->output_file);
+        fprintf(this->output_file, ":- not ");
+        printAtom(iter->get_formula(), this->output_file);        
+        fprintf(this->output_file, ".\n");
+    } 
 }
