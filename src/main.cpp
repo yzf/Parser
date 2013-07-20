@@ -50,26 +50,11 @@ int main(int argc, char** argv) {
     }
     
     yyparse();
+    S2DLP Translator = S2DLP::instance();
     Translator.set_origin_formulas(gformula);
-    
-    HengZhang hz;
-    
-    Formulas hz_result;
-    Formulas result;
-    Cabalar cabalar;
-    
-    Formulas fmls = Translator.origin_formulas;
-    hz_result = hz.create(fmls);
-    Formulas cabalar_result = cabalar.convert_Cabalar(hz_result);
-    while (cabalar_result.size_formulas() > 0) {
-        Formula cur_fml = cabalar_result.top_formula();
-        cabalar_result.pop_formula();
-        printf("formula: ");
-        cur_fml.output(stdout);
-        Rule rule(cur_fml);
-        printf("rule:    ");
-        rule.output(stdout);
-    }
+    Translator.set_output_file(fout);
+    Translator.convert();
+    Translator.output_asp();
 
 
     return 0;

@@ -1,0 +1,100 @@
+:-not s_0(X,Y,MIN_c).
+i(X)|cvr(X).
+s_0(X,Y,Z)|succ_c(Z,NV_0)|s_0(X,Y,NV_0).
+s_0(X,Y,Z):-not _i(X), not _set(X,Y).
+s_0(X,Y,Z):-not _cvr(Z).
+s_0(X,Y,Z):-not _set(Z,Y), .
+set(MIN_c,Y)|t_0(X,Y,MIN_c)|cvr(MIN_c):-not _i(X).
+t_0(X,Y,MIN_c):-not _cvr(MIN_c), not _set(MIN_c,Y), not _i(X).
+set(MIN_c,Y)|t_0(X,Y,MIN_c)|cvr(MIN_c)|set(X,Y).
+t_0(X,Y,MIN_c)|set(X,Y):-not _cvr(MIN_c), not _set(MIN_c,Y).
+set(MIN_c,Y)|i(X)|t_0(X,Y,MIN_c)|cvr(MIN_c):-not _set(X,Y).
+i(X)|t_0(X,Y,MIN_c):-not _cvr(MIN_c), not _set(X,Y), not _set(MIN_c,Y).
+t_0(X,Y,MIN_c):-not _set(X,Y), not _cvr(MIN_c), not _set(MIN_c,Y).
+s_0(X,Y,Z):-not _set(Z,Y), not _cvr(Z).
+s_0(X,Y,Z):-not _set(Z,Y), not _i(X), not _set(X,Y).
+t_0(X,Y,MIN_c):-not _cvr(MIN_c), not _i(X), not _set(MIN_c,Y).
+succ_c(Z,NV_0):-not _cvr(NV_0), not _t_0(X,Y,Z), not _i(X), not _set(NV_0,Y), not _t_0(X,Y,NV_0).
+t_0(X,Y,Z)|succ_c(Z,NV_0):-not _i(X), not _set(X,Y).
+t_0(X,Y,Z)|succ_c(Z,NV_0):-not _cvr(NV_0).
+t_0(X,Y,Z)|set(NV_0,Y)|succ_c(Z,NV_0).
+cvr(NV_0)|t_0(X,Y,Z)|succ_c(Z,NV_0):-not _set(NV_0,Y).
+succ_c(Z,NV_0):-not _i(X), not _set(X,Y), not _t_0(X,Y,Z).
+succ_c(Z,NV_0):-not _cvr(NV_0), not _t_0(X,Y,Z).
+succ_c(Z,NV_0):-not _set(NV_0,Y), not _t_0(X,Y,Z).
+s_0(X,Y,Z):-not _i(X), not _cvr(Z), not _set(X,Y).
+succ_c(Z,NV_0)|s_0(X,Y,Z):-not _cvr(Z), not _t_0(X,Y,MAX_c), not _s_0(X,Y,NV_0), not _i(X), not _set(Z,Y).
+t_0(X,Y,MAX_c)|succ_c(Z,NV_0)|s_0(X,Y,Z):-not _i(X), not _s_0(X,Y,NV_0), not _set(X,Y).
+t_0(X,Y,MAX_c)|succ_c(Z,NV_0)|s_0(X,Y,Z):-not _cvr(Z), not _s_0(X,Y,NV_0).
+t_0(X,Y,MAX_c)|set(Z,Y)|succ_c(Z,NV_0)|s_0(X,Y,Z):-not _s_0(X,Y,NV_0).
+cvr(Z)|t_0(X,Y,MAX_c)|succ_c(Z,NV_0)|s_0(X,Y,Z):-not _set(Z,Y), not _s_0(X,Y,NV_0).
+succ_c(Z,NV_0)|s_0(X,Y,Z):-not _i(X), not _set(X,Y), not _t_0(X,Y,MAX_c), not _s_0(X,Y,NV_0).
+succ_c(Z,NV_0)|s_0(X,Y,Z):-not _cvr(Z), not _t_0(X,Y,MAX_c), not _s_0(X,Y,NV_0).
+succ_c(Z,NV_0)|s_0(X,Y,Z):-not _set(Z,Y), not _t_0(X,Y,MAX_c), not _s_0(X,Y,NV_0).
+s_0(X,Y,Z):-not _cvr(Z), not _t_0(X,Y,MAX_c), not max_c(Z), not _i(X), not _set(Z,Y).
+t_0(X,Y,MAX_c)|s_0(X,Y,Z):-not _i(X), not max_c(Z), not _set(X,Y).
+t_0(X,Y,MAX_c)|s_0(X,Y,Z):-not _cvr(Z), not max_c(Z).
+t_0(X,Y,MAX_c)|set(Z,Y)|s_0(X,Y,Z):-not max_c(Z).
+cvr(Z)|t_0(X,Y,MAX_c)|s_0(X,Y,Z):-not _set(Z,Y), not max_c(Z).
+s_0(X,Y,Z):-not _i(X), not _set(X,Y), not _t_0(X,Y,MAX_c), not max_c(Z).
+s_0(X,Y,Z):-not _cvr(Z), not _t_0(X,Y,MAX_c), not max_c(Z).
+s_0(X,Y,Z):-not _set(Z,Y), not _t_0(X,Y,MAX_c), not max_c(Z).
+set(NV_0,Y)|t_0(X,Y,NV_0)|cvr(NV_0)|t_0(X,Y,Z)|succ_c(Z,NV_0):-not _i(X).
+t_0(X,Y,NV_0)|t_0(X,Y,Z)|succ_c(Z,NV_0):-not _cvr(NV_0), not _set(NV_0,Y), not _i(X).
+set(NV_0,Y)|t_0(X,Y,NV_0)|cvr(NV_0)|set(X,Y)|t_0(X,Y,Z)|succ_c(Z,NV_0).
+t_0(X,Y,NV_0)|set(X,Y)|t_0(X,Y,Z)|succ_c(Z,NV_0):-not _cvr(NV_0), not _set(NV_0,Y).
+i(X)|set(NV_0,Y)|t_0(X,Y,NV_0)|cvr(NV_0)|t_0(X,Y,Z)|succ_c(Z,NV_0):-not _set(X,Y).
+i(X)|t_0(X,Y,NV_0)|t_0(X,Y,Z)|succ_c(Z,NV_0):-not _set(X,Y), not _cvr(NV_0), not _set(NV_0,Y).
+t_0(X,Y,NV_0)|t_0(X,Y,Z)|succ_c(Z,NV_0):-not _cvr(NV_0), not _set(X,Y), not _set(NV_0,Y).
+succ_c(Z,NV_0):-not _cvr(NV_0), not _set(X,Y), not _t_0(X,Y,Z), not _t_0(X,Y,NV_0), not _set(NV_0,Y).
+set(X,Y)|t_0(X,Y,Z)|i(X)|succ_c(Z,NV_0):-not _set(NV_0,Y).
+t_0(X,Y,Z)|succ_c(Z,NV_0):-not _set(NV_0,Y), not _i(X), not _set(X,Y).
+s_0(X,Y,Z):-not _set(Z,Y), not _i(X), not _set(X,Y).
+set(Z,Y)|cvr(Z)|t_0(X,Y,MAX_c)|succ_c(Z,NV_0)|s_0(X,Y,Z):-not _i(X), not _s_0(X,Y,NV_0).
+t_0(X,Y,MAX_c)|succ_c(Z,NV_0)|s_0(X,Y,Z):-not _cvr(Z), not _set(Z,Y), not _i(X), not _s_0(X,Y,NV_0).
+set(Z,Y)|cvr(Z)|set(X,Y)|t_0(X,Y,MAX_c)|succ_c(Z,NV_0)|s_0(X,Y,Z):-not _s_0(X,Y,NV_0).
+set(X,Y)|t_0(X,Y,MAX_c)|succ_c(Z,NV_0)|s_0(X,Y,Z):-not _cvr(Z), not _set(Z,Y), not _s_0(X,Y,NV_0).
+i(X)|set(Z,Y)|cvr(Z)|t_0(X,Y,MAX_c)|succ_c(Z,NV_0)|s_0(X,Y,Z):-not _set(X,Y), not _s_0(X,Y,NV_0).
+i(X)|t_0(X,Y,MAX_c)|succ_c(Z,NV_0)|s_0(X,Y,Z):-not _set(X,Y), not _cvr(Z), not _set(Z,Y), not _s_0(X,Y,NV_0).
+t_0(X,Y,MAX_c)|succ_c(Z,NV_0)|s_0(X,Y,Z):-not _cvr(Z), not _set(X,Y), not _s_0(X,Y,NV_0), not _set(Z,Y).
+succ_c(Z,NV_0)|s_0(X,Y,Z):-not _cvr(Z), not _set(X,Y), not _t_0(X,Y,MAX_c), not _s_0(X,Y,NV_0), not _set(Z,Y).
+set(X,Y)|t_0(X,Y,MAX_c)|i(X)|succ_c(Z,NV_0)|s_0(X,Y,Z):-not _set(Z,Y), not _s_0(X,Y,NV_0).
+t_0(X,Y,MAX_c)|succ_c(Z,NV_0)|s_0(X,Y,Z):-not _set(Z,Y), not _i(X), not _set(X,Y), not _s_0(X,Y,NV_0).
+set(Z,Y)|cvr(Z)|t_0(X,Y,MAX_c)|s_0(X,Y,Z):-not _i(X), not max_c(Z).
+t_0(X,Y,MAX_c)|s_0(X,Y,Z):-not _cvr(Z), not _set(Z,Y), not _i(X), not max_c(Z).
+set(Z,Y)|cvr(Z)|set(X,Y)|t_0(X,Y,MAX_c)|s_0(X,Y,Z):-not max_c(Z).
+set(X,Y)|t_0(X,Y,MAX_c)|s_0(X,Y,Z):-not _cvr(Z), not _set(Z,Y), not max_c(Z).
+i(X)|set(Z,Y)|cvr(Z)|t_0(X,Y,MAX_c)|s_0(X,Y,Z):-not _set(X,Y), not max_c(Z).
+i(X)|t_0(X,Y,MAX_c)|s_0(X,Y,Z):-not _set(X,Y), not _cvr(Z), not _set(Z,Y), not max_c(Z).
+t_0(X,Y,MAX_c)|s_0(X,Y,Z):-not _cvr(Z), not _set(X,Y), not max_c(Z), not _set(Z,Y).
+s_0(X,Y,Z):-not _cvr(Z), not _set(X,Y), not _t_0(X,Y,MAX_c), not max_c(Z), not _set(Z,Y).
+set(X,Y)|t_0(X,Y,MAX_c)|i(X)|s_0(X,Y,Z):-not _set(Z,Y), not max_c(Z).
+t_0(X,Y,MAX_c)|s_0(X,Y,Z):-not _set(Z,Y), not _i(X), not _set(X,Y), not max_c(Z).
+t_0(X,Y,NV_0)|t_0(X,Y,Z)|succ_c(Z,NV_0):-not _cvr(NV_0), not _i(X), not _set(NV_0,Y).
+set(X,Y)|t_0(X,Y,Z)|i(X)|succ_c(Z,NV_0):-not _cvr(NV_0).
+t_0(X,Y,Z)|succ_c(Z,NV_0):-not _i(X), not _cvr(NV_0), not _set(X,Y).
+s_0(X,Y,Z):-not _i(X), not _cvr(Z), not _set(X,Y).
+t_0(X,Y,MAX_c)|succ_c(Z,NV_0)|s_0(X,Y,Z):-not _cvr(Z), not _i(X), not _s_0(X,Y,NV_0), not _set(Z,Y).
+set(X,Y)|t_0(X,Y,MAX_c)|i(X)|succ_c(Z,NV_0)|s_0(X,Y,Z):-not _cvr(Z), not _s_0(X,Y,NV_0).
+t_0(X,Y,MAX_c)|succ_c(Z,NV_0)|s_0(X,Y,Z):-not _i(X), not _cvr(Z), not _set(X,Y), not _s_0(X,Y,NV_0).
+t_0(X,Y,MAX_c)|s_0(X,Y,Z):-not _cvr(Z), not _i(X), not max_c(Z), not _set(Z,Y).
+set(X,Y)|t_0(X,Y,MAX_c)|i(X)|s_0(X,Y,Z):-not _cvr(Z), not max_c(Z).
+t_0(X,Y,MAX_c)|s_0(X,Y,Z):-not _i(X), not _cvr(Z), not _set(X,Y), not max_c(Z).
+%NEW variable define
+%MIN and MAX domain
+#domain min_a(MIN_a).
+#domain max_a(MAX_a).
+#domain min_b(MIN_b).
+#domain max_b(MAX_b).
+#domain min_c(MIN_c).
+#domain max_c(MAX_c).
+%Variable domain
+#domain X(a).
+#domain Y(b).
+#domain Z(c).
+#domain MIN_c(a).
+#domain MAX_c(a).
+#domain NV_0(a).
+%Addition rule for not intension
+max_c(A)|_max_c(A)%Succ predicate definition
+succ_cc(A1, A2):-A1==A2-1,c(A1),c(A2).

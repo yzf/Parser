@@ -10,13 +10,24 @@ Rule::Rule(Formula cabalar) {
 }
 
 Rule::~Rule() {
-    
+      
+}
+
+Rule::Rule(const Rule& rhs) {
+    this->head = rhs.head;
+    this->body = rhs.body;
+    this->nega_atoms = rhs.nega_atoms;
+}
+
+Rule& Rule::operator = (const Rule& rhs) {
+    this->head = rhs.head;
+    this->body = rhs.body;
+    this->nega_atoms = rhs.nega_atoms;
 }
 
 void Rule::divide_body(_formula* body) {
     if(body->formula_type != CONJ) {
-        _formula* body_part = copy_formula(body);
-        this->body.push_back(body_part);
+        this->head.push_back(Formula(body, true));
     }
     else {
         divide_body(body->subformula_l);
@@ -26,8 +37,7 @@ void Rule::divide_body(_formula* body) {
 
 void Rule::divide_head(_formula* head) {
     if(head->formula_type != DISJ) {
-        _formula* head_part = copy_formula(head);
-        this->head.push_back(head_part);
+        this->head.push_back(Formula(head, true));
     }
     else {
         divide_head(head->subformula_l);
@@ -56,23 +66,23 @@ void Rule::convert_formula_rule(_formula* cabalar) {
 }
 
 void Rule::asp_modify() {
-    for(vector<_formula*>::iterator iter = head.begin(); iter != head.end(); iter++) {
-        _formula* head_part = *iter;
+    for(vector<Formula>::iterator iter = head.begin(); iter != head.end(); iter++) {
+        _formula* head_part = iter->get_formula();
         _formula* cur = head_part;
         
         while(cur->formula_type != ATOM) {
             cur = cur->subformula_l;
         }
         if(head_part->formula_type == NEGA || !vocabulary.is_intension_predicate(cur->predicate_id)) {
-            head_part = composite_bool(NEGA, head_part, NULL);
+            _formula* new_head_part = composite_bool(NEGA, copy_formula(head_part), NULL);
             head.erase(iter);            
-            body.push_back(head_part);
+            body.push_back(Formula(new_head_part, false));
             iter--;
         }               
     }
     
-    for(vector<_formula*>::iterator iter = body.begin(); iter != body.end(); iter++) {
-        _formula* body_part = *iter;
+    for(vector<Formula>::iterator iter = body.begin(); iter != body.end(); iter++) {
+        _formula* body_part = iter->get_formula();
         _formula* cur = body_part;
         
         while(cur->formula_type == NEGA && cur->subformula_l->formula_type != ATOM 
@@ -88,8 +98,8 @@ void Rule::asp_modify() {
 }
 
 void Rule::output(FILE* out) {
-    for(vector<_formula*>::iterator iter = head.begin(); iter != head.end(); iter++) {
-        _formula* head_part = *iter;
+    for(vector<Formula>::iterator iter = head.begin(); iter != head.end(); iter++) {
+        _formula* head_part = iter->get_formula();
         
         if(head_part->formula_type == ATOM && head_part->predicate_id != PRED_FALSE 
                 && head_part->predicate_id != PRED_TRUE) {
@@ -101,8 +111,8 @@ void Rule::output(FILE* out) {
     
     bool body_begin = true;
     
-    for(vector<_formula*>::iterator iter = body.begin(); iter != body.end(); iter++) {
-        _formula* body_part = *iter;
+    for(vector<Formula>::iterator iter = body.begin(); iter != body.end(); iter++) {
+        _formula* body_part = iter->get_formula();
         _formula* cur = body_part;
         
         while(cur->formula_type != ATOM) {
@@ -119,7 +129,14 @@ void Rule::output(FILE* out) {
                 fprintf(out, "not ");
                 body_part = body_part->subformula_l;
                 if(body_part->formula_type == NEGA) {
-                    nega_atoms.push_back(body_part->subformula_l);
+                    bool exis = false;
+                    for(vector<Formula>::iterator it = nega_atoms.begin(); 
+                            it != nega_atoms.end();it++) {
+                        if((it->get_formula())->predicate_id == body_part->subformula_l->predicate_id)
+                            exis = true;
+                    }
+                    if(!exis)
+                        nega_atoms.push_back(Formula(body_part->subformula_l, true));
                     fprintf(out, "_");
                 }
             }            
@@ -128,15 +145,7 @@ void Rule::output(FILE* out) {
         }                      
     }  
     
-    fprintf(out, ".\n"); 
-    
-    for(vector<_formula*>::iterator iter = nega_atoms.begin(); iter != nega_atoms.end(); iter++) {
-        fprintf(out, ":-");
-        printAtom(*iter, out);
-        fprintf(out, ", _");
-        printAtom(*iter, out);
-        fprintf(out, ".\n");
-    }    
+    fprintf(out, ".\n");    
 }
 
 void Rule::printAtom(_formula* atom, FILE* out) {
@@ -157,9 +166,9 @@ void Rule::printAtom(_formula* atom, FILE* out) {
 }
 
 bool Rule::isUseless() {
-    for(vector<_formula*>::iterator hit = head.begin(); hit != head.end(); hit++) {
-        for(vector<_formula*>::iterator bit = body.begin(); bit != body.end(); bit++) {
-            if(compare_formula(*hit, *bit)) {
+    for(vector<Formula>::iterator hit = head.begin(); hit != head.end(); hit++) {
+        for(vector<Formula>::iterator bit = body.begin(); bit != body.end(); bit++) {
+            if(compare_formula(hit->get_formula(), bit->get_formula())) {
                 return true;
             }
         }

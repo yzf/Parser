@@ -282,6 +282,33 @@ _formula* copy_formula (const _formula *fml)
     return newFormula;
 }
 
+void delete_formula( _formula* fml ) {
+    assert ( fml );
+
+    switch ( fml->formula_type )
+    {
+    case ATOM:
+        if(fml->parameters)
+	delete_terms(fml->parameters, vocabulary.predicate_arity(fml->predicate_id));
+        break;
+    case CONJ:
+    case DISJ:
+    case IMPL:
+        assert ( fml->subformula_r );
+        delete_formula(fml->subformula_r);
+    case NEGA:
+    case UNIV:
+    case EXIS:
+        assert ( fml->subformula_l );
+        delete_formula(fml->subformula_l);
+        break;
+    default:
+        assert ( 0 );
+    }
+
+    free(fml);
+}
+
 bool compare_formula(const _formula* phi, const _formula* psi) {
     int k;
 

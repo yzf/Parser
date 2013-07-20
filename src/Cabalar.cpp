@@ -21,9 +21,9 @@ Cabalar::Cabalar()
     
 }
         
-Cabalar::~Cabalar()
-{
-    
+Cabalar& Cabalar::instance() {
+    static Cabalar the_instance;
+    return the_instance;
 }
        
 

@@ -43,6 +43,7 @@ _formula* Formula::get_formula()
         
 void Formula::set_formula(_formula* f)
 {
+    delete_formula(this->formula);
     this->formula = f;
 }
 
@@ -80,33 +81,6 @@ bool Formula::is_child_universal(_formula* fml) {
 
 bool Formula::is_universal() {
 	return is_child_universal(this->formula);
-}
-
-void Formula::delete_formula( _formula* fml ) {
-    assert ( fml );
-
-    switch ( fml->formula_type )
-    {
-    case ATOM:
-        if(fml->parameters)
-	delete_terms(fml->parameters, vocabulary.predicate_arity(fml->predicate_id));
-        break;
-    case CONJ:
-    case DISJ:
-    case IMPL:
-        assert ( fml->subformula_r );
-        delete_formula(fml->subformula_r);
-    case NEGA:
-    case UNIV:
-    case EXIS:
-        assert ( fml->subformula_l );
-        delete_formula(fml->subformula_l);
-        break;
-    default:
-        assert ( 0 );
-    }
-
-    free(fml);
 }
 
 void Formula::remove_from_prenex(_formula* parent, int d, _formula* tag) {    

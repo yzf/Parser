@@ -37,6 +37,8 @@ _formula* composite_bool(FORMULA_TYPE formula_type,
 							_formula* subformula_l, _formula* subformula_r);
 _formula* copy_formula(const _formula *fml);
 
+void delete_formula( _formula* fml );
+
 bool compare_formula(const _formula* phi, const _formula* psi);
 //formula transforms
 ///////////////////////////////////////////////////////////////////////////////

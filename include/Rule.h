@@ -5,9 +5,9 @@
 #include <vector>
 
 class Rule{
-    private:
-        vector<_formula*> head;
-        vector<_formula*> body;
+    public:
+        vector<Formula> head;
+        vector<Formula> body;
 
         void convert_formula_rule(_formula*);
         void divide_body(_formula* body);
@@ -15,10 +15,13 @@ class Rule{
         void asp_modify();
         
         void printAtom(_formula*, FILE*);
-        vector<_formula*> nega_atoms;
+        vector<Formula> nega_atoms;
     public:
         Rule(Formula);
         ~Rule();
+        Rule(const Rule& rhs);
+        Rule& operator = (const Rule& rhs);
+        
 
         bool isUseless();
         void output(FILE* out);

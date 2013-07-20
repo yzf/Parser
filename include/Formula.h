@@ -5,6 +5,7 @@
 #include <vector>
 #include "structs.h"
 #include <cstdio>
+#include "utility.h"
 
 using namespace std;
 
@@ -17,7 +18,6 @@ private:
         bool is_prenex_formula;                
         
 	bool is_child_universal(_formula*);
-	void delete_formula (_formula* fml);
          void remove_from_prenex(_formula* parent, int d, _formula* tag);
         _formula* find_prenex_quanlifier(_formula* fml, int var_id);
 	bool find_var_formula (_formula* phi, int var_id);

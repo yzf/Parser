@@ -11,19 +11,27 @@
 
 class S2DLP{
 public:
-	Formulas origin_formulas;
-        Formulas zhangheng_formulas;
-        Formulas dlp_formulas;
-	vector<Rule> dlp_rules;
-        FILE* output_file;
+    Formulas origin_formulas;
+    Formulas zhangheng_formulas;
+    Formulas dlp_formulas;
+    vector<Rule> dlp_rules;
+    FILE* output_file;
+    vector<Formula> nega_predicates;
 public:
-	S2DLP();
-	void convert(FILE* output);
-        void output_origin_formulas();
-        void output_zhangheng_formulas();
-        void output_dlp_formulas();
-        void set_output_file(FILE*&);
-        void set_origin_formulas(_formula*);
+    static S2DLP& instance();
+    void convert();
+    void output_origin_formulas();
+    void output_zhangheng_formulas();
+    void output_dlp_formulas();
+    void set_output_file(FILE*&);
+    void set_origin_formulas(_formula*);
+    void output_addition();
+    void output_asp();
+    
+private:
+    S2DLP();
+    void addSucc(vector<string> domains); 
+    void printAtom(_formula* atom, FILE* out);
 };
 
 #endif
