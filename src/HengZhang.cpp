@@ -147,11 +147,12 @@ Formulas HengZhang::transform(Formula fml) {
     fmls.push_formula(create_formula_1(originalFml));
     fmls.push_formula(create_formula_2(originalFml));
     fmls.push_formula(create_formula_3(originalFml));
-    fmls.push_formula(create_formula_4(originalFml));
-//    fmls.push_formula(create_formula_4_1(originalFml));
-//    fmls.push_formula(create_formula_4_2(originalFml));
-    fmls.push_formula(create_formula_5(originalFml));
-
+//    fmls.push_formula(create_formula_4(originalFml));
+    fmls.push_formula(create_formula_4_1(originalFml));
+    fmls.push_formula(create_formula_4_2(originalFml));
+//    fmls.push_formula(create_formula_5(originalFml));
+    fmls.push_formula(create_formula_5_1(originalFml));
+    fmls.push_formula(create_formula_5_2(originalFml));
     return fmls;
 }
 /**
@@ -240,16 +241,8 @@ Formula HengZhang::create_formula_3(Formula original_fml) {
     
     return fml;
 }
-/**
- * 章衡量词消去公式四   S(_X,_Y) ^ ( ( ~S(_X,_Z) ^ succ(_Y,_Z) ) | max_domian(_Y) )
- *                               -> ( ( T(_X,_MAX) -> theta(_X,_Y) ) ^ 
- *                                      ( theta(_X,_Y) -> T(_X,_MAX) ) )
- *    max_domain(Y) = max_domain1(Y1) ^ max_domain2(Y2) ^ ... ^ max_domainN(YN)
- * @param original_fml
- * @return 
- */
-Formula HengZhang::create_formula_4(Formula original_fml) {
-    
+
+_formula* HengZhang::generate_formula_4_left() {
     // 1 S(_X,_Y)
     _term* term_x_y = combine_terms(terms_X, terms_Y);
     _formula* s_x_y = composite_atom(ATOM, symbol_s, term_x_y);
@@ -276,6 +269,20 @@ Formula HengZhang::create_formula_4(Formula original_fml) {
     for (int i = 1; i < max_ys.size(); ++ i) {
         max_y = composite_bool(CONJ, max_y, copy_formula(max_ys[i].get_formula()));
     }
+    _formula* lrl = composite_bool(CONJ, _s_x_z, succ_y_z);
+    _formula* lr = composite_bool(DISJ, lrl, max_y);
+    _formula* l = composite_bool(CONJ, s_x_y, lr);
+    return l;
+}
+/**
+ * 章衡量词消去公式四   S(_X,_Y) ^ ( ( ~S(_X,_Z) ^ succ(_Y,_Z) ) | max_domian(_Y) )
+ *                               -> ( ( T(_X,_MAX) -> theta(_X,_Y) ) ^ 
+ *                                      ( theta(_X,_Y) -> T(_X,_MAX) ) )
+ *    max_domain(Y) = max_domain1(Y1) ^ max_domain2(Y2) ^ ... ^ max_domainN(YN)
+ * @param original_fml
+ * @return 
+ */
+Formula HengZhang::create_formula_4(Formula original_fml) {
     // 5 T(_X,_MAX)
     _term* term_x_max = combine_terms(terms_X, terms_MAX);
     _formula* t_x_max  = composite_atom(ATOM, symbol_t, term_x_max);
@@ -287,9 +294,7 @@ Formula HengZhang::create_formula_4(Formula original_fml) {
     _term* term_x_max_2 = combine_terms(terms_X, terms_MAX);
     _formula* t_x_max_2  = composite_atom(ATOM, symbol_t, term_x_max_2);
     
-    _formula* lrl = composite_bool(CONJ, _s_x_z, succ_y_z);
-    _formula* lr = composite_bool(DISJ, lrl, max_y);
-    _formula* l = composite_bool(CONJ, s_x_y, lr);
+    _formula* l = generate_formula_4_left();
     _formula* rl = composite_bool(IMPL, t_x_max, theta_x_y);
     _formula* rr = composite_bool(IMPL, theta_x_y_2, t_x_max_2);
     _formula* r = composite_bool(CONJ, rl, rr);
@@ -304,51 +309,20 @@ Formula HengZhang::create_formula_4(Formula original_fml) {
     return fml; 
 }
 /**
- * 章衡量词消去公式四_1    S(_X,_Y) ^ ~S(_X,_Z) ^ succ(_Y,_Z) 
- *                      -> ( (T(_X,_MAX) -> theta(_X,_Y)) 
- *                            ^ (theta(_X,_Y) -> T(_X,_MAX)) )
+ * 章衡量词消去公式四_1    S(_X,_Y) ^ ( ( ~S(_X,_Z) ^ succ(_Y,_Z) ) | max_domian(_Y) )
+ *                               -> ( T(_X,_MAX) -> theta(_X,_Y) )
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::create_formula_4_1(Formula originalFml) {
-    //1 S(_X,_Y)
-    _term* term_x_y = combine_terms(terms_X, terms_Y);
-    _formula* s_x_y = composite_atom(ATOM, symbol_s, term_x_y);
-
-    //2 ~S(_X,_Z)
-    _term* term_x_z = combine_terms(terms_X,terms_Z);
-    _formula* s_x_z  = composite_atom(ATOM, symbol_s, term_x_z);
-    _formula* _s_x_z = composite_bool(NEGA, s_x_z, NULL);
-
-    //3 succ(_Y,_Z)
-    _term* term_y_z = combine_terms(terms_Y, terms_Z);
-    _formula* succ_y_z = composite_atom(ATOM, symbol_succ, term_y_z);
-
-    //4 T(_X,_MAX)
+Formula HengZhang::create_formula_4_1(Formula original_fml) {
+    // 5 T(_X,_MAX)
     _term* term_x_max = combine_terms(terms_X, terms_MAX);
     _formula* t_x_max  = composite_atom(ATOM, symbol_t, term_x_max);
-
-    //5 theta(_X,_Y)
-    Formula tmp_formula_1 = Formula(originalFml);
-    _formula* theta_x_y  = copy_formula(tmp_formula_1.get_formula());
-
-    //6 theta(_X,_Y)
-    Formula tmp_formula_2 = Formula(originalFml);
-    _formula* theta_x_y_2  = copy_formula(tmp_formula_2.get_formula());
+    // 6 theta(_X,_Y)
+    _formula* theta_x_y  = copy_formula(original_fml.get_formula());
     
-    //7 T(_X,_MAX)
-    _term* term_x_max_2 = combine_terms(terms_X, terms_MAX);
-    _formula* t_x_max_2  = composite_atom(ATOM, symbol_t, term_x_max_2);
-
-    //create structure
-    // S(_X,_Y) ^ ~S(_X,_Z) ^ succ(_Y,_Z) 
-    _formula* left = composite_bool(CONJ, s_x_y, _s_x_z);
-    left = composite_bool(CONJ, left, succ_y_z);
-    // (T(_X,_MAX) -> theta(_X,_Y)
-    _formula* right_left = composite_bool(IMPL, t_x_max, theta_x_y);
-    // (theta(_X,_Y) -> T(_X,_MAX)
-    _formula* right_right = composite_bool(IMPL, theta_x_y_2, t_x_max_2);
-    _formula* right = composite_bool(CONJ, right_left, right_right);
+    _formula* left = generate_formula_4_left();
+    _formula* right = composite_bool(IMPL, t_x_max, theta_x_y);
     
     _formula* F = composite_bool(IMPL, left, right);
     
@@ -361,37 +335,21 @@ Formula HengZhang::create_formula_4_1(Formula originalFml) {
     return fml;
 }
 /**
- * 章衡量词消去公式四_2    S(_X,_MAX) -> 
- *                     ( ( T(_X,_MAX) -> theta(_X,_MAX) ) 
- *                        ^ ( theta(_X,_MAX) -> T(_X,_MAX) ) ) 
+ * 章衡量词消去公式四_2    S(_X,_Y) ^ ( ( ~S(_X,_Z) ^ succ(_Y,_Z) ) | max_domian(_Y) )
+ *                               ->  ( theta(_X,_Y) -> T(_X,_MAX) )
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::create_formula_4_2(Formula originalFml) {
+Formula HengZhang::create_formula_4_2(Formula original_fml) {
+    // 5 theta(_X,_Y)
+    _formula* theta_x_y  = copy_formula(original_fml.get_formula());
+    // 6 T(_X,_MAX)
     _term* term_x_max = combine_terms(terms_X, terms_MAX);
-    _formula* s_x_max = composite_atom(ATOM, symbol_s, term_x_max);
-    //2 T(_X,_MAX)
-    _term* term_x_max_2 = combine_terms(terms_X, terms_MAX);
-    _formula* t_x_max  = composite_atom(ATOM, symbol_t, term_x_max_2);
-
-    //3 theta(_X,_MAX)
-    Formula tmp_formula_1 = Formula(originalFml);
-    tmp_formula_1.replace_terms(terms_Y, terms_MAX);
-    _formula* theta_x_max  = copy_formula(tmp_formula_1.get_formula());
+    _formula* t_x_max  = composite_atom(ATOM, symbol_t, term_x_max);
     
-    //4 theta(_X,_MAX)
-    Formula tmp_formula_2 = Formula(originalFml);
-    tmp_formula_2.replace_terms(terms_Y, terms_MAX);
-    _formula* theta_x_max_2 = copy_formula(tmp_formula_2.get_formula());
+    _formula* left = generate_formula_4_left();
+    _formula* right = composite_bool(IMPL, theta_x_y, t_x_max);
     
-    //5 T(_X,_MAX)
-    _term* term_x_max_3 = combine_terms(terms_X, terms_MAX);
-    _formula* t_x_max_2  = composite_atom(ATOM, symbol_t, term_x_max_3);
-    
-    _formula* left = s_x_max;
-    _formula* right_left = composite_bool(IMPL, t_x_max, theta_x_max);
-    _formula* right_right = composite_bool(IMPL, theta_x_max_2, t_x_max_2);
-    _formula* right = composite_bool(CONJ, right_left, right_right);
     _formula* F = composite_bool(IMPL, left, right);
     
     Formula fml = Formula(F, false);
@@ -447,6 +405,82 @@ Formula HengZhang::create_formula_5(Formula originalFml) {
     _formula* rr = composite_bool(IMPL, rrl, t_x_y_2);
     _formula* ff = composite_bool(CONJ, rl, rr);
     _formula* F = composite_bool(IMPL, succ_y_z, ff);
+    
+    Formula fml = Formula(F, false);
+#ifdef DEBUG
+    fml.output(stdout);
+    fprintf(stdout, "\n");
+#endif
+    
+    return fml;
+}
+/**
+ * 章衡量词消去公式五 1    succ(_Y,_Z) -> 
+ *      ( T(_X,_Y)-> (theta(_X,_Z) | T(_X,_Z)) )
+ * @param originalFml 一阶语句
+ * @return 
+ */
+Formula HengZhang::create_formula_5_1(Formula original_fml) {
+    //1 _succ(_Y,_Z)
+    _term* term_y_z = combine_terms(terms_Y, terms_Z);
+    _formula* succ_y_z  = composite_atom(ATOM, symbol_succ, term_y_z);
+
+    //2 T(_X,_Y)
+    _term* term_x_y = combine_terms(terms_X, terms_Y);
+    _formula* t_x_y  = composite_atom(ATOM, symbol_t, term_x_y);
+
+    //3 theta(_X,_Z)
+    Formula tmp_formula_1 = Formula(original_fml);
+    tmp_formula_1.replace_terms(terms_Y, terms_Z);
+    _formula* theta_x_z = copy_formula(tmp_formula_1.get_formula());
+
+    //4 T(_X,_Z)
+    _term* term_x_z = combine_terms(terms_X, terms_Z);
+    _formula* t_x_z = composite_atom(ATOM, symbol_t, term_x_z);
+
+    //create structure
+    _formula* left = succ_y_z;
+    _formula* rr = composite_bool(DISJ, theta_x_z, t_x_z);
+    _formula* right = composite_bool(IMPL, t_x_y, rr);
+    _formula* F = composite_bool(IMPL, left, right);
+    
+    Formula fml = Formula(F, false);
+#ifdef DEBUG
+    fml.output(stdout);
+    fprintf(stdout, "\n");
+#endif
+    
+    return fml;
+}
+/**
+ * 章衡量词消去公式五 2   succ(_Y,_Z) -> 
+ *         ( (theta(_X,_Z) | T(_X,_Z)) -> T(_X,_Y) ) 
+ * @param originalFml 一阶语句
+ * @return 
+ */
+Formula HengZhang::create_formula_5_2(Formula original_fml) {
+    //1 _succ(_Y,_Z)
+    _term* term_y_z = combine_terms(terms_Y, terms_Z);
+    _formula* succ_y_z  = composite_atom(ATOM, symbol_succ, term_y_z);
+
+    //2 T(_X,_Y)
+    _term* term_x_y = combine_terms(terms_X, terms_Y);
+    _formula* t_x_y  = composite_atom(ATOM, symbol_t, term_x_y);
+
+    //3 theta(_X,_Z)
+    Formula tmp_formula_1 = Formula(original_fml);
+    tmp_formula_1.replace_terms(terms_Y, terms_Z);
+    _formula* theta_x_z = copy_formula(tmp_formula_1.get_formula());
+
+    //4 T(_X,_Z)
+    _term* term_x_z = combine_terms(terms_X, terms_Z);
+    _formula* t_x_z = composite_atom(ATOM, symbol_t, term_x_z);
+
+    //create structure
+    _formula* left = succ_y_z;
+    _formula* rl = composite_bool(DISJ, theta_x_z, t_x_z);
+    _formula* right = composite_bool(IMPL, rl, t_x_y);
+    _formula* F = composite_bool(IMPL, left, right);
     
     Formula fml = Formula(F, false);
 #ifdef DEBUG

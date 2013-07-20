@@ -45,8 +45,10 @@ private:
     Formula create_formula_4_1(Formula original_fml);
     Formula create_formula_4_2(Formula original_fml);
     Formula create_formula_5(Formula original_fml);
+    Formula create_formula_5_1(Formula original_fml);
+    Formula create_formula_5_2(Formula original_fml);
     void save_succ_name(string succ_name, vector<string> domain_name);
-    
+    _formula* generate_formula_4_left();
     HengZhang();
 
 public:
