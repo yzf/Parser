@@ -22,15 +22,15 @@ private:
     int symbol_MIN;
     int symbol_succ;
 
-    static int num_s;
-    static int num_t;
-    static int num_MAX;
-    static int num_MIN;
-    static int num_succ;
+    int num_s;
+    int num_t;
+    int num_MAX;
+    int num_MIN;
+    int num_succ;
     
 public:
-    static vector<string> succ_names;
-    static vector< vector<string> > domain_names;
+    vector<string> succ_names;
+    vector< vector<string> > domain_names;
     
 private:
     //utilities
@@ -45,10 +45,14 @@ private:
     Formula create_formula_4_2(Formula original_fml);
     Formula create_formula_5(Formula original_fml);
     void save_succ_name(string succ_name, vector<string> domain_name);
+    
+    HengZhang();
 
 public:
     //creators
     Formulas create(Formulas fmls);
+
+    static HengZhang& instance();
     
 };
 

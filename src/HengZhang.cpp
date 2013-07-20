@@ -7,13 +7,13 @@
 
 extern Vocabulary vocabulary;
 
-int HengZhang::num_s = 0;
-int HengZhang::num_t = 0;
-int HengZhang::num_MAX = 0;
-int HengZhang::num_MIN = 0;
-int HengZhang::num_succ = 0;
-vector<string> HengZhang::succ_names;
-vector< vector<string> > HengZhang::domain_names;
+HengZhang::HengZhang() {
+}
+
+HengZhang& HengZhang::instance() {
+    static HengZhang theSingleton;
+    return theSingleton;
+}
 /**
  * 
  * @param name
@@ -74,16 +74,16 @@ Formula HengZhang::record_quantifier(Formula originalFml) {
 void HengZhang::save_succ_name(string succ_name, vector<string> domain_name) {
     //保存succ名字
     bool flag = true;
-    for (vector<string>::iterator it = HengZhang::succ_names.begin();
-            it != HengZhang::succ_names.end(); it ++) {
+    for (vector<string>::iterator it = this->succ_names.begin();
+            it != this->succ_names.end(); it ++) {
         if (*it == succ_name) {
             flag = false;
             break;
         }
     }
     if (flag) {
-        HengZhang::succ_names.push_back(succ_name);
-        HengZhang::domain_names.push_back(domain_name);
+        this->succ_names.push_back(succ_name);
+        this->domain_names.push_back(domain_name);
     }
 }
 
