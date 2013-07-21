@@ -6,6 +6,7 @@
 #include "structs.h"
 #include "Formula.h"
 #include "Formulas.h"
+#include "HengZhangTree.h"
 using namespace std;
 
 class HengZhang{
@@ -32,6 +33,8 @@ private:
 public:
     vector<string> succ_names;
     vector< vector<string> > domain_names;
+    
+    HengZhangTree hz_tree;
     
 private:
     //utilities

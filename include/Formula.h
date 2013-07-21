@@ -42,6 +42,8 @@ private:
         bool in_list ( const int* list, int len, int obj );
         _formula* double_negation_formula(_formula* phi, const int* int_preds, int num_ip);
         void get_no_quantifier_variables(map<int, bool> &flag, vector<int> &varis, _formula* fml);
+public:
+        int deep;       //公式在章衡转化中的深度
 public:	
         Formula();
     	Formula(_formula* fml, bool copy);
@@ -69,6 +71,7 @@ public:
         bool is_negative(const int* sm_preds, int num_sp, bool negative);
         void double_negation(const int* int_preds, int num_ip);
         void fix_universal_quantifier();
+        bool operator == (Formula&);
 };
 
 #endif

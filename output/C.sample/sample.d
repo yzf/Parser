@@ -1,19 +1,50 @@
-#domain i(X).
-#domain i(Y).
-#domain i(NV_0).
-#domain i(NV_1).
-#domain i(PN_0).
-#domain i(PN_1).
-
-#domain min(MIN).
-#domain max(MAX).
-
-min(1).
-i(1..2).
-max(2).
-
-_p(X) :- not p(X).
-_pr(X) :- not pr(X).
-_s(X,Y) :- not s(X,Y).
-_t(X,Y) :- not t(X,Y).
-_succ(X,Y,NV_0,NV_1) :- not succ(X,Y,NV_0,NV_1).
+[?X]([!Y]([?Z](((p(X)|q(Y))&r(Z)))))
+   ~~s_0(MIN_a)
+   [!X]([!NV_0]([?Y]([!Z]((((succ_a(X,NV_0)&s_0(NV_0))|((~~p(X)|~~q(Y))&~~r(Z)))->s_0(X))))))
+      ~~s_1(X,NV_0,MIN_a)
+      [!X]([!Y]([!NV_0]([!NV_1]([?Z]((((succ_a(Y,NV_1)&s_1(X,NV_0,NV_1))|(((succ_a(X,NV_0)&~~s_0(NV_0))|((~~p(X)|~~q(Y))&~~r(Z)))->~~s_0(X)))->s_1(X,NV_0,Y)))))))
+      [!X]([!NV_0]([!Z]((t_1(X,NV_0,MIN_a)|(((succ_a(X,NV_0)&s_0(NV_0))|((~~p(X)|~~q(MIN_a))&~~r(Z)))->s_0(X))))))
+      [!X]([!Y]([!NV_0]([!NV_1]([!Z](((s_1(X,NV_0,Y)&((~s_1(X,NV_0,NV_1)&succ_a(Y,NV_1))|max_a(Y)))->(t_1(X,NV_0,MAX_a)->(((succ_a(X,NV_0)&s_0(NV_0))|((~~p(X)|~~q(Y))&~~r(Z)))->s_0(X)))))))))
+      [!X]([!Y]([!NV_0]([!NV_1]([?Z](((s_1(X,NV_0,Y)&((~s_1(X,NV_0,NV_1)&succ_a(Y,NV_1))|max_a(Y)))->((((succ_a(X,NV_0)&s_0(NV_0))|((~~p(X)|~~q(Y))&~~r(Z)))->s_0(X))->t_1(X,NV_0,MAX_a))))))))
+      [!X]([!Y]([!NV_0]([!NV_1]([!Z]((succ_a(Y,NV_1)->(t_1(X,NV_0,Y)->((((succ_a(X,NV_0)&s_0(NV_0))|((~~p(X)|~~q(NV_1))&~~r(Z)))->s_0(X))|t_1(X,NV_0,NV_1)))))))))
+      [!X]([!Y]([!NV_0]([!NV_1]([?Z]((succ_a(Y,NV_1)->(((((succ_a(X,NV_0)&s_0(NV_0))|((~~p(X)|~~q(NV_1))&~~r(Z)))->s_0(X))|t_1(X,NV_0,NV_1))->t_1(X,NV_0,Y))))))))
+   [!Y]([?Z]((t_0(MIN_a)|((p(MIN_a)|q(Y))&r(Z)))))
+      ~~s_2(Y,MIN_a)
+      [!Y]([!Z]([!NV_2]((((succ_a(Z,NV_2)&s_2(Y,NV_2))|(~~t_0(MIN_a)|((~~p(MIN_a)|~~q(Y))&~~r(Z))))->s_2(Y,Z)))))
+      [!Y]((t_2(Y,MIN_a)|(t_0(MIN_a)|((p(MIN_a)|q(Y))&r(MIN_a)))))
+      [!Y]([!Z]([!NV_2](((s_2(Y,Z)&((~s_2(Y,NV_2)&succ_a(Z,NV_2))|max_a(Z)))->(t_2(Y,MAX_a)->(t_0(MIN_a)|((p(MIN_a)|q(Y))&r(Z))))))))
+      [!Y]([!Z]([!NV_2](((s_2(Y,Z)&((~s_2(Y,NV_2)&succ_a(Z,NV_2))|max_a(Z)))->((t_0(MIN_a)|((p(MIN_a)|q(Y))&r(Z)))->t_2(Y,MAX_a))))))
+      [!Y]([!Z]([!NV_2]((succ_a(Z,NV_2)->(t_2(Y,Z)->((t_0(MIN_a)|((p(MIN_a)|q(Y))&r(NV_2)))|t_2(Y,NV_2)))))))
+      [!Y]([!Z]([!NV_2]((succ_a(Z,NV_2)->(((t_0(MIN_a)|((p(MIN_a)|q(Y))&r(NV_2)))|t_2(Y,NV_2))->t_2(Y,Z))))))
+   [!X]([!NV_0]([!Y]([?Z](((s_0(X)&((~s_0(NV_0)&succ_a(X,NV_0))|max_a(X)))->(t_0(MAX_a)->((p(X)|q(Y))&r(Z))))))))
+      ~~s_3(X,NV_0,Y,MIN_a)
+      [!X]([!Y]([!Z]([!NV_0]([!NV_3]((((succ_a(Z,NV_3)&s_3(X,NV_0,Y,NV_3))|((~~s_0(X)&((~s_0(NV_0)&succ_a(X,NV_0))|~~max_a(X)))->(~~t_0(MAX_a)->((~~p(X)|~~q(Y))&~~r(Z)))))->s_3(X,NV_0,Y,Z)))))))
+      [!X]([!Y]([!NV_0]((t_3(X,NV_0,Y,MIN_a)|((s_0(X)&((~s_0(NV_0)&succ_a(X,NV_0))|max_a(X)))->(t_0(MAX_a)->((p(X)|q(Y))&r(MIN_a))))))))
+      [!X]([!Y]([!Z]([!NV_0]([!NV_3](((s_3(X,NV_0,Y,Z)&((~s_3(X,NV_0,Y,NV_3)&succ_a(Z,NV_3))|max_a(Z)))->(t_3(X,NV_0,Y,MAX_a)->((s_0(X)&((~s_0(NV_0)&succ_a(X,NV_0))|max_a(X)))->(t_0(MAX_a)->((p(X)|q(Y))&r(Z)))))))))))
+      [!X]([!Y]([!Z]([!NV_0]([!NV_3](((s_3(X,NV_0,Y,Z)&((~s_3(X,NV_0,Y,NV_3)&succ_a(Z,NV_3))|max_a(Z)))->(((s_0(X)&((~s_0(NV_0)&succ_a(X,NV_0))|max_a(X)))->(t_0(MAX_a)->((p(X)|q(Y))&r(Z))))->t_3(X,NV_0,Y,MAX_a))))))))
+      [!X]([!Y]([!Z]([!NV_0]([!NV_3]((succ_a(Z,NV_3)->(t_3(X,NV_0,Y,Z)->(((s_0(X)&((~s_0(NV_0)&succ_a(X,NV_0))|max_a(X)))->(t_0(MAX_a)->((p(X)|q(Y))&r(NV_3))))|t_3(X,NV_0,Y,NV_3)))))))))
+      [!X]([!Y]([!Z]([!NV_0]([!NV_3]((succ_a(Z,NV_3)->((((s_0(X)&((~s_0(NV_0)&succ_a(X,NV_0))|max_a(X)))->(t_0(MAX_a)->((p(X)|q(Y))&r(NV_3))))|t_3(X,NV_0,Y,NV_3))->t_3(X,NV_0,Y,Z))))))))
+   [!X]([!NV_0]([?Y]([!Z](((s_0(X)&((~s_0(NV_0)&succ_a(X,NV_0))|max_a(X)))->(((p(X)|q(Y))&r(Z))->t_0(MAX_a)))))))
+      ~~s_4(X,NV_0,MIN_a)
+      [!X]([!Y]([!NV_0]([!NV_4]([?Z]((((succ_a(Y,NV_4)&s_4(X,NV_0,NV_4))|((~~s_0(X)&((~s_0(NV_0)&succ_a(X,NV_0))|~~max_a(X)))->(((~~p(X)|~~q(Y))&~~r(Z))->~~t_0(MAX_a))))->s_4(X,NV_0,Y)))))))
+      [!X]([!NV_0]([!Z]((t_4(X,NV_0,MIN_a)|((s_0(X)&((~s_0(NV_0)&succ_a(X,NV_0))|max_a(X)))->(((p(X)|q(MIN_a))&r(Z))->t_0(MAX_a)))))))
+      [!X]([!Y]([!NV_0]([!NV_4]([!Z](((s_4(X,NV_0,Y)&((~s_4(X,NV_0,NV_4)&succ_a(Y,NV_4))|max_a(Y)))->(t_4(X,NV_0,MAX_a)->((s_0(X)&((~s_0(NV_0)&succ_a(X,NV_0))|max_a(X)))->(((p(X)|q(Y))&r(Z))->t_0(MAX_a))))))))))
+      [!X]([!Y]([!NV_0]([!NV_4]([?Z](((s_4(X,NV_0,Y)&((~s_4(X,NV_0,NV_4)&succ_a(Y,NV_4))|max_a(Y)))->(((s_0(X)&((~s_0(NV_0)&succ_a(X,NV_0))|max_a(X)))->(((p(X)|q(Y))&r(Z))->t_0(MAX_a)))->t_4(X,NV_0,MAX_a))))))))
+      [!X]([!Y]([!NV_0]([!NV_4]([!Z]((succ_a(Y,NV_4)->(t_4(X,NV_0,Y)->(((s_0(X)&((~s_0(NV_0)&succ_a(X,NV_0))|max_a(X)))->(((p(X)|q(NV_4))&r(Z))->t_0(MAX_a)))|t_4(X,NV_0,NV_4)))))))))
+      [!X]([!Y]([!NV_0]([!NV_4]([?Z]((succ_a(Y,NV_4)->((((s_0(X)&((~s_0(NV_0)&succ_a(X,NV_0))|max_a(X)))->(((p(X)|q(NV_4))&r(Z))->t_0(MAX_a)))|t_4(X,NV_0,NV_4))->t_4(X,NV_0,Y))))))))
+   [!X]([!NV_0]([!Y]([?Z]((succ_a(X,NV_0)->(t_0(X)->(((p(NV_0)|q(Y))&r(Z))|t_0(NV_0))))))))
+      ~~s_5(X,NV_0,Y,MIN_a)
+      [!X]([!Y]([!Z]([!NV_0]([!NV_5]((((succ_a(Z,NV_5)&s_5(X,NV_0,Y,NV_5))|(succ_a(X,NV_0)->(~~t_0(X)->(((~~p(NV_0)|~~q(Y))&~~r(Z))|~~t_0(NV_0)))))->s_5(X,NV_0,Y,Z)))))))
+      [!X]([!Y]([!NV_0]((t_5(X,NV_0,Y,MIN_a)|(succ_a(X,NV_0)->(t_0(X)->(((p(NV_0)|q(Y))&r(MIN_a))|t_0(NV_0))))))))
+      [!X]([!Y]([!Z]([!NV_0]([!NV_5](((s_5(X,NV_0,Y,Z)&((~s_5(X,NV_0,Y,NV_5)&succ_a(Z,NV_5))|max_a(Z)))->(t_5(X,NV_0,Y,MAX_a)->(succ_a(X,NV_0)->(t_0(X)->(((p(NV_0)|q(Y))&r(Z))|t_0(NV_0)))))))))))
+      [!X]([!Y]([!Z]([!NV_0]([!NV_5](((s_5(X,NV_0,Y,Z)&((~s_5(X,NV_0,Y,NV_5)&succ_a(Z,NV_5))|max_a(Z)))->((succ_a(X,NV_0)->(t_0(X)->(((p(NV_0)|q(Y))&r(Z))|t_0(NV_0))))->t_5(X,NV_0,Y,MAX_a))))))))
+      [!X]([!Y]([!Z]([!NV_0]([!NV_5]((succ_a(Z,NV_5)->(t_5(X,NV_0,Y,Z)->((succ_a(X,NV_0)->(t_0(X)->(((p(NV_0)|q(Y))&r(NV_5))|t_0(NV_0))))|t_5(X,NV_0,Y,NV_5)))))))))
+      [!X]([!Y]([!Z]([!NV_0]([!NV_5]((succ_a(Z,NV_5)->(((succ_a(X,NV_0)->(t_0(X)->(((p(NV_0)|q(Y))&r(NV_5))|t_0(NV_0))))|t_5(X,NV_0,Y,NV_5))->t_5(X,NV_0,Y,Z))))))))
+   [!X]([!NV_0]([?Y]([!Z]((succ_a(X,NV_0)->((((p(NV_0)|q(Y))&r(Z))|t_0(NV_0))->t_0(X)))))))
+      ~~s_6(X,NV_0,MIN_a)
+      [!X]([!Y]([!NV_0]([!NV_6]([?Z]((((succ_a(Y,NV_6)&s_6(X,NV_0,NV_6))|(succ_a(X,NV_0)->((((~~p(NV_0)|~~q(Y))&~~r(Z))|~~t_0(NV_0))->~~t_0(X))))->s_6(X,NV_0,Y)))))))
+      [!X]([!NV_0]([!Z]((t_6(X,NV_0,MIN_a)|(succ_a(X,NV_0)->((((p(NV_0)|q(MIN_a))&r(Z))|t_0(NV_0))->t_0(X)))))))
+      [!X]([!Y]([!NV_0]([!NV_6]([!Z](((s_6(X,NV_0,Y)&((~s_6(X,NV_0,NV_6)&succ_a(Y,NV_6))|max_a(Y)))->(t_6(X,NV_0,MAX_a)->(succ_a(X,NV_0)->((((p(NV_0)|q(Y))&r(Z))|t_0(NV_0))->t_0(X))))))))))
+      [!X]([!Y]([!NV_0]([!NV_6]([?Z](((s_6(X,NV_0,Y)&((~s_6(X,NV_0,NV_6)&succ_a(Y,NV_6))|max_a(Y)))->((succ_a(X,NV_0)->((((p(NV_0)|q(Y))&r(Z))|t_0(NV_0))->t_0(X)))->t_6(X,NV_0,MAX_a))))))))
+      [!X]([!Y]([!NV_0]([!NV_6]([!Z]((succ_a(Y,NV_6)->(t_6(X,NV_0,Y)->((succ_a(X,NV_0)->((((p(NV_0)|q(NV_6))&r(Z))|t_0(NV_0))->t_0(X)))|t_6(X,NV_0,NV_6)))))))))
+      [!X]([!Y]([!NV_0]([!NV_6]([?Z]((succ_a(Y,NV_6)->(((succ_a(X,NV_0)->((((p(NV_0)|q(NV_6))&r(Z))|t_0(NV_0))->t_0(X)))|t_6(X,NV_0,NV_6))->t_6(X,NV_0,Y))))))))

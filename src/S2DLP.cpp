@@ -39,6 +39,7 @@ void S2DLP::output_zhangheng_formulas() {
     assert(this->output_file != NULL);
     fprintf(this->output_file, "zhangheng_formulas:\n");
     this->zhangheng_formulas.output_formulas(this->output_file);
+//    this->zhangheng_formulas.output_formulas(stdout);
 }
 void S2DLP::output_dlp_formulas() {   
     assert(this->output_file != NULL);

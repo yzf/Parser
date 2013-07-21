@@ -54,30 +54,34 @@ int main(int argc, char** argv) {
     Translator.set_origin_formulas(gformula);
     Translator.set_output_file(fout);
     Translator.convert();
-//    Translator.output_asp();
-    
-    Formulas hz_result = Translator.zhangheng_formulas;
-    hz_result.output_formulas(stdout);
-    while (hz_result.size_formulas() > 0) {
-        Formula cur_fml = hz_result.top_formula();
-        hz_result.pop_formula();
-        Formulas cur_fmls;
-        cur_fmls.push_formula(cur_fml);
-        
-        Formulas cabalar_result = Cabalar::instance().convert_Cabalar(cur_fmls);
-        fprintf(fout, "HengZhang:\n");
-        cur_fml.output(fout);
-        fprintf(fout, "Cabalar:\n");
-        cabalar_result.output_formulas(fout);
-        fprintf(fout, "Rule:\n");
-        while (cabalar_result.size_formulas() > 0) {
-            Formula f = cabalar_result.top_formula();
-            cabalar_result.pop_formula();
-            Rule rule(f);
-            rule.output(fout);
-        }
-        fprintf(fout, "\n\n");
-    }
+    Translator.output_asp();
+    //输出章衡转化过程
+//    Formulas hz_result = HengZhang::instance().create(Translator.origin_formulas);
+//    hz_result.output_formulas(fout);
+//    HengZhang::instance().hz_tree.output(fout);
+//    printf("leaf_count %d\n", HengZhang::instance().hz_tree.leaf_count);
+    //输出Cabalar转化过程
+//    Formulas hz_result = Translator.zhangheng_formulas;
+//    while (hz_result.size_formulas() > 0) {
+//        Formula cur_fml = hz_result.top_formula();
+//        hz_result.pop_formula();
+//        Formulas cur_fmls;
+//        cur_fmls.push_formula(cur_fml);
+//        
+//        Formulas cabalar_result = Cabalar::instance().convert_Cabalar(cur_fmls);
+//        fprintf(fout, "HengZhang:\n");
+//        cur_fml.output(fout);
+//        fprintf(fout, "Cabalar:\n");
+//        cabalar_result.output_formulas(fout);
+//        fprintf(fout, "Rule:\n");
+//        while (cabalar_result.size_formulas() > 0) {
+//            Formula f = cabalar_result.top_formula();
+//            cabalar_result.pop_formula();
+//            Rule rule(f);
+//            rule.output(fout);
+//        }
+//        fprintf(fout, "\n\n");
+//    }
     
 //    fflush(fout);
 //    

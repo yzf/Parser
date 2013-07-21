@@ -66,8 +66,9 @@ Formula HengZhang::record_quantifier(Formula originalFml) {
         fml_temp = fml;
         fml = fml->subformula_l;
     }
-
-    return Formula(fml, true);
+    Formula ret = Formula(fml, true);
+    ret.deep = originalFml.deep;
+    return ret;
 }
 
 void HengZhang::save_succ_name(string succ_name, vector<string> domain_name) {
@@ -86,7 +87,18 @@ void HengZhang::save_succ_name(string succ_name, vector<string> domain_name) {
     }
 }
 
-Formulas HengZhang::create(Formulas fmls) {    
+Formulas HengZhang::create(Formulas fmls) {
+
+    this->hz_tree.root = HengZhangNode(Formula(), 0);
+    vector<HengZhangNode> children;
+    Formula tmp_fml;
+    Formulas tmp = fmls;
+    while (tmp.size_formulas() > 0) {
+        tmp_fml = tmp.top_formula();
+        children.push_back(HengZhangNode(tmp_fml, tmp_fml.deep));
+        tmp.pop_formula();
+    }
+    this->hz_tree.insert_node(children, this->hz_tree.root);
     
     Formulas temp_fmls = fmls;
     Formulas final_fmls;
@@ -102,6 +114,15 @@ Formulas HengZhang::create(Formulas fmls) {
             cur_fml.fix_universal_quantifier();
             Formulas hz_result = transform(cur_fml);
             temp_fmls.join_formulas(hz_result);
+            
+            tmp = hz_result;
+            children.clear();
+            while (tmp.size_formulas() > 0) {
+                tmp_fml = tmp.top_formula();
+                children.push_back(HengZhangNode(tmp_fml, tmp_fml.deep));
+                tmp.pop_formula();
+            }
+            this->hz_tree.insert_node(children, HengZhangNode(cur_fml, cur_fml.deep));
 #ifdef DEBUG
             printf("prenex:\n");
             cur_fml.output(stdout);
@@ -110,7 +131,6 @@ Formulas HengZhang::create(Formulas fmls) {
 #endif
         }
     }
-    
 
     return final_fmls;
 }
@@ -170,6 +190,7 @@ Formula HengZhang::create_formula_1(Formula originalFml) {
     F  = composite_bool(NEGA, F,  NULL);
     
     Formula fml = Formula(F, false);
+    fml.deep = originalFml.deep + 1;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
@@ -209,6 +230,7 @@ Formula HengZhang::create_formula_2(Formula original_fml) {
     _formula* F = composite_bool(IMPL, l, r);
     
     Formula fml = Formula(F, false);
+    fml.deep = original_fml.deep + 1;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
@@ -234,6 +256,7 @@ Formula HengZhang::create_formula_3(Formula original_fml) {
     _formula* F   = composite_bool(DISJ, t_x_min, theta_x_min);
     
     Formula fml = Formula(F, false);
+    fml.deep = original_fml.deep + 1;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
@@ -301,6 +324,7 @@ Formula HengZhang::create_formula_4(Formula original_fml) {
     _formula* F = composite_bool(IMPL, l, r);
     
     Formula fml = Formula(F, false);
+    fml.deep = original_fml.deep + 1;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
@@ -327,6 +351,7 @@ Formula HengZhang::create_formula_4_1(Formula original_fml) {
     _formula* F = composite_bool(IMPL, left, right);
     
     Formula fml = Formula(F, false);
+    fml.deep = original_fml.deep + 1;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
@@ -353,6 +378,7 @@ Formula HengZhang::create_formula_4_2(Formula original_fml) {
     _formula* F = composite_bool(IMPL, left, right);
     
     Formula fml = Formula(F, false);
+    fml.deep = original_fml.deep + 1;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
@@ -367,7 +393,7 @@ Formula HengZhang::create_formula_4_2(Formula original_fml) {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::create_formula_5(Formula originalFml) {
+Formula HengZhang::create_formula_5(Formula original_fml) {
     //1 _succ(_Y,_Z)
     _term* term_y_z = combine_terms(terms_Y, terms_Z);
     _formula* succ_y_z  = composite_atom(ATOM, symbol_succ, term_y_z);
@@ -377,7 +403,7 @@ Formula HengZhang::create_formula_5(Formula originalFml) {
     _formula* t_x_y  = composite_atom(ATOM, symbol_t, term_x_y);
 
     //3 theta(_X,_Z)
-    Formula tmp_formula_1 = Formula(originalFml);
+    Formula tmp_formula_1 = Formula(original_fml);
     tmp_formula_1.replace_terms(terms_Y, terms_Z);
     _formula* theta_x_z = copy_formula(tmp_formula_1.get_formula());
 
@@ -386,7 +412,7 @@ Formula HengZhang::create_formula_5(Formula originalFml) {
     _formula* t_x_z = composite_atom(ATOM, symbol_t, term_x_z);
     
     //5 theta(_X,_Z)
-    Formula tmp_formula_2 = Formula(originalFml);
+    Formula tmp_formula_2 = Formula(original_fml);
     tmp_formula_2.replace_terms(terms_Y, terms_Z);
     _formula* theta_x_z_2 = copy_formula(tmp_formula_2.get_formula());
     
@@ -407,6 +433,7 @@ Formula HengZhang::create_formula_5(Formula originalFml) {
     _formula* F = composite_bool(IMPL, succ_y_z, ff);
     
     Formula fml = Formula(F, false);
+    fml.deep = original_fml.deep + 1;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
@@ -445,6 +472,7 @@ Formula HengZhang::create_formula_5_1(Formula original_fml) {
     _formula* F = composite_bool(IMPL, left, right);
     
     Formula fml = Formula(F, false);
+    fml.deep = original_fml.deep + 1;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
@@ -483,6 +511,7 @@ Formula HengZhang::create_formula_5_2(Formula original_fml) {
     _formula* F = composite_bool(IMPL, left, right);
     
     Formula fml = Formula(F, false);
+    fml.deep = original_fml.deep + 1;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");

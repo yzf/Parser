@@ -7,6 +7,7 @@
 #include <cstring>
 
 Formula::Formula() {
+    this->deep = 1;
     this->formula = NULL;
     this->is_prenex_formula = false;
 }
@@ -19,15 +20,14 @@ Formula::Formula(_formula* fml, bool copy) {
         _formula* f = copy_formula(fml);
         this->formula = f;
     }
-
+    this->deep = 1;
     this->is_prenex_formula = false;
 }
 
 Formula::Formula(const Formula& FML) {
     _formula* new_formula = copy_formula(FML.formula);
     this->formula = new_formula;
-    
- 
+    this->deep = FML.deep;
     this->is_prenex_formula = false;
 }
 
@@ -52,7 +52,7 @@ void Formula::set_formula(_formula* f)
 Formula& Formula::operator = (const Formula& rhs) {
     _formula* new_formula = copy_formula(rhs.formula);
     this->formula = new_formula;
-    
+    this->deep = rhs.deep;
    
     this->is_prenex_formula = false;
     return *this;
@@ -783,4 +783,10 @@ void Formula::fix_universal_quantifier() {
         }
         this->formula = composite_qntf(UNIV, this->formula, -(*it));
     }
+}
+
+bool Formula::operator == (Formula& rhs) {
+    _formula* l = get_formula();
+    _formula* r = rhs.get_formula();
+    return compare_formula(l, r);
 }

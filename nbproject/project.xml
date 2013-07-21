@@ -14,6 +14,7 @@
                 <sourceRootElem>parse</sourceRootElem>
                 <sourceRootElem>res</sourceRootElem>
                 <sourceRootElem>output</sourceRootElem>
+                <sourceRootElem>include</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

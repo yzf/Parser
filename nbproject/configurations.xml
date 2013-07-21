@@ -8,6 +8,7 @@
       <itemPath>include/Formula.h</itemPath>
       <itemPath>include/Formulas.h</itemPath>
       <itemPath>include/HengZhang.h</itemPath>
+      <itemPath>include/HengZhangTree.h</itemPath>
       <itemPath>include/Rule.h</itemPath>
       <itemPath>include/S2DLP.h</itemPath>
       <itemPath>include/Vocabulary.h</itemPath>
@@ -25,10 +26,15 @@
                    projectFiles="true">
       <logicalFolder name="output" displayName="output" projectFiles="true">
         <logicalFolder name="C.sample" displayName="C.sample" projectFiles="true">
+          <itemPath>output/C.sample/cabalar.out</itemPath>
           <itemPath>output/C.sample/final.out</itemPath>
+          <itemPath>output/C.sample/guocheng.out</itemPath>
           <itemPath>output/C.sample/ptree.out</itemPath>
+          <itemPath>output/C.sample/rules.out</itemPath>
           <itemPath>output/C.sample/sample.d</itemPath>
           <itemPath>output/C.sample/sample.out</itemPath>
+          <itemPath>output/C.sample/zh_cabalar.out</itemPath>
+          <itemPath>output/C.sample/zhengheng.out</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="res" displayName="res" projectFiles="true">
@@ -128,6 +134,7 @@
       <itemPath>src/Formula.cpp</itemPath>
       <itemPath>src/Formulas.cpp</itemPath>
       <itemPath>src/HengZhang.cpp</itemPath>
+      <itemPath>src/HengZhangTree.cpp</itemPath>
       <itemPath>src/Rule.cpp</itemPath>
       <itemPath>src/S2DLP.cpp</itemPath>
       <itemPath>src/Vocabulary.cpp</itemPath>
@@ -154,6 +161,7 @@
     <Elem>parse</Elem>
     <Elem>res</Elem>
     <Elem>output</Elem>
+    <Elem>include</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -184,6 +192,8 @@
       </item>
       <item path="include/HengZhang.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/HengZhangTree.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Rule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/S2DLP.h" ex="false" tool="3" flavor2="0">
@@ -194,13 +204,23 @@
       </item>
       <item path="include/utility.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="output/C.sample/cabalar.out" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="output/C.sample/final.out" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="output/C.sample/guocheng.out" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="output/C.sample/ptree.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="output/C.sample/rules.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="output/C.sample/sample.d" ex="false" tool="3" flavor2="0">
       </item>
       <item path="output/C.sample/sample.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="output/C.sample/zh_cabalar.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="output/C.sample/zhengheng.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="parse/clean.sh" ex="false" tool="3" flavor2="0">
       </item>
@@ -337,6 +357,8 @@
       <item path="src/Formulas.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/HengZhang.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/HengZhangTree.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Rule.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -386,6 +408,8 @@
       </item>
       <item path="include/HengZhang.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/HengZhangTree.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Rule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/S2DLP.h" ex="false" tool="3" flavor2="0">
@@ -396,13 +420,23 @@
       </item>
       <item path="include/utility.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="output/C.sample/cabalar.out" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="output/C.sample/final.out" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="output/C.sample/guocheng.out" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="output/C.sample/ptree.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="output/C.sample/rules.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="output/C.sample/sample.d" ex="false" tool="3" flavor2="0">
       </item>
       <item path="output/C.sample/sample.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="output/C.sample/zh_cabalar.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="output/C.sample/zhengheng.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="parse/clean.sh" ex="false" tool="3" flavor2="0">
       </item>
@@ -539,6 +573,8 @@
       <item path="src/Formulas.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/HengZhang.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/HengZhangTree.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Rule.cpp" ex="false" tool="1" flavor2="0">
       </item>

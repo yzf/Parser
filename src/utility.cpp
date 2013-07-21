@@ -253,7 +253,10 @@ _formula* composite_qntf(FORMULA_TYPE formula_type,
 //------------------------------------------------------------------------------
 _formula* copy_formula (const _formula *fml)
 {
-    assert (fml);
+//    assert (fml);
+    if (fml == NULL) {
+        return NULL;
+    }
 	
     _formula* newFormula = (_formula*)malloc(sizeof(_formula));
     assert (newFormula);
