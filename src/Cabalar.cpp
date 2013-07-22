@@ -16,9 +16,17 @@
 #define DBPRINTF(...) 
 #endif
 
-Cabalar::Cabalar()
-{
+Cabalar::Cabalar() {
     
+}
+Cabalar::Cabalar(const Cabalar& rhs) {
+    
+}
+Cabalar::~Cabalar() {
+    
+}
+Cabalar& Cabalar::operator = (const Cabalar &rhs) {
+    return *this;
 }
         
 Cabalar& Cabalar::instance() {

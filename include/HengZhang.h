@@ -54,7 +54,9 @@ private:
     void save_succ_name(string succ_name, vector<string> domain_name);
     _formula* generate_formula_4_left();
     HengZhang();
-
+    HengZhang(const HengZhang& rhs);
+    ~HengZhang();
+    HengZhang& operator = (const HengZhang& rhs);
 public:
     //creators
     Formulas create(Formulas fmls);

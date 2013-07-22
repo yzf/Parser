@@ -50,17 +50,16 @@ int main(int argc, char** argv) {
     }
     
     yyparse();
-    S2DLP Translator = S2DLP::instance();
-    Translator.set_origin_formulas(gformula);
-    Translator.set_output_file(stdout);
-    Translator.convert();
-    Translator.output_asp();
+    S2DLP::instance().set_origin_formulas(gformula);
+    S2DLP::instance().set_output_file(fout);
+    S2DLP::instance().convert();
+    S2DLP::instance().output_asp();
     //输出章衡转化过程
-//    Formulas hz_result = HengZhang::instance().create(Translator.origin_formulas);
+//    Formulas hz_result = HengZhang::instance().create(S2DLP::instance().origin_formulas);
 //    HengZhang::instance().hz_tree.output(fout);
 //    printf("leaf_count %d\n", HengZhang::instance().hz_tree.leaf_count);
     //输出Cabalar转化过程
-//    Formulas hz_result = HengZhang::instance().create(Translator.origin_formulas);
+//    Formulas hz_result = HengZhang::instance().create(S2DLP::instance().origin_formulas);
 //    while (hz_result.size_formulas() > 0) {
 //        Formula cur_fml = hz_result.top_formula();
 //        hz_result.pop_formula();
@@ -81,17 +80,6 @@ int main(int argc, char** argv) {
 //        }
 //        fprintf(fout, "\n\n");
 //    }
-    
-//    fflush(fout);
-//    
-//    FILE* file = popen("sort output/C.sample/sample.out | uniq", "r");
-//    FILE* final_output = fopen("output/C.sample/final.out", "w+");
-//    char line[1024];
-//    while (fgets(line, 1024, file) != NULL) {
-//        fprintf(final_output, "%s", line);
-//    }
-//    pclose(file);
-//    fclose(final_output);
 
     return 0;
 }

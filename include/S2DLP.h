@@ -27,10 +27,13 @@ public:
     void set_origin_formulas(_formula*);
     void output_addition();
     void output_asp();
-    ~S2DLP();
+    
     
 private:
     S2DLP();
+    S2DLP(const S2DLP& rhs);
+    ~S2DLP();
+    S2DLP& operator = (const S2DLP& rhs);
     void addSucc(vector<string> domains); 
     void printAtom(_formula* atom, FILE* out);
 };

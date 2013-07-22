@@ -10,6 +10,14 @@ extern Vocabulary vocabulary;
 HengZhang::HengZhang() {
 }
 
+HengZhang::HengZhang(const HengZhang& rhs) {
+}
+HengZhang& HengZhang::operator = (const HengZhang& rhs) {
+    return *this;
+}
+HengZhang::~HengZhang() {
+}
+
 HengZhang& HengZhang::instance() {
     static HengZhang theSingleton;
     return theSingleton;

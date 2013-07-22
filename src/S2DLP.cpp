@@ -4,6 +4,25 @@
 S2DLP::S2DLP() : output_file(NULL){
 }
 
+S2DLP::S2DLP(const S2DLP& rhs) {
+    this->dlp_formulas = rhs.dlp_formulas;
+    this->dlp_rules = rhs.dlp_rules;
+    this->nega_predicates = rhs.nega_predicates;
+    this->origin_formulas = rhs.origin_formulas;
+    this->output_file = rhs.output_file;
+    this->zhangheng_formulas = rhs.zhangheng_formulas;
+}
+
+S2DLP& S2DLP::operator = (const S2DLP& rhs) {
+    this->dlp_formulas = rhs.dlp_formulas;
+    this->dlp_rules = rhs.dlp_rules;
+    this->nega_predicates = rhs.nega_predicates;
+    this->origin_formulas = rhs.origin_formulas;
+    this->output_file = rhs.output_file;
+    this->zhangheng_formulas = rhs.zhangheng_formulas;
+    return *this;
+}
+
 S2DLP::~S2DLP() {
     if (this->output_file != NULL) {
         fclose(this->output_file);
@@ -62,24 +81,24 @@ void S2DLP::output_addition() {
         fprintf(this->output_file, "#domain %s(%s).\n", vocabulary.names_domain[vocabulary.variable_at_domain[i]], vocabulary.names_variable[i]);
     }
     
-    fprintf(this->output_file, "%%Addition rule for not intension\n");
-    for(int i = 0; i < vocabulary.num_predicate; i++) {
-        if(!vocabulary.is_intension_predicate(i)) {
-            fprintf(this->output_file, "%s", vocabulary.names_predicate[i]);
-            int arties = vocabulary.predicate_arity(i);
-            for(int j = 0; j < arties; j++) {
-                if(j == 0) fprintf(this->output_file, "(");
-                if(j != arties - 1) fprintf(this->output_file, "%c,", 'A' + j);
-                else fprintf(this->output_file, "%c)", 'A' + j);
-            }
-            fprintf(this->output_file, "|_%s", vocabulary.names_predicate[i]);
-            for(int j = 0; j < arties; j++) {
-                if(j == 0) fprintf(this->output_file, "(");
-                if(j != arties - 1) fprintf(this->output_file, "%c,", 'A' + j);
-                else fprintf(this->output_file, "%c)", 'A' + j);
-            }
-        }
-    }
+//    fprintf(this->output_file, "%%Addition rule for not intension\n");
+//    for(int i = 0; i < vocabulary.num_predicate; i++) {
+//        if(!vocabulary.is_intension_predicate(i)) {
+//            fprintf(this->output_file, "%s", vocabulary.names_predicate[i]);
+//            int arties = vocabulary.predicate_arity(i);
+//            for(int j = 0; j < arties; j++) {
+//                if(j == 0) fprintf(this->output_file, "(");
+//                if(j != arties - 1) fprintf(this->output_file, "%c,", 'A' + j);
+//                else fprintf(this->output_file, "%c)", 'A' + j);
+//            }
+//            fprintf(this->output_file, "|_%s", vocabulary.names_predicate[i]);
+//            for(int j = 0; j < arties; j++) {
+//                if(j == 0) fprintf(this->output_file, "(");
+//                if(j != arties - 1) fprintf(this->output_file, "%c,", 'A' + j);
+//                else fprintf(this->output_file, "%c)", 'A' + j);
+//            }
+//        }
+//    }
     
     fprintf(this->output_file, "\n%%Succ predicate definition\n");
     
