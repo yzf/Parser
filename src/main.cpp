@@ -64,7 +64,6 @@ int main(int argc, char** argv) {
 #ifdef SHOW_HZ
     Formulas hz_result = HengZhang::instance().create(S2DLP::instance().origin_formulas);
     HengZhang::instance().hz_tree.output(fout);
-    printf("leaf_count %d\n", HengZhang::instance().hz_tree.leaf_count);
 #endif
     //输出Cabalar转化过程
 #ifdef SHOW_HZ_CABALAR
