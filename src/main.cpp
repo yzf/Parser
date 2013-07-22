@@ -15,6 +15,10 @@
 #include "HengZhang.h"
 using namespace std;
 
+#define SHOW_RESULT
+#define SHOW_HZ
+//#define SHOW_HZ_CABALAR
+
 extern FILE *yyin;
 extern S2DLP Translator;
 extern Vocabulary vocabulary;
@@ -52,34 +56,40 @@ int main(int argc, char** argv) {
     yyparse();
     S2DLP::instance().set_origin_formulas(gformula);
     S2DLP::instance().set_output_file(fout);
+#ifdef SHOW_RESULT
     S2DLP::instance().convert();
     S2DLP::instance().output_asp();
+#endif
     //输出章衡转化过程
-//    Formulas hz_result = HengZhang::instance().create(S2DLP::instance().origin_formulas);
-//    HengZhang::instance().hz_tree.output(fout);
-//    printf("leaf_count %d\n", HengZhang::instance().hz_tree.leaf_count);
+#ifdef SHOW_HZ
+    Formulas hz_result = HengZhang::instance().create(S2DLP::instance().origin_formulas);
+    HengZhang::instance().hz_tree.output(fout);
+    printf("leaf_count %d\n", HengZhang::instance().hz_tree.leaf_count);
+#endif
     //输出Cabalar转化过程
-//    Formulas hz_result = HengZhang::instance().create(S2DLP::instance().origin_formulas);
-//    while (hz_result.size_formulas() > 0) {
-//        Formula cur_fml = hz_result.top_formula();
-//        hz_result.pop_formula();
-//        Formulas cur_fmls;
-//        cur_fmls.push_formula(cur_fml);
-//        
-//        Formulas cabalar_result = Cabalar::instance().convert_Cabalar(cur_fmls);
-//        fprintf(fout, "HengZhang:\n");
-//        cur_fml.output(fout);
-//        fprintf(fout, "Cabalar:\n");
-//        cabalar_result.output_formulas(fout);
-//        fprintf(fout, "Rule:\n");
-//        while (cabalar_result.size_formulas() > 0) {
-//            Formula f = cabalar_result.top_formula();
-//            cabalar_result.pop_formula();
-//            Rule rule(f);
-//            rule.output(fout);
-//        }
-//        fprintf(fout, "\n\n");
-//    }
+#ifdef SHOW_HZ_CABALAR
+    Formulas hz_result = HengZhang::instance().create(S2DLP::instance().origin_formulas);
+    while (hz_result.size_formulas() > 0) {
+        Formula cur_fml = hz_result.top_formula();
+        hz_result.pop_formula();
+        Formulas cur_fmls;
+        cur_fmls.push_formula(cur_fml);
+        
+        Formulas cabalar_result = Cabalar::instance().convert_Cabalar(cur_fmls);
+        fprintf(fout, "HengZhang:\n");
+        cur_fml.output(fout);
+        fprintf(fout, "Cabalar:\n");
+        cabalar_result.output_formulas(fout);
+        fprintf(fout, "Rule:\n");
+        while (cabalar_result.size_formulas() > 0) {
+            Formula f = cabalar_result.top_formula();
+            cabalar_result.pop_formula();
+            Rule rule(f);
+            rule.output(fout);
+        }
+        fprintf(fout, "\n\n");
+    }
+#endif
 
     return 0;
 }
