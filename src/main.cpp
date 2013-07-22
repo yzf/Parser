@@ -16,7 +16,7 @@
 using namespace std;
 
 #define SHOW_RESULT
-#define SHOW_HZ
+//#define SHOW_HZ
 //#define SHOW_HZ_CABALAR
 
 extern FILE *yyin;

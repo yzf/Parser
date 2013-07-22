@@ -102,8 +102,8 @@ void S2DLP::output_addition() {
     
     fprintf(this->output_file, "\n%%Succ predicate definition\n");
     
-    for(vector< vector<string> >::iterator itr = HengZhang::instance().domain_names.begin(); itr != HengZhang::instance().domain_names.end(); itr++) {
-        addSucc(*itr);
+    for(int i = 0; i < HengZhang::instance().domain_names.size(); i++) {
+        addSucc(HengZhang::instance().domain_names.at(i));
     }    
 }
 

@@ -177,9 +177,10 @@ void Rule::printAtom(_formula* atom, FILE* out) {
             if(i == 0)
             fprintf(out, "(%s", vocabulary.query_name(ft[i].variable_id, VARIABLE));
             else 
-            fprintf(out, ",%s", vocabulary.query_name(ft[i].variable_id, VARIABLE));                       
-        }
-        fprintf(out, ")");
+            fprintf(out, ",%s", vocabulary.query_name(ft[i].variable_id, VARIABLE));  
+            
+            if(i == ftc - 1) fprintf(out, ")");
+        }        
     }    
 }
 
