@@ -52,16 +52,15 @@ int main(int argc, char** argv) {
     yyparse();
     S2DLP Translator = S2DLP::instance();
     Translator.set_origin_formulas(gformula);
-    Translator.set_output_file(fout);
+    Translator.set_output_file(stdout);
     Translator.convert();
     Translator.output_asp();
     //输出章衡转化过程
 //    Formulas hz_result = HengZhang::instance().create(Translator.origin_formulas);
-//    hz_result.output_formulas(fout);
 //    HengZhang::instance().hz_tree.output(fout);
 //    printf("leaf_count %d\n", HengZhang::instance().hz_tree.leaf_count);
     //输出Cabalar转化过程
-//    Formulas hz_result = Translator.zhangheng_formulas;
+//    Formulas hz_result = HengZhang::instance().create(Translator.origin_formulas);
 //    while (hz_result.size_formulas() > 0) {
 //        Formula cur_fml = hz_result.top_formula();
 //        hz_result.pop_formula();

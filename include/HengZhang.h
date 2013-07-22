@@ -44,6 +44,7 @@ private:
     Formula create_formula_1(Formula original_fml);
     Formula create_formula_2(Formula original_fml);
     Formula create_formula_3(Formula original_fml);
+    Formula create_formula_4_old(Formula original_fml);
     Formula create_formula_4(Formula original_fml);
     Formula create_formula_4_1(Formula original_fml);
     Formula create_formula_4_2(Formula original_fml);
