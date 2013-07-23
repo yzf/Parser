@@ -15,9 +15,9 @@
 #include "HengZhang.h"
 using namespace std;
 
-//#define SHOW_RESULT
+#define SHOW_RESULT
 //#define SHOW_HZ_RESULT
-#define SHOW_HZ_PROCESS
+//#define SHOW_HZ_PROCESS
 //#define SHOW_HZ_CABALAR
 
 extern FILE *yyin;
@@ -61,6 +61,7 @@ int main(int argc, char** argv) {
 #ifdef SHOW_RESULT 
     S2DLP::instance().convert();
     S2DLP::instance().output_asp();
+//    S2DLP::instance().formula_tree.output(fout);
 #endif
     //输出章衡转化后的结果
 #ifdef SHOW_HZ_RESULT

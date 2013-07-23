@@ -3,6 +3,7 @@
 #include "Formula.h"
 #include "structs.h"
 #include "utility.h"
+#include "S2DLP.h"
 
 
 #include <stdlib.h>
@@ -1160,6 +1161,7 @@ Formulas Cabalar::convert_negative_normal_forms(Formulas fmls)
     {
         Formula fml = fmls.top_formula();
         Formula new_fml = Formula(convert_negative_normal_form(fml.get_formula()), true);
+        new_fml.formula_id = fml.formula_id;
         currFml.push_formula(new_fml);
         fmls.pop_formula();
     }
@@ -1173,14 +1175,15 @@ Formulas Cabalar::convert_negative_normal_forms(Formulas fmls)
 Formulas Cabalar::convert_Cabalar(Formulas fmls)
 {
     DBPRINTF("%s\n",__FUNCTION__);
-	
+    
 //    assert(fmls);
 
     Formulas transFmls;
     Formulas finalFmls;
     Formulas tempfmls;
-    
+    vector<TreeNode> children;
     Formula fml;
+    Formula tmp_fml;
 
     tempfmls = this->convert_negative_normal_forms(fmls);
     
@@ -1206,18 +1209,27 @@ Formulas Cabalar::convert_Cabalar(Formulas fmls)
                 
         transFmls = this->Cabalar_Trans(fml.get_formula());
   //      printf("\n transFmls : ");transFmls.output_formulas(stdout);printf("\n");	
-        
+//        插入节点到公式树
+        Formulas tmp_transFmls = transFmls;
+        children.clear();
+        while (tmp_transFmls.size_formulas() > 0) {
+            tmp_fml = tmp_transFmls.top_formula();
+            children.push_back(TreeNode(tmp_fml, true, false));
+            tmp_transFmls.pop_formula();
+        }
+        S2DLP::instance().formula_tree.insert_node_children(children, fml.formula_id);
         if(transFmls.equal(hold))// no translation
         {
-		finalFmls.push_formula(fml);
+            finalFmls.push_formula(fml);
 	}
         else
 	{
-		tempfmls.join_formulas(transFmls);
+            tempfmls.join_formulas(transFmls);
         }
        
     }
-    
+    //在公式树中标记叶子为cabalar结果
+    S2DLP::instance().formula_tree.mark_final_cabalars();
     
     return finalFmls;
 }
