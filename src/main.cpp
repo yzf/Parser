@@ -15,9 +15,9 @@
 #include "HengZhang.h"
 using namespace std;
 
-#define SHOW_RESULT
+//#define SHOW_RESULT
 //#define SHOW_HZ_RESULT
-//#define SHOW_HZ_PROCESS
+#define SHOW_HZ_PROCESS
 //#define SHOW_HZ_CABALAR
 
 extern FILE *yyin;
@@ -70,7 +70,7 @@ int main(int argc, char** argv) {
     //输出章衡转化过程
 #ifdef SHOW_HZ_PROCESS
     Formulas hz_result = HengZhang::instance().create(S2DLP::instance().origin_formulas);
-    HengZhang::instance().hz_tree.output(fout);
+    S2DLP::instance().formula_tree.output(fout);
 #endif
     //输出章衡转化到Cabalar转化的过程
 #ifdef SHOW_HZ_CABALAR

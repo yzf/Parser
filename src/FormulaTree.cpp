@@ -28,7 +28,7 @@ void TreeNode::output(FILE* out, int deep) {
     this->formula.output(out);
 }
 
-bool FormulaTree::insert_node(vector<TreeNode> children_formulas, 
+bool FormulaTree::insert_node_children(vector<TreeNode> children_formulas, 
         int father_formula_id) {
     queue<TreeNode*> que;
     que.push(&root);
@@ -37,6 +37,23 @@ bool FormulaTree::insert_node(vector<TreeNode> children_formulas,
         que.pop();
         if (cur_node->formula.formula_id == father_formula_id) {
             cur_node->set_children(children_formulas);
+            return true;
+        }
+        for (int i = 0; i < cur_node->children_formulas.size(); ++ i) {
+            que.push(&(cur_node->children_formulas[i]));
+        }
+    }
+    return false;
+}
+
+bool FormulaTree::append_node_child(TreeNode child, int father_formula_id) {
+    queue<TreeNode*> que;
+    que.push(&root);
+    while (! que.empty()) {
+        TreeNode* cur_node = que.front();
+        que.pop();
+        if (cur_node->formula.formula_id == father_formula_id) {
+            cur_node->children_formulas.push_back(child);
             return true;
         }
         for (int i = 0; i < cur_node->children_formulas.size(); ++ i) {

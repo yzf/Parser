@@ -31,7 +31,9 @@ public:
 private:
     void output_node(FILE* out, TreeNode &node, int deep);
 public:
-    bool insert_node(vector<TreeNode> children_formulas, int father_formula_id);
+    bool insert_node_children(vector<TreeNode> children_formulas, 
+            int father_formula_id);
+    bool append_node_child(TreeNode child, int father_formula_id);
     void output(FILE* out);
 };
 

@@ -7,6 +7,7 @@
 #include "Cabalar.h"
 #include "HengZhang.h"
 #include "Rule.h"
+#include "FormulaTree.h"
 #include <vector>
 
 class S2DLP{
@@ -17,6 +18,8 @@ public:
     vector<Rule> dlp_rules;
     FILE* output_file;
     vector<Formula> nega_predicates;
+    
+    FormulaTree formula_tree;
 public:
     static S2DLP& instance();
     void convert();

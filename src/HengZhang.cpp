@@ -97,7 +97,7 @@ void HengZhang::save_succ_name(string succ_name, vector<string> domain_name) {
 
 Formulas HengZhang::create(Formulas fmls) {
 
-    this->hz_tree.root = TreeNode(Formula());
+    S2DLP::instance().formula_tree.root = TreeNode(Formula());
     vector<TreeNode> children;
     Formula tmp_fml;
     Formulas tmp = fmls;
@@ -106,7 +106,8 @@ Formulas HengZhang::create(Formulas fmls) {
         children.push_back(TreeNode(tmp_fml));
         tmp.pop_formula();
     }
-    this->hz_tree.insert_node(children, this->hz_tree.root.formula.formula_id);
+    S2DLP::instance().formula_tree.insert_node_children(children, 
+            S2DLP::instance().formula_tree.root.formula.formula_id);
     
     Formulas temp_fmls = fmls;
     Formulas final_fmls;
@@ -130,7 +131,8 @@ Formulas HengZhang::create(Formulas fmls) {
                 children.push_back(TreeNode(tmp_fml));
                 tmp.pop_formula();
             }
-            this->hz_tree.insert_node(children, cur_fml.formula_id);
+            S2DLP::instance().formula_tree.insert_node_children(children, 
+                                                cur_fml.formula_id);
 #ifdef DEBUG
             printf("prenex:\n");
             cur_fml.output(stdout);
