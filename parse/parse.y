@@ -15,9 +15,9 @@ extern "C" {
 	extern int yylex(void);
 }
 
-extern S2DLP Translator;
 extern Vocabulary vocabulary;
 extern int context_flag;
+extern _formula* gformula; 
 
 int id;
 char str_buf[512];
@@ -73,7 +73,7 @@ s2dlp
 	: formulas intensionP domain_section{
             assert($1);
             printf("root\n");
-            Translator.set_origin_formulas($1);
+            gformula = $1;
 	}
 ;
 

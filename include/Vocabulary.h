@@ -1,9 +1,12 @@
+#ifndef _VOCABULARY_H_
+#define _VOCABULARY_H_
+
 #include "structs.h"
 #include <cstdio>
-#pragma once
+
 
 class Vocabulary {
-    private:
+    public:
         int num_variable;
         char* names_variable[MAX_NUM_VARIABLE];
         int variable_at_domain[MAX_NUM_VARIABLE];
@@ -27,13 +30,17 @@ class Vocabulary {
 
         int num_names_domain;
         char* names_domain[MAX_NUM_DOMAIN];
-
+        
+        int newNexName;
+        
     public:
         Vocabulary();
         ~Vocabulary();
         void destory_vocabulary();
         int add_symbol(const char* name, SYMBOL_TYPE type, int arity);
+        int add_rename_variable();
         int query_symbol(const char* name, SYMBOL_TYPE type);
+        bool is_intension_predicate(int var_id);
         int set_intension_predicate(const char* name);
         void set_domain(char* variable, char* domain);
         int predicate_arity(int id);
@@ -41,3 +48,5 @@ class Vocabulary {
         char* query_name(int id, SYMBOL_TYPE type);
         void dump_vocabulary(FILE* out);
 };
+
+#endif

@@ -209,7 +209,7 @@ void output_term ( FILE* out, const _term* t )
 //formula operations
 ///////////////////////////////////////////////////////////////////////////////
 _formula* composite_atom(FORMULA_TYPE formula_type,
-									const int predicate_id, _term* parameters)
+				const int predicate_id, _term* parameters)
 {
     assert(formula_type == ATOM);
 
@@ -253,7 +253,10 @@ _formula* composite_qntf(FORMULA_TYPE formula_type,
 //------------------------------------------------------------------------------
 _formula* copy_formula (const _formula *fml)
 {
-    assert (fml);
+//    assert (fml);
+    if (fml == NULL) {
+        return NULL;
+    }
 	
     _formula* newFormula = (_formula*)malloc(sizeof(_formula));
     assert (newFormula);
@@ -282,104 +285,173 @@ _formula* copy_formula (const _formula *fml)
     return newFormula;
 }
 
-//other
-///////////////////////////////////////////////////////////////////////////////
+void delete_formula( _formula* fml ) {
+    assert ( fml );
 
-/*void output_extraDefinition(FILE* out)//@TODO
-{
-	int i;
-	for(i = 0; i < vocabulary.num_predicate; i++)
-	{
-		fprintf(out,"_%s :- not %s\n",vocabulary.names_predicate[i],
-				vocabulary.names_predicate[i]);
-	}
-}
-
-_formula* double_negation(_formula* phi, const int* int_preds, int num_ip)
-{
-    assert(phi);
-
-    if (is_negative(phi, int_preds, num_ip, false))
-    {
-        return phi;
-    }
-
-    switch ( phi->formula_type )
+    switch ( fml->formula_type )
     {
     case ATOM:
-        if(in_list(int_preds, num_ip, phi->predicate_id))
-        {
-            phi = composite_bool ( NEGA, phi, NULL );
-            phi = composite_bool ( NEGA, phi, NULL );
-        }
+        if(fml->parameters)
+	delete_terms(fml->parameters, vocabulary.predicate_arity(fml->predicate_id));
         break;
     case CONJ:
     case DISJ:
     case IMPL:
-		phi->subformula_r = double_negation(phi->subformula_r,int_preds,num_ip);
+        assert ( fml->subformula_r );
+        delete_formula(fml->subformula_r);
     case NEGA:
     case UNIV:
     case EXIS:
-		phi->subformula_l = double_negation(phi->subformula_l,int_preds,num_ip);
+        assert ( fml->subformula_l );
+        delete_formula(fml->subformula_l);
         break;
-
     default:
         assert ( 0 );
     }
 
-    return phi;
+    free(fml);
 }
 
-_formula* 
-minimal_simu(_formula* phi, const int* int_preds, int num_ip,
-		 const _formula* reff )
-{
-    assert(phi);
+bool compare_formula(const _formula* phi, const _formula* psi) {
+    int k;
 
-    if (num_ip <= 0)//No internal predicates, fast return.
-    {
-        return phi;
-    }
+    assert(phi);
+    assert(psi);
+
+    if (phi->formula_type!=psi->formula_type) return false;
 
     switch (phi->formula_type)
     {
-	case ATOM:
-		return phi;
-	
-    case NEGA:
-        assert(phi->subformula_l);
-        if ( ATOM == phi->subformula_l->formula_type &&
-             in_list ( int_preds, num_ip, phi->subformula_l->predicate_id ) )
-        {			
-			phi->formula_type = IMPL;
-			phi->subformula_r = copy_formula(reff);
-        }
-        else
+    case ATOM:
+        if (phi->predicate_id!=psi->predicate_id) return false;
+        k = vocabulary.predicate_arity(phi->predicate_id) - 1;
+        assert(k<0||phi->parameters);
+        assert(k<0||psi->parameters);
+        for ( ; k>=0; k--)
         {
-            phi->subformula_l = minimal_simu(phi->subformula_l, 
-												int_preds, num_ip, reff );
+            if (!compare_term(phi->parameters+k,psi->parameters+k))
+                return FALSE;
         }
-        return phi;
-		
-    case CONJ:
-    case DISJ:
-        assert ( phi->subformula_l );
-        assert ( phi->subformula_r );
-        phi->subformula_l = minimal_simu (phi->subformula_l, 
-												int_preds, num_ip, reff );
-        phi->subformula_r = minimal_simu (phi->subformula_r, 
-												int_preds, num_ip, reff );
-        return phi;
-		
+        return true;
     case UNIV:
     case EXIS:
-        assert ( phi->subformula_l );
-        phi->subformula_l = minimal_simu (phi->subformula_l, 
-												int_preds, num_ip, reff );
-        return phi;
-		
+        if (phi->variable_id!=psi->variable_id) return false;
+    case NEGA:
+        assert(phi->subformula_l);
+        assert(psi->subformula_l);
+        return compare_formula(phi->subformula_l,psi->subformula_l);
+    case CONJ:
+    case DISJ:
+    case IMPL:
+        assert(phi->subformula_l);
+        assert(psi->subformula_l);
+        assert(phi->subformula_r);
+        assert(psi->subformula_r);
+        return (compare_formula(phi->subformula_l,psi->subformula_l)
+            && compare_formula(phi->subformula_r,psi->subformula_r));
     default:
         assert(0);
     }
-    return NULL;
-}*/
+    return false;
+}
+//other
+///////////////////////////////////////////////////////////////////////////////
+//
+//void output_extraDefinition(FILE* out)//@TODO
+//{
+//	int i;
+//	for(i = 0; i < vocabulary.num_predicate; i++)
+//	{
+//		fprintf(out,"_%s :- not %s\n",vocabulary.names_predicate[i],
+//				vocabulary.names_predicate[i]);
+//	}
+//}
+//
+//_formula* double_negation(_formula* phi, const int* int_preds, int num_ip)
+//{
+//    assert(phi);
+//
+//    if (is_negative(phi, int_preds, num_ip, false))
+//    {
+//        return phi;
+//    }
+//
+//    switch ( phi->formula_type )
+//    {
+//    case ATOM:
+//        if(in_list(int_preds, num_ip, phi->predicate_id))
+//        {
+//            phi = composite_bool ( NEGA, phi, NULL );
+//            phi = composite_bool ( NEGA, phi, NULL );
+//        }
+//        break;
+//    case CONJ:
+//    case DISJ:
+//    case IMPL:
+//		phi->subformula_r = double_negation(phi->subformula_r,int_preds,num_ip);
+//    case NEGA:
+//    case UNIV:
+//    case EXIS:
+//		phi->subformula_l = double_negation(phi->subformula_l,int_preds,num_ip);
+//        break;
+//
+//    default:
+//        assert ( 0 );
+//    }
+//
+//    return phi;
+//}
+//
+//_formula* 
+//minimal_simu(_formula* phi, const int* int_preds, int num_ip,
+//		 const _formula* reff )
+//{
+//    assert(phi);
+//
+//    if (num_ip <= 0)//No internal predicates, fast return.
+//    {
+//        return phi;
+//    }
+//
+//    switch (phi->formula_type)
+//    {
+//	case ATOM:
+//		return phi;
+//	
+//    case NEGA:
+//        assert(phi->subformula_l);
+//        if ( ATOM == phi->subformula_l->formula_type &&
+//             in_list ( int_preds, num_ip, phi->subformula_l->predicate_id ) )
+//        {			
+//			phi->formula_type = IMPL;
+//			phi->subformula_r = copy_formula(reff);
+//        }
+//        else
+//        {
+//            phi->subformula_l = minimal_simu(phi->subformula_l, 
+//												int_preds, num_ip, reff );
+//        }
+//        return phi;
+//		
+//    case CONJ:
+//    case DISJ:
+//        assert ( phi->subformula_l );
+//        assert ( phi->subformula_r );
+//        phi->subformula_l = minimal_simu (phi->subformula_l, 
+//												int_preds, num_ip, reff );
+//        phi->subformula_r = minimal_simu (phi->subformula_r, 
+//												int_preds, num_ip, reff );
+//        return phi;
+//		
+//    case UNIV:
+//    case EXIS:
+//        assert ( phi->subformula_l );
+//        phi->subformula_l = minimal_simu (phi->subformula_l, 
+//												int_preds, num_ip, reff );
+//        return phi;
+//		
+//    default:
+//        assert(0);
+//    }
+//    return NULL;
+//}

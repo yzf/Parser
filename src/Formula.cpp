@@ -1,25 +1,62 @@
 #include "Formula.h"
 #include "Formulas.h"
 #include "utility.h"
+#include <algorithm>
 #include <assert.h>
 #include <cstdlib>
+#include <cstring>
+
+int Formula::new_formula_id = 0;
 
 Formula::Formula() {
     this->formula = NULL;
+    this->is_prenex_formula = false;
+    this->formula_id = 0;
 }
 
-Formula::Formula(_formula* fml) {
-	this->formula = fml;
+Formula::Formula(_formula* fml, bool copy) {
+    if(!copy) {
+        this->formula = fml;
+    }    
+    else {
+        _formula* f = copy_formula(fml);
+        this->formula = f;
+    }
+    this->is_prenex_formula = false;
+    this->formula_id = Formula::new_formula_id ++;
 }
 
-/*Formula::Formula(Formula& FML) {
-	_formula* new_formula = copy_formula(FML.formula);
-	
-	this->formula = new_formula;
-}*/
+Formula::Formula(const Formula& rhs) {
+    _formula* new_formula = copy_formula(rhs.formula);
+    this->formula = new_formula;
+    this->is_prenex_formula = false;
+    this->formula_id = rhs.formula_id;
+}
 
 Formula::~Formula() {
-	delete_formula(this->formula);
+    if (this->formula != NULL) {
+        delete_formula(this->formula);
+    }
+    
+}
+
+_formula* Formula::get_formula()
+{
+    return this->formula;
+}
+        
+void Formula::set_formula(_formula* f)
+{
+    delete_formula(this->formula);
+    this->formula = f;
+}
+
+Formula& Formula::operator = (const Formula& rhs) {
+    _formula* new_formula = copy_formula(rhs.formula);
+    this->formula = new_formula;
+    this->is_prenex_formula = false;
+    this->formula_id = rhs.formula_id;
+    return *this;
 }
 
 bool Formula::is_child_universal(_formula* fml) {
@@ -49,81 +86,44 @@ bool Formula::is_universal() {
 	return is_child_universal(this->formula);
 }
 
-bool Formula::compare_formula(const _formula* phi, const _formula* psi) {
-    int k;
-
-    assert(phi);
-    assert(psi);
-
-    if (phi->formula_type!=psi->formula_type) return false;
-
-    switch (phi->formula_type)
-    {
-    case ATOM:
-        if (phi->predicate_id!=psi->predicate_id) return false;
-        k = vocabulary.predicate_arity(phi->predicate_id) - 1;
-        assert(k<0||phi->parameters);
-        assert(k<0||psi->parameters);
-        for ( ; k>=0; k--)
-        {
-            if (!compare_term(phi->parameters+k,psi->parameters+k))
-                return FALSE;
-        }
-        return true;
-    case UNIV:
-    case EXIS:
-        if (phi->variable_id!=psi->variable_id) return false;
-    case NEGA:
-        assert(phi->subformula_l);
-        assert(psi->subformula_l);
-        return compare_formula(phi->subformula_l,psi->subformula_l);
-    case CONJ:
-    case DISJ:
-    case IMPL:
-        assert(phi->subformula_l);
-        assert(psi->subformula_l);
-        assert(phi->subformula_r);
-        assert(psi->subformula_r);
-        return (compare_formula(phi->subformula_l,psi->subformula_l)
-            && compare_formula(phi->subformula_r,psi->subformula_r));
-    default:
-        assert(0);
+void Formula::remove_from_prenex(_formula* parent, int d, _formula* tag) {    
+    _formula* sf;
+    
+    if(d == 0) sf = parent->subformula_l;
+    else sf = parent->subformula_r;
+    
+    if(sf == NULL || (sf->formula_type != UNIV && sf->formula_type != EXIS)) {
+        return;
     }
-    return false;
-}
-
-bool Formula::compare(Formula& ffc) {
-	return compare_formula(this->formula, ffc.formula);
-}
-
-void Formula::delete_formula ( _formula* fml ) {
-    assert ( fml );
-
-    switch ( fml->formula_type )
-    {
-    case ATOM:
-        if(fml->parameters)
-	delete_terms(fml->parameters, vocabulary.predicate_arity(fml->variable_id));
-        break;
-    case CONJ:
-    case DISJ:
-    case IMPL:
-        assert ( fml->subformula_r );
-        delete_formula(fml->subformula_r);
-    case NEGA:
-    case UNIV:
-    case EXIS:
-        assert ( fml->subformula_l );
-        delete_formula(fml->subformula_l);
-        break;
-    default:
-        assert ( 0 );
+    
+    if(sf == tag) {
+        if(d == 0) parent->subformula_l = sf->subformula_l;
+        else parent->subformula_r = sf->subformula_l;
+        free(sf);
+        remove_from_prenex(sf, 0, tag);
     }
-
-    free(fml);
+    else {
+        remove_from_prenex(sf, 0, tag);
+    }
+    
 }
 
-bool Formula::find_var_formula(const _formula* phi, int var_id) {
+_formula* Formula::find_prenex_quanlifier(_formula* fml, int var_id) {
+    if(fml == NULL || (fml->formula_type != UNIV && fml->formula_type != EXIS)) {
+        return NULL;
+    }
+    if(fml->variable_id == var_id) {
+        return fml;
+    }
+    else if(fml->subformula_l->formula_type == UNIV || fml->subformula_l->formula_type == EXIS) {
+        return find_prenex_quanlifier(fml->subformula_l, var_id);
+    }
+    else {
+        return NULL;
+    }
+}
+
+bool Formula::find_var_formula(_formula* phi, int var_id) {
     int i;
 
     assert ( phi );
@@ -135,9 +135,9 @@ bool Formula::find_var_formula(const _formula* phi, int var_id) {
         {
             assert ( phi->parameters );
             if ( find_var_term ( phi->parameters+i, var_id ) )
-                return true;
+                return phi;
         }
-        return false;
+        return NULL;
     case NEGA:
     case UNIV:
     case EXIS:
@@ -153,11 +153,15 @@ bool Formula::find_var_formula(const _formula* phi, int var_id) {
     default:
         assert ( 0 );
     }
-    return false;
+    return NULL;
 }
 
 bool Formula::find_var(int var_id) {
     return find_var_formula(this->formula, var_id);
+}
+
+void Formula::rename_node_formula(_formula* tag) {   
+    tag->variable_id = vocabulary.add_rename_variable();
 }
 
 void Formula::rename_var_formula(_formula* phi, int oldv, int newv) {
@@ -237,12 +241,15 @@ void Formula::output_formula (FILE* out, _formula* phi)
     switch ( phi->formula_type )
     {
     case ATOM:
+        if(phi->predicate_id >= 0 && vocabulary.predicate_arity(phi->predicate_id) == 0)
+            fprintf ( out, "%s", vocabulary.query_name(phi->predicate_id, PREDICATE));
+        else{
         if(phi->predicate_id >= 0)
         {
             fprintf ( out, "%s(", vocabulary.query_name(phi->predicate_id, PREDICATE));
             for(i = 0; i < vocabulary.predicate_arity(phi->predicate_id); i++)
             {
-                if ( i > 0 ) fprintf ( out, ", " );
+                if ( i > 0 ) fprintf ( out, "," );
                 output_term ( out, phi->parameters+i );
             }
         }
@@ -260,7 +267,7 @@ void Formula::output_formula (FILE* out, _formula* phi)
                 fprintf ( out, "(" );
                 assert ( phi->parameters );
                 output_term ( out, phi->parameters );
-                fprintf ( out, " = " );
+                fprintf ( out, "=" );
                 output_term ( out, phi->parameters+1 );
                 break;
 			case PRED_MIN:
@@ -285,19 +292,19 @@ void Formula::output_formula (FILE* out, _formula* phi)
             }
         }
         fprintf ( out, ")" );
+        }
         break;
     case NEGA:
-        fprintf ( out, "~ (" );
+        fprintf ( out, "~" );
         assert ( phi->subformula_l );
         output_formula ( out, phi->subformula_l );
-        fprintf ( out, ")" );
         break;
     case CONJ:
-        s_conn = (char*)" & ";
+        s_conn = (char*)"&";
     case DISJ:
-        if ( NULL==s_conn ) s_conn = (char*)" | ";
+        if ( NULL==s_conn ) s_conn = (char*)"|";
     case IMPL:
-        if ( NULL==s_conn ) s_conn = (char*)" -> ";
+        if ( NULL==s_conn ) s_conn = (char*)"->";
         fprintf ( out, "(" );
         assert ( phi->subformula_l );
         output_formula ( out, phi->subformula_l );
@@ -310,7 +317,7 @@ void Formula::output_formula (FILE* out, _formula* phi)
         s_conn = (char*)"!";
     case EXIS:
         if ( NULL==s_conn ) s_conn = (char*)"?";
-        fprintf(out, "[%s %s] (", s_conn, vocabulary.query_name(phi->variable_id, VARIABLE));
+        fprintf(out, "[%s%s](", s_conn, vocabulary.query_name(phi->variable_id, VARIABLE));
         assert ( phi->subformula_l );
         output_formula ( out, phi->subformula_l );
         fprintf ( out, ")" );
@@ -320,17 +327,17 @@ void Formula::output_formula (FILE* out, _formula* phi)
     }
 }
 
-void Formula::divide_clause_formula(_formula* fml, Formulas& result) {
-    Formula* new_formula;
+void Formula::divide_clause_formula(_formula* fml, _formula* parent, Formulas& result) {
     if(fml != NULL) {
-        if(fml->formula_type == CONJ && fml->subformula_l->formula_type == CONJ ) {
-            new_formula = new Formula(fml->subformula_r);  
-            result.push_formula(*new_formula);
-            divide_clause_formula(fml->subformula_l, result);
+        if((parent == NULL || parent->formula_type == CONJ) && fml->formula_type == CONJ) {
+            
+            Formula new_formula = Formula(fml->subformula_r, true);  
+            result.push_formula(new_formula);
+            divide_clause_formula(fml->subformula_l, fml, result);   
         }
         else {
-            new_formula = new Formula(fml);
-            result.push_formula(*new_formula);
+            Formula new_formula = Formula(fml, true);
+            result.push_formula(new_formula);
         }
         
     }
@@ -345,7 +352,7 @@ void Formula::divide_CNF_formula(_formula* fml, Formulas& result) {
             divide_CNF_formula(fml->subformula_r, result);
         }
         else {
-            new_formula = new Formula(fml);
+            new_formula = new Formula(fml, true);
             result.push_formula(*new_formula);
         }
     }
@@ -353,9 +360,7 @@ void Formula::divide_CNF_formula(_formula* fml, Formulas& result) {
 
 Formulas Formula::divide_clause() {
     Formulas* outputFormulas = new Formulas();
-    
-    divide_clause_formula(this->formula, *outputFormulas);
-    
+    divide_clause_formula(this->formula, NULL, *outputFormulas);
     return *outputFormulas;  
 }       
 
@@ -381,12 +386,13 @@ void Formula::lower_negative(_formula* srcFormula) {
             switch (subFor->formula_type) {
                 case NEGA:
                     lower_negative(subFor);
-                    if(subFor->subformula_l->formula_type == NEGA) {
+                    subFor = srcFormula->subformula_l;
+                    if(subFor->formula_type == NEGA && subFor->subformula_l->formula_type == NEGA) {
                         srcFormula->subformula_l = subFor->subformula_l->subformula_l;
                         free(subFor->subformula_l);
                         free(subFor);                       
                     }
-                    if(srcFormula->subformula_l->subformula_l->formula_type != ATOM) {
+                    if(srcFormula->subformula_l->formula_type != ATOM && srcFormula->subformula_l->subformula_l->formula_type != ATOM) {
                         lower_negative(srcFormula);
                     }
                     break;
@@ -410,7 +416,6 @@ void Formula::lower_negative(_formula* srcFormula) {
                 {
                     FORMULA_TYPE ftype = (subFor->formula_type == UNIV ? EXIS : UNIV);
 
-                    // reconstruct the source formula
                     srcFormula->formula_type = ftype;
                     srcFormula->subformula_l = composite_bool(NEGA, subFor->subformula_l, NULL);
                     srcFormula->variable_id = subFor->variable_id;
@@ -420,13 +425,6 @@ void Formula::lower_negative(_formula* srcFormula) {
                     break;
                 }
                 case IMPL:
-                    /*free(srcFormula);
-                    srcFormula = composite_bool(subFor->subformula_l,
-                        composite_bool(subFor->subformula_r, NULL, NEGA), 
-                        CONJ);
-                    free(subFor);
-                    lower_negative(srcFormula);*/
-                    
                     /*subFor = composite_bool(composite_bool(subFor->subformula_l, NULL, NEGA), subFor->subformula_r, CONJ);
                     lower_negative(srcFormula);*/
                     break;
@@ -445,15 +443,6 @@ void Formula::lower_negative(_formula* srcFormula) {
             lower_negative(srcFormula->subformula_l);
             break;
         case IMPL:
-           /* if (!inSM) {
-                _formula* tmpl = srcFormula->subformula_l;
-                _formula* tmpr = srcFormula->subformula_r;
-                free(srcFormula);
-                srcFormula = composite_bool(composite_bool(tmpl, NULL, NEGA), 
-                                tmpr,
-                                DISJ);
-                LowerNegative(srcFormula, inSM);
-            }*/
             lower_negative(srcFormula->subformula_l);
             lower_negative(srcFormula->subformula_r);
             break;
@@ -546,7 +535,7 @@ void Formula::convert_CNF() {
     lower_disjunction(this->formula, 0);
 }
 
-/*void Formula::convert_pernex_formula(_formula* fml) {
+void Formula::convert_prenex_formula(_formula* fml) {
     if(fml == NULL) {
         return;
     }
@@ -555,7 +544,7 @@ void Formula::convert_CNF() {
         case ATOM:
             break;
         case NEGA:
-            convert_pernex_formula(fml->subformula_l);
+            convert_prenex_formula(fml->subformula_l);
             
             while(fml->subformula_l->formula_type == EXIS || fml->subformula_l->formula_type == UNIV) {
                 FORMULA_TYPE flt = (fml->subformula_l->formula_type == UNIV) ? EXIS : UNIV;
@@ -568,25 +557,237 @@ void Formula::convert_CNF() {
             break;
         case IMPL:
         case CONJ:
-        case DISJ:
-            convert_pernex_formula(fml->subformula_l);
-            convert_pernex_formula(fml->subformula_r);
+        case DISJ: {
+            convert_prenex_formula(fml->subformula_l);
+            convert_prenex_formula(fml->subformula_r);
             
             _formula* sub_l = fml->subformula_l;
             _formula* sub_r = fml->subformula_r;
+            _formula* curr_fml = fml;                      
             
-            if(fml->formula_type == IMPL && (sub_l->formula_type == EXIS 
-                    || sub_r->formula_type == UNIV)) {
-                sub_l->formula_type = (sub_l->formula_type == UNIV) ? EXIS : UNIV;
+            while(sub_l->formula_type == UNIV || sub_l->formula_type == EXIS || 
+                    sub_r->formula_type == UNIV || sub_r->formula_type == EXIS) {
+                
+                if(curr_fml->formula_type == IMPL && (sub_l->formula_type == EXIS 
+                        || sub_l->formula_type == UNIV)) {
+                    sub_l->formula_type = (sub_l->formula_type == UNIV) ? EXIS : UNIV;
+                }
+                FORMULA_TYPE priority_type = UNIV;
+            
+                if(sub_l->formula_type != priority_type && sub_r->formula_type != priority_type) {
+                    priority_type = EXIS;
+                }
+                if(sub_l->formula_type == priority_type || sub_l->formula_type == sub_r->formula_type) {
+                    _formula* same_variable = find_prenex_quanlifier(sub_r, sub_l->variable_id);
+                    
+                    if(same_variable != NULL) {
+                        if((sub_l->formula_type == UNIV && curr_fml->formula_type == CONJ && same_variable->formula_type == UNIV)||
+                                (sub_l->formula_type == EXIS && curr_fml->formula_type == DISJ && same_variable->formula_type == EXIS)) {
+                            remove_from_prenex(curr_fml, 1, same_variable);
+                        }
+                        else {
+                            int new_id = vocabulary.add_rename_variable();
+                            rename_var_formula(sub_r, sub_l->variable_id, new_id);
+                        }
+                    }
+                    
+                    FORMULA_TYPE temp = curr_fml->formula_type;
+                    sub_r = curr_fml->subformula_r;
+                    curr_fml->formula_type = sub_l->formula_type;
+                    curr_fml->variable_id = sub_l->variable_id;
+                    sub_l->formula_type = temp;
+                    sub_l->subformula_r = sub_r;
+                }
+                else {
+                    _formula* same_variable = find_prenex_quanlifier(sub_l, sub_r->variable_id);
+                    
+                    if(same_variable != NULL) {
+                        if((sub_r->formula_type == UNIV && curr_fml->formula_type == CONJ && same_variable->formula_type == UNIV)||
+                                (sub_r->formula_type == EXIS && curr_fml->formula_type == DISJ && same_variable->formula_type == EXIS)) {
+                            remove_from_prenex(curr_fml, 0, same_variable);
+                        }
+                        else {
+                            int new_id = vocabulary.add_rename_variable();
+                            rename_var_formula(sub_r, sub_l->variable_id, new_id);
+                        }
+                    }
+                    
+                    FORMULA_TYPE temp = curr_fml->formula_type;
+                    sub_l = curr_fml->subformula_l;
+                    _formula* r_sub_l = sub_r->subformula_l;
+                    curr_fml->formula_type = sub_r->formula_type;
+                    curr_fml->variable_id = sub_r->variable_id;
+                    curr_fml->subformula_l = sub_r;
+                    sub_r->formula_type = temp;
+                    sub_r->subformula_l = sub_l;
+                    sub_r->subformula_r = r_sub_l;
+                }
+                curr_fml = curr_fml->subformula_l;
+                sub_l = curr_fml->subformula_l;
+                sub_r = curr_fml->subformula_r;
             }
-            
+        }
+            break;
+        case UNIV:
+        case EXIS:
+            convert_prenex_formula(fml->subformula_l);
+            break;
+        default:
+            break;           
     }
-}*/
-
-void Formula::convert_prenex() {
-    
 }
 
+void Formula::convert_prenex() {
+    convert_prenex_formula(this->formula);
+    this->is_prenex_formula = true;
+   
+}
+
+bool Formula::is_prenex() {
+    return this->is_prenex_formula;
+}
+
+//_formula* Formula::getFormula() {
+//    return this->formula;
+//}
+
 void Formula::output(FILE* out) {
-	output_formula(out, this->formula);
+    output_formula(out, this->formula);
+    fprintf(out, "\n");
+}
+
+bool Formula::is_negative (const int* sm_preds, int num_sp, bool negative ) {
+    return is_negative_formula(this->formula, sm_preds, num_sp, negative);
+}
+
+bool Formula::in_list ( const int* list, int len, int obj )
+{
+    for ( len--; len>=0; len-- )
+        if ( list[len]==obj ) return true;
+    return false;
+}
+
+bool Formula::is_negative_formula(const _formula* phi, 
+		const int* sm_preds, int num_sp, bool negative) {
+    assert ( phi );
+
+    switch ( phi->formula_type )
+    {
+    case ATOM:
+        if ( negative || !in_list ( sm_preds, num_sp, phi->predicate_id ) )
+            return true;
+        break;
+    case NEGA:
+        assert ( phi->subformula_l );
+        return is_negative_formula( phi->subformula_l, sm_preds, num_sp, !negative );
+    case CONJ:
+    case DISJ:
+        assert ( phi->subformula_l );
+        assert ( phi->subformula_r );
+        return (is_negative_formula( phi->subformula_l, sm_preds, num_sp, negative ) &&
+               is_negative_formula( phi->subformula_r, sm_preds, num_sp, negative ));
+    case IMPL:
+        assert ( phi->subformula_l );
+        assert ( phi->subformula_r );
+        return (is_negative_formula( phi->subformula_l, sm_preds, num_sp, !negative ) &&
+               is_negative_formula( phi->subformula_r, sm_preds, num_sp, negative ));
+    case UNIV:
+    case EXIS:
+        assert ( phi->subformula_l );
+        return is_negative_formula( phi->subformula_l, sm_preds, num_sp, negative );
+    default:
+        assert ( 0 );
+    }
+
+    return false;
+}
+
+_formula* Formula::double_negation_formula(_formula* phi, const int* int_preds, int num_ip) {
+    assert(phi);
+
+    if (is_negative_formula(phi, int_preds, num_ip, false))
+    {
+        return phi;
+    }
+
+    switch ( phi->formula_type )
+    {
+    case ATOM:
+        if(in_list(int_preds, num_ip, phi->predicate_id))
+        {
+            phi = composite_bool ( NEGA, phi, NULL );
+            phi = composite_bool ( NEGA, phi, NULL );
+        }
+        break;
+    case CONJ:
+    case DISJ:
+    case IMPL:
+		phi->subformula_r = double_negation_formula(phi->subformula_r,int_preds,num_ip);
+    case NEGA:
+    case UNIV:
+    case EXIS:
+		phi->subformula_l = double_negation_formula(phi->subformula_l,int_preds,num_ip);
+        break;
+
+    default:
+        assert ( 0 );
+    }
+
+    return phi;
+}
+
+void Formula::double_negation(const int* int_preds, int num_ip) {
+    this->formula = double_negation_formula(this->formula, int_preds, num_ip);
+}
+
+void Formula::get_no_quantifier_variables(map<int, bool> &flag, vector<int> &varis, _formula* fml) {
+    assert(fml);
+    switch (fml->formula_type) {
+        case NEGA:
+            break;
+        case UNIV:
+        case EXIS:
+            flag[fml->variable_id] = true;
+            get_no_quantifier_variables(flag, varis, fml->subformula_l);
+            break;
+        case IMPL:
+        case CONJ:
+        case DISJ:
+            get_no_quantifier_variables(flag, varis, fml->subformula_l);
+            get_no_quantifier_variables(flag, varis, fml->subformula_r);
+            break;
+        case ATOM:
+            for(int i = 0; i < vocabulary.predicate_arity(fml->predicate_id); ++ i)
+            {
+                _term* term = fml->parameters + i;
+                if (! flag[term->variable_id]) {
+                    flag[term->variable_id] = true;
+                    varis.push_back(-(term->variable_id));
+                }
+            }
+            break;
+        default:
+            assert(0);
+    }
+}
+
+void Formula::fix_universal_quantifier() {
+    map<int, bool> variables_flag;
+    vector<int> variables;
+    get_no_quantifier_variables(variables_flag, variables, this->formula);
+    sort(variables.begin(), variables.end());
+    for (vector<int>::iterator it = variables.begin();
+            it != variables.end(); ++ it) {
+        if (strncmp("MAX", vocabulary.names_variable[-(*it)], 3) == 0 ||
+                strncmp("MIN", vocabulary.names_variable[-(*it)], 3) == 0) {
+            continue;
+        }
+        this->formula = composite_qntf(UNIV, this->formula, -(*it));
+    }
+}
+
+bool Formula::operator == (Formula& rhs) {
+    _formula* l = get_formula();
+    _formula* r = rhs.get_formula();
+    return compare_formula(l, r);
 }

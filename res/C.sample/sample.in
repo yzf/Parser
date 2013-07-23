@@ -1,11 +1,5 @@
-[?X]~~p(X).
-[?X]pr(X).
-[!X](f->(p(X)|~p(X))).
-[!Y]pr(Y).
+[!X](cvr(X)->i(X)).
+[!X][!Y][?Z]( (i(X)&set(X,Y)) -> (cvr(Z)&set(Z,Y)) ).
 
-{p,pr,f}
-
-<Y@b;X@ce>
-
-
-
+{cvr}
+<X@i;Y@e;Z@i>
