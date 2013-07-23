@@ -6,10 +6,12 @@
 #include <cstdlib>
 #include <cstring>
 
+int Formula::new_formula_id = 0;
+
 Formula::Formula() {
-    this->deep = 1;
     this->formula = NULL;
     this->is_prenex_formula = false;
+    this->formula_id = 0;
 }
 
 Formula::Formula(_formula* fml, bool copy) {
@@ -20,15 +22,15 @@ Formula::Formula(_formula* fml, bool copy) {
         _formula* f = copy_formula(fml);
         this->formula = f;
     }
-    this->deep = 1;
     this->is_prenex_formula = false;
+    this->formula_id = Formula::new_formula_id ++;
 }
 
-Formula::Formula(const Formula& FML) {
-    _formula* new_formula = copy_formula(FML.formula);
+Formula::Formula(const Formula& rhs) {
+    _formula* new_formula = copy_formula(rhs.formula);
     this->formula = new_formula;
-    this->deep = FML.deep;
     this->is_prenex_formula = false;
+    this->formula_id = rhs.formula_id;
 }
 
 Formula::~Formula() {
@@ -52,9 +54,8 @@ void Formula::set_formula(_formula* f)
 Formula& Formula::operator = (const Formula& rhs) {
     _formula* new_formula = copy_formula(rhs.formula);
     this->formula = new_formula;
-    this->deep = rhs.deep;
-   
     this->is_prenex_formula = false;
+    this->formula_id = rhs.formula_id;
     return *this;
 }
 

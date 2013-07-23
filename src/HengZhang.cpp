@@ -37,7 +37,7 @@ int HengZhang::add_symbol(const char* name, SYMBOL_TYPE type, int arity) {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::record_quantifier(Formula originalFml) {
+Formula HengZhang::record_quantifier(Formula original_fml) {
     char str_buf[512];
     _formula* fml_temp;
 
@@ -47,7 +47,7 @@ Formula HengZhang::record_quantifier(Formula originalFml) {
     terms_MIN.clear();
     terms_MAX.clear();
     
-    _formula* fml = originalFml.get_formula();
+    _formula* fml = original_fml.get_formula();
     while(fml->formula_type == UNIV)
     {
         terms_X.push_back(fml->variable_id);
@@ -75,7 +75,7 @@ Formula HengZhang::record_quantifier(Formula originalFml) {
         fml = fml->subformula_l;
     }
     Formula ret = Formula(fml, true);
-    ret.deep = originalFml.deep;
+    ret.formula_id = original_fml.formula_id;
     return ret;
 }
 
@@ -97,16 +97,16 @@ void HengZhang::save_succ_name(string succ_name, vector<string> domain_name) {
 
 Formulas HengZhang::create(Formulas fmls) {
 
-    this->hz_tree.root = TreeNode(Formula(), 0);
+    this->hz_tree.root = TreeNode(Formula());
     vector<TreeNode> children;
     Formula tmp_fml;
     Formulas tmp = fmls;
     while (tmp.size_formulas() > 0) {
         tmp_fml = tmp.top_formula();
-        children.push_back(TreeNode(tmp_fml, tmp_fml.deep));
+        children.push_back(TreeNode(tmp_fml));
         tmp.pop_formula();
     }
-    this->hz_tree.insert_node(children, this->hz_tree.root);
+    this->hz_tree.insert_node(children, this->hz_tree.root.formula.formula_id);
     
     Formulas temp_fmls = fmls;
     Formulas final_fmls;
@@ -127,10 +127,10 @@ Formulas HengZhang::create(Formulas fmls) {
             children.clear();
             while (tmp.size_formulas() > 0) {
                 tmp_fml = tmp.top_formula();
-                children.push_back(TreeNode(tmp_fml, tmp_fml.deep));
+                children.push_back(TreeNode(tmp_fml));
                 tmp.pop_formula();
             }
-            this->hz_tree.insert_node(children, TreeNode(cur_fml, cur_fml.deep));
+            this->hz_tree.insert_node(children, cur_fml.formula_id);
 #ifdef DEBUG
             printf("prenex:\n");
             cur_fml.output(stdout);
@@ -199,7 +199,7 @@ Formula HengZhang::create_formula_1(Formula original_fml) {
     F  = composite_bool(NEGA, F,  NULL);
     
     Formula fml = Formula(F, false);
-    fml.deep = original_fml.deep + 1;
+    fml.formula_id = Formula::new_formula_id ++;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
@@ -239,7 +239,7 @@ Formula HengZhang::create_formula_2(Formula original_fml) {
     _formula* F = composite_bool(IMPL, l, r);
     
     Formula fml = Formula(F, false);
-    fml.deep = original_fml.deep + 1;
+    fml.formula_id = Formula::new_formula_id ++;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
@@ -265,7 +265,7 @@ Formula HengZhang::create_formula_3(Formula original_fml) {
     _formula* F   = composite_bool(DISJ, t_x_min, theta_x_min);
     
     Formula fml = Formula(F, false);
-    fml.deep = original_fml.deep + 1;
+    fml.formula_id = Formula::new_formula_id ++;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
@@ -309,7 +309,7 @@ Formula HengZhang::create_formula_4_old(Formula original_fml) {
     _formula* F = composite_bool(IMPL, left, right);
     
     Formula fml = Formula(F, false);
-    fml.deep = original_fml.deep + 1;
+    fml.formula_id = Formula::new_formula_id ++;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
@@ -377,7 +377,7 @@ Formula HengZhang::create_formula_4(Formula original_fml) {
     _formula* F = composite_bool(IMPL, l, r);
     
     Formula fml = Formula(F, false);
-    fml.deep = original_fml.deep + 1;
+    fml.formula_id = Formula::new_formula_id ++;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
@@ -404,7 +404,7 @@ Formula HengZhang::create_formula_4_1(Formula original_fml) {
     _formula* F = composite_bool(IMPL, left, right);
     
     Formula fml = Formula(F, false);
-    fml.deep = original_fml.deep + 1;
+    fml.formula_id = Formula::new_formula_id ++;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
@@ -431,7 +431,7 @@ Formula HengZhang::create_formula_4_2(Formula original_fml) {
     _formula* F = composite_bool(IMPL, left, right);
     
     Formula fml = Formula(F, false);
-    fml.deep = original_fml.deep + 1;
+    fml.formula_id = Formula::new_formula_id ++;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
@@ -486,7 +486,7 @@ Formula HengZhang::create_formula_5(Formula original_fml) {
     _formula* F = composite_bool(IMPL, succ_y_z, ff);
     
     Formula fml = Formula(F, false);
-    fml.deep = original_fml.deep + 1;
+    fml.formula_id = Formula::new_formula_id ++;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
@@ -524,7 +524,7 @@ Formula HengZhang::create_formula_5_1(Formula original_fml) {
     _formula* F = composite_bool(IMPL, left, right);
     
     Formula fml = Formula(F, false);
-    fml.deep = original_fml.deep + 1;
+    fml.formula_id = Formula::new_formula_id ++;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");
@@ -562,7 +562,7 @@ Formula HengZhang::create_formula_5_2(Formula original_fml) {
     _formula* F = composite_bool(IMPL, left, right);
     
     Formula fml = Formula(F, false);
-    fml.deep = original_fml.deep + 1;
+    fml.formula_id = Formula::new_formula_id ++;
 #ifdef DEBUG
     fml.output(stdout);
     fprintf(stdout, "\n");

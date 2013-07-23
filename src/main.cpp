@@ -16,7 +16,8 @@
 using namespace std;
 
 #define SHOW_RESULT
-//#define SHOW_HZ
+//#define SHOW_HZ_RESULT
+//#define SHOW_HZ_PROCESS
 //#define SHOW_HZ_CABALAR
 
 extern FILE *yyin;
@@ -56,16 +57,22 @@ int main(int argc, char** argv) {
     yyparse();
     S2DLP::instance().set_origin_formulas(gformula);
     S2DLP::instance().set_output_file(fout);
-#ifdef SHOW_RESULT
+    //输出最终的Rule结果
+#ifdef SHOW_RESULT 
     S2DLP::instance().convert();
     S2DLP::instance().output_asp();
 #endif
+    //输出章衡转化后的结果
+#ifdef SHOW_HZ_RESULT
+    Formulas hz_result = HengZhang::instance().create(S2DLP::instance().origin_formulas);
+    hz_result.output_formulas(fout);
+#endif
     //输出章衡转化过程
-#ifdef SHOW_HZ
+#ifdef SHOW_HZ_PROCESS
     Formulas hz_result = HengZhang::instance().create(S2DLP::instance().origin_formulas);
     HengZhang::instance().hz_tree.output(fout);
 #endif
-    //输出Cabalar转化过程
+    //输出章衡转化到Cabalar转化的过程
 #ifdef SHOW_HZ_CABALAR
     Formulas hz_result = HengZhang::instance().create(S2DLP::instance().origin_formulas);
     while (hz_result.size_formulas() > 0) {

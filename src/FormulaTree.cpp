@@ -2,12 +2,12 @@
 #include <queue>
 
 TreeNode::TreeNode() :
-                formula(Formula()), deep(0) {
+                formula(Formula()) {
     
 }
 
-TreeNode::TreeNode(Formula _formula, int _deep) : 
-                formula(_formula), deep(_deep) {
+TreeNode::TreeNode(Formula _formula) : 
+                formula(_formula) {
 }
 
 void TreeNode::set_children(vector<TreeNode> _children_formulas) {
@@ -18,27 +18,24 @@ void TreeNode::set_children(vector<TreeNode> _children_formulas) {
     this->children_formulas = _children_formulas;
 }
 
-void TreeNode::output(FILE* out) {
-    if (this->deep == 0) {
+void TreeNode::output(FILE* out, int deep) {
+    if (this->formula.get_formula() == NULL) {
         return ;
     }
-    for (int i = 1; i < this->deep; ++ i) {
+    for (int i = 1; i < deep; ++ i) {
         fprintf(out, "   ");
     }
     this->formula.output(out);
 }
 
-bool FormulaTree::insert_node(vector<TreeNode> children_formulas, TreeNode father) {
+bool FormulaTree::insert_node(vector<TreeNode> children_formulas, 
+        int father_formula_id) {
     queue<TreeNode*> que;
     que.push(&root);
     while (! que.empty()) {
         TreeNode* cur_node = que.front();
         que.pop();
-        if (cur_node->deep > father.deep) {
-            continue;
-        }
-        if (cur_node->deep == father.deep && 
-                (cur_node->deep == 0 || cur_node->formula == father.formula)) {
+        if (cur_node->formula.formula_id == father_formula_id) {
             cur_node->set_children(children_formulas);
             return true;
         }
@@ -49,16 +46,16 @@ bool FormulaTree::insert_node(vector<TreeNode> children_formulas, TreeNode fathe
     return false;
 }
 
-void FormulaTree::output_node(FILE* out, TreeNode &node) {
-    node.output(out);
+void FormulaTree::output_node(FILE* out, TreeNode &node, int deep) {
+    node.output(out, deep);
     if (node.children_formulas.size() == 0) {
         this->leaf_count ++;
     }
     for (int i = 0; i < node.children_formulas.size(); ++ i) {
-        output_node(out, node.children_formulas[i]);
+        output_node(out, node.children_formulas[i], deep + 1);
     }
 }
 
 void FormulaTree::output(FILE* out) {
-    output_node(out, root);
+    output_node(out, root, 0);
 }

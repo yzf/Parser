@@ -43,7 +43,8 @@ private:
         _formula* double_negation_formula(_formula* phi, const int* int_preds, int num_ip);
         void get_no_quantifier_variables(map<int, bool> &flag, vector<int> &varis, _formula* fml);
 public:
-        int deep;       //公式在章衡转化中的深度
+        int formula_id;       //生成公式树时用到
+        static int new_formula_id;
 public:	
         Formula();
     	Formula(_formula* fml, bool copy);
