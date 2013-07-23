@@ -1,4 +1,5 @@
 a(1..3).
 min_a(1).
 max_a(3).
-:- not q.
+#hide.
+#show p/2.

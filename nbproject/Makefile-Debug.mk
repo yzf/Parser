@@ -37,9 +37,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/src/Cabalar.o \
 	${OBJECTDIR}/src/Formula.o \
+	${OBJECTDIR}/src/FormulaTree.o \
 	${OBJECTDIR}/src/Formulas.o \
 	${OBJECTDIR}/src/HengZhang.o \
-	${OBJECTDIR}/src/HengZhangTree.o \
 	${OBJECTDIR}/src/Rule.o \
 	${OBJECTDIR}/src/S2DLP.o \
 	${OBJECTDIR}/src/Vocabulary.o \
@@ -84,6 +84,11 @@ ${OBJECTDIR}/src/Formula.o: src/Formula.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Formula.o src/Formula.cpp
 
+${OBJECTDIR}/src/FormulaTree.o: src/FormulaTree.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -g -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/FormulaTree.o src/FormulaTree.cpp
+
 ${OBJECTDIR}/src/Formulas.o: src/Formulas.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
@@ -93,11 +98,6 @@ ${OBJECTDIR}/src/HengZhang.o: src/HengZhang.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -g -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/HengZhang.o src/HengZhang.cpp
-
-${OBJECTDIR}/src/HengZhangTree.o: src/HengZhangTree.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/HengZhangTree.o src/HengZhangTree.cpp
 
 ${OBJECTDIR}/src/Rule.o: src/Rule.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src

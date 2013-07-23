@@ -6,9 +6,9 @@
                    projectFiles="true">
       <itemPath>include/Cabalar.h</itemPath>
       <itemPath>include/Formula.h</itemPath>
+      <itemPath>include/FormulaTree.h</itemPath>
       <itemPath>include/Formulas.h</itemPath>
       <itemPath>include/HengZhang.h</itemPath>
-      <itemPath>include/HengZhangTree.h</itemPath>
       <itemPath>include/Rule.h</itemPath>
       <itemPath>include/S2DLP.h</itemPath>
       <itemPath>include/Vocabulary.h</itemPath>
@@ -133,9 +133,9 @@
     <logicalFolder name="src" displayName="src" projectFiles="true">
       <itemPath>src/Cabalar.cpp</itemPath>
       <itemPath>src/Formula.cpp</itemPath>
+      <itemPath>src/FormulaTree.cpp</itemPath>
       <itemPath>src/Formulas.cpp</itemPath>
       <itemPath>src/HengZhang.cpp</itemPath>
-      <itemPath>src/HengZhangTree.cpp</itemPath>
       <itemPath>src/Rule.cpp</itemPath>
       <itemPath>src/S2DLP.cpp</itemPath>
       <itemPath>src/Vocabulary.cpp</itemPath>
@@ -189,11 +189,11 @@
       </item>
       <item path="include/Formula.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/FormulaTree.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Formulas.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/HengZhang.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/HengZhangTree.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Rule.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -357,11 +357,11 @@
       </item>
       <item path="src/Formula.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/FormulaTree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Formulas.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/HengZhang.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/HengZhangTree.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Rule.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -407,11 +407,11 @@
       </item>
       <item path="include/Formula.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/FormulaTree.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Formulas.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/HengZhang.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="include/HengZhangTree.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Rule.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -575,11 +575,11 @@
       </item>
       <item path="src/Formula.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/FormulaTree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
       <item path="src/Formulas.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/HengZhang.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/HengZhangTree.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Rule.cpp" ex="false" tool="1" flavor2="0">
       </item>

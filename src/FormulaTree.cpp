@@ -1,16 +1,16 @@
-#include "HengZhangTree.h"
+#include "FormulaTree.h"
 #include <queue>
 
-HengZhangNode::HengZhangNode() :
+TreeNode::TreeNode() :
                 formula(Formula()), deep(0) {
     
 }
 
-HengZhangNode::HengZhangNode(Formula _formula, int _deep) : 
+TreeNode::TreeNode(Formula _formula, int _deep) : 
                 formula(_formula), deep(_deep) {
 }
 
-void HengZhangNode::set_children(vector<HengZhangNode> _children_formulas) {
+void TreeNode::set_children(vector<TreeNode> _children_formulas) {
     for (int i = 0; i < _children_formulas.size(); ++ i) {
         _children_formulas[i].formula.convert_prenex();
         _children_formulas[i].formula.fix_universal_quantifier();
@@ -18,7 +18,7 @@ void HengZhangNode::set_children(vector<HengZhangNode> _children_formulas) {
     this->children_formulas = _children_formulas;
 }
 
-void HengZhangNode::output(FILE* out) {
+void TreeNode::output(FILE* out) {
     if (this->deep == 0) {
         return ;
     }
@@ -28,11 +28,11 @@ void HengZhangNode::output(FILE* out) {
     this->formula.output(out);
 }
 
-bool HengZhangTree::insert_node(vector<HengZhangNode> children_formulas, HengZhangNode father) {
-    queue<HengZhangNode*> que;
+bool FormulaTree::insert_node(vector<TreeNode> children_formulas, TreeNode father) {
+    queue<TreeNode*> que;
     que.push(&root);
     while (! que.empty()) {
-        HengZhangNode* cur_node = que.front();
+        TreeNode* cur_node = que.front();
         que.pop();
         if (cur_node->deep > father.deep) {
             continue;
@@ -49,7 +49,7 @@ bool HengZhangTree::insert_node(vector<HengZhangNode> children_formulas, HengZha
     return false;
 }
 
-void HengZhangTree::output_node(FILE* out, HengZhangNode &node) {
+void FormulaTree::output_node(FILE* out, TreeNode &node) {
     node.output(out);
     if (node.children_formulas.size() == 0) {
         this->leaf_count ++;
@@ -59,6 +59,6 @@ void HengZhangTree::output_node(FILE* out, HengZhangNode &node) {
     }
 }
 
-void HengZhangTree::output(FILE* out) {
+void FormulaTree::output(FILE* out) {
     output_node(out, root);
 }
