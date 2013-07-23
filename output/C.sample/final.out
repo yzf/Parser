@@ -1,8 +1,0 @@
-%NEW variable define
-_ok:- not ok.
-_t_0(X,NV_0):- not t_0(X,NV_0).
-_false(Y):- not false(Y).
-_ture(Y):- not ture(Y).
-_un(Y):- not un(Y).
-_posd(X,Y):- not posd(X,Y).
-_negd(X,Y):- not negd(X,Y).

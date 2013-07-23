@@ -1229,7 +1229,7 @@ Formulas Cabalar::convert_Cabalar(Formulas fmls)
        
     }
     //在公式树中标记叶子为cabalar结果
-    S2DLP::instance().formula_tree.mark_final_cabalars();
+    S2DLP::instance().formula_tree.mark_leaves(CABALAR_LEAF);
     
     return finalFmls;
 }

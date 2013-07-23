@@ -141,7 +141,7 @@ Formulas HengZhang::create(Formulas fmls) {
 #endif
         }
     }
-
+    S2DLP::instance().formula_tree.mark_leaves(HENGZHANG_LEAF);
     return final_fmls;
 }
 

@@ -13,12 +13,14 @@
 #include "structs.h"
 #include "Cabalar.h"
 #include "HengZhang.h"
+#include "FormulaTree.h"
 using namespace std;
 
 #define SHOW_RESULT
-//#define SHOW_HZ_RESULT
+//#define SHOW_ALL_PROCESS
 //#define SHOW_HZ_PROCESS
-//#define SHOW_HZ_CABALAR
+//#define SHOW_CABALAR_PROCESS
+#define RUN_ASP
 
 extern FILE *yyin;
 extern S2DLP Translator;
@@ -57,45 +59,34 @@ int main(int argc, char** argv) {
     yyparse();
     S2DLP::instance().set_origin_formulas(gformula);
     S2DLP::instance().set_output_file(fout);
+    S2DLP::instance().convert();
     //输出最终的Rule结果
 #ifdef SHOW_RESULT 
-    S2DLP::instance().convert();
     S2DLP::instance().output_asp();
-//    S2DLP::instance().formula_tree.output(fout);
 #endif
-    //输出章衡转化后的结果
-#ifdef SHOW_HZ_RESULT
-    Formulas hz_result = HengZhang::instance().create(S2DLP::instance().origin_formulas);
-    hz_result.output_formulas(fout);
+    //输出整个转化过程
+#ifdef SHOW_ALL_PROCESS
+    S2DLP::instance().formula_tree.output_all_process(fout);
 #endif
     //输出章衡转化过程
 #ifdef SHOW_HZ_PROCESS
-    Formulas hz_result = HengZhang::instance().create(S2DLP::instance().origin_formulas);
-    S2DLP::instance().formula_tree.output(fout);
+   S2DLP::instance().formula_tree.output_hengzhang_process(fout);
 #endif
-    //输出章衡转化到Cabalar转化的过程
-#ifdef SHOW_HZ_CABALAR
-    Formulas hz_result = HengZhang::instance().create(S2DLP::instance().origin_formulas);
-    while (hz_result.size_formulas() > 0) {
-        Formula cur_fml = hz_result.top_formula();
-        hz_result.pop_formula();
-        Formulas cur_fmls;
-        cur_fmls.push_formula(cur_fml);
-        
-        Formulas cabalar_result = Cabalar::instance().convert_Cabalar(cur_fmls);
-        fprintf(fout, "HengZhang:\n");
-        cur_fml.output(fout);
-        fprintf(fout, "Cabalar:\n");
-        cabalar_result.output_formulas(fout);
-        fprintf(fout, "Rule:\n");
-        while (cabalar_result.size_formulas() > 0) {
-            Formula f = cabalar_result.top_formula();
-            cabalar_result.pop_formula();
-            Rule rule(f);
-            rule.output(fout);
-        }
-        fprintf(fout, "\n\n");
+   //输出Cabalar转化过程
+#ifdef SHOW_CABALAR_PROCESS
+   S2DLP::instance().formula_tree.output_cabalar_process(fout);
+#endif
+
+    
+#ifdef RUN_ASP
+    fflush(fout);
+    FILE* asp = popen("gringo output/C.sample/sample.fact output/C.sample/sample.out | claspD 0", "r");
+    const int MAX = 1024;
+    char line[MAX];
+    while (fgets(line, MAX, asp) != NULL) {
+        printf("%s", line);
     }
+    pclose(asp);
 #endif
 
     return 0;

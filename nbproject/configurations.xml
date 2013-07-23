@@ -26,16 +26,8 @@
                    projectFiles="true">
       <logicalFolder name="output" displayName="output" projectFiles="true">
         <logicalFolder name="C.sample" displayName="C.sample" projectFiles="true">
-          <itemPath>output/C.sample/cabalar.out</itemPath>
-          <itemPath>output/C.sample/final.out</itemPath>
-          <itemPath>output/C.sample/guocheng.out</itemPath>
-          <itemPath>output/C.sample/ptree.out</itemPath>
-          <itemPath>output/C.sample/rules.out</itemPath>
-          <itemPath>output/C.sample/sample.d</itemPath>
           <itemPath>output/C.sample/sample.fact</itemPath>
           <itemPath>output/C.sample/sample.out</itemPath>
-          <itemPath>output/C.sample/zh_cabalar.out</itemPath>
-          <itemPath>output/C.sample/zhengheng.out</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="res" displayName="res" projectFiles="true">
@@ -205,25 +197,9 @@
       </item>
       <item path="include/utility.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="output/C.sample/cabalar.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="output/C.sample/final.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="output/C.sample/guocheng.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="output/C.sample/ptree.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="output/C.sample/rules.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="output/C.sample/sample.d" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="output/C.sample/sample.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="output/C.sample/sample.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="output/C.sample/zh_cabalar.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="output/C.sample/zhengheng.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="parse/clean.sh" ex="false" tool="3" flavor2="0">
       </item>
@@ -423,25 +399,9 @@
       </item>
       <item path="include/utility.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="output/C.sample/cabalar.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="output/C.sample/final.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="output/C.sample/guocheng.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="output/C.sample/ptree.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="output/C.sample/rules.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="output/C.sample/sample.d" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="output/C.sample/sample.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="output/C.sample/sample.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="output/C.sample/zh_cabalar.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="output/C.sample/zhengheng.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="parse/clean.sh" ex="false" tool="3" flavor2="0">
       </item>
