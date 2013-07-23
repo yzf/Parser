@@ -9,7 +9,7 @@
 using namespace std;
 
 class HengZhang{
-private:
+public:
     vector<int> terms_X;
     vector<int> terms_Y;
     vector<int> terms_Z;

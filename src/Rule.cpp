@@ -149,7 +149,12 @@ void Rule::output(FILE* out) {
                             exis = true;
                     }
                     if(!exis) {
-                        S2DLP::instance().nega_predicates.push_back(Formula(body_part->subformula_l, true));  
+                        Formula new_nega_predicate = Formula(body_part->subformula_l, true);
+                        new_nega_predicate.replace_terms(HengZhang::instance().terms_MIN,
+                                                        HengZhang::instance().terms_Y);
+                        new_nega_predicate.replace_terms(HengZhang::instance().terms_MAX,
+                                                        HengZhang::instance().terms_Y);
+                        S2DLP::instance().nega_predicates.push_back(new_nega_predicate);  
                     }
                     fprintf(out, "_");
                 }

@@ -1,4 +1,5 @@
 #include "S2DLP.h"
+#include "cstring"
 #include <assert.h>
 
 S2DLP::S2DLP() : output_file(NULL){
@@ -78,7 +79,11 @@ void S2DLP::output_addition() {
     
     fprintf(this->output_file, "%%Variable domain\n");
     for(int i = 0; i < vocabulary.num_variable; i++) {
-        fprintf(this->output_file, "#domain %s(%s).\n", vocabulary.names_domain[vocabulary.variable_at_domain[i]], vocabulary.names_variable[i]);
+        string str = vocabulary.names_variable[i];
+        if (str.find("MIN") == string::npos && 
+                str.find("MAX") == string::npos) {
+            fprintf(this->output_file, "#domain %s(%s).\n", vocabulary.names_domain[vocabulary.variable_at_domain[i]], vocabulary.names_variable[i]);
+        }
     }
     
 //    fprintf(this->output_file, "%%Addition rule for not intension\n");
