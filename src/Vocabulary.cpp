@@ -21,6 +21,7 @@ Vocabulary::Vocabulary() {
     this->num_new_predicate = 0;
     this->num_intension_predicate = 0;
     this->num_names_domain = 0;
+    this->newNexName = 0;
 }
 
 Vocabulary::~Vocabulary() {
@@ -41,10 +42,10 @@ int Vocabulary::add_symbol ( const char* name, SYMBOL_TYPE type, int arity )
 {
 	// return value: 1. >=0 - id; 2. -1 - too many symbols; 3. -2 - type error
     char* s;
-
+    int id;
     assert (name);
     
-    if(query_symbol(name, type) < 0) {
+    if((id = query_symbol(name, type)) < 0) {
         s = (char*)malloc( (strlen(name) + 1) *sizeof(char) );
         strcpy (s, name);
 
@@ -70,7 +71,18 @@ int Vocabulary::add_symbol ( const char* name, SYMBOL_TYPE type, int arity )
         }
     }
     
-    return -1;
+    return id;
+}
+
+int Vocabulary::add_rename_variable() {
+    char name_buf[512];
+    sprintf(name_buf, "PN_%i", this->newNexName++);
+    
+    while(query_symbol(name_buf,VARIABLE) >= 0) {
+        this->newNexName++;
+    }
+    
+    return add_symbol(name_buf,VARIABLE,0);
 }
 
 int Vocabulary::query_symbol ( const char* name, SYMBOL_TYPE type )
@@ -116,6 +128,15 @@ int Vocabulary::query_symbol ( const char* name, SYMBOL_TYPE type )
     return -1;
 }
 
+bool Vocabulary::is_intension_predicate(int var_id) {
+    for(int i = 0; i < this->num_intension_predicate; i++) {
+        if(this->index_intension_predicate[i] == var_id) {
+            return true;
+        }
+    }
+    return false;
+}
+
 int Vocabulary::set_intension_predicate(const char* name) {
     int id = query_symbol(name, PREDICATE);
     
@@ -128,7 +149,7 @@ void Vocabulary::set_domain(char* variable, char* domain) {
     int id = query_symbol(domain, DOMAIN);
     int vid;
     
-    if(id = -1) {
+    if(id == -1) {
         this->names_domain[this->num_names_domain] = domain;
         id = this->num_names_domain++;
     }
@@ -146,7 +167,6 @@ int Vocabulary::predicate_arity(int id)
     else
     {
         assert(this->arities_predicate);
-        printf("%dHello", id);
         assert(id < this->num_predicate);
         return this->arities_predicate[id];
     }
@@ -208,14 +228,7 @@ void Vocabulary::dump_vocabulary(FILE* out) {
         fprintf(out, "%s ", names_predicate[index_intension_predicate[n]]);
     }
     
-    fprintf(out, "\ndomain:\n");
-    for(n = 0; n < num_names_domain; n++) {
-        fprintf(out, "%s ", names_domain[n]);
-    }
-    for(n = 0; n < num_variable; n++) {
-        fprintf(out, "%d ", variable_at_domain[n]);
-    }
-    
+    fprintf(out, "\ndomain:\n");    
     for(n = 0; n < num_variable; n++) {
         fprintf(out, "%s at %s", names_variable[n], names_domain[variable_at_domain[n]]);
         if(n != num_variable - 1) {
