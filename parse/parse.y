@@ -60,6 +60,8 @@ void yyerror(const char* s)
 %token <s> LL
 %token <s> RR
 
+%token <s> BACKSLASH
+
 %type <f>  s2dlp formulas formula atom
 %type <t>  term 
 %type <ts> terms

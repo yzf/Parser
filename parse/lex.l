@@ -9,6 +9,9 @@ extern int context_flag;/* 0 - not in any atom, 1 - in an atom*/
 
 %}
 
+
+%x COMMENT
+
 blank	  			[ \n\t\r]*
 variable			[A-Z][a-zA-Z0-9_]*
 constant			[a-z0-9][a-zA-Z0-9_]*
@@ -53,6 +56,13 @@ constant			[a-z0-9][a-zA-Z0-9_]*
 ";"                                     {return SEMICO;                 }
 "@"                                     {return AT;                     }
 {blank}		    	{/* skip blankspace */	}
+
+"\\"                                    {return BACKSLASH;              }
+
+"%"                                     {BEGIN COMMENT;                 }
+<COMMENT>{blank}                        {BEGIN INITIAL;                 }
+<COMMENT>.                              {}
+
 %%
 
 int yywrap()
