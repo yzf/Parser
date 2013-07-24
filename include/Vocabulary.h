@@ -3,7 +3,9 @@
 
 #include "structs.h"
 #include <cstdio>
+#include <vector>
 
+using namespace std;
 
 class Vocabulary {
     public:
@@ -32,6 +34,8 @@ class Vocabulary {
         char* names_domain[MAX_NUM_DOMAIN];
         
         int newNexName;
+        vector<_formula*> atom_list;
+        
         
     public:
         Vocabulary();
@@ -47,6 +51,9 @@ class Vocabulary {
         int function_arity(int id);
         char* query_name(int id, SYMBOL_TYPE type);
         void dump_vocabulary(FILE* out);
+        void add_atom(_formula*);
+        _formula* get_atom(int predicate_id);
+       
 };
 
 #endif

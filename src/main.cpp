@@ -20,7 +20,7 @@ using namespace std;
 //#define SHOW_ALL_PROCESS
 //#define SHOW_HZ_PROCESS
 //#define SHOW_CABALAR_PROCESS
-//#define RUN_ASP
+#define RUN_ASP
 
 extern FILE *yyin;
 extern S2DLP Translator;

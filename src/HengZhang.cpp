@@ -1,7 +1,8 @@
 #include "HengZhang.h"
 #include "utility.h"
 #include "S2DLP.h"
-#include <stdlib.h>
+#include "utility.h"
+#include "cstdlib"
 
 //#define DEBUG
 
@@ -195,6 +196,10 @@ Formula HengZhang::create_formula_1(Formula original_fml) {
     // Add S(_X, _MIN)
     _term* term_x_min   = combine_terms(terms_X, terms_MIN);
     _formula* s_x_min = composite_atom(ATOM, symbol_s, term_x_min);
+    _formula* s_x_y = copy_formula(s_x_min);
+    replace_term(s_x_y->parameters, 
+            terms_MIN.size(), terms_MIN, terms_Y);
+    vocabulary.add_atom(s_x_y);
 
     // create structure
     _formula* F  = composite_bool(NEGA, s_x_min, NULL);
@@ -219,11 +224,9 @@ Formula HengZhang::create_formula_2(Formula original_fml) {
     //1 (succ(_Y,_Z)
     _term* term_y_z = combine_terms(terms_Y, terms_Z);
     _formula* succ_y_z = composite_atom(ATOM, symbol_succ, term_y_z);
-
     //2 s(_X,_Z)
     _term* term_x_z = combine_terms(terms_X, terms_Z);
     _formula* s_x_z = composite_atom(ATOM, symbol_s, term_x_z);
-
     //3 theta__(_X,_Y)
     original_fml.double_negation(vocabulary.index_intension_predicate,
             vocabulary.num_intension_predicate);
@@ -258,6 +261,10 @@ Formula HengZhang::create_formula_3(Formula original_fml) {
     //create left sub-formula t(_X,_MIN)
     _term* term_x_min = combine_terms(terms_X, terms_MIN);
     _formula* t_x_min   = composite_atom(ATOM, symbol_t, term_x_min);
+    _formula* t_x_y = copy_formula(t_x_min);
+    replace_term(t_x_y->parameters, 
+            terms_MIN.size(), terms_MIN, terms_Y);
+    vocabulary.add_atom(t_x_y);
 
     //create right sub-formula theta(_X,_MIN)
     original_fml.replace_terms(terms_Y, terms_MIN);

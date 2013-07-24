@@ -90,13 +90,13 @@ void Rule::asp_modify() {
             cur = cur->subformula_l;
         }
         
-       /* if(!vocabulary.is_intension_predicate(cur->predicate_id)) {
+        if(!vocabulary.is_intension_predicate(cur->predicate_id)) {
             while(body_part->formula_type == NEGA && body_part->subformula_l->formula_type != ATOM) {
                 body_part = body_part->subformula_l->subformula_l;
             }
-           // iter->set_formula(copy_formula(body_part));
+            iter->set_formula(copy_formula(body_part));
         }
-        else {*/
+        else {
             while(body_part->formula_type == NEGA && body_part->subformula_l->formula_type != ATOM 
                 && body_part->subformula_l->subformula_l->formula_type != ATOM) {
                 _formula* sub = body_part->subformula_l;
@@ -106,7 +106,7 @@ void Rule::asp_modify() {
                     free(sub->subformula_l);
                 }
             }
-       // }
+        }
     }
 }
 
@@ -149,11 +149,8 @@ void Rule::output(FILE* out) {
                             exis = true;
                     }
                     if(!exis) {
-                        Formula new_nega_predicate = Formula(body_part->subformula_l, true);
-                        new_nega_predicate.replace_terms(HengZhang::instance().terms_MIN,
-                                                        HengZhang::instance().terms_Y);
-                        new_nega_predicate.replace_terms(HengZhang::instance().terms_MAX,
-                                                        HengZhang::instance().terms_Y);
+                        _formula* pid = vocabulary.get_atom(body_part->subformula_l->predicate_id);
+                        Formula new_nega_predicate = Formula(pid, true);
                         S2DLP::instance().nega_predicates.push_back(new_nega_predicate);  
                     }
                     fprintf(out, "_");

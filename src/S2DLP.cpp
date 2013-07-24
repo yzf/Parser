@@ -203,5 +203,20 @@ void S2DLP::output_asp() {
         fprintf(this->output_file, ":- not ");
         printAtom(iter->get_formula(), this->output_file);        
         fprintf(this->output_file, ".\n");
-    } 
+    }
+    
+    for(int i = 0 ; i < vocabulary.atom_list.size(); i++) {
+        if(!vocabulary.is_intension_predicate(vocabulary.atom_list.at(i)->predicate_id)) {
+            fprintf(this->output_file, "_");
+            printAtom(vocabulary.atom_list.at(i), this->output_file);
+            fprintf(this->output_file, " :- not ");
+            printAtom(vocabulary.atom_list.at(i), this->output_file);
+            fprintf(this->output_file, ".\n");
+            
+            printAtom(vocabulary.atom_list.at(i), this->output_file);
+            fprintf(this->output_file, " | _");
+            printAtom(vocabulary.atom_list.at(i), this->output_file);
+            fprintf(this->output_file, ".\n");
+        }
+    }
 }
