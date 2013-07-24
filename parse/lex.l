@@ -60,7 +60,7 @@ constant			[a-z0-9][a-zA-Z0-9_]*
 "\\"                                    {return BACKSLASH;              }
 
 "%"                                     {BEGIN COMMENT;                 }
-<COMMENT>{blank}                        {BEGIN INITIAL;                 }
+<COMMENT>\n                             {BEGIN INITIAL;                 }
 <COMMENT>.                              {}
 
 %%

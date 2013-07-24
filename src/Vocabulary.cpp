@@ -219,6 +219,16 @@ void Vocabulary::add_atom(_formula* atom) {
     }
 }
 
+_formula* Vocabulary::get_atom(int predicate_id) {
+    for(int i = 0; i < atom_list.size(); i++) {
+        if(atom_list.at(i)->predicate_id == predicate_id) {
+            return atom_list.at(i);
+        }
+    }
+    
+    return NULL;
+}
+
 void Vocabulary::dump_vocabulary(FILE* out) {
     int n;
     

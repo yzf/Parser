@@ -36,6 +36,7 @@ class Vocabulary {
         int newNexName;
         vector<_formula*> atom_list;
         
+        
     public:
         Vocabulary();
         ~Vocabulary();
@@ -51,6 +52,8 @@ class Vocabulary {
         char* query_name(int id, SYMBOL_TYPE type);
         void dump_vocabulary(FILE* out);
         void add_atom(_formula*);
+        _formula* get_atom(int predicate_id);
+       
 };
 
 #endif
