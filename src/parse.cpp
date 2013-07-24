@@ -509,7 +509,7 @@ static const yytype_uint16 yyrline[] =
 {
        0,    75,    75,    83,    86,    89,    92,    97,   104,   107,
      110,   113,   118,   125,   129,   136,   142,   148,   154,   159,
-     171,   182,   186,   193,   222,   255,   275,   288,   300,   321
+     171,   182,   186,   193,   224,   257,   277,   290,   302,   323
 };
 #endif
 
@@ -1705,6 +1705,8 @@ yyreduce:
 		(yyval.f)->parameters   = (_term*)malloc(sizeof(_term)*(yyvsp[(3) - (4)].ts)->num_term);
 		memcpy((yyval.f)->parameters, (yyvsp[(3) - (4)].ts)->terms, sizeof(_term)*(yyvsp[(3) - (4)].ts)->num_term);
 		
+                _formula* atom = copy_formula((yyval.f));
+                vocabulary.add_atom(atom);
 		free((yyvsp[(3) - (4)].ts));
 		//free($1);
 
@@ -1715,7 +1717,7 @@ yyreduce:
   case 24:
 
 /* Line 1806 of yacc.c  */
-#line 222 "parse.y"
+#line 224 "parse.y"
     {
 		printf("atom no terms\n");
 		assert((yyvsp[(1) - (1)].s));
@@ -1751,7 +1753,7 @@ yyreduce:
   case 25:
 
 /* Line 1806 of yacc.c  */
-#line 255 "parse.y"
+#line 257 "parse.y"
     {
 		printf("terms comma\n");
 		assert((yyvsp[(1) - (3)].ts));
@@ -1777,7 +1779,7 @@ yyreduce:
   case 26:
 
 /* Line 1806 of yacc.c  */
-#line 275 "parse.y"
+#line 277 "parse.y"
     {
 		printf("terms single\n");
 		(yyval.ts) = (_terms*)malloc(sizeof(_terms));
@@ -1793,7 +1795,7 @@ yyreduce:
   case 27:
 
 /* Line 1806 of yacc.c  */
-#line 288 "parse.y"
+#line 290 "parse.y"
     {
 		printf("term var\n");
 		assert((yyvsp[(1) - (1)].s));
@@ -1811,7 +1813,7 @@ yyreduce:
   case 28:
 
 /* Line 1806 of yacc.c  */
-#line 300 "parse.y"
+#line 302 "parse.y"
     {
 		assert((yyvsp[(1) - (1)].s));
 		printf("term cons %s\n",(yyvsp[(1) - (1)].s));
@@ -1838,7 +1840,7 @@ yyreduce:
   case 29:
 
 /* Line 1806 of yacc.c  */
-#line 321 "parse.y"
+#line 323 "parse.y"
     {
 		printf("term func\n");
 		assert((yyvsp[(1) - (4)].s));
@@ -1869,7 +1871,7 @@ yyreduce:
 
 
 /* Line 1806 of yacc.c  */
-#line 1873 "../src/parse.cpp"
+#line 1875 "../src/parse.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2100,6 +2102,6 @@ yyreturn:
 
 
 /* Line 2067 of yacc.c  */
-#line 347 "parse.y"
+#line 349 "parse.y"
 
 

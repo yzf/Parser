@@ -214,6 +214,8 @@ atom
 		$$->parameters   = (_term*)malloc(sizeof(_term)*$3->num_term);
 		memcpy($$->parameters, $3->terms, sizeof(_term)*$3->num_term);
 		
+                _formula* atom = copy_formula($$);
+                vocabulary.add_atom(atom);
 		free($3);
 		//free($1);
 

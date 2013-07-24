@@ -205,6 +205,20 @@ char* Vocabulary::query_name ( int id, SYMBOL_TYPE type )
     return NULL;
 }
 
+void Vocabulary::add_atom(_formula* atom) {
+    bool exis = false;
+    
+    for(int i = 0; i < atom_list.size(); i++) {
+        if(atom_list.at(i)->predicate_id == atom->predicate_id) {
+            exis = true;
+        }
+    }
+    
+    if(!exis) {
+        atom_list.push_back(atom);
+    }
+}
+
 void Vocabulary::dump_vocabulary(FILE* out) {
     int n;
     
@@ -237,5 +251,10 @@ void Vocabulary::dump_vocabulary(FILE* out) {
         else {
             fprintf(out, "\n");
         }
+    }
+    
+    fprintf(out, "\natom\n");
+    for(n = 0; n < atom_list.size(); n++) {
+        fprintf(out, "%s", query_name(atom_list.at(n)->predicate_id, PREDICATE));
     }
 }
