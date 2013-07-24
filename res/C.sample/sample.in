@@ -1,8 +1,5 @@
-%SKJKF
-%JKALSDJF
-[?X](p(X) -> q(X)).
+[?X]p(X).
 
-%AJLG
-{p}
+{p/r;p/v}
 
 <X@a>

@@ -5,6 +5,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 #define MAX_NUM_PREDICATE   100
 #define MAX_NUM_DOMAIN      10
+#define MAX_NUM_VARY        10
 #define MAX_NUM_FUNCTION	100
 #define MAX_NUM_VARIABLE	100
 #define MAX_LEN_PARAMETER	10
@@ -44,7 +45,8 @@ typedef enum {
 	VARIABLE = 0,
 	FUNCTION,
 	PREDICATE,
-        DOMAIN
+        DOMAIN,
+        VARY
 } SYMBOL_TYPE;
 
 typedef enum {

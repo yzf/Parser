@@ -59,12 +59,14 @@ void yyerror(const char* s)
 %token <s> AT
 %token <s> LL
 %token <s> RR
+%token <s> SLASH
 
 %token <s> BACKSLASH
 
 %type <f>  s2dlp formulas formula atom
 %type <t>  term 
 %type <ts> terms
+%type <s>  associate_pred
 
 %left S_IMPL
 %left S_CONJ S_DISJ
@@ -72,31 +74,34 @@ void yyerror(const char* s)
 
 %%
 s2dlp 
-	: formulas intensionP domain_section{
+	: formulas predicate_section domain_section{
             assert($1);
             printf("root\n");
             gformula = $1;
 	}
 ;
-
-intensionP
-        : LBRACE inten_preds RBRACE {
-        
+predicate_section
+        : LBRACE associate_pred SLASH associate_pred SEMICO varys RBRACE {
+            vocabulary.set_intension_predicate($2);
+            vocabulary.r = $4;
         }
-        |
 ;
-inten_preds
-        : inten_preds COMMA intent_pred {
+varys
+        : vary COMMA varys {
             
         } 
-        | intent_pred {
+        | vary {
             
         }
 ;
-intent_pred
-        : S_PRED {           
-            vocabulary.set_intension_predicate($1);
-
+vary
+        : associate_pred SLASH associate_pred {
+            vocabulary.set_vary($1, $3);
+        }
+;
+associate_pred
+        : S_PRED {
+            $$ = $1;
             context_flag = 0;
         }
 ;

@@ -16,11 +16,11 @@
 #include "FormulaTree.h"
 using namespace std;
 
-#define SHOW_RESULT
+//#define SHOW_RESULT
 //#define SHOW_ALL_PROCESS
 //#define SHOW_HZ_PROCESS
 //#define SHOW_CABALAR_PROCESS
-#define RUN_ASP
+//#define RUN_ASP
 
 extern FILE *yyin;
 extern S2DLP Translator;
@@ -57,9 +57,10 @@ int main(int argc, char** argv) {
     }
     
     yyparse();
-    S2DLP::instance().set_origin_formulas(gformula);
-    S2DLP::instance().set_output_file(fout);
-    S2DLP::instance().convert();
+    vocabulary.dump_vocabulary(stdout);
+//    S2DLP::instance().set_origin_formulas(gformula);
+//    S2DLP::instance().set_output_file(fout);
+//    S2DLP::instance().convert();
     //输出最终的Rule结果
 #ifdef SHOW_RESULT 
     S2DLP::instance().output_asp();

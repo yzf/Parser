@@ -111,7 +111,10 @@ int Vocabulary::query_symbol ( const char* name, SYMBOL_TYPE type )
             n = this->num_names_domain;
             ps = this->names_domain;
             break;
-            
+        case VARY:
+            n = this->num_names_vary;
+            ps = this->names_vary;
+            break;
     default:
         assert ( 0 );
         return -2;
@@ -155,6 +158,19 @@ void Vocabulary::set_domain(char* variable, char* domain) {
     }
     if((vid = query_symbol(variable, VARIABLE)) != -1) {
         this->variable_at_domain[vid] = id;
+    }
+}
+
+void Vocabulary::set_vary(char* predicate, char* vary) {
+    int id = query_symbol(vary, VARY);
+    int vid;
+    
+    if(id == -1) {
+        this->names_vary[this->num_names_vary] = vary;
+        id = this->num_names_vary++;
+    }
+    if((vid = query_symbol(predicate, PREDICATE)) != -1) {
+        this->predicate_in_vary[vid] = id;
     }
 }
 
@@ -258,8 +274,13 @@ void Vocabulary::dump_vocabulary(FILE* out) {
         if(n != num_variable - 1) {
             fprintf(out, ", ");
         }
-        else {
-            fprintf(out, "\n");
+    }
+    
+    fprintf(out, "\nvary:\n");    
+    for(n = 0; n < num_predicate; n++) {
+        fprintf(out, "%s in %s", names_predicate[n], names_vary[predicate_in_vary[n]]);
+        if(n != num_predicate - 1) {
+            fprintf(out, ", ");
         }
     }
     
@@ -267,4 +288,7 @@ void Vocabulary::dump_vocabulary(FILE* out) {
     for(n = 0; n < atom_list.size(); n++) {
         fprintf(out, "%s", query_name(atom_list.at(n)->predicate_id, PREDICATE));
     }
+    
+    fprintf(out, "ri:%s", r);
+    fprintf(out, "\n");
 }

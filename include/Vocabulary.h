@@ -21,9 +21,6 @@ class Vocabulary {
         int arities_predicate[MAX_NUM_PREDICATE];
         char* names_predicate[MAX_NUM_PREDICATE];
 
-        int num_stable_predicate;
-        int index_stable_predicate[MAX_NUM_PREDICATE];
-
         int num_new_variable;
         int num_new_predicate;
 
@@ -32,6 +29,12 @@ class Vocabulary {
 
         int num_names_domain;
         char* names_domain[MAX_NUM_DOMAIN];
+        
+        int num_names_vary;
+        char* names_vary[MAX_NUM_VARY];
+        int predicate_in_vary[MAX_NUM_VARY];
+        
+        char* r;
         
         int newNexName;
         vector<_formula*> atom_list;
@@ -46,6 +49,7 @@ class Vocabulary {
         int query_symbol(const char* name, SYMBOL_TYPE type);
         bool is_intension_predicate(int var_id);
         int set_intension_predicate(const char* name);
+        void set_vary(char* predicate, char* vary);
         void set_domain(char* variable, char* domain);
         int predicate_arity(int id);
         int function_arity(int id);

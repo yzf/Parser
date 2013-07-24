@@ -60,7 +60,8 @@
      AT = 278,
      LL = 279,
      RR = 280,
-     BACKSLASH = 281
+     SLASH = 281,
+     BACKSLASH = 282
    };
 #endif
 /* Tokens.  */
@@ -87,7 +88,8 @@
 #define AT 278
 #define LL 279
 #define RR 280
-#define BACKSLASH 281
+#define SLASH 281
+#define BACKSLASH 282
 
 
 
@@ -107,7 +109,7 @@ typedef union YYSTYPE
 
 
 /* Line 2068 of yacc.c  */
-#line 111 "../src/parse.h"
+#line 113 "../src/parse.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
