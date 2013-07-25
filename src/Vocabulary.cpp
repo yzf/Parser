@@ -13,6 +13,7 @@ Vocabulary::Vocabulary() {
     memset(this->names_predicate, 0, sizeof(char));
     memset(this->index_intension_predicate, 0, sizeof(int));
     memset(this->names_domain, 0, sizeof(char));
+    memset(this->predicate_in_vary, -1, sizeof(int));
     
     this->num_variable = 0;
     this->num_function = 0;
@@ -137,6 +138,17 @@ bool Vocabulary::is_intension_predicate(int var_id) {
             return true;
         }
     }
+    return false;
+}
+
+bool Vocabulary::is_vary_predicate(int id)
+{
+    for(int i = 0; i < this->num_names_vary; i++)
+    {
+        if(this->predicate_in_vary[i] == id)
+            return true;
+    }
+    
     return false;
 }
 

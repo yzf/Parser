@@ -48,6 +48,7 @@ class Vocabulary {
         int add_rename_variable();
         int query_symbol(const char* name, SYMBOL_TYPE type);
         bool is_intension_predicate(int var_id);
+        bool is_vary_predicate(int id);
         int set_intension_predicate(const char* name);
         void set_vary(char* predicate, char* vary);
         void set_domain(char* variable, char* domain);

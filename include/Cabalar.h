@@ -44,8 +44,7 @@ private:
      //tools
     int Commutative_Trans(_formula* root, _formula* curr,
                            FORMULA_TYPE commutativeSymbol);
-    _formula* convert_negative_normal_form(_formula* fml);//Negative Normal Form
-    Formulas convert_negative_normal_forms(Formulas fmls);
+    
     Formulas Cabalar_Trans(_formula* fml);
     Cabalar();
     Cabalar(const Cabalar& rhs);
@@ -54,6 +53,9 @@ private:
 public:
     Formulas convert_Cabalar(Formulas fmls);
 
+    _formula* convert_negative_normal_form(_formula* fml);//Negative Normal Form
+    Formulas convert_negative_normal_forms(Formulas fmls);
+    
     static Cabalar& instance();
         
 };

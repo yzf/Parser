@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/FormulaTree.o \
 	${OBJECTDIR}/src/Formulas.o \
 	${OBJECTDIR}/src/HengZhang.o \
+	${OBJECTDIR}/src/PointerSensitive.o \
 	${OBJECTDIR}/src/Rule.o \
 	${OBJECTDIR}/src/S2DLP.o \
 	${OBJECTDIR}/src/Vocabulary.o \
@@ -98,6 +99,11 @@ ${OBJECTDIR}/src/HengZhang.o: src/HengZhang.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/HengZhang.o src/HengZhang.cpp
+
+${OBJECTDIR}/src/PointerSensitive.o: src/PointerSensitive.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/PointerSensitive.o src/PointerSensitive.cpp
 
 ${OBJECTDIR}/src/Rule.o: src/Rule.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src

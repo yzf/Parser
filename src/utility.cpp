@@ -154,6 +154,8 @@ void rename_var_term(_term* t, int oldv, int newv)
     }
 }
 
+
+
 _term* replace_term(_term* terms, int arity, 
 			const std::vector<int>& exis, const std::vector<int>& replacements)
 {
@@ -379,7 +381,7 @@ bool compare_formula(const _formula* phi, const _formula* psi) {
 //    switch ( phi->formula_type )
 //    {
 //    case ATOM:
-//        if(in_list(int_preds, num_ip, phi->predicate_id))
+//       if(in_list(int_preds, num_ip, phi->predicate_id))
 //        {
 //            phi = composite_bool ( NEGA, phi, NULL );
 //            phi = composite_bool ( NEGA, phi, NULL );

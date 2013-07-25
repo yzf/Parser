@@ -9,6 +9,7 @@
       <itemPath>include/FormulaTree.h</itemPath>
       <itemPath>include/Formulas.h</itemPath>
       <itemPath>include/HengZhang.h</itemPath>
+      <itemPath>include/PointerSensitive.h</itemPath>
       <itemPath>include/Rule.h</itemPath>
       <itemPath>include/S2DLP.h</itemPath>
       <itemPath>include/Vocabulary.h</itemPath>
@@ -128,6 +129,7 @@
       <itemPath>src/FormulaTree.cpp</itemPath>
       <itemPath>src/Formulas.cpp</itemPath>
       <itemPath>src/HengZhang.cpp</itemPath>
+      <itemPath>src/PointerSensitive.cpp</itemPath>
       <itemPath>src/Rule.cpp</itemPath>
       <itemPath>src/S2DLP.cpp</itemPath>
       <itemPath>src/Vocabulary.cpp</itemPath>
@@ -187,6 +189,8 @@
       </item>
       <item path="include/HengZhang.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/PointerSensitive.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Rule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/S2DLP.h" ex="false" tool="3" flavor2="0">
@@ -338,6 +342,8 @@
       <item path="src/Formulas.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/HengZhang.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/PointerSensitive.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Rule.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -389,6 +395,8 @@
       </item>
       <item path="include/HengZhang.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/PointerSensitive.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Rule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/S2DLP.h" ex="false" tool="3" flavor2="0">
@@ -540,6 +548,8 @@
       <item path="src/Formulas.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/HengZhang.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/PointerSensitive.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Rule.cpp" ex="false" tool="1" flavor2="0">
       </item>
