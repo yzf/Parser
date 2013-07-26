@@ -70,6 +70,12 @@ void S2DLP::set_origin_formulas(_formula* input) {
     Formula* origin = new Formula(input, false);
     this->origin_formulas = origin->divide_clause();
 }
+
+void S2DLP::set_origin_formulas(Formulas fmls)
+{
+    this->origin_formulas = fmls;
+}
+
 void S2DLP::output_addition() {
     fprintf(this->output_file, "%%MIN and MAX domain\n");
     for(int i = 0; i < vocabulary.num_names_domain; i++) {

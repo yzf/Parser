@@ -23,10 +23,9 @@ private:
     _formula* PointerSensitive_7_2(_formula* fml);
     _formula* PointerSensitive_8(_formula* fml);
     _formula* PointerSensitive_9(_formula* fml);
-    _formula* PointerSensitive_10(_formula* fml);
-    _formula* PointerSensitive_11(_formula* fml);
     
 public:
+    static PointerSensitive& instance();
     PointerSensitive();
     ~PointerSensitive(); 
     Formulas PointerSensitive_Convert(_formula* fml);

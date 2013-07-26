@@ -28,6 +28,7 @@ public:
     void output_dlp_formulas();
     void set_output_file(FILE*&);
     void set_origin_formulas(_formula*);
+    void set_origin_formulas(Formulas);
     void output_addition();
     void output_asp();
     

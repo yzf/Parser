@@ -3,6 +3,9 @@
 #include <cstring>
 #include <cstdlib>
 #include <assert.h>
+#include "utility.h"
+#include <iostream>
+
 
 Vocabulary::Vocabulary() {
     memset(this->names_variable, 0, sizeof(char));
@@ -13,7 +16,7 @@ Vocabulary::Vocabulary() {
     memset(this->names_predicate, 0, sizeof(char));
     memset(this->index_intension_predicate, 0, sizeof(int));
     memset(this->names_domain, 0, sizeof(char));
-    memset(this->predicate_in_vary, -1, sizeof(int));
+    memset(this->predicate_in_vary, -1, sizeof(int)*MAX_NUM_PREDICATE);
     
     this->num_variable = 0;
     this->num_function = 0;
@@ -143,13 +146,10 @@ bool Vocabulary::is_intension_predicate(int var_id) {
 
 bool Vocabulary::is_vary_predicate(int id)
 {
-    for(int i = 0; i < this->num_names_vary; i++)
-    {
-        if(this->predicate_in_vary[i] == id)
-            return true;
-    }
-    
-    return false;
+    if(this->predicate_in_vary[id] > -1)
+        return true;
+    else
+        return false;
 }
 
 int Vocabulary::set_intension_predicate(const char* name) {
@@ -250,7 +250,7 @@ void Vocabulary::add_atom(_formula* atom) {
 _formula* Vocabulary::get_atom(int predicate_id) {
     for(int i = 0; i < atom_list.size(); i++) {
         if(atom_list.at(i)->predicate_id == predicate_id) {
-            return atom_list.at(i);
+            return copy_formula(atom_list.at(i));
         }
     }
     

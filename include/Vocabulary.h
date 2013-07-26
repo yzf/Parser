@@ -32,7 +32,7 @@ class Vocabulary {
         
         int num_names_vary;
         char* names_vary[MAX_NUM_VARY];
-        int predicate_in_vary[MAX_NUM_VARY];
+        int predicate_in_vary[MAX_NUM_PREDICATE];
         
         char* r;
         
@@ -58,7 +58,8 @@ class Vocabulary {
         void dump_vocabulary(FILE* out);
         void add_atom(_formula*);
         _formula* get_atom(int predicate_id);
-       
+        
+        
 };
 
 #endif

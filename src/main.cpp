@@ -14,6 +14,7 @@
 #include "Cabalar.h"
 #include "HengZhang.h"
 #include "FormulaTree.h"
+#include "PointerSensitive.h"
 using namespace std;
 
 //#define SHOW_RESULT
@@ -50,7 +51,7 @@ int main(int argc, char** argv) {
     
     if(argc < 3)
     {
-        io("res/C.sample/sample.in","output/C.sample/sample.out");
+        io("res/C.sample/sample2.in","output/C.sample/sample.out");
     }
     else{
         io(argv[1], argv[2]);
@@ -58,7 +59,9 @@ int main(int argc, char** argv) {
     
     yyparse();
     vocabulary.dump_vocabulary(stdout);
-//    S2DLP::instance().set_origin_formulas(gformula);
+    Formulas fmls = PointerSensitive::instance().PointerSensitive_Convert(gformula);
+//    printf("\nPointerSensitive : \n");fmls.output_formulas(stdout);printf("\n");
+    S2DLP::instance().set_origin_formulas(fmls);
 //    S2DLP::instance().set_output_file(fout);
 //    S2DLP::instance().convert();
     //输出最终的Rule结果
