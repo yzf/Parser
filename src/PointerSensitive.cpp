@@ -253,19 +253,18 @@ _formula* PointerSensitive::PointerSensitive_7_2(_formula* fml)
     _formula* lr = composite_bool(NEGA, ll, NULL);
     _formula* tmpl = composite_bool(DISJ, ll, lr);
     
-    _formula* wholeuniv = (_formula*)malloc(sizeof(_formula));
-    wholeuniv->formula_type = UNIV;
-    wholeuniv->variable_id = (ll->parameters+0)->variable_id;
-    for(int i = 1; i < vocabulary.arities_predicate[ll->predicate_id]; i++)
+    _formula* currfml = NULL;
+    for(int i = vocabulary.arities_predicate[ll->predicate_id] - 1; i >= 0; i--)
     {    
-        _formula* univ;
-        univ->formula_type = UNIV;
-        univ->variable_id = (ll->parameters+i)->variable_id;
-        wholeuniv->subformula_l = univ;
+        _formula* univ = composite_qntf(UNIV, currfml, (ll->parameters+i)->variable_id);
+        currfml = univ;
     }
-    wholeuniv->subformula_l = tmpl;
+    _formula* pointer = currfml;
+    while(pointer->subformula_l != NULL)
+        pointer = pointer->subformula_l;
+    pointer->subformula_l = tmpl;
     
-    _formula* l = wholeuniv;
+    _formula* l = currfml;
    
     _formula* result = composite_bool(IMPL, l ,r);
     
