@@ -14,7 +14,7 @@ Vocabulary::Vocabulary() {
     memset(this->names_function, 0, sizeof(char));
     memset(this->arities_predicate, 0, sizeof(int));
     memset(this->names_predicate, 0, sizeof(char));
-    memset(this->index_intension_predicate, 0, sizeof(int));
+    memset(this->index_intension_predicate, -1, sizeof(int));
     memset(this->names_domain, 0, sizeof(char));
     memset(this->predicate_in_vary, -1, sizeof(int)*MAX_NUM_PREDICATE);
     
@@ -78,9 +78,9 @@ int Vocabulary::add_symbol ( const char* name, SYMBOL_TYPE type, int arity )
     return id;
 }
 
-int Vocabulary::add_rename_variable() {
+int Vocabulary::add_rename_variable(const char* prefix) {
     char name_buf[512];
-    sprintf(name_buf, "PN_%i", this->newNexName++);
+    sprintf(name_buf, "%s%i", prefix, this->newNexName++);
     
     while(query_symbol(name_buf,VARIABLE) >= 0) {
         this->newNexName++;

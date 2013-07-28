@@ -1,8 +1,12 @@
 #include "utility.h"
+#include "Formula.h"
 
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <iostream>
+
+using namespace std;
 
 //terms operations
 ///////////////////////////////////////////////////////////////////////////////
@@ -12,7 +16,7 @@ _term* combine_terms(const _term* head, int head_size,
 	_term* terms = (_term*)malloc( sizeof(_term) * (head_size+tail_size) );
 	
 	memcpy(terms, head, sizeof(_term)*head_size);
-	memcpy(terms+sizeof(_term)*head_size, tail, sizeof(_term)*tail_size);
+	memcpy(terms+head_size, tail, sizeof(_term)*tail_size);
 	
 	return terms;
 }
@@ -208,6 +212,40 @@ void output_term ( FILE* out, const _term* t )
         }
     }
 }
+
+
+
+
+//构造一系列变量名不同，变量id不同，论域相同的参数
+_term* construct_terms(const _term* terms, int size)
+{
+     _term* param = (_term*)malloc(sizeof(_term)*size);
+     
+     for(int i = 0; i < size; i++) 
+     {
+        //根据p中原来的参数名字，新建一个变量，并放进变量列表中。
+        int pv_id = (terms+i)->variable_id;
+        char* pv = strdup(vocabulary.names_variable[pv_id]);
+        char * newname = strcat(pv, "_");
+        char name_buf[512];
+        sprintf(name_buf, "%s%d", newname, vocabulary.newNexName);
+        int id = vocabulary.add_symbol(name_buf, VARIABLE, 0);
+        
+        //把新变量放进需要构造的参数列表中。
+        (param+i)->term_type = VARI;
+        (param+i)->variable_id = id;
+        
+        //设定该新变量的论域。
+        char* v_domain = strdup(vocabulary.names_domain[vocabulary.variable_at_domain[pv_id]]);
+        vocabulary.set_domain(name_buf, v_domain);        
+     }
+     
+     vocabulary.newNexName++;
+     
+     return param;
+}
+
+
 //formula operations
 ///////////////////////////////////////////////////////////////////////////////
 _formula* composite_atom(FORMULA_TYPE formula_type,
@@ -217,10 +255,14 @@ _formula* composite_atom(FORMULA_TYPE formula_type,
 
     _formula* fml = (_formula*)malloc(sizeof(_formula));
     assert(fml);
-
+    
+    
+    
     fml->formula_type = formula_type;
     fml->predicate_id = predicate_id;
     fml->parameters   = parameters;
+    
+ 
     return fml;
 }
 

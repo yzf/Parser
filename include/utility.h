@@ -16,6 +16,9 @@ _term* combine_terms(const _term* head, int head_size,
 _term* combine_terms(const std::vector<int>& head, 
 					   const std::vector<int>& tail);//VARI terms ONLY
 _term*   copy_terms (const _term* terms, int size);
+
+_term* construct_terms(const _term* terms, int size);
+
 void   delete_terms (_term* terms, int size);
 bool   compare_term (const _term* t, const _term* s);
 
@@ -26,6 +29,8 @@ _term* replace_term (_term* terms, int arity,
 			const std::vector<int>& exis, const std::vector<int>& replacements);
 
 void output_term(FILE* out, const _term* t);
+
+
 
 //formula operations
 ///////////////////////////////////////////////////////////////////////////////

@@ -38,14 +38,13 @@ class Vocabulary {
         
         int newNexName;
         vector<_formula*> atom_list;
-        
-        
+    
     public:
         Vocabulary();
         ~Vocabulary();
         void destory_vocabulary();
         int add_symbol(const char* name, SYMBOL_TYPE type, int arity);
-        int add_rename_variable();
+        int add_rename_variable(const char* prefix = "PN_");
         int query_symbol(const char* name, SYMBOL_TYPE type);
         bool is_intension_predicate(int var_id);
         bool is_vary_predicate(int id);
