@@ -1,7 +1,6 @@
-#include "S2DLP.h"
+#include "structs.h"
+#include <cstdio>
 
-Vocabulary* _vocabulary = new Vocabulary();
-Vocabulary vocabulary = *_vocabulary;
 
 _formula* gformula = NULL; 
 int context_flag = 0;

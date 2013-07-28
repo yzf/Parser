@@ -8,22 +8,21 @@
 #include <cstdlib>
 #include <cstdio>
 #include <assert.h>
-
-#include "S2DLP.h"
+#include "Vocabulary.h"
 #include "structs.h"
-#include "Cabalar.h"
+#include "utility.h"
+#include "Utils.h"
+#include "Formula.h"
+#include "Formulas.h"
 #include "HengZhang.h"
-#include "FormulaTree.h"
+#include <iostream>
+
+
 using namespace std;
 
-#define SHOW_RESULT
-//#define SHOW_ALL_PROCESS
-//#define SHOW_HZ_PROCESS
-//#define SHOW_CABALAR_PROCESS
-#define RUN_ASP
+
 
 extern FILE *yyin;
-extern S2DLP Translator;
 extern Vocabulary vocabulary;
 extern _formula* gformula;
 FILE* fout;
@@ -57,37 +56,14 @@ int main(int argc, char** argv) {
     }
     
     yyparse();
-    S2DLP::instance().set_origin_formulas(gformula);
-    S2DLP::instance().set_output_file(fout);
-    S2DLP::instance().convert();
-    //输出最终的Rule结果
-#ifdef SHOW_RESULT 
-    S2DLP::instance().output_asp();
-#endif
-    //输出整个转化过程
-#ifdef SHOW_ALL_PROCESS
-    S2DLP::instance().formula_tree.output_all_process(fout);
-#endif
-    //输出章衡转化过程
-#ifdef SHOW_HZ_PROCESS
-   S2DLP::instance().formula_tree.output_hengzhang_process(fout);
-#endif
-   //输出Cabalar转化过程
-#ifdef SHOW_CABALAR_PROCESS
-   S2DLP::instance().formula_tree.output_cabalar_process(fout);
-#endif
-
     
-#ifdef RUN_ASP
-    fflush(fout);
-    FILE* asp = popen("gringo output/C.sample/sample.fact output/C.sample/sample.out | claspD 0", "r");
-    const int MAX = 1024;
-    char line[MAX];
-    while (fgets(line, MAX, asp) != NULL) {
-        printf("%s", line);
-    }
-    pclose(asp);
-#endif
+    
+    Vocabulary::instance().dumpVocabulary(stdout);
+    Formula f = Formula(gformula, true);
+    Formulas fs;
+    fs.pushBack(f);
+    Formulas hz = HengZhang::instance().create(fs);
+    hz.output(fout);
 
     return 0;
 }

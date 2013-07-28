@@ -1,8 +1,7 @@
-%SKJKF
-%JKALSDJF
-[?X](p(X) -> q(X)).
+
+[!X][!Y][?Z]((i(X)&set(X,Y))->(cvr(Z)&set(Z,Y))).
 
 %AJLG
-{p}
+{cvr}
 
-<X@a>
+<X@a;Y@b;Z@a>

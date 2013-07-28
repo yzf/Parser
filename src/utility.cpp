@@ -48,12 +48,10 @@ _term* copy_terms(const _term* terms, int size)//deep copy
 
     memcpy(newTerms, terms, sizeof(_term)*size);
 
-    for(int i = 0; i < size; i++)
-    {
-        if(newTerms[i].term_type == FUNC)
-        {
-            newTerms[i].parameters = copy_terms(newTerms[i].parameters,
-			vocabulary.function_arity(newTerms[i].function_id));
+    for(int i = 0; i < size; i++) {
+        if(terms[i].term_type == FUNC) {
+            newTerms[i].parameters = copy_terms(terms[i].parameters,
+			Vocabulary::instance().getFunctionArity(terms[i].function_id));
         }
     }
 
@@ -67,7 +65,7 @@ void delete_terms(_term* terms, int size)//deep delete
         if(terms[i].term_type == FUNC)
         {
             delete_terms(terms[i].parameters,
-			vocabulary.function_arity(terms[i].function_id));
+			Vocabulary::instance().getFunctionArity(terms[i].function_id));
         }
     }
     free(terms);
@@ -89,7 +87,7 @@ bool compare_term(const _term* t, const _term* s)
     case FUNC:
         if (t->function_id==s->function_id)
         {
-            k = vocabulary.function_arity(t->function_id) - 1;
+            k = Vocabulary::instance().getFunctionArity(t->function_id) - 1;
             assert(k<0||t->parameters);
             assert(k<0||s->parameters);
             for ( ; k>=0; k--)
@@ -117,7 +115,7 @@ bool find_var_term(const _term* t, int var_id)
         return (t->variable_id==var_id);
     case FUNC:
         assert(t->parameters);
-        for(i = 0; i < vocabulary.function_arity(t->function_id); i++)
+        for(i = 0; i < Vocabulary::instance().getFunctionArity(t->function_id); i++)
         {
             if ( find_var_term(t->parameters+i, var_id) )
                 return true;
@@ -144,7 +142,7 @@ void rename_var_term(_term* t, int oldv, int newv)
         break;
     case FUNC:
         assert (t->parameters);
-        for(i = 0; i < vocabulary.function_arity(t->function_id); i++)
+        for(i = 0; i < Vocabulary::instance().getFunctionArity(t->function_id); i++)
         {
             rename_var_term(t->parameters+i, oldv, newv);
         }
@@ -174,7 +172,7 @@ _term* replace_term(_term* terms, int arity,
         else if(terms[i].term_type == FUNC)
         {
             replace_term(terms[i].parameters, 
-					vocabulary.function_arity(terms[i].function_id), exis, replacements);
+					Vocabulary::instance().getFunctionArity(terms[i].function_id), exis, replacements);
         }
     }
     return terms;
@@ -188,12 +186,12 @@ void output_term ( FILE* out, const _term* t )
 
     if ( VARI==t->term_type )
     {
-        fprintf ( out, "%s", vocabulary.query_name(t->variable_id, VARIABLE));
+        fprintf ( out, "%s", Vocabulary::instance().getNameById(t->variable_id, VARIABLE));
     }
     else
     {
-        fprintf ( out, "%s", vocabulary.query_name(t->function_id, FUNCTION));
-        k = vocabulary.function_arity(t->function_id);
+        fprintf ( out, "%s", Vocabulary::instance().getNameById(t->function_id, FUNCTION));
+        k = Vocabulary::instance().getFunctionArity(t->function_id);
         if ( k > 0 )
         {
             fprintf ( out, "(" );
@@ -265,7 +263,7 @@ _formula* copy_formula (const _formula *fml)
     switch (fml->formula_type)
     {
     case ATOM:
-        newFormula->parameters = copy_terms(fml->parameters, vocabulary.predicate_arity(fml->predicate_id));
+        newFormula->parameters = copy_terms(fml->parameters, Vocabulary::instance().getPredicateArity(fml->predicate_id));
         break;
     case CONJ:
     case DISJ:
@@ -292,7 +290,7 @@ void delete_formula( _formula* fml ) {
     {
     case ATOM:
         if(fml->parameters)
-	delete_terms(fml->parameters, vocabulary.predicate_arity(fml->predicate_id));
+	delete_terms(fml->parameters, Vocabulary::instance().getPredicateArity(fml->predicate_id));
         break;
     case CONJ:
     case DISJ:
@@ -324,7 +322,7 @@ bool compare_formula(const _formula* phi, const _formula* psi) {
     {
     case ATOM:
         if (phi->predicate_id!=psi->predicate_id) return false;
-        k = vocabulary.predicate_arity(phi->predicate_id) - 1;
+        k = Vocabulary::instance().getPredicateArity(phi->predicate_id) - 1;
         assert(k<0||phi->parameters);
         assert(k<0||psi->parameters);
         for ( ; k>=0; k--)
@@ -360,10 +358,10 @@ bool compare_formula(const _formula* phi, const _formula* psi) {
 //void output_extraDefinition(FILE* out)//@TODO
 //{
 //	int i;
-//	for(i = 0; i < vocabulary.num_predicate; i++)
+//	for(i = 0; i < Vocabulary::instance().num_predicate; i++)
 //	{
-//		fprintf(out,"_%s :- not %s\n",vocabulary.names_predicate[i],
-//				vocabulary.names_predicate[i]);
+//		fprintf(out,"_%s :- not %s\n",Vocabulary::instance().names_predicate[i],
+//				Vocabulary::instance().names_predicate[i]);
 //	}
 //}
 //
@@ -455,3 +453,98 @@ bool compare_formula(const _formula* phi, const _formula* psi) {
 //    }
 //    return NULL;
 //}
+
+void output_formula(FILE* out, _formula* fml) {
+    char* s_conn = NULL;
+    int i;
+
+    assert(fml);
+
+    switch ( fml->formula_type )
+    {
+    case ATOM:
+        if(fml->predicate_id >= 0 && Vocabulary::instance().getPredicateArity(fml->predicate_id) == 0)
+            fprintf ( out, "%s", Vocabulary::instance().getNameById(fml->predicate_id, PREDICATE));
+        else{
+        if(fml->predicate_id >= 0)
+        {
+            fprintf ( out, "%s(", Vocabulary::instance().getNameById(fml->predicate_id, PREDICATE));
+            for(i = 0; i < Vocabulary::instance().getPredicateArity(fml->predicate_id); i++)
+            {
+                if ( i > 0 ) fprintf ( out, "," );
+                output_term ( out, fml->parameters+i );
+            }
+        }
+        else
+        {
+            switch ( fml->predicate_id )
+            {
+			case PRED_TRUE:
+				fprintf( out, "(TRUE");
+				break;
+			case PRED_FALSE:
+				fprintf( out, "(FALSE");
+				break;
+            case PRED_EQUALITY:
+                fprintf ( out, "(" );
+                assert ( fml->parameters );
+                output_term ( out, fml->parameters );
+                fprintf ( out, "=" );
+                output_term ( out, fml->parameters+1 );
+                break;
+			case PRED_MIN:
+				fprintf( out, "MIN(");
+				assert( fml->parameters );
+				output_term( out, fml->parameters );
+				break;
+			case PRED_MAX:
+				fprintf( out, "MAX(");
+				assert( fml->parameters );
+				output_term( out, fml->parameters );
+				break;
+			case PRED_SUCC:
+                fprintf ( out, "SUCC(" );
+                assert ( fml->parameters );
+                output_term ( out, fml->parameters );
+                fprintf ( out, "," );
+                output_term ( out, fml->parameters+1 );
+				break;
+            default:
+                assert ( 0 );
+            }
+        }
+        fprintf ( out, ")" );
+        }
+        break;
+    case NEGA:
+        fprintf ( out, "~" );
+        assert ( fml->subformula_l );
+        output_formula ( out, fml->subformula_l );
+        break;
+    case CONJ:
+        s_conn = (char*)"&";
+    case DISJ:
+        if ( NULL==s_conn ) s_conn = (char*)"|";
+    case IMPL:
+        if ( NULL==s_conn ) s_conn = (char*)"->";
+        fprintf ( out, "(" );
+        assert ( fml->subformula_l );
+        output_formula ( out, fml->subformula_l );
+        fprintf ( out, "%s", s_conn );
+        assert ( fml->subformula_r );
+        output_formula ( out, fml->subformula_r );
+        fprintf ( out, ")" );
+        break;
+    case UNIV:
+        s_conn = (char*)"!";
+    case EXIS:
+        if ( NULL==s_conn ) s_conn = (char*)"?";
+        fprintf(out, "[%s%s](", s_conn, Vocabulary::instance().getNameById(fml->variable_id, VARIABLE));
+        assert ( fml->subformula_l );
+        output_formula ( out, fml->subformula_l );
+        fprintf ( out, ")" );
+        break;
+    default:
+        assert ( 0 );
+    }
+}

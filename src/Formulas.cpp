@@ -1,132 +1,77 @@
 #include "Formulas.h"
-#include "Formula.h"
-#include <cstdlib>
-#include <deque>
-#include "utility.h"
-
-using namespace std;
 
 
-Formulas::Formulas(deque<Formula> _fs) {
-    this->_formulas = _fs;
+Formulas::Formulas() {
 }
 
-Formulas::Formulas()
-{
-    
+Formulas::Formulas(deque<Formula> _formulas) {
+    this->m_dequeFormulas = _formulas;
 }
 
-Formulas::Formulas(const Formulas& rhs) {
-    this->_formulas = rhs._formulas;
+unsigned int Formulas::size() const {
+    return this->m_dequeFormulas.size();
 }
 
-Formulas::~Formulas() {
-    while(!(this->_formulas.empty())) {
-        this->_formulas.pop_back();
+bool Formulas::isEmpty() const {
+    return this->m_dequeFormulas.empty();
+}
+
+void Formulas::pushBack(const Formula& _tail) {
+    this->m_dequeFormulas.push_back(_tail);
+}
+void Formulas::pushFront(const Formula& _front) {
+    this->m_dequeFormulas.push_front(_front);
+}
+Formula Formulas::popBack() {
+    Formula ret = this->m_dequeFormulas.back();
+    this->m_dequeFormulas.pop_back();
+    return ret;
+}
+Formula Formulas::popFront() {
+    Formula ret = this->m_dequeFormulas.front();
+    this->m_dequeFormulas.pop_front();
+    return ret;
+}
+Formula Formulas::front() {
+    return this->m_dequeFormulas.front();
+}
+Formula Formulas::back() {
+    return this->m_dequeFormulas.back();
+}
+/**
+ * 连接公式数组 如 {a,b,c}{d,e} -> {a,b,c,d,e}
+ * @param _tail
+ */
+void Formulas::joinFormulas(const Formulas& _tail) {
+    Formulas tmpFmls = _tail;
+    while (! tmpFmls.isEmpty()) {
+        pushBack(tmpFmls.popFront());
     }
 }
 
-Formulas& Formulas::operator = (const Formulas& rhs) {
-    this->_formulas = rhs._formulas;
-}
-
-deque<Formula>  Formulas::get_formulas()
-{
-    return this->_formulas;
-}
-      
-
-void Formulas::set_formulas(deque<Formula> fs)
-{
-    this->_formulas = fs;
-}
-
-bool Formulas::equal(Formulas f)
-{
-    if(this->_formulas.size() != f.get_formulas().size())
+bool Formulas::operator == (const Formulas& _rhs) const {
+    deque<Formula>::const_iterator it1;
+    deque<Formula>::const_iterator it2;
+    if (this->m_dequeFormulas.size() != _rhs.m_dequeFormulas.size()) {
         return false;
-    
-//    deque<Formula>::iterator it = this->_formulas.begin();
-//    deque<Formula>::iterator itf = f.get_formulas().begin();
-//    while(it != this->_formulas.end())
-//    {
-//        if(*it != *itf)
-//            return false;
-//        it++;
-//        itf++;
-//    }
-    
-    int size = this->_formulas.size();
-    deque<Formula> f1 = this->_formulas;
-    deque<Formula> f2 = f.get_formulas();
-    
-    for(int i = 0; i < size; i++)
-    {
-        
-        if(!compare_formula(f1.at(i).get_formula(), f2.at(i).get_formula()))
-            return false;
     }
-    
+    for (it1 = this->m_dequeFormulas.begin(), it2 = _rhs.m_dequeFormulas.begin(); 
+            it1 != this->m_dequeFormulas.end() && it2 != _rhs.m_dequeFormulas.end(); 
+            ++ it1, ++ it2) {
+        if (*it1 != *it2) {
+            return false;
+        }
+    }
     return true;
 }
 
-
-bool Formulas::is_empty()
-{
-    return (this->_formulas.size() == 0);
+bool Formulas::operator != (const Formulas& _rhs) const {
+    return ! (*this == _rhs);
 }
 
-
-void Formulas::join_formulas(Formulas tail)
-{
-    
-    deque<Formula> temphead = this->_formulas;
-    deque<Formula> temptail = tail.get_formulas();
-    
-    while(!temptail.empty())
-    {
-        temphead.push_back(temptail.front());
-        temptail.pop_front();
-    }
-    
-    this->set_formulas(temphead);
-}
-
-void Formulas::push_formula(Formula tail)
-{  
-    this->_formulas.push_back(tail);
-}
-	
-void Formulas::pop_formula()//DO NOT DELETE formula
-{
-    this->_formulas.pop_front();
-}
-
-Formula  Formulas::top_formula()
-{
-    return this->_formulas.front();
-}
-        	
-void Formulas::copy_formulas(Formulas sigma)       
-{
-    this->set_formulas(sigma.get_formulas());
-}
-        	
-void Formulas::delete_formulas()        
-{
-    this->get_formulas().clear();
-}
-        
-int Formulas::size_formulas()      
-{
-    return this->_formulas.size();
-}
-
-void Formulas::output_formulas(FILE* out)       
-{
-    for (deque<Formula>::iterator it = this->_formulas.begin();
-            it != this->_formulas.end();
-            ++ it) {
-        it->output(out);
+void Formulas::output(FILE* _out) const {
+    for (deque<Formula>::const_iterator it = this->m_dequeFormulas.begin();
+            it != this->m_dequeFormulas.end(); ++ it) {
+        it->output(_out);
     }
 }

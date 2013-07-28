@@ -48,4 +48,9 @@ _formula* double_negation(_formula* phi, const int* int_preds, int num_ip);
 _formula* minimal_simu(_formula* phi, const int* int_preds, int num_ip,
 						 const _formula* reff);
 
+
+
+void output_formula(FILE* out, _formula* fml);
+
+
 #endif
