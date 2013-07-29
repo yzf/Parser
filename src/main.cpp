@@ -55,8 +55,10 @@ int main(int argc, char** argv) {
     Formula* f = new Formula(gformula, false);
     S2DLP::instance().init(f);
     S2DLP::instance().hengZhangTransform();
-    S2DLP::instance().outputHengZhangFormulas(fout);
-    
+    S2DLP::instance().outputHengZhangFormulas(stdout);
+    S2DLP::instance().cabalarTransform();
+    S2DLP::instance().outputCabalarFormulas(fout);
+
     delete f;
     fclose(fout);
     return 0;

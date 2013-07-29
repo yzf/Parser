@@ -1,11 +1,12 @@
 #include "S2DLP.h"
 #include "HengZhang.h"
+#include "Cabalar.h"
 #include <assert.h>
 
-S2DLP::S2DLP() {
-    this->m_pOriginalFormulas = NULL;
-    this->m_pHengZhangFormulas = NULL;
-    this->m_pDlpFormulas = NULL;
+S2DLP::S2DLP() :
+        m_pOriginalFormulas(NULL),
+        m_pHengZhangFormulas(NULL),
+        m_pDlpFormulas(NULL) {
 }
 
 S2DLP::~S2DLP() {
@@ -48,7 +49,7 @@ void S2DLP::init(Formulas* _originalFmls) {
  */
 void S2DLP::hengZhangTransform() {
     assert(this->m_pOriginalFormulas);
-    this->m_pHengZhangFormulas = HengZhang::instance().create(*(this->m_pOriginalFormulas));
+    this->m_pHengZhangFormulas = HengZhang::instance().convert(*(this->m_pOriginalFormulas));
 }
 /**
  * 输出章衡转化结果
@@ -63,6 +64,7 @@ void S2DLP::outputHengZhangFormulas(FILE* _out) {
  */
 void S2DLP::cabalarTransform() {
     assert(this->m_pOriginalFormulas);
+    this->m_pDlpFormulas = Cabalar::instance().convert(*(this->m_pHengZhangFormulas));
 }
 /**
  * 输出Cabalar转化结果

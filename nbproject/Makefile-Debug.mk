@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/Cabalar.o \
+	${OBJECTDIR}/src/CabalarUtils.o \
 	${OBJECTDIR}/src/Formula.o \
 	${OBJECTDIR}/src/Formulas.o \
 	${OBJECTDIR}/src/HengZhang.o \
@@ -76,6 +77,11 @@ ${OBJECTDIR}/src/Cabalar.o: src/Cabalar.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Cabalar.o src/Cabalar.cpp
+
+${OBJECTDIR}/src/CabalarUtils.o: src/CabalarUtils.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/CabalarUtils.o src/CabalarUtils.cpp
 
 ${OBJECTDIR}/src/Formula.o: src/Formula.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src

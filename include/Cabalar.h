@@ -11,13 +11,18 @@
 #include "Formula.h"
 #include "Formulas.h"
 
+class Formulas;
+
 class Cabalar {
 private:
     Cabalar();
     ~Cabalar();
     Cabalar(const Cabalar& _rhs) {};
     Cabalar& operator = (const Cabalar& _rhs) {return *this;};
+    
+    Formulas convertToNegativeNormalForms(Formulas _originalFmls); 
 public:
+    Formulas* convert(const Formulas& _originalFmls);
     static Cabalar& instance();
 };
 

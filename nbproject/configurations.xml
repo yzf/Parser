@@ -5,6 +5,7 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>include/Cabalar.h</itemPath>
+      <itemPath>include/CabalarUtils.h</itemPath>
       <itemPath>include/Formula.h</itemPath>
       <itemPath>include/Formulas.h</itemPath>
       <itemPath>include/HengZhang.h</itemPath>
@@ -36,6 +37,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>src/Cabalar.cpp</itemPath>
+      <itemPath>src/CabalarUtils.cpp</itemPath>
       <itemPath>src/Formula.cpp</itemPath>
       <itemPath>src/Formulas.cpp</itemPath>
       <itemPath>src/HengZhang.cpp</itemPath>
@@ -92,6 +94,8 @@
       </compileType>
       <item path="include/Cabalar.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/CabalarUtils.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Formula.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Formulas.h" ex="false" tool="3" flavor2="0">
@@ -121,6 +125,8 @@
       <item path="res/C.sample/sample.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/CabalarUtils.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Formula.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -168,6 +174,8 @@
       </compileType>
       <item path="include/Cabalar.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/CabalarUtils.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Formula.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Formulas.h" ex="false" tool="3" flavor2="0">
@@ -197,6 +205,8 @@
       <item path="res/C.sample/sample.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/CabalarUtils.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Formula.cpp" ex="false" tool="1" flavor2="0">
       </item>

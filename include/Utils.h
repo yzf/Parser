@@ -17,12 +17,19 @@
 
 using namespace std;
 
+class Formulas;
 /**
  * 工具类
  */
 class Utils {
-public:
-    
+private:
+    static _formula* negativeNormalForm_1(_formula* _originalFml);
+    static _formula* negativeNormalForm_2(_formula* _originalFml);
+    static _formula* negativeNormalForm_3(_formula* _originalFml);
+    static _formula* negativeNormalForm_4(_formula* _originalFml);
+    static _formula* negativeNormalForm_5(_formula* _originalFml);
+    static _formula* negativeNormalForm_6(_formula* _originalFml);
+public: 
     //对term的操作
     static void outputTerm(FILE* _out, const _term* _t);
     static void replaceTerm(_term* _ts, int _arity, const vector<int>& _originals, 
@@ -49,6 +56,7 @@ public:
                                 const vector<int>& _originals, 
 				const vector<int>& _replacements);
     static void divideFormula(_formula* _fml, _formula* _parent, Formulas* _result);
+    static _formula* convertToNegativeNormalForm(_formula* _originalFml);
     
     static _formula* compositeByConnective(FORMULA_TYPE _formulaType, 
                          _formula* _subformulaL, _formula* _subformulaR);

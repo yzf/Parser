@@ -36,6 +36,7 @@ public:
     bool isUniversal() const;
     void convertToPrenex();
     void fixUniversalQuantifier();
+    void removeUniversalQuantifier();
     void output(FILE* _out) const;
     void doubleNegationIntensionPredicates();
     void replaceTerms(const vector<int>& _originals, 

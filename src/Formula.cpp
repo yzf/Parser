@@ -76,6 +76,13 @@ void Formula::fixUniversalQuantifier() {
         this->m_pFormula = Utils::compositeByQuantifier(UNIV, this->m_pFormula, -(*it));
     }
 }
+void Formula::removeUniversalQuantifier() {
+    while (this->m_pFormula->formula_type == UNIV) {
+        _formula* pre = this->m_pFormula;
+        this->m_pFormula = this->m_pFormula->subformula_l;
+        free(pre);
+    }
+}
 /**
  * 输出公式
  * @param _out 输出文件

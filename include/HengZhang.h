@@ -58,7 +58,7 @@ private:
     HengZhang& operator = (const HengZhang& _rhs);
 public:
     //creators
-    Formulas* create(const Formulas& _originalFmls);
+    Formulas* convert(const Formulas& _originalFmls);
 
     static HengZhang& instance();
     

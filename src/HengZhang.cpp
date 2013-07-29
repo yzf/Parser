@@ -64,7 +64,7 @@ Formula HengZhang::recordQuantifier(Formula _originalFml) {
  * @param _originalFmls Formulas 需要进行转换的公式
  * @return 返回Formulas*，需要手动销毁
  */
-Formulas* HengZhang::create(const Formulas& _originalFmls) {
+Formulas* HengZhang::convert(const Formulas& _originalFmls) {
     Formulas tempFmls = _originalFmls;
     Formulas* pFinalFmls = new Formulas();
     while (! tempFmls.isEmpty()) {
