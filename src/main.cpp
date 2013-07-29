@@ -10,7 +10,6 @@
 #include <assert.h>
 #include "Vocabulary.h"
 #include "structs.h"
-#include "utility.h"
 #include "Utils.h"
 #include "Formula.h"
 #include "Formulas.h"
@@ -20,26 +19,20 @@
 
 using namespace std;
 
-
-
 extern FILE *yyin;
-extern Vocabulary vocabulary;
 extern _formula* gformula;
 FILE* fout;
 extern int yyparse();
 
-void io(const char* iPathName, const char* oPathName)
-{
+void io(const char* iPathName, const char* oPathName) {
     yyin = fopen (iPathName, "r");
     fout = fopen (oPathName, "w+");
 
-    if(!yyin)
-    {
+    if (! yyin) {
         printf("IO Error: cannot open the input file.\n" );
         assert(0);
     }
-    if(!fout)
-    {
+    if (! fout) {
         printf("IO Error: cannot open the output file.\n");
         assert(0);
     }
@@ -56,7 +49,6 @@ int main(int argc, char** argv) {
     }
     
     yyparse();
-    
     
     Vocabulary::instance().dumpVocabulary(stdout);
     Formula f = Formula(gformula, true);

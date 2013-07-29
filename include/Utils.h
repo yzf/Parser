@@ -8,10 +8,11 @@
 #ifndef UTIL_H
 #define	UTIL_H
 
+#include <cstdio>
 #include "structs.h"
-#include "utility.h"
 #include <map>
 #include <vector>
+#include "Vocabulary.h"
 
 using namespace std;
 

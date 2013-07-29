@@ -2,6 +2,7 @@
 #include "Utils.h"
 #include <cstring>
 #include <algorithm>
+#include "Vocabulary.h"
 
 int Formula::ms_nNewFormulaId = 0;
 

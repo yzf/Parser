@@ -10,7 +10,6 @@
       <itemPath>include/Utils.h</itemPath>
       <itemPath>include/Vocabulary.h</itemPath>
       <itemPath>include/structs.h</itemPath>
-      <itemPath>include/utility.h</itemPath>
     </logicalFolder>
     <logicalFolder name="parse" displayName="parse" projectFiles="true">
       <itemPath>parse/clean.sh</itemPath>
@@ -44,7 +43,6 @@
       <itemPath>src/main.cpp</itemPath>
       <itemPath>src/parse.cpp</itemPath>
       <itemPath>src/parse.h</itemPath>
-      <itemPath>src/utility.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -99,8 +97,6 @@
       </item>
       <item path="include/structs.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/utility.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="output/C.sample/sample.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="output/C.sample/sample.out" ex="false" tool="3" flavor2="0">
@@ -134,8 +130,6 @@
       <item path="src/parse.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/parse.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/utility.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -171,8 +165,6 @@
       </item>
       <item path="include/structs.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/utility.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="output/C.sample/sample.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="output/C.sample/sample.out" ex="false" tool="3" flavor2="0">
@@ -206,8 +198,6 @@
       <item path="src/parse.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/parse.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/utility.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

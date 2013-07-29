@@ -143,7 +143,7 @@ _term* Utils::copyTerms(const _term* _ts, int _size) {
 void Utils::deleteTerms(_term* _ts, int _size) {
     for(int i = 0; i < _size; ++ i) {
         if(_ts[i].term_type == FUNC) {
-            delete_terms(_ts[i].parameters,
+            deleteTerms(_ts[i].parameters,
                     Vocabulary::instance().getFunctionArity(_ts[i].function_id));
         }
     }
@@ -300,7 +300,7 @@ bool Utils::compareFormula(const _formula* _lhs, const _formula* _rhs) {
         assert(k < 0 || _lhs->parameters);
         assert(k < 0 || _rhs->parameters);
         for ( ; k >= 0; -- k) {
-            if (!compare_term(_lhs->parameters + k,_rhs->parameters + k)) {
+            if (! compareTerm(_lhs->parameters + k,_rhs->parameters + k)) {
                 return FALSE;
             }
         }
@@ -313,7 +313,7 @@ bool Utils::compareFormula(const _formula* _lhs, const _formula* _rhs) {
     case NEGA:
         assert(_lhs->subformula_l);
         assert(_rhs->subformula_l);
-        return compare_formula(_lhs->subformula_l,_rhs->subformula_l);
+        return compareFormula(_lhs->subformula_l,_rhs->subformula_l);
     case CONJ:
     case DISJ:
     case IMPL:
@@ -321,8 +321,8 @@ bool Utils::compareFormula(const _formula* _lhs, const _formula* _rhs) {
         assert(_rhs->subformula_l);
         assert(_lhs->subformula_r);
         assert(_rhs->subformula_r);
-        return (compare_formula(_lhs->subformula_l,_rhs->subformula_l)
-            && compare_formula(_lhs->subformula_r,_rhs->subformula_r));
+        return (compareFormula(_lhs->subformula_l,_rhs->subformula_l)
+            && compareFormula(_lhs->subformula_r,_rhs->subformula_r));
     default:
         assert(0);
     }
@@ -352,12 +352,12 @@ _formula* Utils::copyFormula(const _formula* _fml) {
     case DISJ:
     case IMPL:
         assert(_fml->subformula_r);
-        newFormula->subformula_r = copy_formula( _fml->subformula_r);
+        newFormula->subformula_r = copyFormula( _fml->subformula_r);
     case NEGA:
     case UNIV:
     case EXIS:
         assert(_fml->subformula_l);
-        newFormula->subformula_l = copy_formula(_fml->subformula_l);
+        newFormula->subformula_l = copyFormula(_fml->subformula_l);
         break;
     default:
         assert (0);

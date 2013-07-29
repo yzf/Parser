@@ -43,8 +43,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/global.o \
 	${OBJECTDIR}/src/lex.o \
 	${OBJECTDIR}/src/main.o \
-	${OBJECTDIR}/src/parse.o \
-	${OBJECTDIR}/src/utility.o
+	${OBJECTDIR}/src/parse.o
 
 
 # C Compiler Flags
@@ -115,11 +114,6 @@ ${OBJECTDIR}/src/parse.o: src/parse.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -g -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/parse.o src/parse.cpp
-
-${OBJECTDIR}/src/utility.o: src/utility.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/utility.o src/utility.cpp
 
 # Subprojects
 .build-subprojects:

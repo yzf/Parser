@@ -4,7 +4,6 @@
 #include <assert.h>
 #include "structs.h"
 #include "Vocabulary.h"
-#include "utility.h"
 #include "Utils.h"
 
 extern "C" {

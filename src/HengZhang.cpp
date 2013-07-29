@@ -1,6 +1,5 @@
 #include "HengZhang.h"
 #include "cstdlib"
-#include "Vocabulary.h"
 #include "Utils.h"
 
 HengZhang::HengZhang() {
@@ -218,7 +217,7 @@ _formula* HengZhang::generateFormulaLeft_4() {
     }
     _formula* max_y = Utils::copyFormula(max_ys[0].getFormula());
     for (int i = 1; i < max_ys.size(); ++ i) {
-        max_y = Utils::compositeByConnective(CONJ, max_y, copy_formula(max_ys[i].getFormula()));
+        max_y = Utils::compositeByConnective(CONJ, max_y, Utils::copyFormula(max_ys[i].getFormula()));
     }
     _formula* lrl = Utils::compositeByConnective(CONJ, _s_x_z, succ_y_z);
     _formula* lr = Utils::compositeByConnective(DISJ, lrl, max_y);
