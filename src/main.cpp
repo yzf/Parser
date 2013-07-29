@@ -51,7 +51,7 @@ int main(int argc, char** argv) {
     
     if(argc < 3)
     {
-        io("res/C.sample/sample2.in","output/C.sample/sample.out");
+        io("res/C.sample/sample.in","output/C.sample/sample.out");
     }
     else{
         io(argv[1], argv[2]);

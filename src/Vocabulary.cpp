@@ -288,10 +288,15 @@ void Vocabulary::dump_vocabulary(FILE* out) {
         }
     }
     
-    fprintf(out, "\nvary:\n");    
+    fprintf(out, "\nvary:\n");
+    int count = 0;
     for(n = 0; n < num_predicate; n++) {
-        fprintf(out, "%s in %s", names_predicate[n], names_vary[predicate_in_vary[n]]);
-        if(n != num_predicate - 1) {
+        if(vocabulary.is_vary_predicate(n))
+        {
+            fprintf(out, "%s in %s", names_predicate[n], names_vary[predicate_in_vary[n]]);
+            count++;
+        }
+        if(n != num_predicate - 1 && count != 0) {
             fprintf(out, ", ");
         }
     }

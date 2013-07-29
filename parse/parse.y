@@ -93,6 +93,7 @@ varys
         | vary {
             
         }
+        |
 ;
 vary
         : associate_pred SLASH associate_pred {

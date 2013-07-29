@@ -1,4 +1,4 @@
-#include "Cabalar.h"
+//#include "Cabalar.h"
 #include "Formulas.h"
 #include "Formula.h"
 #include "structs.h"
@@ -51,8 +51,8 @@ _formula* Cabalar::Cabalar_DLT(_formula* originFml)//Disjunction, Left PRED_TRUE
 	
 	//cleanup
         
-//	delete_formula(originFml->subformula_r);   //move delete_formula to utility.cpp or free directly.     
-        free(originFml->subformula_r);
+	delete_formula(originFml->subformula_r);   //move delete_formula to utility.cpp or free directly.     
+//        free(originFml->subformula_r);
 	free(originFml);
 	
 	//output
@@ -73,7 +73,7 @@ _formula* Cabalar::Cabalar_DLF(_formula* originFml)//Disjunction, Left PRED_FALS
 	_formula* f = originFml->subformula_r;
 	
 	//cleanup
-	free(originFml->subformula_l);
+	delete_formula(originFml->subformula_l);
 	free(originFml);
 	
 	//output
@@ -94,7 +94,7 @@ _formula* Cabalar::Cabalar_CLT(_formula* originFml)//Conjunction, Left PRED_TRUE
 	_formula* f = originFml->subformula_r;
 	
 	//cleanup
-	free(originFml->subformula_l);
+	delete_formula(originFml->subformula_l);
 	free(originFml);
 	
 	//output
@@ -116,7 +116,7 @@ _formula* Cabalar::Cabalar_CLF(_formula* originFml)//Conjunction, Left PRED_FALS
 	
 	//cleanup
 //	delete_formula(originFml->subformula_r);
-        free(originFml->subformula_r);
+        delete_formula(originFml->subformula_r);
 	free(originFml);
 	
 	//output
@@ -137,7 +137,7 @@ _formula* Cabalar::Cabalar_ILT(_formula* originFml)//Implementation, Left PRED_T
 	_formula* f = originFml->subformula_r;
 	
 	//cleanup
-	free(originFml->subformula_l);
+	delete_formula(originFml->subformula_l);
 	free(originFml);
 	
 	//output
@@ -158,8 +158,8 @@ _formula* Cabalar::Cabalar_ILF(_formula* originFml)//Implementation, Left PRED_F
 	_formula* f = composite_atom(ATOM,PRED_TRUE,NULL);
 	
 	//cleanup
-//	delete_formula(originFml);
-	free(originFml);
+	delete_formula(originFml);
+//	free(originFml);
 	//output
 	return f;
 }
@@ -179,7 +179,7 @@ _formula* Cabalar::Cabalar_IRF(_formula* originFml)//Implementation, Right PRED_
 	_formula* f = convert_negative_normal_form(composite_bool(NEGA,L,NULL));
 	
 	//cleanup
-	free(originFml->subformula_r);
+	delete_formula(originFml->subformula_r);
 	free(originFml);
 	
 	//output
@@ -200,8 +200,8 @@ _formula* Cabalar::Cabalar_IRT(_formula* originFml)//Implementation, Right PRED_
 	_formula* f = composite_atom(ATOM,PRED_TRUE,NULL);
 	
 	//cleanup
-//	delete_formula(originFml);
-	free(originFml);
+	delete_formula(originFml);
+//	free(originFml);
 	//output
 	return f;
 }
@@ -217,8 +217,9 @@ _formula* Cabalar::Cabalar_N1(_formula* originFml)
 	_formula* f = composite_atom(ATOM, PRED_FALSE, NULL);
 	
 	//cleanup
-	free(originFml->subformula_l);
-	free(originFml);
+//	free(originFml->subformula_l);
+//	free(originFml);
+        delete_formula(originFml);
 	
 	//output
     return f;
@@ -235,8 +236,9 @@ _formula* Cabalar::Cabalar_N2(_formula* originFml)
 	_formula* f  = composite_atom(ATOM, PRED_TRUE, NULL);
 	
 	//cleanup
-	free(originFml->subformula_l);
-	free(originFml);
+//	free(originFml->subformula_l);
+//	free(originFml);
+        delete_formula(originFml);
 	
 	//output
     return f;
@@ -360,12 +362,13 @@ Formulas Cabalar::Cabalar_L1(_formula* originFml)
 	_formula* f1 = composite_bool(IMPL, F, G);
 	
 	//cleanup
-	free(originFml->subformula_l);//TRUE ^ F
-	free(originFml);//TRUE ^ F -> G
+        delete_formula(originFml->subformula_l->subformula_l);//TRUE
+	free(originFml->subformula_l);// ^
+	free(originFml);// ->
 	
 	//output
         Formulas fmls;
-        Formula ff1(f1, true);
+        Formula ff1(f1, false);
         fmls.push_formula(ff1);
         return fmls;
 }
@@ -386,12 +389,12 @@ Formulas Cabalar::Cabalar_L2(_formula* originFml)
 	_formula* f1 = composite_atom(ATOM,PRED_TRUE,0);
 	
 	//cleanup
-//	delete_formula(originFml);
-	free(originFml);
+	delete_formula(originFml);
+//	free(originFml);
         
 	//output
         Formulas fmls;
-        Formula ff1(f1, true);
+        Formula ff1(f1, false);
  //       fmls.push_formula(ff1);
         fmls.push_formula(ff1);
         return fmls;
@@ -421,13 +424,13 @@ Formulas Cabalar::Cabalar_L3(_formula* originFml)
     _formula* f1   = composite_bool(IMPL, G, f1_R);
 	
     //cleanup
-    free(originFml->subformula_l->subformula_l);//--F
-    free(originFml->subformula_l);//--F ^ G
-    free(originFml);
+    free(originFml->subformula_l->subformula_l);//-
+    free(originFml->subformula_l);// ^
+    free(originFml);// ->
 
     //output
     Formulas fmls;
-    Formula ff1(f1, true);
+    Formula ff1(f1, false);
     fmls.push_formula(ff1);
     return fmls;
 }
@@ -462,14 +465,14 @@ Formulas Cabalar::Cabalar_L4(_formula* originFml)
     _formula* f2   = composite_bool(IMPL, f2_L, copy_formula(K));
 
     //cleanup
-    free(originFml->subformula_l->subformula_l);
-    free(originFml->subformula_l);
-    free(originFml);
+    free(originFml->subformula_l->subformula_l);//v
+    free(originFml->subformula_l);// ^ 
+    free(originFml);// ->
 
     //output
     Formulas fmls;
-    Formula ff1(f1, true);
-    Formula ff2(f2, true);
+    Formula ff1(f1, false);
+    Formula ff2(f2, false);
     fmls.push_formula(ff1);
     fmls.push_formula(ff2);
     
@@ -520,9 +523,9 @@ Formulas Cabalar::Cabalar_L5(_formula* originFml)
 
     //output
     Formulas fmls;
-    Formula ff1(f1, true);
-    Formula ff2(f2, true);
-    Formula ff3(f3, true);
+    Formula ff1(f1, false);
+    Formula ff2(f2, false);
+    Formula ff3(f3, false);
     fmls.push_formula(ff1);
     fmls.push_formula(ff2);
     fmls.push_formula(ff3);
@@ -546,11 +549,12 @@ Formulas Cabalar::Cabalar_R1(_formula* originFml)
 	_formula* f1 = composite_bool(IMPL,F,G);
 	
 	//cleanup
-	free(originFml->subformula_r);
-	free(originFml);
+        delete_formula(originFml->subformula_r->subformula_l);//FALSE
+	free(originFml->subformula_r);//v
+	free(originFml);//->
 	
 	Formulas fmls;
-        Formula ff1(f1, true);
+        Formula ff1(f1, false);
 	fmls.push_formula(ff1);
 	return fmls;
 }
@@ -567,12 +571,12 @@ Formulas Cabalar::Cabalar_R2(_formula* originFml)
 
     _formula* f1 = composite_atom(ATOM,PRED_TRUE,0);
     //cleanup
-//  delete_formula(originFml);
-    free(originFml);
+  delete_formula(originFml);
+//    free(originFml);
 
     //output
     Formulas fmls;
-    Formula ff1(f1, true);
+    Formula ff1(f1, false);
     fmls.push_formula(ff1);
     return fmls;
 }
@@ -599,13 +603,13 @@ Formulas Cabalar::Cabalar_R3(_formula* originFml)
     _formula* f1   = composite_bool(IMPL, f1_L, H);
 
     //cleanup
-    free(originFml->subformula_r->subformula_l);
-    free(originFml->subformula_r);
-    free(originFml);
+    free(originFml->subformula_r->subformula_l);//~
+    free(originFml->subformula_r);//v
+    free(originFml);//->
 
     //output
     Formulas fmls;
-    Formula ff1(f1, true);
+    Formula ff1(f1, false);
     fmls.push_formula(ff1);
     return fmls;
 }
@@ -640,14 +644,14 @@ Formulas Cabalar::Cabalar_R4(_formula* originFml)
     _formula* f2   = composite_bool(IMPL, copy_formula(F), f2_R);
 
     //cleanup
-    free(originFml->subformula_r->subformula_l);
-    free(originFml->subformula_r);
-    free(originFml);
+    free(originFml->subformula_r->subformula_l);//^
+    free(originFml->subformula_r);//v
+    free(originFml);//->
 
     //output
     Formulas fmls;
-    Formula ff1(f1, true);
-    Formula ff2(f2, true);
+    Formula ff1(f1, false);
+    Formula ff2(f2, false);
     fmls.push_formula(ff1);
     fmls.push_formula(ff2);
     return fmls;
@@ -691,14 +695,14 @@ Formulas Cabalar::Cabalar_R5(_formula* originFml)
     _formula* f2   = composite_bool(IMPL, f2_L, f2_R);
 
     //cleanup
-    free(originFml->subformula_r->subformula_l);
-    free(originFml->subformula_r);
-    free(originFml);
+    free(originFml->subformula_r->subformula_l);//->
+    free(originFml->subformula_r);//v
+    free(originFml);//->
 
     //output
     Formulas fmls;
-    Formula ff1(f1, true);
-    Formula ff2(f2, true);
+    Formula ff1(f1, false);
+    Formula ff2(f2, false);
     fmls.push_formula(ff1);
     fmls.push_formula(ff2);
     return fmls;
@@ -805,7 +809,9 @@ Formulas Cabalar::Cabalar_Trans(_formula* fml)
 
     while(fml->formula_type == UNIV)
     {
+        _formula* pre = fml;
         fml = fml->subformula_l;
+        free(pre);
     }
     
     // Cabalar. (2005) Left/Right side rules
@@ -904,7 +910,7 @@ Formulas Cabalar::Cabalar_Trans(_formula* fml)
 	    if(subformula_l->predicate_id == PRED_FALSE)
 	    {
                    _formula* temp1 = Cabalar_ILF(fml);
-                   Formula temp2(temp1, true);
+                   Formula temp2(temp1, false);
                    Formulas ffs;
                    ffs.push_formula(temp2);
                    return ffs;
@@ -951,7 +957,7 @@ Formulas Cabalar::Cabalar_Trans(_formula* fml)
 			if(subformula_r->predicate_id == PRED_TRUE)
 			{
                             _formula* temp1 = Cabalar_IRT(fml);
-                            Formula temp2(temp1, true);
+                            Formula temp2(temp1, false);
                             Formulas ffs;
                             ffs.push_formula(temp2);
                             return ffs;
@@ -995,7 +1001,7 @@ Formulas Cabalar::Cabalar_Trans(_formula* fml)
 				CD_o->predicate_id == PRED_TRUE)
 		{
                     _formula* temp1 = Cabalar_CLT(fml);
-                    Formula temp2(temp1, true);
+                    Formula temp2(temp1, false);
                     Formulas ffs;
                     ffs.push_formula(temp2);
                     return ffs;
@@ -1006,7 +1012,7 @@ Formulas Cabalar::Cabalar_Trans(_formula* fml)
 				CD_o->predicate_id == PRED_FALSE)
 		{
                     _formula* temp1 = Cabalar_CLF(fml);
-                    Formula temp2(temp1, true);
+                    Formula temp2(temp1, false);
                     Formulas ffs;
                     ffs.push_formula(temp2);
                     return ffs;
@@ -1025,7 +1031,7 @@ Formulas Cabalar::Cabalar_Trans(_formula* fml)
 				CD_o->predicate_id == PRED_FALSE)
 		{
                     _formula* temp1 = Cabalar_DLF(fml);
-                    Formula temp2(temp1, true);
+                    Formula temp2(temp1, false);
                     Formulas ffs;
                     ffs.push_formula(temp2);
                     return ffs;
@@ -1036,7 +1042,7 @@ Formulas Cabalar::Cabalar_Trans(_formula* fml)
 				CD_o->predicate_id == PRED_TRUE)
 		{
                     _formula* temp1 = Cabalar_DLT(fml);
-                    Formula temp2(temp1, true);
+                    Formula temp2(temp1, false);
                     Formulas ffs;
                     ffs.push_formula(temp2);
                     return ffs;
@@ -1068,7 +1074,7 @@ Formulas Cabalar::Cabalar_Trans(_formula* fml)
 	
 	DBPRINTF("FINAL\n");
     
-    Formula f_result(fml, true);
+    Formula f_result(fml, false);
     Formulas fs_result;
     fs_result.push_formula(f_result);
     return fs_result;        //No rules in Cabalar. (2005) fix this formula, end.
@@ -1160,7 +1166,7 @@ Formulas Cabalar::convert_negative_normal_forms(Formulas fmls)
     while(fmls.size_formulas() > 0)
     {
         Formula fml = fmls.top_formula();
-        Formula new_fml = Formula(convert_negative_normal_form(fml.get_formula()), true);
+        Formula new_fml = Formula(convert_negative_normal_form(copy_formula(fml.get_formula())), false);
         new_fml.formula_id = fml.formula_id;
         currFml.push_formula(new_fml);
         fmls.pop_formula();
@@ -1207,7 +1213,7 @@ Formulas Cabalar::convert_Cabalar(Formulas fmls)
 	//	printf("\n");
 #endif
                 
-        transFmls = this->Cabalar_Trans(fml.get_formula());
+        transFmls = this->Cabalar_Trans(copy_formula(fml.get_formula()));
   //      printf("\n transFmls : ");transFmls.output_formulas(stdout);printf("\n");	
 //        插入节点到公式树
         Formulas tmp_transFmls = transFmls;

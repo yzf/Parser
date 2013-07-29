@@ -393,15 +393,19 @@ _formula* PointerSensitive::PointerSensitive_9(_formula* fml)
         _param_size.push_back(vocabulary.predicate_arity(vary_id[i]));
     }
     
+    vector<_formula*> res;
+    
     //构造整条公式中需要用到的主要ATOM
-    vector<_formula*> V_xy;     //V1(X,Y), V2(X,Y)
-    _formula* V_xu;     //V1(X,U)
-    vector<_formula*> Q_y;      //Q1(Y), Q2(Y)
-    vector<_formula*> Z_y;      //Z1(Y), Z2(Y)
-    for(int i = 0; i < vocabulary.num_names_vary; i++)
-    {   
+    vector<_formula*> V_xy;     //Vi(X,Y)
+    vector<_formula*> Q_y;      //Qi(Y)
+    vector<_formula*> Z_y;      //Zi(Y)  
+    for(int i = 0; i < vary_id.size(); i++)
+//    for(int i = 0; i < vocabulary.num_names_vary; i++)
+    {       
+        _formula* res_ = NULL;
         //V_xy
-        char* V = strdup(vocabulary.names_vary[i]);
+//        char* V = strdup(vocabulary.names_vary[i]);
+        char* V = strdup(vocabulary.names_vary[vocabulary.predicate_in_vary[vary_id[i]]]);
         int id = vocabulary.query_symbol(V, PREDICATE);
         int pvy_id;
         if(id < 0)
@@ -417,27 +421,7 @@ _formula* PointerSensitive::PointerSensitive_9(_formula* fml)
         _term* v_param = combine_terms(param_x, term_size, _param[i], _param_size[i]);
         _formula* Vi_xy = composite_atom(ATOM, pvy_id, v_param);
         V_xy.push_back(Vi_xy);
-        
-        //V_xu  这部应该放在外面判断，当p属于z时才使用。
-//        char* Vu_tmp = strdup(V);
-//        char* Vu = strcat(Vu_tmp, "_u");
-//        int vu_id = vocabulary.query_symbol(Vu, PREDICATE);
-//        int vu_vid;
-//        if(vu_id < 0)
-//        {
-//            vu_vid = vocabulary.add_symbol(Vu, PREDICATE, 2*term_size);
-////            vocabulary.index_intension_predicate[vocabulary.num_intension_predicate++] = vu_vid;
-//        }
-//        else
-//            vu_vid = vu_id;
-        
-        //当读到和p对应的V时，加入该式子    
-        if(vocabulary.predicate_in_vary[p->predicate_id] == i)
-        {
-            _term* vu_param = combine_terms(param_x, term_size, param_u, term_size);        
-            V_xu = composite_atom(ATOM, pvy_id, vu_param); 
-        }
-        
+                       
         //Q_y
         char* qq = strdup(vocabulary.query_name(vary_id[i], PREDICATE));
         char* tq = strdup(qq);
@@ -448,28 +432,45 @@ _formula* PointerSensitive::PointerSensitive_9(_formula* fml)
         
         //Z_y
         _formula* Zi_y = composite_atom(ATOM, vary_id[i], _param[i]);
-        Z_y.push_back(Zi_y);       
-    }
-    
-    //基于上述ATOM，构建公式
-    vector<_formula*> res;
-    int count = 0;
-    for(int i = 0; i < vocabulary.num_names_vary; i++)
-    {
+        Z_y.push_back(Zi_y);
+              
+        ////////////////
         //part1
         _formula* mid1 = composite_bool(IMPL, Q_y[i], gamma);
         _formula* n_zy = composite_bool(NEGA, Z_y[i], NULL);
         _formula* tail1 = composite_bool(NEGA, n_zy, NULL);
         _formula* head1 = composite_bool(DISJ, V_xy[i], mid1);
         _formula* part1_ = composite_bool(DISJ, head1, tail1);
-        
+
         //part2
         _formula* head2 = composite_bool(DISJ, V_xy[i], n_zy);
         _formula* part2_ = composite_bool(DISJ, head2, Q_y[i]);
+
+        res_ = composite_bool(CONJ, part1_, part2_);
+        res.push_back(res_);
+    }
+    
+    //当读到和p对应的V时，加入该式子  
+    _formula* V_xu = NULL;     //V1(X,U)
+    _term* vu_param = NULL;
+    if(vocabulary.is_vary_predicate(p->predicate_id))
+    {
+        char* Vp = strdup(vocabulary.names_vary[vocabulary.predicate_in_vary[p->predicate_id]]);
+        int pid = vocabulary.query_symbol(Vp, PREDICATE);
+        int pvu_id;
+        if(pid < 0)
+        {                   
+            int pvid = vocabulary.add_symbol(Vp, PREDICATE, 2*term_size);
+
+             pvu_id = pvid;
+      //         vocabulary.index_intension_predicate[vocabulary.num_intension_predicate++] = vid;
+        }                   
+        else                        
+             pvu_id = pid;
+      
+        vu_param = combine_terms(param_x, term_size, param_u, term_size);        
+        V_xu = composite_atom(ATOM, pvu_id, vu_param);
         
-        _formula* res_ = composite_bool(CONJ, part1_, part2_);
-        
-        //part_p
         _formula* mid_p = composite_bool(IMPL, PR, gamma);
         _formula* n_pu = composite_bool(NEGA, PU, NULL);
         _formula* nn_pu = composite_bool(NEGA, n_pu, NULL);
@@ -478,24 +479,73 @@ _formula* PointerSensitive::PointerSensitive_9(_formula* fml)
         _formula* head_p_2 = composite_bool(DISJ, V_xu, n_pu);
         _formula* part_p_2 = composite_bool(DISJ, head_p_2, PR);
         _formula* part_p_ = composite_bool(CONJ, part_p_1, part_p_2);
-        
-        if(vocabulary.is_vary_predicate(p->predicate_id) && count == 0)
-        {
-            res_ = composite_bool(CONJ, res_, part_p_);
-            count++;
-        }
-        
-        res.push_back(res_);
+      
+//        _formula* res_ = composite_bool(CONJ, res_, part_p_);
+//        Formula res__ = Formula(part_p_, true);
+//        res__.output(stdout);
+        res.push_back(part_p_);
     }
-    
-    _formula* ps11_ = copy_formula(res[0]);
-    for(int i = 1; i < vocabulary.num_names_vary; i++)
+      
+//    //基于上述ATOM，构建公式
+//    vector<_formula*> res;
+//    int count = 0;
+////    for(int i = 0; i < vocabulary.num_names_vary; i++)
+//    for(int i = 0; i < vary_id.size(); i++)
+//    {
+//        _formula* res_ = NULL;
+//        if(V_xy.size() > 0 && Q_y.size() > 0 && Z_y.size() > 0)
+//        {
+//            //part1
+//            _formula* mid1 = composite_bool(IMPL, Q_y[i], gamma);
+//            _formula* n_zy = composite_bool(NEGA, Z_y[i], NULL);
+//            _formula* tail1 = composite_bool(NEGA, n_zy, NULL);
+//            _formula* head1 = composite_bool(DISJ, V_xy[i], mid1);
+//            _formula* part1_ = composite_bool(DISJ, head1, tail1);
+//
+//            //part2
+//            _formula* head2 = composite_bool(DISJ, V_xy[i], n_zy);
+//            _formula* part2_ = composite_bool(DISJ, head2, Q_y[i]);
+//
+//            res_ = composite_bool(CONJ, part1_, part2_);
+//        }
+//        
+//        //part_p
+//        _formula* part_p_ = NULL;
+//        if(V_xu != NULL)
+//        {
+//            _formula* mid_p = composite_bool(IMPL, PR, gamma);
+//            _formula* n_pu = composite_bool(NEGA, PU, NULL);
+//            _formula* nn_pu = composite_bool(NEGA, n_pu, NULL);
+//            _formula* head_p_1 = composite_bool(DISJ, V_xu, mid_p);
+//            _formula* part_p_1 = composite_bool(DISJ, head_p_1, nn_pu);
+//            _formula* head_p_2 = composite_bool(DISJ, V_xu, n_pu);
+//            _formula* part_p_2 = composite_bool(DISJ, head_p_2, PR);
+//            part_p_ = composite_bool(CONJ, part_p_1, part_p_2);
+//        }
+//        
+//        if(vocabulary.is_vary_predicate(p->predicate_id) && count == 0)
+//        {
+//            res_ = composite_bool(CONJ, res_, part_p_);
+//            count++;
+//        }
+//        
+//        res.push_back(res_);
+//    }
+    _formula* ps11_ = NULL;
+    if(res.size() > 0)
+        ps11_ = copy_formula(res[0]);
+    for(int i = 1; i < res.size(); i++)
     {
         ps11_ = composite_bool(CONJ, ps11_, res[i]);
     }
     
-    Formula _ps11 = Formula(ps11_, true);
-    printf("\nps11 : ");_ps11.output(stdout);
+    if(ps11_ != NULL)
+    {
+        Formula _ps11 = Formula(ps11_, true);
+        printf("\nps11 : ");_ps11.output(stdout);
+    }
+    else
+        printf("\nps11 is null!\n");
     
     //加入量词[?X][?W][!U][!Y]
     _formula* exis_x = NULL;   
@@ -537,14 +587,20 @@ _formula* PointerSensitive::PointerSensitive_9(_formula* fml)
     _formula* pointer = exis_x;
     for(int i = 0; i < qntf.size(); i++)
     {       
-        while(pointer->subformula_l != NULL)
-            pointer = pointer->subformula_l;
-        pointer->subformula_l = qntf[i];
+        if(qntf[i] != NULL)
+        {
+            while(pointer->subformula_l != NULL)
+                pointer = pointer->subformula_l;
+            pointer->subformula_l = qntf[i];
+        }
     }
     
- 
     _formula* final_tmp = composite_bool(CONJ, ps9, ps10);
-    _formula* final_ = composite_bool(CONJ, final_tmp, ps11_);
+    _formula* final_;
+    if(ps11_ != NULL)
+        final_ = composite_bool(CONJ, final_tmp, ps11_);
+    else
+        final_ = final_tmp;
     
     while(pointer->subformula_l != NULL)
             pointer = pointer->subformula_l;
