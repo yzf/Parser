@@ -37,7 +37,7 @@ public:
 private:
     Vocabulary();
     Vocabulary(const Vocabulary& rhs){}
-    bool operator =(const Vocabulary& rhs){}
+    Vocabulary& operator =(const Vocabulary& rhs){return *this;}
     ~Vocabulary();
 
 public:

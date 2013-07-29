@@ -35,9 +35,11 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/src/Cabalar.o \
 	${OBJECTDIR}/src/Formula.o \
 	${OBJECTDIR}/src/Formulas.o \
 	${OBJECTDIR}/src/HengZhang.o \
+	${OBJECTDIR}/src/S2DLP.o \
 	${OBJECTDIR}/src/Utils.o \
 	${OBJECTDIR}/src/Vocabulary.o \
 	${OBJECTDIR}/src/global.o \
@@ -70,50 +72,60 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/alpha: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/alpha ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/src/Cabalar.o: src/Cabalar.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Cabalar.o src/Cabalar.cpp
+
 ${OBJECTDIR}/src/Formula.o: src/Formula.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Formula.o src/Formula.cpp
+	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Formula.o src/Formula.cpp
 
 ${OBJECTDIR}/src/Formulas.o: src/Formulas.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Formulas.o src/Formulas.cpp
+	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Formulas.o src/Formulas.cpp
 
 ${OBJECTDIR}/src/HengZhang.o: src/HengZhang.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/HengZhang.o src/HengZhang.cpp
+	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/HengZhang.o src/HengZhang.cpp
+
+${OBJECTDIR}/src/S2DLP.o: src/S2DLP.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/S2DLP.o src/S2DLP.cpp
 
 ${OBJECTDIR}/src/Utils.o: src/Utils.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Utils.o src/Utils.cpp
+	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Utils.o src/Utils.cpp
 
 ${OBJECTDIR}/src/Vocabulary.o: src/Vocabulary.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Vocabulary.o src/Vocabulary.cpp
+	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Vocabulary.o src/Vocabulary.cpp
 
 ${OBJECTDIR}/src/global.o: src/global.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/global.o src/global.cpp
+	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/global.o src/global.cpp
 
 ${OBJECTDIR}/src/lex.o: src/lex.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/lex.o src/lex.cpp
+	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/lex.o src/lex.cpp
 
 ${OBJECTDIR}/src/main.o: src/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/main.o src/main.cpp
+	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/main.o src/main.cpp
 
 ${OBJECTDIR}/src/parse.o: src/parse.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/parse.o src/parse.cpp
+	$(COMPILE.cc) -g -Wall -Iinclude -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/parse.o src/parse.cpp
 
 # Subprojects
 .build-subprojects:

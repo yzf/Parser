@@ -42,7 +42,7 @@ void Utils::replaceTerm(_term* _ts, int _arity, const vector<int>& _originals,
     for(int i = 0; i < _arity; i++) {
         //replacement
         if(_ts[i].term_type == VARI) {
-            for(int j = 0; j < _originals.size(); j++) {
+            for(unsigned int j = 0; j < _originals.size(); j++) {
                 if(_ts[i].variable_id == _originals[j]) {
                     _ts[i].variable_id = _replacements[j];
                 }
@@ -750,6 +750,26 @@ void Utils::replaceFormulaTerms(_formula* _fml,
         break;
     default:
         assert(0);
+    }
+}
+/**
+ * 拆分公式
+ * @param _fml
+ * @param _parent
+ * @param _result
+ */
+void Utils::divideFormula(_formula* _fml, _formula* _parent, Formulas* _result) {
+    if(_fml != NULL) {
+        if((_parent == NULL || _parent->formula_type == CONJ) && _fml->formula_type == CONJ) {
+            Formula new_formula = Formula(_fml->subformula_r, true);  
+            _result->pushBack(new_formula);
+            divideFormula(_fml->subformula_l, _fml, _result);   
+        }
+        else {
+            Formula new_formula = Formula(_fml, true);
+            _result->pushBack(new_formula);
+        }
+        
     }
 }
 /**

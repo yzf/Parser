@@ -61,17 +61,17 @@ Formula HengZhang::recordQuantifier(Formula _originalFml) {
 }
 /**
  * 对每条公式进行章衡公式转换
- * @param _originalFmls
- * @return 
+ * @param _originalFmls Formulas 需要进行转换的公式
+ * @return 返回Formulas*，需要手动销毁
  */
-Formulas HengZhang::create(Formulas _originalFmls) {
+Formulas* HengZhang::create(const Formulas& _originalFmls) {
     Formulas tempFmls = _originalFmls;
-    Formulas finalFmls;
+    Formulas* pFinalFmls = new Formulas();
     while (! tempFmls.isEmpty()) {
         Formula curFml = tempFmls.popFront();
         curFml.convertToPrenex();
         if (curFml.isUniversal()) {
-            finalFmls.pushBack(curFml);
+            pFinalFmls->pushBack(curFml);
             continue;
         }
         curFml.fixUniversalQuantifier();
@@ -79,7 +79,7 @@ Formulas HengZhang::create(Formulas _originalFmls) {
         tempFmls.joinFormulas(hzFmls);
     }
     
-    return finalFmls;
+    return pFinalFmls;
 }
 
 Formulas HengZhang::transform(Formula _originalFml) {
@@ -104,7 +104,7 @@ Formulas HengZhang::transform(Formula _originalFml) {
  
     string succName = "succ";
     vector<string> domain_name;
-    for (int i = 0; i < terms_Y.size(); ++ i) {
+    for (unsigned int i = 0; i < terms_Y.size(); ++ i) {
         succName += string("_") + 
                 Vocabulary::instance().getVariableDomain(terms_Y[i]);
     }
@@ -206,7 +206,7 @@ _formula* HengZhang::generateFormulaLeft_4() {
     _formula* succ_y_z = Utils::compositeToAtom(symbol_succ, term_y_z);
     // 4 max_domian(_Y)
     vector<Formula> max_ys;
-    for (int i = 0; i < terms_Y.size(); ++ i) {
+    for (unsigned int i = 0; i < terms_Y.size(); ++ i) {
         string name = string("max_") + Vocabulary::instance().getVariableDomain(terms_Y[i]);
         _term* term_yi = (_term*)malloc(sizeof(_term));
         term_yi->term_type = VARI;
@@ -216,7 +216,7 @@ _formula* HengZhang::generateFormulaLeft_4() {
         max_ys.push_back(Formula(max_yi, false));
     }
     _formula* max_y = Utils::copyFormula(max_ys[0].getFormula());
-    for (int i = 1; i < max_ys.size(); ++ i) {
+    for (unsigned int i = 1; i < max_ys.size(); ++ i) {
         max_y = Utils::compositeByConnective(CONJ, max_y, Utils::copyFormula(max_ys[i].getFormula()));
     }
     _formula* lrl = Utils::compositeByConnective(CONJ, _s_x_z, succ_y_z);

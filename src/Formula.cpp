@@ -91,8 +91,21 @@ void Formula::output(FILE* _out) const {
 void Formula::doubleNegationIntensionPredicates() {
     this->m_pFormula = Utils::doubleNegationIntensionPredicates(this->m_pFormula);
 }
-
+/**
+ * 替换参数
+ * @param _originals
+ * @param _replacements
+ */
 void Formula::replaceTerms(const vector<int>& _originals, 
 				const vector<int>& _replacements) {
     Utils::replaceFormulaTerms(this->m_pFormula, _originals, _replacements);
+}
+/**
+ * 对公式进行拆分，结果是对公式的每段进行拷贝，原公式不影响
+ * @return Formulas* 需要手动销毁
+ */
+Formulas* Formula::divideFormula() {
+    Formulas* pResult = new Formulas();
+    Utils::divideFormula(this->m_pFormula, NULL, pResult);
+    return pResult;
 }

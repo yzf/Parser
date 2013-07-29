@@ -14,6 +14,7 @@
 #include "Formula.h"
 #include "Formulas.h"
 #include "HengZhang.h"
+#include "S2DLP.h"
 #include <iostream>
 
 
@@ -40,23 +41,24 @@ void io(const char* iPathName, const char* oPathName) {
 
 int main(int argc, char** argv) {
     
-    if(argc < 3)
-    {
+    if(argc < 3) {
         io("res/C.sample/sample.in","output/C.sample/sample.out");
     }
-    else{
+    else {
         io(argv[1], argv[2]);
     }
     
     yyparse();
+    fclose(yyin);
     
     Vocabulary::instance().dumpVocabulary(stdout);
-    Formula f = Formula(gformula, true);
-    Formulas fs;
-    fs.pushBack(f);
-    Formulas hz = HengZhang::instance().create(fs);
-    hz.output(fout);
-
+    Formula* f = new Formula(gformula, false);
+    S2DLP::instance().init(f);
+    S2DLP::instance().hengZhangTransform();
+    S2DLP::instance().outputHengZhangFormulas(fout);
+    
+    delete f;
+    fclose(fout);
     return 0;
 }
 

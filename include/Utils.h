@@ -13,6 +13,7 @@
 #include <map>
 #include <vector>
 #include "Vocabulary.h"
+#include "Formulas.h"
 
 using namespace std;
 
@@ -47,13 +48,14 @@ public:
     static void replaceFormulaTerms(_formula* _fml, 
                                 const vector<int>& _originals, 
 				const vector<int>& _replacements);
+    static void divideFormula(_formula* _fml, _formula* _parent, Formulas* _result);
     
     static _formula* compositeByConnective(FORMULA_TYPE _formulaType, 
                          _formula* _subformulaL, _formula* _subformulaR);
     static _formula* compositeByQuantifier(FORMULA_TYPE _formulaType, 
                          _formula* _subformulaL, int _variableId);
     static _formula* compositeToAtom(int _predicateId, _term* _parameters);
-    
+
 };
 
 

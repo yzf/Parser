@@ -1,4 +1,4 @@
-
+[!X](cvr(X)->i(X)).
 [!X][!Y][?Z]((i(X)&set(X,Y))->(cvr(Z)&set(Z,Y))).
 
 %AJLG

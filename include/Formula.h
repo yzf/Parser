@@ -10,9 +10,12 @@
 
 #include <cstdio>
 #include "structs.h"
+#include "Formulas.h"
 #include <vector>
 
 using namespace std;
+
+class Formulas;
 
 class Formula {
 private:
@@ -37,6 +40,7 @@ public:
     void doubleNegationIntensionPredicates();
     void replaceTerms(const vector<int>& _originals, 
 				const vector<int>& _replacements);
+    Formulas* divideFormula();
 };
 
 

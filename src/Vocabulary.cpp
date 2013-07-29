@@ -234,7 +234,7 @@ const char* Vocabulary::getNameById(int _id, SYMBOL_TYPE _type) const {
  * @param out
  */
 void Vocabulary::dumpVocabulary(FILE* _out) {
-    int n;
+    unsigned int n;
     
     fprintf(_out, "\nvariable:\n");
     for (map<int, string>::const_iterator it = this->m_mapVariableName.begin(); 
@@ -285,7 +285,7 @@ void Vocabulary::dumpVocabulary(FILE* _out) {
 void Vocabulary::add_atom(_formula* atom) {
     bool exis = false;
     
-    for(int i = 0; i < atom_list.size(); i++) {
+    for(unsigned int i = 0; i < atom_list.size(); i++) {
         if(atom_list.at(i)->predicate_id == atom->predicate_id) {
             exis = true;
         }
@@ -297,7 +297,7 @@ void Vocabulary::add_atom(_formula* atom) {
 }
 
 _formula* Vocabulary::get_atom(int predicate_id) {
-    for(int i = 0; i < atom_list.size(); i++) {
+    for(unsigned int i = 0; i < atom_list.size(); i++) {
         if(atom_list.at(i)->predicate_id == predicate_id) {
             return atom_list.at(i);
         }
