@@ -562,6 +562,7 @@ _formula* PointerSensitive::PointerSensitive_9(_formula* fml)
 
 Formulas PointerSensitive::PointerSensitive_Convert(_formula* fml)
 {
+    
     _formula* f61 =  PointerSensitive_6_1(fml);    
     _formula* f62 =  PointerSensitive_6_2(fml);
     Formula ff62 = Formula(f62, true);
@@ -579,14 +580,13 @@ Formulas PointerSensitive::PointerSensitive_Convert(_formula* fml)
     Formula ff8 = Formula(f8, true);
     Formula ff9 = Formula(f9, true);
     
-   
-    
     deque<Formula> df;
     df.push_back(ff61);
     df.push_back(ff62);
     df.push_back(ff71);
     df.push_back(ff72);
     df.push_back(ff8);
+    df.push_back(ff9);
     
     Formulas fmls(df);
     

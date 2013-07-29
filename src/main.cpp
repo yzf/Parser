@@ -17,7 +17,7 @@
 #include "PointerSensitive.h"
 using namespace std;
 
-//#define SHOW_RESULT
+#define SHOW_RESULT
 //#define SHOW_ALL_PROCESS
 //#define SHOW_HZ_PROCESS
 //#define SHOW_CABALAR_PROCESS
@@ -59,11 +59,14 @@ int main(int argc, char** argv) {
     
     yyparse();
     vocabulary.dump_vocabulary(stdout);
-    Formulas fmls = PointerSensitive::instance().PointerSensitive_Convert(gformula);
+    
+    _formula* input = Cabalar::instance().convert_negative_normal_form(gformula);
+    
+    Formulas fmls = PointerSensitive::instance().PointerSensitive_Convert(input);
 //    printf("\nPointerSensitive : \n");fmls.output_formulas(stdout);printf("\n");
     S2DLP::instance().set_origin_formulas(fmls);
-//    S2DLP::instance().set_output_file(fout);
-//    S2DLP::instance().convert();
+    S2DLP::instance().set_output_file(fout);
+    S2DLP::instance().convert();
     //输出最终的Rule结果
 #ifdef SHOW_RESULT 
     S2DLP::instance().output_asp();
