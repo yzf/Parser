@@ -51,6 +51,8 @@ Formula HengZhang::recordQuantifier(Formula _originalFml) {
 
         sprintf(strBuf,"NV_%d", this->num_NV ++);
         int idNV = Vocabulary::instance().addSymbol(strBuf, VARIABLE);
+        Vocabulary::instance().setVariableDomain(strBuf, 
+                        Vocabulary::instance().getVariableDomain(idNV));
         terms_Z.push_back(idNV);
 
         fml = fml->subformula_l;
@@ -96,20 +98,35 @@ Formulas HengZhang::transform(Formula _originalFml) {
     symbol_s = Vocabulary::instance().addSymbol(nameBuf, 
                         PREDICATE, terms_X.size() + terms_Y.size());
     Vocabulary::instance().addIntensionPredicate(nameBuf);
+    
+    _term* term_x_y   = Utils::combineTerms(terms_X, terms_Y);
+    _formula* s_x_y = Utils::compositeToAtom(symbol_s, term_x_y);
+    Vocabulary::instance().addAtom(Formula(s_x_y, false));
  
     sprintf(nameBuf, "t_%d", num_t ++);
     symbol_t = Vocabulary::instance().addSymbol(nameBuf, 
                         PREDICATE, terms_X.size() + terms_Y.size());
     Vocabulary::instance().addIntensionPredicate(nameBuf);
+    
+    term_x_y   = Utils::combineTerms(terms_X, terms_Y);
+    _formula* t_x_y = Utils::compositeToAtom(symbol_t, term_x_y);
+    Vocabulary::instance().addAtom(Formula(t_x_y, false));
  
     string succName = "succ";
-    vector<string> domain_name;
+    vector<string> domainNames;
     for (unsigned int i = 0; i < terms_Y.size(); ++ i) {
-        succName += string("_") + 
-                Vocabulary::instance().getVariableDomain(terms_Y[i]);
+        const char* domainName = Vocabulary::instance().getVariableDomain(terms_Y[i]);
+        succName += string("_") + domainName;
+        domainNames.push_back(string(domainName));
+    }
+    if (Vocabulary::instance().getSymbolId(succName.c_str(), PREDICATE) == -1) {
+        this->m_vDomainNames.push_back(domainNames);
     }
     symbol_succ = Vocabulary::instance().addSymbol(succName.c_str(), 
                         PREDICATE, terms_Y.size() + terms_Z.size());
+    _term* term_y_z   = Utils::combineTerms(terms_Y, terms_Z);
+    _formula* succ_y_z = Utils::compositeToAtom(symbol_succ, term_y_z);
+    Vocabulary::instance().addAtom(Formula(succ_y_z, false));
     
     Formulas fmls;
     fmls.pushBack(createFormula_1(originalFml));
@@ -213,7 +230,9 @@ _formula* HengZhang::generateFormulaLeft_4() {
         term_yi->variable_id = terms_Y[i];
         int pre_id = Vocabulary::instance().addSymbol(name.c_str(), PREDICATE, 1);
         _formula* max_yi = Utils::compositeToAtom(pre_id, term_yi);
-        max_ys.push_back(Formula(max_yi, false));
+        Formula f = Formula(max_yi, false);
+        max_ys.push_back(f);
+        Vocabulary::instance().addAtom(f);
     }
     _formula* max_y = Utils::copyFormula(max_ys[0].getFormula());
     for (unsigned int i = 1; i < max_ys.size(); ++ i) {

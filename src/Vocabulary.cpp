@@ -1,4 +1,5 @@
 #include "Vocabulary.h"
+#include "S2DLP.h"
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
@@ -25,9 +26,14 @@ Vocabulary::Vocabulary() {
     this->m_mapFunctionArity.clear();
     this->m_mapPredicateArity.clear();
     this->m_mapIsIntensionPredicate.clear();
+    this->m_fmlAtomList = new Formulas();
 }
 
 Vocabulary::~Vocabulary() {
+    if (this->m_fmlAtomList != NULL) {
+        delete this->m_fmlAtomList;
+        this->m_fmlAtomList = NULL;
+    }
 }
 /**
  * 保存内涵谓词
@@ -234,7 +240,6 @@ const char* Vocabulary::getNameById(int _id, SYMBOL_TYPE _type) const {
  * @param out
  */
 void Vocabulary::dumpVocabulary(FILE* _out) {
-    unsigned int n;
     
     fprintf(_out, "\nvariable:\n");
     for (map<int, string>::const_iterator it = this->m_mapVariableName.begin(); 
@@ -277,31 +282,47 @@ void Vocabulary::dumpVocabulary(FILE* _out) {
     }
     
     fprintf(_out, "\natom\n");
-    for(n = 0; n < atom_list.size(); n++) {
-        fprintf(_out, "%s", getNameById(atom_list.at(n)->predicate_id, PREDICATE));
+    for (FORMULAS_ITERATOR it = m_fmlAtomList->begin();
+            it != m_fmlAtomList->end(); ++ it) {
+        fprintf(_out, "%s", getNameById(it->getFormula()->predicate_id, PREDICATE));
     }
 }
 
-void Vocabulary::add_atom(_formula* atom) {
-    bool exis = false;
-    
-    for(unsigned int i = 0; i < atom_list.size(); i++) {
-        if(atom_list.at(i)->predicate_id == atom->predicate_id) {
-            exis = true;
+Formula Vocabulary::getAtom(int _predicateId) const {
+    for (FORMULAS_ITERATOR it = m_fmlAtomList->begin();
+            it != m_fmlAtomList->end(); ++ it) {
+        if (it->getFormula()->predicate_id == _predicateId) {
+            return *it;
         }
     }
-    
-    if(!exis) {
-        atom_list.push_back(atom);
+    return Formula();
+}
+void Vocabulary::addAtom(const Formula& _newAtom) {
+    for (FORMULAS_ITERATOR iter = m_fmlAtomList->begin();
+            iter != m_fmlAtomList->end(); ++ iter) {
+        if (iter->getFormula()->predicate_id == _newAtom.getFormula()->predicate_id) {
+            return;
+        }
     }
+    this->m_fmlAtomList->pushBack(_newAtom);
 }
 
-_formula* Vocabulary::get_atom(int predicate_id) {
-    for(unsigned int i = 0; i < atom_list.size(); i++) {
-        if(atom_list.at(i)->predicate_id == predicate_id) {
-            return atom_list.at(i);
-        }
+bool Vocabulary::isSuccOrMax(int _predicateId) const {
+    const char* predicateName = getNameById(_predicateId, PREDICATE);
+    if (strncmp("max", predicateName, 3) == 0 ||
+            strncmp("succ", predicateName, 4) == 0) {
+        return true;
     }
-    
-    return NULL;
+    return false;
+}
+map<int, string> Vocabulary::getDomainNames() const {
+    return this->m_mapDomainName;
+}
+
+map<int, int> Vocabulary::getVariablesDomains() const {
+    return this->m_mapVariableDomain;
+}
+
+Formulas* Vocabulary::getAtomList() const {
+    return this->m_fmlAtomList;
 }

@@ -15,13 +15,16 @@ using namespace std;
 
 class Formula;
 
+#define FORMULAS_ITERATOR deque<Formula>::iterator
+
 class Formulas {
 private:
     deque<Formula> m_dequeFormulas;
     
 public:
     Formulas();
-    Formulas(deque<Formula> _formulas);
+    Formulas(const deque<Formula>& _formulas);
+    Formulas(const Formulas& _rhs);
     
     unsigned int size() const;
     bool isEmpty() const;
@@ -35,6 +38,9 @@ public:
     bool operator == (const Formulas& _rhs) const;
     bool operator != (const Formulas& _rhs) const;
     void output(FILE* _out) const;
+    FORMULAS_ITERATOR begin();
+    FORMULAS_ITERATOR end();
+    FORMULAS_ITERATOR erase(FORMULAS_ITERATOR _it);
 };
 
 

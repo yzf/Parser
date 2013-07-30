@@ -16,6 +16,7 @@
 #include "HengZhang.h"
 #include "S2DLP.h"
 #include <iostream>
+#include <unistd.h>
 
 
 using namespace std;
@@ -53,11 +54,15 @@ int main(int argc, char** argv) {
     
     Vocabulary::instance().dumpVocabulary(stdout);
     Formula* f = new Formula(gformula, false);
+
     S2DLP::instance().init(f);
     S2DLP::instance().hengZhangTransform();
     S2DLP::instance().outputHengZhangFormulas(stdout);
     S2DLP::instance().cabalarTransform();
-    S2DLP::instance().outputCabalarFormulas(fout);
+//    S2DLP::instance().outputCabalarFormulas(fout);
+    S2DLP::instance().ruleTransform();
+//    S2DLP::instance().outputRules(fout);
+    S2DLP::instance().outputFinalResult(fout);
 
     delete f;
     fclose(fout);

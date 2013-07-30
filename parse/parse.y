@@ -5,6 +5,7 @@
 #include "structs.h"
 #include "Vocabulary.h"
 #include "Utils.h"
+#include "Formula.h"
 
 extern "C" {
     void yyerror(const char *s);
@@ -200,8 +201,8 @@ atom
             $$->parameters = (_term*)malloc(sizeof(_term)*$3->num_term);
             memcpy($$->parameters, $3->terms, sizeof(_term)*$3->num_term);
 
-            //_formula* atom = copy_formula($$);
-            //Vocabulary::instance().add_atom(atom);
+            _formula* atom = Utils::copyFormula($$);
+            Vocabulary::instance().addAtom(Formula(atom, false));
             free($3);
 
             context_flag = 0;

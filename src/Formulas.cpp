@@ -4,8 +4,12 @@
 Formulas::Formulas() {
 }
 
-Formulas::Formulas(deque<Formula> _formulas) {
+Formulas::Formulas(const deque<Formula>& _formulas) {
     this->m_dequeFormulas = _formulas;
+}
+
+Formulas::Formulas(const Formulas& _rhs) {
+    this->m_dequeFormulas = _rhs.m_dequeFormulas;
 }
 
 unsigned int Formulas::size() const {
@@ -74,4 +78,15 @@ void Formulas::output(FILE* _out) const {
             it != this->m_dequeFormulas.end(); ++ it) {
         it->output(_out);
     }
+}
+
+FORMULAS_ITERATOR Formulas::begin() {
+    return this->m_dequeFormulas.begin();
+}
+FORMULAS_ITERATOR Formulas::end() {
+    return this->m_dequeFormulas.end();
+}
+
+FORMULAS_ITERATOR Formulas::erase(FORMULAS_ITERATOR _it) {
+    return this->m_dequeFormulas.erase(_it);
 }

@@ -95,7 +95,7 @@ typedef union YYSTYPE
 {
 
 /* Line 2068 of yacc.c  */
-#line 26 "parse.y"
+#line 27 "parse.y"
 
     char* s;
     struct __formula* f;

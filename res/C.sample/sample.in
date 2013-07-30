@@ -1,7 +1,6 @@
 [!X](cvr(X)->i(X)).
-[!X][!Y][?Z]((i(X)&set(X,Y))->(cvr(Z)&set(Z,Y))).
+[!X][!Y][?Z]((i(X)&set(X,Y)) -> (cvr(Z)&set(Z,Y))).
 
-%AJLG
 {cvr}
 
-<X@a;Y@b;Z@a>
+<X@i;Y@e;Z@i>

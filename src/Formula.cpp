@@ -45,6 +45,10 @@ bool Formula::operator != (const Formula& _rhs) const {
 _formula* Formula::getFormula() const {
     return this->m_pFormula;
 }
+void Formula::setFormula(_formula* _newFormula) {
+    Utils::deleteFormula(this->m_pFormula);
+    this->m_pFormula = _newFormula;
+}
 /**
  * 判断公式是否含有存在量词
  * @return 

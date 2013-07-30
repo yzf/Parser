@@ -1,5 +1,6 @@
 #include "CabalarUtils.h"
 #include "Utils.h"
+#include "NNFUtils.h"
 #include <cstdlib>
 #include <assert.h>
 /**
@@ -132,7 +133,7 @@ _formula* CabalarUtils::implRightFalse(_formula* _originalFml) {
     assert(_originalFml->subformula_r->formula_type == ATOM);
     assert(_originalFml->subformula_r->predicate_id == PRED_FALSE);
     _formula* ret = Utils::compositeByConnective(NEGA, _originalFml->subformula_l, NULL);
-    ret = Utils::convertToNegativeNormalForm(ret);
+    ret = NNFUtils::convertToNegativeNormalForm(ret);
     Utils::deleteFormula(_originalFml->subformula_r);
     free(_originalFml);
     return ret;
@@ -270,11 +271,11 @@ Formulas CabalarUtils::leftRule_5(_formula* _originalFml) {
     assert(_originalFml->subformula_r);//k
     
     _formula* f = _originalFml->subformula_l->subformula_l->subformula_l;
-    _formula* _f = Utils::convertToNegativeNormalForm(
+    _formula* _f = NNFUtils::convertToNegativeNormalForm(
                         Utils::compositeByConnective(NEGA, 
                             Utils::copyFormula(f), NULL));
     _formula* g = _originalFml->subformula_l->subformula_l->subformula_r;
-    _formula* _g = Utils::convertToNegativeNormalForm(
+    _formula* _g = NNFUtils::convertToNegativeNormalForm(
                         Utils::compositeByConnective(NEGA, 
                             Utils::copyFormula(g), NULL));
     _formula* h = _originalFml->subformula_l->subformula_r;
@@ -442,11 +443,11 @@ Formulas CabalarUtils::rightRule_5(_formula* _originalFml) {
     _formula* f = _originalFml->subformula_l;
     _formula* f_2 = Utils::copyFormula(f);
     _formula* g = _originalFml->subformula_r->subformula_l->subformula_l;
-    _formula* _g = Utils::convertToNegativeNormalForm(
+    _formula* _g = NNFUtils::convertToNegativeNormalForm(
                         Utils::compositeByConnective(NEGA, 
                             Utils::copyFormula(g), NULL));
     _formula* h = _originalFml->subformula_r->subformula_l->subformula_r;
-    _formula* _h = Utils::convertToNegativeNormalForm(
+    _formula* _h = NNFUtils::convertToNegativeNormalForm(
                         Utils::compositeByConnective(NEGA, 
                             Utils::copyFormula(h), NULL));
     _formula* k = _originalFml->subformula_r->subformula_r;

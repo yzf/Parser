@@ -40,6 +40,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Formula.o \
 	${OBJECTDIR}/src/Formulas.o \
 	${OBJECTDIR}/src/HengZhang.o \
+	${OBJECTDIR}/src/NNFUtils.o \
+	${OBJECTDIR}/src/Rule.o \
 	${OBJECTDIR}/src/S2DLP.o \
 	${OBJECTDIR}/src/Utils.o \
 	${OBJECTDIR}/src/Vocabulary.o \
@@ -97,6 +99,16 @@ ${OBJECTDIR}/src/HengZhang.o: src/HengZhang.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/HengZhang.o src/HengZhang.cpp
+
+${OBJECTDIR}/src/NNFUtils.o: src/NNFUtils.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/NNFUtils.o src/NNFUtils.cpp
+
+${OBJECTDIR}/src/Rule.o: src/Rule.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Rule.o src/Rule.cpp
 
 ${OBJECTDIR}/src/S2DLP.o: src/S2DLP.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src

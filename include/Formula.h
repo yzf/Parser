@@ -33,6 +33,7 @@ public:
     bool operator != (const Formula& _rhs) const;
     
     _formula* getFormula() const;
+    void setFormula(_formula* _newFormula);
     bool isUniversal() const;
     void convertToPrenex();
     void fixUniversalQuantifier();

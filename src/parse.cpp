@@ -74,6 +74,7 @@
 #include "structs.h"
 #include "Vocabulary.h"
 #include "Utils.h"
+#include "Formula.h"
 
 extern "C" {
     void yyerror(const char *s);
@@ -93,7 +94,7 @@ void yyerror(const char* s) {
 
 
 /* Line 268 of yacc.c  */
-#line 97 "../src/parse.cpp"
+#line 98 "../src/parse.cpp"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -178,7 +179,7 @@ typedef union YYSTYPE
 {
 
 /* Line 293 of yacc.c  */
-#line 26 "parse.y"
+#line 27 "parse.y"
 
     char* s;
     struct __formula* f;
@@ -188,7 +189,7 @@ typedef union YYSTYPE
 
 
 /* Line 293 of yacc.c  */
-#line 192 "../src/parse.cpp"
+#line 193 "../src/parse.cpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -200,7 +201,7 @@ typedef union YYSTYPE
 
 
 /* Line 343 of yacc.c  */
-#line 204 "../src/parse.cpp"
+#line 205 "../src/parse.cpp"
 
 #ifdef short
 # undef short
@@ -499,9 +500,9 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    66,    66,    74,    79,    82,    87,    93,    97,   100,
-     105,   112,   116,   123,   129,   135,   141,   146,   158,   169,
-     173,   180,   209,   242,   261,   275,   287,   309
+       0,    67,    67,    75,    80,    83,    88,    94,    98,   101,
+     106,   113,   117,   124,   130,   136,   142,   147,   159,   170,
+     174,   181,   210,   243,   262,   276,   288,   310
 };
 #endif
 
@@ -1464,7 +1465,7 @@ yyreduce:
         case 2:
 
 /* Line 1806 of yacc.c  */
-#line 66 "parse.y"
+#line 67 "parse.y"
     {
             assert((yyvsp[(1) - (3)].f));
             printf("root\n");
@@ -1475,7 +1476,7 @@ yyreduce:
   case 3:
 
 /* Line 1806 of yacc.c  */
-#line 74 "parse.y"
+#line 75 "parse.y"
     {
         
         }
@@ -1484,7 +1485,7 @@ yyreduce:
   case 4:
 
 /* Line 1806 of yacc.c  */
-#line 79 "parse.y"
+#line 80 "parse.y"
     {
             
         }
@@ -1493,7 +1494,7 @@ yyreduce:
   case 5:
 
 /* Line 1806 of yacc.c  */
-#line 82 "parse.y"
+#line 83 "parse.y"
     {
             
         }
@@ -1502,7 +1503,7 @@ yyreduce:
   case 6:
 
 /* Line 1806 of yacc.c  */
-#line 87 "parse.y"
+#line 88 "parse.y"
     {           
             Vocabulary::instance().addIntensionPredicate((yyvsp[(1) - (1)].s));
             context_flag = 0;
@@ -1512,7 +1513,7 @@ yyreduce:
   case 7:
 
 /* Line 1806 of yacc.c  */
-#line 93 "parse.y"
+#line 94 "parse.y"
     {
         }
     break;
@@ -1520,7 +1521,7 @@ yyreduce:
   case 8:
 
 /* Line 1806 of yacc.c  */
-#line 97 "parse.y"
+#line 98 "parse.y"
     {
         
         }
@@ -1529,7 +1530,7 @@ yyreduce:
   case 9:
 
 /* Line 1806 of yacc.c  */
-#line 100 "parse.y"
+#line 101 "parse.y"
     {
             
         }
@@ -1538,7 +1539,7 @@ yyreduce:
   case 10:
 
 /* Line 1806 of yacc.c  */
-#line 105 "parse.y"
+#line 106 "parse.y"
     {
             Vocabulary::instance().setVariableDomain((yyvsp[(1) - (3)].s), (yyvsp[(3) - (3)].s));
             context_flag = 0;
@@ -1548,7 +1549,7 @@ yyreduce:
   case 11:
 
 /* Line 1806 of yacc.c  */
-#line 112 "parse.y"
+#line 113 "parse.y"
     {
             printf("formulas recursive\n");
             (yyval.f) = Utils::compositeByConnective(CONJ, (yyvsp[(1) - (3)].f), (yyvsp[(2) - (3)].f));
@@ -1558,7 +1559,7 @@ yyreduce:
   case 12:
 
 /* Line 1806 of yacc.c  */
-#line 116 "parse.y"
+#line 117 "parse.y"
     {
             printf("formulas single\n");
             (yyval.f) = (yyvsp[(1) - (2)].f);
@@ -1568,7 +1569,7 @@ yyreduce:
   case 13:
 
 /* Line 1806 of yacc.c  */
-#line 123 "parse.y"
+#line 124 "parse.y"
     {
             printf("formula conj\n");
             assert((yyvsp[(1) - (3)].f));
@@ -1580,7 +1581,7 @@ yyreduce:
   case 14:
 
 /* Line 1806 of yacc.c  */
-#line 129 "parse.y"
+#line 130 "parse.y"
     {
             printf("formula disj\n");
             assert((yyvsp[(1) - (3)].f));
@@ -1592,7 +1593,7 @@ yyreduce:
   case 15:
 
 /* Line 1806 of yacc.c  */
-#line 135 "parse.y"
+#line 136 "parse.y"
     {
             printf("formula impl\n");
             assert((yyvsp[(1) - (3)].f));
@@ -1604,7 +1605,7 @@ yyreduce:
   case 16:
 
 /* Line 1806 of yacc.c  */
-#line 141 "parse.y"
+#line 142 "parse.y"
     {
             printf("formula nega\n");
             assert((yyvsp[(2) - (2)].f));
@@ -1615,7 +1616,7 @@ yyreduce:
   case 17:
 
 /* Line 1806 of yacc.c  */
-#line 146 "parse.y"
+#line 147 "parse.y"
     {
             printf("formula univ\n");
             assert((yyvsp[(3) - (5)].s));
@@ -1633,7 +1634,7 @@ yyreduce:
   case 18:
 
 /* Line 1806 of yacc.c  */
-#line 158 "parse.y"
+#line 159 "parse.y"
     {
             printf("formula exis\n");
             assert((yyvsp[(3) - (5)].s));
@@ -1650,7 +1651,7 @@ yyreduce:
   case 19:
 
 /* Line 1806 of yacc.c  */
-#line 169 "parse.y"
+#line 170 "parse.y"
     {
             printf("formula atom\n");
             (yyval.f) = (yyvsp[(1) - (1)].f);
@@ -1660,7 +1661,7 @@ yyreduce:
   case 20:
 
 /* Line 1806 of yacc.c  */
-#line 173 "parse.y"
+#line 174 "parse.y"
     {
             printf("formula paren\n");
             (yyval.f) = (yyvsp[(2) - (3)].f);
@@ -1670,7 +1671,7 @@ yyreduce:
   case 21:
 
 /* Line 1806 of yacc.c  */
-#line 180 "parse.y"
+#line 181 "parse.y"
     {
             printf("atom terms\n");
             assert((yyvsp[(1) - (4)].s));
@@ -1694,8 +1695,8 @@ yyreduce:
             (yyval.f)->parameters = (_term*)malloc(sizeof(_term)*(yyvsp[(3) - (4)].ts)->num_term);
             memcpy((yyval.f)->parameters, (yyvsp[(3) - (4)].ts)->terms, sizeof(_term)*(yyvsp[(3) - (4)].ts)->num_term);
 
-            //_formula* atom = copy_formula($$);
-            //Vocabulary::instance().add_atom(atom);
+            _formula* atom = Utils::copyFormula((yyval.f));
+            Vocabulary::instance().addAtom(Formula(atom, false));
             free((yyvsp[(3) - (4)].ts));
 
             context_flag = 0;
@@ -1705,7 +1706,7 @@ yyreduce:
   case 22:
 
 /* Line 1806 of yacc.c  */
-#line 209 "parse.y"
+#line 210 "parse.y"
     {
             printf("atom no terms\n");
             assert((yyvsp[(1) - (1)].s));
@@ -1741,7 +1742,7 @@ yyreduce:
   case 23:
 
 /* Line 1806 of yacc.c  */
-#line 242 "parse.y"
+#line 243 "parse.y"
     {
             printf("terms comma\n");
             assert((yyvsp[(1) - (3)].ts));
@@ -1766,7 +1767,7 @@ yyreduce:
   case 24:
 
 /* Line 1806 of yacc.c  */
-#line 261 "parse.y"
+#line 262 "parse.y"
     {
             printf("terms single\n");
             (yyval.ts) = (_terms*)malloc(sizeof(_terms));
@@ -1783,7 +1784,7 @@ yyreduce:
   case 25:
 
 /* Line 1806 of yacc.c  */
-#line 275 "parse.y"
+#line 276 "parse.y"
     {
             assert((yyvsp[(1) - (1)].s));
 
@@ -1801,7 +1802,7 @@ yyreduce:
   case 26:
 
 /* Line 1806 of yacc.c  */
-#line 287 "parse.y"
+#line 288 "parse.y"
     {
             assert((yyvsp[(1) - (1)].s));
 
@@ -1829,7 +1830,7 @@ yyreduce:
   case 27:
 
 /* Line 1806 of yacc.c  */
-#line 309 "parse.y"
+#line 310 "parse.y"
     {
             printf("term func\n");
             assert((yyvsp[(1) - (4)].s));
@@ -1859,7 +1860,7 @@ yyreduce:
 
 
 /* Line 1806 of yacc.c  */
-#line 1863 "../src/parse.cpp"
+#line 1864 "../src/parse.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2090,6 +2091,6 @@ yyreturn:
 
 
 /* Line 2067 of yacc.c  */
-#line 334 "parse.y"
+#line 335 "parse.y"
 
 

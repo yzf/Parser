@@ -6,6 +6,9 @@
 #include <vector>
 #include <map>
 #include <string>
+#include "Formulas.h"
+
+class Formulas;
 
 using namespace std;
 
@@ -31,8 +34,7 @@ private:
     map<int, bool> m_mapIsIntensionPredicate;   // 记录是否为内涵谓词
      
     
-public:   
-    vector<_formula*> atom_list;
+    Formulas* m_fmlAtomList;
 
 private:
     Vocabulary();
@@ -57,6 +59,12 @@ public:
     bool isIntensionPredicate(int _predicateId);
     const char* getNameById(int _id, SYMBOL_TYPE _type) const;
     void dumpVocabulary(FILE* _out);
+    Formula getAtom(int _predicateId) const;
+    void addAtom(const Formula& _newAtom);
+    bool isSuccOrMax(int _predicateId) const;
+    map<int, string> getDomainNames() const;
+    map<int, int> getVariablesDomains() const;
+    Formulas* getAtomList() const;
 };
 
 #endif

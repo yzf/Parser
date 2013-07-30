@@ -40,6 +40,8 @@ public:
     int num_succ;
     int num_NV;
     
+    vector< vector<string> > m_vDomainNames;
+    
 private:
     Formulas transform(Formula _originalFml);
     Formula recordQuantifier(Formula _originalFml);

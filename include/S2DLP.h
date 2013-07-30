@@ -10,12 +10,23 @@
 
 #include "Formula.h"
 #include "Formulas.h"
+#include "Rule.h"
+#include <list>
+#include <string>
+#include <vector>
+#include <cstdio>
+
+class Formula;
+class Formulas;
+class Rule;
 
 class S2DLP {
 private:
     Formulas* m_pOriginalFormulas;      //原公式
     Formulas* m_pHengZhangFormulas;     //章衡转化结果
     Formulas* m_pDlpFormulas;           //Cabalar转化结果
+    Formulas* m_pNegaPredicates;        //出现非非的谓词公式
+    list<Rule> m_listRules;
 private:
     S2DLP();
     S2DLP(const S2DLP& _rhs) {};
@@ -29,6 +40,14 @@ public:
     void outputHengZhangFormulas(FILE* _out);
     void cabalarTransform();
     void outputCabalarFormulas(FILE* _out);
+    void ruleTransform();
+    void outputRules(FILE* _out);
+    void convert();
+    void outputAddition(FILE* _out);
+    void outputFinalResult(FILE* _out);
+    Formulas* getNegaPredicates() const;
+    void addNegaPredicates(const Formula& _negaPredicate);
+    void addSucc(FILE* _out, vector<string> domains);
 };
 
 #endif	/* S2DLP_H */

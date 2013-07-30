@@ -1,6 +1,7 @@
 #include "Cabalar.h"
 #include "Utils.h"
 #include "CabalarUtils.h"
+#include "NNFUtils.h"
 
 Cabalar::Cabalar() {
     
@@ -24,7 +25,7 @@ Formulas Cabalar::convertToNegativeNormalForms(Formulas _originalFmls) {
     while(! _originalFmls.isEmpty()) {
         Formula fml = _originalFmls.popFront();
         Formula newFml = Formula(
-                        Utils::convertToNegativeNormalForm(
+                        NNFUtils::convertToNegativeNormalForm(
                                 Utils::copyFormula(fml.getFormula())), false);
         newFml.m_nFormulaId = fml.m_nFormulaId;
         retFormulas.pushBack(newFml);
