@@ -10,7 +10,7 @@
 #domain i(NV_0).
 %NEW variable define
 _cvr(X):- not cvr(X).
-_t_0(X,Y,MIN_i):- not t_0(X,Y,MIN_i).
+_t_0(X,Y,Z):- not t_0(X,Y,Z).
 %Addition define
 _i(X) :- not i(X).
 i(X) | _i(X).

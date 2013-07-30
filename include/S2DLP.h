@@ -32,22 +32,26 @@ private:
     S2DLP(const S2DLP& _rhs) {};
     S2DLP& operator = (const S2DLP& _rhs) {return *this;}
     ~S2DLP();
+    
+    void hengZhangTransform();
+    void cabalarTransform();
+    void ruleTransform();
+    void outputAddition(FILE* _out);
 public:
     static S2DLP& instance();
+    
     void init(Formula* _originalFml);
     void init(Formulas* _originalFmls);
-    void hengZhangTransform();
-    void outputHengZhangFormulas(FILE* _out);
-    void cabalarTransform();
-    void outputCabalarFormulas(FILE* _out);
-    void ruleTransform();
-    void outputRules(FILE* _out);
     void convert();
-    void outputAddition(FILE* _out);
+    void outputHengZhangFormulas(FILE* _out) const;
+    void outputCabalarFormulas(FILE* _out) const;
+    void outputRules(FILE* _out);
+    
     void outputFinalResult(FILE* _out);
     Formulas* getNegaPredicates() const;
     void addNegaPredicates(const Formula& _negaPredicate);
     void addSucc(FILE* _out, vector<string> domains);
+    
 };
 
 #endif	/* S2DLP_H */

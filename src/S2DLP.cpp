@@ -63,7 +63,7 @@ void S2DLP::hengZhangTransform() {
  * 输出章衡转化结果
  * @param _out
  */
-void S2DLP::outputHengZhangFormulas(FILE* _out) {
+void S2DLP::outputHengZhangFormulas(FILE* _out) const {
     assert(this->m_pHengZhangFormulas);
     this->m_pHengZhangFormulas->output(_out);
 }
@@ -78,7 +78,7 @@ void S2DLP::cabalarTransform() {
  * 输出Cabalar转化结果
  * @param _out
  */
-void S2DLP::outputCabalarFormulas(FILE* _out) {
+void S2DLP::outputCabalarFormulas(FILE* _out) const {
     assert(this->m_pDlpFormulas);
     this->m_pDlpFormulas->output(_out);
 }
@@ -115,7 +115,16 @@ void S2DLP::convert() {
     hengZhangTransform();
     cabalarTransform();
     ruleTransform();
+    //由于出现~~的谓词需要输出后再知道，所以先随便输出到一个文件，再把该文件删除
+    FILE* tmpFile = fopen("out.tmp", "w+");
+    outputRules(tmpFile);
+    fclose(tmpFile);
+    remove("out.tmp");
 }
+/**
+ * 输出附加信息
+ * @param _out
+ */
 void S2DLP::outputAddition(FILE* _out) {
     fprintf(_out, "%%MIN and MAX domain\n");
     map<int, string> domainNames = Vocabulary::instance().getDomainNames();
@@ -137,7 +146,6 @@ void S2DLP::outputAddition(FILE* _out) {
         }
         fprintf(_out, "#domain %s(%s).\n", domainName, variName);
     }
-    printf("%u\n", m_pNegaPredicates->size());
     fprintf(_out, "%%NEW variable define\n");
     for (FORMULAS_ITERATOR iter = m_pNegaPredicates->begin(); 
             iter != m_pNegaPredicates->end(); ++ iter) {
@@ -169,54 +177,80 @@ void S2DLP::outputAddition(FILE* _out) {
     }  
     fprintf(_out, "\n");
 }
+/**
+ * 输出线序
+ * @param _out
+ * @param domains
+ */
 void S2DLP::addSucc(FILE* _out, vector<string> domains) {
     int size = domains.size();
     
-    if(size == 1) {
+    if (size == 1) {
         fprintf(_out, "succ");
-        for(int i = 0; i < size; i++) {
-            fprintf(_out, "_%s", domains.at(i).c_str());
+        for (int i = 0; i < size; ++ i) {
+            fprintf(_out, "_%s", domains[i].c_str());
         }
-        fprintf(_out, "(A1, A2):-A1==A2-1,%s(A1),%s(A2).\n", domains.at(0).c_str(), domains.at(0).c_str());
+        fprintf(_out, "(A1, A2):-A1==A2-1,%s(A1),%s(A2).\n", 
+                domains[0].c_str(), domains[0].c_str());
     }
     else {
-        for(int i = 0; i < size; i++) {
+        for (int i = 0; i < size; ++ i) {
             fprintf(_out, "succ");
-            for(int j = 0; j < size; j++) {
-                fprintf(_out, "_%s", domains.at(j).c_str());
+            for (int j = 0; j < size; ++ j) {
+                fprintf(_out, "_%s", domains[j].c_str());
             }
             fprintf(_out, "(");
-            for(int j = 0; j < size; j++) {
-                if(j >= size - i) fprintf(_out, "MAX_%s,", domains.at(j).c_str());
-                else if(j == size - i - 1) fprintf(_out, "%c1,", 'A' + j);
-                else fprintf(_out, "%c,", 'A' + j); 
+            for (int j = 0; j < size; ++ j) {
+                if (j >= size - i) {
+                    fprintf(_out, "MAX_%s,", domains[j].c_str());
+                }
+                else if (j == size - i - 1) {
+                    fprintf(_out, "%c1,", 'A' + j);
+                }
+                else {
+                    fprintf(_out, "%c,", 'A' + j); 
+                }
             }
-            for(int j = 0; j < size; j++) {
-                if(j >= size - i) fprintf(_out, "MIN_%s", domains.at(j).c_str());
-                else if(j == size - i - 1) fprintf(_out, "%c2", 'A' + j);
-                else fprintf(_out, "%c", 'A' + j);
-                if(j == size - 1) fprintf(_out, ")");
-                else fprintf(_out, ",");
+            for (int j = 0; j < size; ++ j) {
+                if (j >= size - i) {
+                    fprintf(_out, "MIN_%s", domains.at(j).c_str());
+                }
+                else if (j == size - i - 1) {
+                    fprintf(_out, "%c2", 'A' + j);
+                }
+                else {
+                    fprintf(_out, "%c", 'A' + j);
+                }
+                if (j == size - 1) {
+                    fprintf(_out, ")");
+                }
+                else {
+                    fprintf(_out, ",");
+                }
             }
             
             bool exis = false;
-            for(unsigned int j = 0; j < HengZhang::instance().m_vDomainNames.size(); j++) {
-                if(HengZhang::instance().m_vDomainNames.at(j).size() == 1 && HengZhang::instance().m_vDomainNames.at(j).at(0) == domains[size - j - 1]) {
+            for (unsigned int j = 0; j < HengZhang::instance().m_vDomainNames.size(); ++ j) {
+                if(HengZhang::instance().m_vDomainNames[j].size() == 1 && HengZhang::instance().m_vDomainNames[j][0] == domains[size - j - 1]) {
                     exis = true;
                 }
             }
-            if(!exis) {
+            if (! exis) {
                 vector<string> d;
                 d.push_back(domains[size - i - 1]);
                 HengZhang::instance().m_vDomainNames.push_back(d);
             }
-            fprintf(_out, ":-succ_%s(%c1,%c2),", domains.at(size - i - 1).c_str(), 'A' + size - i - 1, 'A' + size - i - 1);
+            fprintf(_out, ":-succ_%s(%c1,%c2),", 
+                    domains[size - i - 1].c_str(), 'A' + size - i - 1, 'A' + size - i - 1);
             
-            for(int j = 0; j < size - i; j++) {
-                if(j == size - i - 1)
-                    fprintf(_out, "%s(%c1),%s(%c2).", domains.at(j).c_str(), 'A' + j, domains.at(j).c_str(), 'A' + j);
-                else
-                    fprintf(_out, "%s(%c),", domains.at(j).c_str(), 'A' + j);            
+            for (int j = 0; j < size - i; ++ j) {
+                if (j == size - i - 1) {
+                    fprintf(_out, "%s(%c1),%s(%c2).", 
+                            domains[j].c_str(), 'A' + j, domains[j].c_str(), 'A' + j);
+                }
+                else {
+                    fprintf(_out, "%s(%c),", domains[j].c_str(), 'A' + j);            
+                }
             }
             
             fprintf(_out, "\n");

@@ -32,7 +32,7 @@ Rule& Rule::operator = (const Rule& _rhs) {
  * 输出规则
  * @param _out
  */
-void Rule::output(FILE* _out) {
+void Rule::output(FILE* _out) const {
     //输出规则头部
     for (FORMULAS_ITERATOR it = m_pHeadFormulas->begin(); 
             it != m_pHeadFormulas->end(); ++ it) {
@@ -81,7 +81,6 @@ void Rule::output(FILE* _out) {
                         Formula newNegaPredicate = Vocabulary::instance()
                                         .getAtom(bodyPart->subformula_l->predicate_id); 
                         assert(newNegaPredicate.getFormula());
-                        newNegaPredicate.output(stdout);
                         S2DLP::instance().addNegaPredicates(newNegaPredicate);
                     }
                     fprintf(_out, "_");

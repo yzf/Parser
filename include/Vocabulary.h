@@ -43,27 +43,25 @@ private:
     ~Vocabulary();
 
 public:
-    
-    void add_atom(_formula*);
-    _formula* get_atom(int predicate_id);
-    
     static Vocabulary& instance();
-    void addIntensionPredicate(const char*_name);
-    const char* getVariableDomain(int _variableId);
+    void dumpVocabulary(FILE* _out) ;
+    //setter adder
     void setVariableDomain(const char* _variable, const char* _domain);
-    int getSymbolId(const char* _name, SYMBOL_TYPE _type);
     int addSymbol(const char* _name, SYMBOL_TYPE _type, int _arity = 0);
+    int addRenameVariable();
+    void addIntensionPredicate(const char*_name);
+    void addAtom(const Formula& _newAtom);
+    //getter
+    bool isIntensionPredicate(int _predicateId) const;
+    bool isSuccOrMax(int _predicateId) const;
+    int getSymbolId(const char* _name, SYMBOL_TYPE _type);
     int getPredicateArity(int _id);
     int getFunctionArity(int _id);
-    int addRenameVariable();
-    bool isIntensionPredicate(int _predicateId);
+    const char* getVariableDomain(int _variableId);
     const char* getNameById(int _id, SYMBOL_TYPE _type) const;
-    void dumpVocabulary(FILE* _out);
-    Formula getAtom(int _predicateId) const;
-    void addAtom(const Formula& _newAtom);
-    bool isSuccOrMax(int _predicateId) const;
     map<int, string> getDomainNames() const;
     map<int, int> getVariablesDomains() const;
+    Formula getAtom(int _predicateId) const;
     Formulas* getAtomList() const;
 };
 

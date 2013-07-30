@@ -832,6 +832,7 @@ _formula* Utils::compositeToAtom(int _predicateId, _term* _parameters) {
  * @param _out
  */
 void Utils::printAtom(const _formula* _atom, FILE* _out) {
+    assert(_atom->formula_type == ATOM);
     fprintf(_out, "%s", Vocabulary::instance().getNameById(_atom->predicate_id, PREDICATE));
     if (_atom->parameters != NULL) {
         _term* ft = _atom->parameters;

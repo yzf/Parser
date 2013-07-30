@@ -115,7 +115,7 @@ void Formula::replaceTerms(const vector<int>& _originals,
  * 对公式进行拆分，结果是对公式的每段进行拷贝，原公式不影响
  * @return Formulas* 需要手动销毁
  */
-Formulas* Formula::divideFormula() {
+Formulas* Formula::divideFormula() const{
     Formulas* pResult = new Formulas();
     Utils::divideFormula(this->m_pFormula, NULL, pResult);
     return pResult;

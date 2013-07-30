@@ -42,7 +42,7 @@ public:
     void doubleNegationIntensionPredicates();
     void replaceTerms(const vector<int>& _originals, 
 				const vector<int>& _replacements);
-    Formulas* divideFormula();
+    Formulas* divideFormula() const;
 };
 
 

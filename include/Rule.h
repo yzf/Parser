@@ -28,7 +28,7 @@ public:
     Rule(const Rule& _rhs);
     ~Rule();
     Rule& operator = (const Rule& _rhs);
-    void output(FILE* _out);
+    void output(FILE* _out) const;
     bool isUseless() const;
     void aspModify();
 };

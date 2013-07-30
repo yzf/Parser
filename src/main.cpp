@@ -52,20 +52,23 @@ int main(int argc, char** argv) {
     yyparse();
     fclose(yyin);
     
-    Vocabulary::instance().dumpVocabulary(stdout);
     Formula* f = new Formula(gformula, false);
 
     S2DLP::instance().init(f);
-    S2DLP::instance().hengZhangTransform();
-    S2DLP::instance().outputHengZhangFormulas(stdout);
-    S2DLP::instance().cabalarTransform();
-//    S2DLP::instance().outputCabalarFormulas(fout);
-    S2DLP::instance().ruleTransform();
-//    S2DLP::instance().outputRules(fout);
+    S2DLP::instance().convert();
     S2DLP::instance().outputFinalResult(fout);
-
     delete f;
     fclose(fout);
+    
+    FILE* asp = popen("gringo output/C.sample/sample.fact output/C.sample/sample.out | claspD 0", "r");
+    const int MAX = 1024;
+    char line[MAX];
+    while (fgets(line, MAX, asp) != NULL) {
+        printf("%s", line);
+    }
+    pclose(asp);
+    
+    
     return 0;
 }
 

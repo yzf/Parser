@@ -21,24 +21,24 @@ class Formulas;
 
 class HengZhang{
 public:
-    vector<int> terms_X;
-    vector<int> terms_Y;
-    vector<int> terms_Z;
-    vector<int> terms_MIN;
-    vector<int> terms_MAX;
+    vector<int> m_vTermsX;
+    vector<int> m_vTermsY;
+    vector<int> m_vTermsZ;
+    vector<int> m_vTermsMIN;
+    vector<int> m_vTermsMAX;
 
-    int symbol_s;
-    int symbol_t;
-    int symbol_MAX;
-    int symbol_MIN;
-    int symbol_succ;
+    int m_nSymbolS;
+    int m_nSymbolT;
+    int m_nSymbolMAX;
+    int m_nSymbolMIN;
+    int m_nSymbolSucc;
 
-    int num_s;
-    int num_t;
-    int num_MAX;
-    int num_MIN;
-    int num_succ;
-    int num_NV;
+    int m_nNumS;
+    int m_nNumT;
+    int m_nNumMAX;
+    int m_nNumMIN;
+    int m_nNumSucc;
+    int m_nNumNV;
     
     vector< vector<string> > m_vDomainNames;
     

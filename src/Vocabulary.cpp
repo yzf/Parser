@@ -191,8 +191,9 @@ int Vocabulary::addRenameVariable() {
  * @param _variableId
  * @return 
  */
-bool Vocabulary::isIntensionPredicate(int _predicateId) {
-    return this->m_mapIsIntensionPredicate[_predicateId];
+bool Vocabulary::isIntensionPredicate(int _predicateId) const {
+    map<int, bool>::const_iterator it = m_mapIsIntensionPredicate.find(_predicateId);
+    return it != m_mapIsIntensionPredicate.end() ? true : false;
 }
 /**
  * 获取id对应的名字
@@ -239,7 +240,7 @@ const char* Vocabulary::getNameById(int _id, SYMBOL_TYPE _type) const {
  * 输出字符表的信息
  * @param out
  */
-void Vocabulary::dumpVocabulary(FILE* _out) {
+void Vocabulary::dumpVocabulary(FILE* _out)  {
     
     fprintf(_out, "\nvariable:\n");
     for (map<int, string>::const_iterator it = this->m_mapVariableName.begin(); 
