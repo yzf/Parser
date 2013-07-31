@@ -57,16 +57,14 @@ int main(int argc, char** argv) {
     yyparse();
     fclose(yyin);
     
-    
-    
-    Formula* f = new Formula(gformula, false);
+    Formula f = Formula(gformula, false);
     
 #ifdef RUN_S2DLP
     S2DLP::instance().init(f);
     S2DLP::instance().convert();
     S2DLP::instance().outputFinalResult(fout);
-    delete f;
     fclose(fout);
+    S2DLP::instance().destroy();
 #endif
     Vocabulary::instance().dumpVocabulary(stdout);
 #ifdef RUN_ASP

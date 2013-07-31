@@ -40,8 +40,10 @@ private:
 public:
     static S2DLP& instance();
     
-    void init(const Formula* _originalFml);
-    void init(Formulas* _originalFmls);
+    void init(const Formula& _originalFml);
+    void init(const Formulas& _originalFmls);
+    void destroy();
+    
     void convert();
     void outputHengZhangFormulas(FILE* _out) const;
     void outputCabalarFormulas(FILE* _out) const;

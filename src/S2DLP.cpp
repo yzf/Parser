@@ -14,6 +14,31 @@ S2DLP::S2DLP() :
 }
 
 S2DLP::~S2DLP() {
+    destroy();
+}
+
+S2DLP& S2DLP::instance() {
+    static S2DLP theInstance;
+    return theInstance;
+}
+/**
+ * 初始化S2DLP求解器
+ * @param _originalFml  调用divedeFormula方法，将原公式划分为多条子公式
+ */
+void S2DLP::init(const Formula& _originalFml) {
+    this->m_pOriginalFormulas = _originalFml.divideFormula();
+}
+/**
+ * 初始化S2DLP求解器
+ * @param _originalFmls
+ */
+void S2DLP::init(const Formulas& _originalFmls) {
+    this->m_pOriginalFormulas = new Formulas(_originalFmls);
+}
+/**
+ * 销毁
+ */
+void S2DLP::destroy() {
     if (this->m_pOriginalFormulas != NULL) {
         delete this->m_pOriginalFormulas;
         this->m_pOriginalFormulas = NULL;
@@ -30,27 +55,7 @@ S2DLP::~S2DLP() {
         delete this->m_pNegaPredicates;
         this->m_pNegaPredicates = NULL;
     }
-}
-
-S2DLP& S2DLP::instance() {
-    static S2DLP theInstance;
-    return theInstance;
-}
-/**
- * 初始化S2DLP求解器
- * @param _originalFml  调用divedeFormula方法，将原公式划分为多条子公式
- */
-void S2DLP::init(const Formula* _originalFml) {
-    assert(_originalFml);
-    this->m_pOriginalFormulas = _originalFml->divideFormula();
-}
-/**
- * 初始化S2DLP求解器
- * @param _originalFmls
- */
-void S2DLP::init(Formulas* _originalFmls) {
-    assert(_originalFmls);
-    this->m_pOriginalFormulas = _originalFmls;
+    this->m_listRules.clear();
 }
 /**
  * 进行章衡量词消去转化

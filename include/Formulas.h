@@ -25,7 +25,7 @@ public:
     Formulas();
     Formulas(const deque<Formula>& _formulas);
     Formulas(const Formulas& _rhs);
-    
+    ~Formulas();
     unsigned int size() const;
     bool isEmpty() const;
     void pushBack(const Formula& _tail);

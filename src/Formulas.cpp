@@ -12,6 +12,10 @@ Formulas::Formulas(const Formulas& _rhs) {
     this->m_dequeFormulas = _rhs.m_dequeFormulas;
 }
 
+Formulas::~Formulas() {
+    this->m_dequeFormulas.clear();
+}
+
 unsigned int Formulas::size() const {
     return this->m_dequeFormulas.size();
 }
