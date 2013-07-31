@@ -257,7 +257,7 @@ void Vocabulary::dumpVocabulary(FILE* _out)  {
     fprintf(_out, "\npredicate:\n");
     for (map<int, string>::const_iterator it = this->m_mapPredicateName.begin(); 
             it != this->m_mapPredicateName.end(); ++ it) {
-        fprintf(_out, "%s ", (it->second).c_str());
+        fprintf(_out, "%s:%d\t", (it->second).c_str(), it->first);
     }
     
     fprintf(_out, "\nintension predicate:\n");
@@ -285,7 +285,8 @@ void Vocabulary::dumpVocabulary(FILE* _out)  {
     fprintf(_out, "\natom\n");
     for (FORMULAS_ITERATOR it = m_fmlAtomList->begin();
             it != m_fmlAtomList->end(); ++ it) {
-        fprintf(_out, "%s", getNameById(it->getFormula()->predicate_id, PREDICATE));
+        fprintf(_out, "%s:%d ", getNameById(it->getFormula()->predicate_id, PREDICATE),
+                it->getFormula()->predicate_id);
     }
 }
 

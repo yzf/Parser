@@ -43,8 +43,9 @@ public:
     static void renameFormulaVariables(_formula* _fml, int _oldVariableId, int _newVariableId);
     static void convertToPrenex(_formula* _fml);
     static void getNoQuantifierVariables(map<int, bool>& _flag, vector<int>& _varis, _formula* _fml);
-    static bool isNegativeFormula(_formula* _fml, bool _negative);
-    static _formula* doubleNegationIntensionPredicates(_formula* _fml);
+    static bool isNegativeFormula(_formula* _fml, bool _negative, int* _p = NULL, int _size = 0);
+    static bool inList(int _target, int *_p, int size);
+    static _formula* doubleNegationPredicates(_formula* _fml, int* _p = NULL, int _size = 0);
     static void replaceFormulaTerms(_formula* _fml, 
                                 const vector<int>& _originals, 
 				const vector<int>& _replacements);

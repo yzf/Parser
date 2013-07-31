@@ -59,7 +59,8 @@ void yyerror(const char* s) {
 %type <t>  term 
 %type <ts> terms
 
-%left S_IMPL S_CONJ S_DISJ
+%left S_IMPL
+%left S_CONJ S_DISJ
 %right S_NEGA S_EXIS S_UNIV
 
 %%
@@ -223,6 +224,8 @@ atom
             }
             else if ((id = Vocabulary::instance().getSymbolId($1, PREDICATE)) < 0) {
                 id = Vocabulary::instance().addSymbol($1, PREDICATE, 0);
+                Formula atom = Formula(Utils::compositeToAtom(id, NULL), false);
+                Vocabulary::instance().addAtom(atom);
             } 
             else if (Vocabulary::instance().getPredicateArity(id) != 0)
             {

@@ -40,7 +40,7 @@ S2DLP& S2DLP::instance() {
  * 初始化S2DLP求解器
  * @param _originalFml  调用divedeFormula方法，将原公式划分为多条子公式
  */
-void S2DLP::init(Formula* _originalFml) {
+void S2DLP::init(const Formula* _originalFml) {
     assert(_originalFml);
     this->m_pOriginalFormulas = _originalFml->divideFormula();
 }
@@ -89,9 +89,13 @@ void S2DLP::ruleTransform() {
     }
 }
 void S2DLP::outputRules(FILE* _out) {
+    int i = 0;
     for (list<Rule>::iterator it = m_listRules.begin();
             it != m_listRules.end(); ++ it) {
         it->output(_out);
+        if (++ i % 500 == 0) {
+            fflush(_out);
+        } 
     }
 }
 /**
@@ -165,10 +169,10 @@ void S2DLP::outputAddition(FILE* _out) {
             fprintf(_out, " :- not ");
             Utils::printAtom(iter->getFormula(), _out);
             fprintf(_out, ".\n");
-            Utils::printAtom(iter->getFormula(), _out);
-            fprintf(_out, " | _");
-            Utils::printAtom(iter->getFormula(), _out);
-            fprintf(_out, ".\n");
+//            Utils::printAtom(iter->getFormula(), _out);
+//            fprintf(_out, " | _");
+//            Utils::printAtom(iter->getFormula(), _out);
+//            fprintf(_out, ".\n");
         }
     }
     fprintf(_out, "%%Succ predicate definition\n");
@@ -176,6 +180,7 @@ void S2DLP::outputAddition(FILE* _out) {
         addSucc(_out, HengZhang::instance().m_vDomainNames.at(i));
     }  
     fprintf(_out, "\n");
+    fflush(_out);
 }
 /**
  * 输出线序

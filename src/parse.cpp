@@ -420,7 +420,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  14
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   60
+#define YYLAST   61
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  26
@@ -500,9 +500,9 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    67,    67,    75,    80,    83,    88,    94,    98,   101,
-     106,   113,   117,   124,   130,   136,   142,   147,   159,   170,
-     174,   181,   210,   243,   262,   276,   288,   310
+       0,    68,    68,    76,    81,    84,    89,    95,    99,   102,
+     107,   114,   118,   125,   131,   137,   143,   148,   160,   171,
+     175,   182,   211,   246,   265,   279,   291,   313
 };
 #endif
 
@@ -573,18 +573,18 @@ static const yytype_int8 yydefgoto[] =
 static const yytype_int8 yypact[] =
 {
        7,    -6,     7,     7,    38,    21,    -1,    16,   -16,    42,
-     -16,     1,    23,    34,   -16,    46,     3,    22,     7,     7,
-       7,   -16,   -16,    33,    18,   -16,   -16,    36,    37,   -16,
-     -15,   -16,    48,   -16,   -16,   -16,   -16,   -16,    42,   -16,
-      42,     7,     7,    46,   -16,    31,    11,   -16,    24,   -16,
-      35,    35,   -16,    51,    48,   -16,   -16,   -16,   -16
+     -16,     1,    34,    43,   -16,    46,    27,    22,     7,     7,
+       7,   -16,   -16,    39,    18,   -16,   -16,    37,    40,   -16,
+     -15,   -16,    51,   -16,   -16,   -16,   -16,    19,    42,   -16,
+      42,     7,     7,    46,   -16,    32,    11,   -16,    24,   -16,
+      35,    35,   -16,    53,    51,   -16,   -16,   -16,   -16
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -16,   -16,   -16,   -16,    13,   -16,   -16,     4,   -16,    -2,
-     -16,    19,    20
+     -16,   -16,   -16,   -16,    15,   -16,   -16,     5,   -16,    -2,
+     -16,    23,    20
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -595,11 +595,11 @@ static const yytype_uint8 yytable[] =
 {
       10,    11,    43,     1,    17,     2,    44,     9,    18,    19,
       20,     1,     3,     2,     4,    26,    35,    36,    37,    15,
-       3,    14,     4,    18,    19,    20,    27,    32,    21,    18,
-      19,    20,    39,    54,    34,    40,    55,    28,    56,    50,
-      51,    40,    18,    19,    20,    22,    38,    23,    12,    13,
-      29,    45,    41,    42,    53,    57,    52,    48,    58,     0,
-      49
+       3,    14,     4,    18,    19,    20,    18,    19,    21,    18,
+      19,    20,    39,    54,    34,    40,    55,    27,    56,    50,
+      51,    40,    18,    19,    20,    22,    28,    23,    12,    13,
+      29,    32,    38,    41,    45,    53,    42,    57,    52,    58,
+      49,    48
 };
 
 #define yypact_value_is_default(yystate) \
@@ -608,15 +608,15 @@ static const yytype_uint8 yytable[] =
 #define yytable_value_is_error(yytable_value) \
   YYID (0)
 
-static const yytype_int8 yycheck[] =
+static const yytype_uint8 yycheck[] =
 {
        2,     3,    17,     4,     6,     6,    21,    13,     7,     8,
        9,     4,    13,     6,    15,    14,    18,    19,    20,    20,
-      13,     0,    15,     7,     8,     9,     3,    24,    12,     7,
+      13,     0,    15,     7,     8,     9,     7,     8,    12,     7,
        8,     9,    14,    22,    12,    17,    25,     3,    14,    41,
-      42,    17,     7,     8,     9,     3,    13,     5,    10,    11,
-       4,     3,    16,    16,    23,     4,    43,    38,    54,    -1,
-      40
+      42,    17,     7,     8,     9,     3,     3,     5,    10,    11,
+       4,    24,    13,    16,     3,    23,    16,     4,    43,    54,
+      40,    38
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -1465,7 +1465,7 @@ yyreduce:
         case 2:
 
 /* Line 1806 of yacc.c  */
-#line 67 "parse.y"
+#line 68 "parse.y"
     {
             assert((yyvsp[(1) - (3)].f));
             printf("root\n");
@@ -1476,7 +1476,7 @@ yyreduce:
   case 3:
 
 /* Line 1806 of yacc.c  */
-#line 75 "parse.y"
+#line 76 "parse.y"
     {
         
         }
@@ -1485,7 +1485,7 @@ yyreduce:
   case 4:
 
 /* Line 1806 of yacc.c  */
-#line 80 "parse.y"
+#line 81 "parse.y"
     {
             
         }
@@ -1494,7 +1494,7 @@ yyreduce:
   case 5:
 
 /* Line 1806 of yacc.c  */
-#line 83 "parse.y"
+#line 84 "parse.y"
     {
             
         }
@@ -1503,7 +1503,7 @@ yyreduce:
   case 6:
 
 /* Line 1806 of yacc.c  */
-#line 88 "parse.y"
+#line 89 "parse.y"
     {           
             Vocabulary::instance().addIntensionPredicate((yyvsp[(1) - (1)].s));
             context_flag = 0;
@@ -1513,7 +1513,7 @@ yyreduce:
   case 7:
 
 /* Line 1806 of yacc.c  */
-#line 94 "parse.y"
+#line 95 "parse.y"
     {
         }
     break;
@@ -1521,7 +1521,7 @@ yyreduce:
   case 8:
 
 /* Line 1806 of yacc.c  */
-#line 98 "parse.y"
+#line 99 "parse.y"
     {
         
         }
@@ -1530,7 +1530,7 @@ yyreduce:
   case 9:
 
 /* Line 1806 of yacc.c  */
-#line 101 "parse.y"
+#line 102 "parse.y"
     {
             
         }
@@ -1539,7 +1539,7 @@ yyreduce:
   case 10:
 
 /* Line 1806 of yacc.c  */
-#line 106 "parse.y"
+#line 107 "parse.y"
     {
             Vocabulary::instance().setVariableDomain((yyvsp[(1) - (3)].s), (yyvsp[(3) - (3)].s));
             context_flag = 0;
@@ -1549,7 +1549,7 @@ yyreduce:
   case 11:
 
 /* Line 1806 of yacc.c  */
-#line 113 "parse.y"
+#line 114 "parse.y"
     {
             printf("formulas recursive\n");
             (yyval.f) = Utils::compositeByConnective(CONJ, (yyvsp[(1) - (3)].f), (yyvsp[(2) - (3)].f));
@@ -1559,7 +1559,7 @@ yyreduce:
   case 12:
 
 /* Line 1806 of yacc.c  */
-#line 117 "parse.y"
+#line 118 "parse.y"
     {
             printf("formulas single\n");
             (yyval.f) = (yyvsp[(1) - (2)].f);
@@ -1569,7 +1569,7 @@ yyreduce:
   case 13:
 
 /* Line 1806 of yacc.c  */
-#line 124 "parse.y"
+#line 125 "parse.y"
     {
             printf("formula conj\n");
             assert((yyvsp[(1) - (3)].f));
@@ -1581,7 +1581,7 @@ yyreduce:
   case 14:
 
 /* Line 1806 of yacc.c  */
-#line 130 "parse.y"
+#line 131 "parse.y"
     {
             printf("formula disj\n");
             assert((yyvsp[(1) - (3)].f));
@@ -1593,7 +1593,7 @@ yyreduce:
   case 15:
 
 /* Line 1806 of yacc.c  */
-#line 136 "parse.y"
+#line 137 "parse.y"
     {
             printf("formula impl\n");
             assert((yyvsp[(1) - (3)].f));
@@ -1605,7 +1605,7 @@ yyreduce:
   case 16:
 
 /* Line 1806 of yacc.c  */
-#line 142 "parse.y"
+#line 143 "parse.y"
     {
             printf("formula nega\n");
             assert((yyvsp[(2) - (2)].f));
@@ -1616,7 +1616,7 @@ yyreduce:
   case 17:
 
 /* Line 1806 of yacc.c  */
-#line 147 "parse.y"
+#line 148 "parse.y"
     {
             printf("formula univ\n");
             assert((yyvsp[(3) - (5)].s));
@@ -1634,7 +1634,7 @@ yyreduce:
   case 18:
 
 /* Line 1806 of yacc.c  */
-#line 159 "parse.y"
+#line 160 "parse.y"
     {
             printf("formula exis\n");
             assert((yyvsp[(3) - (5)].s));
@@ -1651,7 +1651,7 @@ yyreduce:
   case 19:
 
 /* Line 1806 of yacc.c  */
-#line 170 "parse.y"
+#line 171 "parse.y"
     {
             printf("formula atom\n");
             (yyval.f) = (yyvsp[(1) - (1)].f);
@@ -1661,7 +1661,7 @@ yyreduce:
   case 20:
 
 /* Line 1806 of yacc.c  */
-#line 174 "parse.y"
+#line 175 "parse.y"
     {
             printf("formula paren\n");
             (yyval.f) = (yyvsp[(2) - (3)].f);
@@ -1671,7 +1671,7 @@ yyreduce:
   case 21:
 
 /* Line 1806 of yacc.c  */
-#line 181 "parse.y"
+#line 182 "parse.y"
     {
             printf("atom terms\n");
             assert((yyvsp[(1) - (4)].s));
@@ -1706,7 +1706,7 @@ yyreduce:
   case 22:
 
 /* Line 1806 of yacc.c  */
-#line 210 "parse.y"
+#line 211 "parse.y"
     {
             printf("atom no terms\n");
             assert((yyvsp[(1) - (1)].s));
@@ -1723,6 +1723,8 @@ yyreduce:
             }
             else if ((id = Vocabulary::instance().getSymbolId((yyvsp[(1) - (1)].s), PREDICATE)) < 0) {
                 id = Vocabulary::instance().addSymbol((yyvsp[(1) - (1)].s), PREDICATE, 0);
+                Formula atom = Formula(Utils::compositeToAtom(id, NULL), false);
+                Vocabulary::instance().addAtom(atom);
             } 
             else if (Vocabulary::instance().getPredicateArity(id) != 0)
             {
@@ -1742,7 +1744,7 @@ yyreduce:
   case 23:
 
 /* Line 1806 of yacc.c  */
-#line 243 "parse.y"
+#line 246 "parse.y"
     {
             printf("terms comma\n");
             assert((yyvsp[(1) - (3)].ts));
@@ -1767,7 +1769,7 @@ yyreduce:
   case 24:
 
 /* Line 1806 of yacc.c  */
-#line 262 "parse.y"
+#line 265 "parse.y"
     {
             printf("terms single\n");
             (yyval.ts) = (_terms*)malloc(sizeof(_terms));
@@ -1784,7 +1786,7 @@ yyreduce:
   case 25:
 
 /* Line 1806 of yacc.c  */
-#line 276 "parse.y"
+#line 279 "parse.y"
     {
             assert((yyvsp[(1) - (1)].s));
 
@@ -1802,7 +1804,7 @@ yyreduce:
   case 26:
 
 /* Line 1806 of yacc.c  */
-#line 288 "parse.y"
+#line 291 "parse.y"
     {
             assert((yyvsp[(1) - (1)].s));
 
@@ -1830,7 +1832,7 @@ yyreduce:
   case 27:
 
 /* Line 1806 of yacc.c  */
-#line 310 "parse.y"
+#line 313 "parse.y"
     {
             printf("term func\n");
             assert((yyvsp[(1) - (4)].s));
@@ -1860,7 +1862,7 @@ yyreduce:
 
 
 /* Line 1806 of yacc.c  */
-#line 1864 "../src/parse.cpp"
+#line 1866 "../src/parse.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2091,6 +2093,6 @@ yyreturn:
 
 
 /* Line 2067 of yacc.c  */
-#line 335 "parse.y"
+#line 338 "parse.y"
 
 

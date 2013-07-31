@@ -651,37 +651,53 @@ void Utils::getNoQuantifierVariables(map<int, bool>& _flag, vector<int>& _varis,
         assert(0);
     }
 }
-bool Utils::isNegativeFormula(_formula* _fml, bool _negative) {
+bool Utils::isNegativeFormula(_formula* _fml, bool _negative, int* _p, int _size) {
     assert(_fml);
 
     switch (_fml->formula_type)
     {
     case ATOM:
-        if (_negative || ! Vocabulary::instance().isIntensionPredicate(_fml->predicate_id ))
-            return true;
+        if (_p == NULL || _size == 0) {
+            if(_negative || ! Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
+                return true;
+            }
+        }
+        else {
+            if (_negative || ! inList(_fml->predicate_id, _p, _size)) {
+                return true;
+            }
+        }
         break;
     case NEGA:
         assert(_fml->subformula_l);
-        return isNegativeFormula(_fml->subformula_l, !_negative);
+        return isNegativeFormula(_fml->subformula_l, !_negative, _p, _size);
     case CONJ:
     case DISJ:
         assert(_fml->subformula_l);
         assert(_fml->subformula_r);
-        return (isNegativeFormula(_fml->subformula_l, _negative) &&
-               isNegativeFormula(_fml->subformula_r, _negative));
+        return (isNegativeFormula(_fml->subformula_l, _negative, _p, _size) &&
+               isNegativeFormula(_fml->subformula_r, _negative, _p, _size));
     case IMPL:
         assert(_fml->subformula_l);
         assert(_fml->subformula_r);
-        return (isNegativeFormula(_fml->subformula_l, !_negative) &&
-               isNegativeFormula(_fml->subformula_r, _negative ));
+        return (isNegativeFormula(_fml->subformula_l, !_negative, _p, _size) &&
+               isNegativeFormula(_fml->subformula_r, _negative, _p, _size));
     case UNIV:
     case EXIS:
         assert(_fml->subformula_l);
-        return isNegativeFormula(_fml->subformula_l, _negative);
+        return isNegativeFormula(_fml->subformula_l, _negative, _p, _size);
     default:
         assert(0);
     }
 
+    return false;
+}
+bool Utils::inList(int _target, int *_p, int size) {
+    for (int i = 0; i < size; ++ i) {
+        if (_p[i] == _target) {
+            return true;
+        }
+    }
     return false;
 }
 /**
@@ -689,29 +705,37 @@ bool Utils::isNegativeFormula(_formula* _fml, bool _negative) {
  * @param _fml
  * @return 
  */
-_formula* Utils::doubleNegationIntensionPredicates(_formula* _fml) {
+_formula* Utils::doubleNegationPredicates(_formula* _fml, int *_p, int _size) {
     assert(_fml);
 
-    if (isNegativeFormula(_fml, false)) {
+    if (isNegativeFormula(_fml, false, _p, _size)) {
         return _fml;
     }
 
     switch (_fml->formula_type)
     {
     case ATOM:
-        if(Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
-            _fml = compositeByConnective(NEGA, _fml, NULL);
-            _fml = compositeByConnective(NEGA, _fml, NULL);
+        if (_p == NULL || _size == 0) {
+            if(Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
+                _fml = compositeByConnective(NEGA, _fml, NULL);
+                _fml = compositeByConnective(NEGA, _fml, NULL);
+            }
+        }
+        else {
+            if (inList(_fml->predicate_id, _p, _size)) {
+                _fml = compositeByConnective(NEGA, _fml, NULL);
+                _fml = compositeByConnective(NEGA, _fml, NULL);
+            }
         }
         break;
     case CONJ:
     case DISJ:
     case IMPL:
-        _fml->subformula_r = doubleNegationIntensionPredicates(_fml->subformula_r);
+        _fml->subformula_r = doubleNegationPredicates(_fml->subformula_r, _p, _size);
     case NEGA:
     case UNIV:
     case EXIS:
-        _fml->subformula_l = doubleNegationIntensionPredicates(_fml->subformula_l);
+        _fml->subformula_l = doubleNegationPredicates(_fml->subformula_l, _p, _size);
         break;
     default:
         assert(0);

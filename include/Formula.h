@@ -40,6 +40,7 @@ public:
     void removeUniversalQuantifier();
     void output(FILE* _out) const;
     void doubleNegationIntensionPredicates();
+    void doubleNegationPredicates(int* _p, int _size);
     void replaceTerms(const vector<int>& _originals, 
 				const vector<int>& _replacements);
     Formulas* divideFormula() const;
