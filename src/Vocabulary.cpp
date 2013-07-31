@@ -31,15 +31,6 @@ Vocabulary::Vocabulary() {
 }
 
 Vocabulary::~Vocabulary() {
-    m_mapVariableName.clear();
-    m_mapDomainName.clear();
-    m_mapFunctionName.clear();
-    m_mapPredicateName.clear();
-    m_mapVariableDomain.clear();
-    m_mapFunctionArity.clear();
-    m_mapPredicateArity.clear();
-    m_mapIsIntensionPredicate.clear();
-    m_mapDomainVariables.clear();
     if (m_fmlAtomList != NULL) {
         delete m_fmlAtomList;
         m_fmlAtomList = NULL;
