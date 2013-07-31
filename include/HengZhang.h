@@ -1,66 +1,70 @@
-#ifndef _HENGZHANG_H_
-#define _HENGZHANG_H_
+/* 
+ * File:   HengZhang.h
+ * Author: yzf
+ *
+ * Created on July 28, 2013, 3:08 PM
+ */
+
+#ifndef HENGZHANG_H
+#define	HENGZHANG_H
 
 #include <vector>
 #include <string>
 #include "structs.h"
 #include "Formula.h"
 #include "Formulas.h"
+
 using namespace std;
+
+class Formula;
+class Formulas;
 
 class HengZhang{
 public:
-    vector<int> terms_X;
-    vector<int> terms_Y;
-    vector<int> terms_Z;
-    vector<int> terms_MIN;//waste space
-    vector<int> terms_MAX;//waste space
+    vector<int> m_vTermsX;
+    vector<int> m_vTermsY;
+    vector<int> m_vTermsZ;
+    vector<int> m_vTermsMIN;
+    vector<int> m_vTermsMAX;
 
-    int symbol_s;
-    int symbol_t;
-    int symbol_MAX;
-    int symbol_MIN;
-    int symbol_succ;
+    int m_nSymbolS;
+    int m_nSymbolT;
+    int m_nSymbolMAX;
+    int m_nSymbolMIN;
+    int m_nSymbolSucc;
 
-    int num_s;
-    int num_t;
-    int num_MAX;
-    int num_MIN;
-    int num_succ;
-    int num_NV;
+    int m_nNumS;
+    int m_nNumT;
+    int m_nNumMAX;
+    int m_nNumMIN;
+    int m_nNumSucc;
+    int m_nNumNV;
     
-public:
-    vector<string> succ_names;
-    vector< vector<string> > domain_names;
+    vector< vector<string> > m_vDomainNames;
     
 private:
-    //utilities
-    int add_symbol(const char* name, SYMBOL_TYPE type, int arity);
-    Formulas transform(Formula fml);
-    Formula record_quantifier(Formula original_fml);
-    Formula create_formula_1(Formula original_fml);
-    Formula create_formula_2(Formula original_fml);
-    Formula create_formula_3(Formula original_fml);
-    Formula create_formula_4_old(Formula original_fml);
-    Formula create_formula_4(Formula original_fml);
-    Formula create_formula_4_1(Formula original_fml);
-    Formula create_formula_4_2(Formula original_fml);
-    Formula create_formula_5(Formula original_fml);
-    Formula create_formula_5_1(Formula original_fml);
-    Formula create_formula_5_2(Formula original_fml);
-    void save_succ_name(string succ_name, vector<string> domain_name);
-    _formula* generate_formula_4_left();
+    Formulas transform(Formula _originalFml);
+    Formula recordQuantifier(Formula _originalFml);
+    Formula createFormula_1(Formula _originalFml);
+    Formula createFormula_2(Formula _originalFml);
+    Formula createFormula_3(Formula _originalFml);
+    Formula createFormula_4_1(Formula _originalFml);
+    Formula createFormula_4_2(Formula _originalFml);
+    Formula createFormula_5_1(Formula _originalFml);
+    Formula createFormula_5_2(Formula _originalFml);
+    _formula* generateFormulaLeft_4();
+    
     HengZhang();
-    HengZhang(const HengZhang& rhs);
+    HengZhang(const HengZhang& _rhs);
     ~HengZhang();
-    HengZhang& operator = (const HengZhang& rhs);
+    HengZhang& operator = (const HengZhang& _rhs);
 public:
     //creators
-    Formulas create(Formulas fmls);
+    Formulas* convert(const Formulas& _originalFmls);
 
     static HengZhang& instance();
     
 };
 
-#endif
+#endif	/* HENGZHANG_H */
 

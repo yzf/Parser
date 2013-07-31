@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux-x86
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux-x86
-CND_ARTIFACT_NAME_Debug=parser
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux-x86/parser
+CND_ARTIFACT_NAME_Debug=alpha
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux-x86/alpha
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux-x86/package
-CND_PACKAGE_NAME_Debug=parser.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/parser.tar
+CND_PACKAGE_NAME_Debug=alpha.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/alpha.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux-x86
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux-x86
-CND_ARTIFACT_NAME_Release=parser
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/parser
+CND_ARTIFACT_NAME_Release=alpha
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/alpha
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux-x86/package
-CND_PACKAGE_NAME_Release=parser.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/parser.tar
+CND_PACKAGE_NAME_Release=alpha.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/alpha.tar
 #
 # include compiler specific variables
 #

@@ -1,41 +1,49 @@
-#ifndef _FORMULAS_H_
-#define _FORMULAS_H_
+/* 
+ * File:   Formulas.h
+ * Author: yzf
+ *
+ * Created on July 28, 2013, 2:19 PM
+ */
+
+#ifndef FORMULAS_H
+#define	FORMULAS_H
 
 #include "Formula.h"
 #include <deque>
-#include <cstdio>
 
 using namespace std;
 
 class Formula;
 
-class Formulas{
-    private:
-        deque<Formula> _formulas;
+#define FORMULAS_ITERATOR deque<Formula>::iterator
 
-    public:
-        Formulas();
-        ~Formulas();
-        Formulas(deque<Formula> _formula);
-        Formulas(const Formulas&);
-
-        deque<Formula> get_formulas();
-        void set_formulas(deque<Formula> fs);
-
-        bool is_empty();
-        
-        void join_formulas(Formulas tail);
-        void push_formula(Formula tail);
-        void pop_formula ();//DO NOT DELETE formula
-        Formula top_formula ();
-        void copy_formulas(Formulas sigma);
-        void delete_formulas();
-        int size_formulas();
-        
-        bool equal(Formulas f);
-        
-        void output_formulas(FILE* out);
-        Formulas& operator = (const Formulas&);
+class Formulas {
+private:
+    deque<Formula> m_dequeFormulas;
+    
+public:
+    Formulas();
+    Formulas(const deque<Formula>& _formulas);
+    Formulas(const Formulas& _rhs);
+    ~Formulas();
+    unsigned int size() const;
+    bool isEmpty() const;
+    void pushBack(const Formula& _tail);
+    void pushFront(const Formula& _front);
+    Formula popBack();
+    Formula popFront();
+    Formula front();
+    Formula back();
+    void joinFormulas(Formulas& _tail);
+    bool operator == (const Formulas& _rhs) const;
+    bool operator != (const Formulas& _rhs) const;
+    void output(FILE* _out) const;
+    FORMULAS_ITERATOR begin();
+    FORMULAS_ITERATOR end();
+    FORMULAS_ITERATOR erase(FORMULAS_ITERATOR _it);
 };
 
-#endif
+
+
+#endif	/* FORMULAS_H */
+

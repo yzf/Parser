@@ -1,39 +1,34 @@
 %{
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 #include <assert.h>
-
 #include "structs.h"
 #include "Vocabulary.h"
-#include "utility.h"
-#include "S2DLP.h"
+#include "Utils.h"
 #include "Formula.h"
-#include "Formulas.h"
 
 extern "C" {
-	void yyerror(const char *s);
-	extern int yylex(void);
+    void yyerror(const char *s);
+    extern int yylex(void);
 }
 
-extern Vocabulary vocabulary;
 extern int context_flag;
 extern _formula* gformula; 
 
 int id;
 char str_buf[512];
 
-void yyerror(const char* s)
-{
-	printf("Parser error: %s\n", s);
+void yyerror(const char* s) {
+    printf("Parser error: %s\n", s);
 }
 
 %}
 
 %union {
-	char* s;
-	struct __formula* f;
-	struct __term* t;
-        struct __terms* ts;
+    char* s;
+    struct __formula* f;
+    struct __term* t;
+    struct __terms* ts;
 }
 
 %token <s> S_VARI
@@ -81,7 +76,6 @@ intensionP
         : LBRACE inten_preds RBRACE {
         
         }
-        |
 ;
 inten_preds
         : inten_preds COMMA intent_pred {
@@ -93,16 +87,13 @@ inten_preds
 ;
 intent_pred
         : S_PRED {           
-            vocabulary.set_intension_predicate($1);
-
+            Vocabulary::instance().addIntensionPredicate($1);
             context_flag = 0;
         }
 ;
 domain_section
         : LL domains RR {
-
         }
-        |
 ;
 domains
         : domains SEMICO domain {
@@ -114,232 +105,234 @@ domains
 ;
 domain
         : S_VARI AT S_PRED {
-            vocabulary.set_domain($1, $3);
+            Vocabulary::instance().setVariableDomain($1, $3);
             context_flag = 0;
         }
 ;
 
 formulas
 	: formulas formula PERIOD {
-		printf("formulas recursive\n");
-		$$ = composite_bool(CONJ, $1, $2);
+            printf("formulas recursive\n");
+            $$ = Utils::compositeByConnective(CONJ, $1, $2);
 	}
 	| formula PERIOD {
-		printf("formulas single\n");
-		$$ = $1;
+            printf("formulas single\n");
+            $$ = $1;
 	}
 ;
 	
 formula
 	: formula S_CONJ formula {
-		printf("formula conj\n");
-		assert($1);
-		assert($3);
-		$$ = composite_bool(CONJ, $1, $3);
+            printf("formula conj\n");
+            assert($1);
+            assert($3);
+            $$ = Utils::compositeByConnective(CONJ, $1, $3);
 	}
 	| formula S_DISJ formula {
-		printf("formula disj\n");
-		assert($1);
-		assert($3);
-		$$ = composite_bool(DISJ, $1, $3);
+            printf("formula disj\n");
+            assert($1);
+            assert($3);
+            $$ = Utils::compositeByConnective(DISJ, $1, $3);
 	}
 	| formula S_IMPL formula {
-		printf("formula impl\n");
-		assert($1);
-		assert($3);
-		$$ = composite_bool(IMPL, $1, $3);
+            printf("formula impl\n");
+            assert($1);
+            assert($3);
+            $$ = Utils::compositeByConnective(IMPL, $1, $3);
 	}
 	| S_NEGA formula {
-		printf("formula nega\n");
-		assert($2);
-		$$ = composite_bool(NEGA, $2, NULL);
+            printf("formula nega\n");
+            assert($2);
+            $$ = Utils::compositeByConnective(NEGA, $2, NULL);
 	}
 	| LBRACKET S_UNIV S_VARI RBRACKET formula {
-		printf("formula univ\n");
-		assert($3);
-		assert($5);
-		
-		if ((id = vocabulary.query_symbol($3, VARIABLE)) < 0) {
-			id = vocabulary.add_symbol($3, VARIABLE, 0);
-		}
-	    $$ = composite_qntf(UNIV, $5, id);
+            printf("formula univ\n");
+            assert($3);
+            assert($5);
+
+            if ((id = Vocabulary::instance().getSymbolId($3, VARIABLE)) < 0) {
+                id = Vocabulary::instance().addSymbol($3, VARIABLE, 0);
+            }
+	    $$ = Utils::compositeByQuantifier(UNIV, $5, id);
 	    
 	    //free($3);
 	}
 	| LBRACKET S_EXIS S_VARI RBRACKET formula {
-		printf("formula exis\n");
-		assert($3);
-		assert($5);
-		if ((id = vocabulary.query_symbol($3, VARIABLE)) < 0) {
-			id = vocabulary.add_symbol($3, VARIABLE, 0);
-		}
-	    $$ = composite_qntf(EXIS, $5, id);
+            printf("formula exis\n");
+            assert($3);
+            assert($5);
+            if ((id = Vocabulary::instance().getSymbolId($3, VARIABLE)) < 0) {
+                    id = Vocabulary::instance().addSymbol($3, VARIABLE, 0);
+            }
+	    $$ = Utils::compositeByQuantifier(EXIS, $5, id);
 	    
 	    //free($2);
 	}
 	| atom {
-		printf("formula atom\n");
-		$$ = $1;
+            printf("formula atom\n");
+            $$ = $1;
 	}
 	| LPAREN formula RPAREN {
-		printf("formula paren\n");
-		$$ = $2;
+            printf("formula paren\n");
+            $$ = $2;
 	}
 ;
 
 atom
 	: S_PRED LPAREN terms RPAREN  {
-		printf("atom terms\n");
-		assert($1);
-		assert($3);
-		
-		$$ = (_formula*)malloc(sizeof(_formula));
+            printf("atom terms\n");
+            assert($1);
+            assert($3);
 
-		if ((id = vocabulary.query_symbol($1, PREDICATE)) < 0) {
-			id = vocabulary.add_symbol($1, PREDICATE, $3->num_term);
-		} 
-		else if (vocabulary.predicate_arity(id) != $3->num_term)
-		{
-			sprintf(str_buf, "the predicate \"%s\" has too many definitions!", $1);
-			yyerror(str_buf);
-			exit(-1);
-		}
-		
-		printf("atom terms: id ok\n");
+            $$ = (_formula*)malloc(sizeof(_formula));
 
-		$$->formula_type = ATOM;
-		$$->predicate_id = id;
-		$$->parameters   = (_term*)malloc(sizeof(_term)*$3->num_term);
-		memcpy($$->parameters, $3->terms, sizeof(_term)*$3->num_term);
-		
-		free($3);
-		//free($1);
+            if ((id = Vocabulary::instance().getSymbolId($1, PREDICATE)) < 0) {
+                id = Vocabulary::instance().addSymbol($1, PREDICATE, $3->num_term);
+            } 
+            else if (Vocabulary::instance().getPredicateArity(id) != $3->num_term) {
+                sprintf(str_buf, "the predicate \"%s\" has too many definitions!", $1);
+                yyerror(str_buf);
+                exit(-1);
+            }
 
-		context_flag = 0;
+            printf("atom terms: id ok\n");
+
+            $$->formula_type = ATOM;
+            $$->predicate_id = id;
+            $$->parameters = (_term*)malloc(sizeof(_term)*$3->num_term);
+            memcpy($$->parameters, $3->terms, sizeof(_term)*$3->num_term);
+
+            _formula* atom = Utils::copyFormula($$);
+            Vocabulary::instance().addAtom(Formula(atom, false));
+            free($3);
+
+            context_flag = 0;
 	}
 	| S_PRED {
-		printf("atom no terms\n");
-		assert($1);
-		
-		$$ = (_formula*)malloc(sizeof(_formula));
+            printf("atom no terms\n");
+            assert($1);
 
-		if(strcmp($1, "true") == 0)
-		{
-			id = PRED_TRUE;
-		}
-		else if(strcmp($1, "false") == 0)
-		{
-			id = PRED_FALSE;
-		}
-		else if ((id = vocabulary.query_symbol($1, PREDICATE)) < 0) {
-			id = vocabulary.add_symbol($1, PREDICATE, 0);
-		} 
-		else if (vocabulary.predicate_arity(id) != 0)
-		{
-			sprintf(str_buf, "the predicate \"%s\" has too many definitions!", $1);
-			yyerror(str_buf);
-			exit(-1);
-		}
-	
-		$$->formula_type = ATOM;
-		$$->predicate_id = id;
-		$$->parameters   = NULL;
+            $$ = (_formula*)malloc(sizeof(_formula));
 
-		context_flag = 0;
+            if(strcmp($1, "true") == 0)
+            {
+                id = PRED_TRUE;
+            }
+            else if(strcmp($1, "false") == 0)
+            {
+                id = PRED_FALSE;
+            }
+            else if ((id = Vocabulary::instance().getSymbolId($1, PREDICATE)) < 0) {
+                id = Vocabulary::instance().addSymbol($1, PREDICATE, 0);
+                Formula atom = Formula(Utils::compositeToAtom(id, NULL), false);
+                Vocabulary::instance().addAtom(atom);
+            } 
+            else if (Vocabulary::instance().getPredicateArity(id) != 0)
+            {
+                sprintf(str_buf, "the predicate \"%s\" has too many definitions!", $1);
+                yyerror(str_buf);
+                exit(-1);
+            }
+
+            $$->formula_type = ATOM;
+            $$->predicate_id = id;
+            $$->parameters   = NULL;
+
+            context_flag = 0;
 	}
 ;
 	
 terms
 	: terms COMMA term {
-		printf("terms comma\n");
-		assert($1);
-		assert($3);
-		
-		$$ = $1;
+            printf("terms comma\n");
+            assert($1);
+            assert($3);
 
-		if ($$->num_term+1 < MAX_LEN_PARAMETER) {	
-			memcpy($$->terms+$$->num_term, $3, sizeof(_term));
-		 
-			$$->num_term ++;
-		}
-		else {
-			sprintf(str_buf, "too many parameters!");
-			yyerror(str_buf);
-			exit(-1);
-		}
-		
-		free($3);
+            $$ = $1;
+
+            if ($$->num_term+1 < MAX_LEN_PARAMETER) {	
+                memcpy($$->terms+$$->num_term, $3, sizeof(_term));
+                $$->num_term ++;
+            }
+            else {
+                sprintf(str_buf, "too many parameters!");
+                yyerror(str_buf);
+                exit(-1);
+            }
+
+            free($3);
 	}
 	| term {
-		printf("terms single\n");
-		$$ = (_terms*)malloc(sizeof(_terms));
-		
-		assert($1);
-		
-		memcpy(&($$->terms), $1, sizeof(_term));
-		 
-		$$->num_term = 1;
+            printf("terms single\n");
+            $$ = (_terms*)malloc(sizeof(_terms));
+
+            assert($1);
+
+            memcpy(&($$->terms), $1, sizeof(_term));
+
+            $$->num_term = 1;
+            free($1);
 	}
 ;
 
 term
 	: S_VARI {
-		printf("term var\n");
-		assert($1);
-		
-		$$ = (_term*)malloc(sizeof(_term));
-		$$->term_type = VARI;
-                
-                id = vocabulary.add_symbol($1, VARIABLE, 0);
+            assert($1);
 
-		$$->variable_id = id;
-		//free($1);
+            printf("term var\n");
+
+            $$ = (_term*)malloc(sizeof(_term));
+            $$->term_type = VARI;
+            id = Vocabulary::instance().addSymbol($1, VARIABLE, 0);
+            $$->variable_id = id;
+
+            free($1);
 	}
 	| S_FUNC {
-		assert($1);
-		printf("term cons %s\n",$1);
-		$$ = (_term*)malloc(sizeof(_term));
-		$$->term_type = FUNC;
+            assert($1);
 
-		if ((vocabulary.query_symbol($1, FUNCTION)) < 0) {
-			id = vocabulary.add_symbol($1, FUNCTION, 0);
-		}
-		else if (vocabulary.function_arity(id) != 0)
-		{
-			sprintf(str_buf, "the function \"%s\" has too many definitions!", $1);
-			yyerror(str_buf);
-			exit(-1);
-		}
-		
-		$$->function_id = id;
-		$$->parameters  = NULL;
-		
-		//free($1);
+            printf("term cons %s\n", $1);
+
+            $$ = (_term*)malloc(sizeof(_term));
+            $$->term_type = FUNC;
+
+            if ((Vocabulary::instance().getSymbolId($1, FUNCTION)) < 0) {
+                id = Vocabulary::instance().addSymbol($1, FUNCTION, 0);
+            }
+            else if (Vocabulary::instance().getFunctionArity(id) != 0) {
+                sprintf(str_buf, "the function \"%s\" has too many definitions!", $1);
+                yyerror(str_buf);
+                exit(-1);
+            }
+
+            $$->function_id = id;
+            $$->parameters  = NULL;
+
+            free($1);
 	}
 	| S_FUNC LPAREN terms RPAREN {
-		printf("term func\n");
-		assert($1);
-		assert($3);
-		
-		$$ = (_term*)malloc(sizeof(_term));
-		$$->term_type = FUNC;
+            printf("term func\n");
+            assert($1);
+            assert($3);
 
-		if ((id = vocabulary.query_symbol($1, FUNCTION)) < 0) {
-			id = vocabulary.add_symbol($1, FUNCTION, $3->num_term);
-		}
-		else if (vocabulary.function_arity(id) != $3->num_term)
-		{
-			sprintf(str_buf, "the function \"%s\" has too many definitions!", $1);
-			yyerror(str_buf);
-			exit(-1);
-		}
-		
-		$$->function_id = id;
-		$$->parameters = (_term*)malloc(sizeof(_term)*$3->num_term);
-		memcpy($$->parameters, $3->terms, sizeof(_term)*$3->num_term);
-		
-		free($3); 
-		//free($1);
+            $$ = (_term*)malloc(sizeof(_term));
+            $$->term_type = FUNC;
+
+            if ((id = Vocabulary::instance().getSymbolId($1, FUNCTION)) < 0) {
+                id = Vocabulary::instance().addSymbol($1, FUNCTION, $3->num_term);
+            }
+            else if (Vocabulary::instance().getFunctionArity(id) != $3->num_term) {
+                sprintf(str_buf, "the function \"%s\" has too many definitions!", $1);
+                yyerror(str_buf);
+                exit(-1);
+            }
+
+            $$->function_id = id;
+            $$->parameters = (_term*)malloc(sizeof(_term)*$3->num_term);
+            memcpy($$->parameters, $3->terms, sizeof(_term)*$3->num_term);
+
+            free($3); 
+            free($1);
 	}
 ;
 %%

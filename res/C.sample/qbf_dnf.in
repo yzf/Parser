@@ -1,8 +1,0 @@
-[!Y](ture(Y) | false(Y)).
-([?X][!Y](posd(X,Y) -> ture(Y)) & (negd(X,Y) -> false(Y)) ) -> ok.
-[!Y](ok & un(Y) -> ture(Y) & false(Y)).
-~~ok.
-
-{ture,false,ok}
-
-<X@disj;Y@atom>
