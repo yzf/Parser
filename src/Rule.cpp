@@ -1,202 +1,223 @@
 #include "Rule.h"
-#include "Formula.h"
-#include "Vocabulary.h"
-#include "utility.h"
+#include "Utils.h"
 #include "S2DLP.h"
+#include <assert.h>
 #include <cstdlib>
 
-Rule::Rule(Formula cabalar) {
-    convert_formula_rule(cabalar.get_formula());
-    asp_modify();
+Rule::Rule(const Formula& _fml) {
+    m_pHeadFormulas = new Formulas();
+    m_pBodyFormulas = new Formulas();
+    convertFormulaToRule(_fml.getFormula());
 }
-
+Rule::Rule(const Rule& _rhs) {
+    m_pHeadFormulas = new Formulas(*(_rhs.m_pHeadFormulas));
+    m_pBodyFormulas = new Formulas(*(_rhs.m_pBodyFormulas));
+}
 Rule::~Rule() {
-      
-}
-
-Rule::Rule(const Rule& rhs) {
-    this->head = rhs.head;
-    this->body = rhs.body;
-    this->nega_atoms = rhs.nega_atoms;
-}
-
-Rule& Rule::operator = (const Rule& rhs) {
-    this->head = rhs.head;
-    this->body = rhs.body;
-    this->nega_atoms = rhs.nega_atoms;
-}
-
-void Rule::divide_body(_formula* body) {
-    if(body->formula_type != CONJ) {
-        this->body.push_back(Formula(body, true));
+    if (m_pHeadFormulas != NULL) {
+        delete m_pHeadFormulas;
+        m_pHeadFormulas = NULL;
     }
-    else {
-        divide_body(body->subformula_l);
-        divide_body(body->subformula_r);
+    if (m_pBodyFormulas != NULL) {
+        delete m_pBodyFormulas;
+        m_pBodyFormulas = NULL;
     }
 }
-
-void Rule::divide_head(_formula* head) {
-    if(head->formula_type != DISJ) {
-        this->head.push_back(Formula(head, true));
-    }
-    else {
-        divide_head(head->subformula_l);
-        divide_head(head->subformula_r);
-    }    
+Rule& Rule::operator = (const Rule& _rhs) {
+    m_pHeadFormulas = new Formulas(*(_rhs.m_pHeadFormulas));
+    m_pBodyFormulas = new Formulas(*(_rhs.m_pBodyFormulas));
+    return *this;
 }
-
-void Rule::convert_formula_rule(_formula* cabalar) {
-    if(cabalar == NULL) {
-        return;
-    }
-    
-    switch(cabalar->formula_type) {
-        case IMPL:
-            divide_head(cabalar->subformula_r);
-            divide_body(cabalar->subformula_l);
-            break;
-        case NEGA:
-        case DISJ:
-        case ATOM:
-            divide_head(cabalar);
-            break;
-        default:
-            break;
-    }
-}
-
-void Rule::asp_modify() {
-    for(vector<Formula>::iterator iter = head.begin(); iter != head.end(); iter++) {
-        _formula* head_part = iter->get_formula();
-        _formula* cur = head_part;
+/**
+ * 输出规则
+ * @param _out
+ */
+void Rule::output(FILE* _out) const {
+    //输出规则头部
+    for (FORMULAS_ITERATOR it = m_pHeadFormulas->begin(); 
+            it != m_pHeadFormulas->end(); ++ it) {
+        _formula* headPart = it->getFormula();
         
-        while(cur->formula_type != ATOM) {
-            cur = cur->subformula_l;
-        }
-        if(head_part->formula_type == NEGA || (!vocabulary.is_intension_predicate(cur->predicate_id) && cur->predicate_id > 0)) {
-            _formula* new_head_part = composite_bool(NEGA, copy_formula(head_part), NULL);
-            head.erase(iter);            
-            body.push_back(Formula(new_head_part, false));
-            iter--;
-        }               
-    }
-    
-    for(vector<Formula>::iterator iter = body.begin(); iter != body.end(); iter++) {
-        _formula* body_part = iter->get_formula();
-        _formula* cur = body_part;
-        
-        while(cur->formula_type != ATOM) {
-            cur = cur->subformula_l;
-        }
-        
-       /* if(!vocabulary.is_intension_predicate(cur->predicate_id)) {
-            while(body_part->formula_type == NEGA && body_part->subformula_l->formula_type != ATOM) {
-                body_part = body_part->subformula_l->subformula_l;
+        if (headPart->formula_type == ATOM && headPart->predicate_id != PRED_FALSE 
+                && headPart->predicate_id != PRED_TRUE) {
+            Utils::printAtom(headPart, _out);       
+            if (it != m_pHeadFormulas->end() - 1 && 
+                    (it+1)->getFormula()->predicate_id != PRED_FALSE &&
+                        (it+1)->getFormula()->predicate_id != PRED_TRUE) {
+                fprintf(_out, "|");
             }
-           // iter->set_formula(copy_formula(body_part));
-        }
-        else {*/
-            while(body_part->formula_type == NEGA && body_part->subformula_l->formula_type != ATOM 
-                && body_part->subformula_l->subformula_l->formula_type != ATOM) {
-                _formula* sub = body_part->subformula_l;
-                if(sub->formula_type == NEGA && sub->subformula_l->formula_type == NEGA) {
-                    body_part->subformula_l = sub->subformula_l->subformula_l;
-                    free(sub);
-                    free(sub->subformula_l);
-                }
-            }
-       // }
-    }
-}
-
-void Rule::output(FILE* out) {
-    for(vector<Formula>::iterator iter = head.begin(); iter != head.end(); iter++) {
-        _formula* head_part = iter->get_formula();
-        
-        if(head_part->formula_type == ATOM && head_part->predicate_id != PRED_FALSE 
-                && head_part->predicate_id != PRED_TRUE) {
-            printAtom(head_part, out);       
-            if(iter != head.end() - 1 && (iter+1)->get_formula()->predicate_id != PRED_FALSE &&
-                (iter+1)->get_formula()->predicate_id != PRED_TRUE) fprintf(out, "|");
         }        
     }
+    //输出规则体部
+    bool bodyBegin = true;
     
-    bool body_begin = true;
-    
-    for(vector<Formula>::iterator iter = body.begin(); iter != body.end(); iter++) {
-        _formula* body_part = iter->get_formula();
-        _formula* cur = body_part;
+    for (FORMULAS_ITERATOR it = m_pBodyFormulas->begin(); 
+            it != m_pBodyFormulas->end(); ++ it) {
+        _formula* bodyPart = it->getFormula();
+        _formula* cur = bodyPart;
         
-        while(cur->formula_type != ATOM) {
+        while (cur->formula_type != ATOM) {
             cur = cur->subformula_l;
         }                
         
-        if(cur->predicate_id != PRED_TRUE && cur->predicate_id != PRED_FALSE) {            
-            if(body_begin) {
-                fprintf(out, ":-");
-                body_begin = false;
+        if (cur->predicate_id != PRED_TRUE && cur->predicate_id != PRED_FALSE) {            
+            if (bodyBegin) {
+                fprintf(_out, ":-");
+                bodyBegin = false;
             }
             
-            if(body_part->formula_type == NEGA) {
-                fprintf(out, "not ");
-                body_part = body_part->subformula_l;
-                if(body_part->formula_type == NEGA) {
+            if (bodyPart->formula_type == NEGA) {
+                fprintf(_out, "not ");
+                bodyPart = bodyPart->subformula_l;
+                if (bodyPart->formula_type == NEGA) {
                     bool exis = false;
-                    for(vector<Formula>::iterator it = S2DLP::instance().nega_predicates.begin(); 
-                            it != S2DLP::instance().nega_predicates.end();it++) {
-                        if((it->get_formula())->predicate_id == body_part->subformula_l->predicate_id)
+                    for (FORMULAS_ITERATOR it_2 = S2DLP::instance().getNegaPredicates()->begin();
+                            it_2 != S2DLP::instance().getNegaPredicates()->end(); ++ it_2) {
+                        if (it_2->getFormula()->predicate_id == bodyPart->subformula_l->predicate_id) {
                             exis = true;
+                        }
                     }
-                    if(!exis) {
-                        Formula new_nega_predicate = Formula(body_part->subformula_l, true);
-                        new_nega_predicate.replace_terms(HengZhang::instance().terms_MIN,
-                                                        HengZhang::instance().terms_Y);
-                        new_nega_predicate.replace_terms(HengZhang::instance().terms_MAX,
-                                                        HengZhang::instance().terms_Y);
-                        S2DLP::instance().nega_predicates.push_back(new_nega_predicate);  
+                    if (! exis) {
+                        Formula newNegaPredicate = Vocabulary::instance()
+                                        .getAtom(bodyPart->subformula_l->predicate_id); 
+                        assert(newNegaPredicate.getFormula());
+                        S2DLP::instance().addNegaPredicates(newNegaPredicate);
                     }
-                    fprintf(out, "_");
+                    fprintf(_out, "_");
                 }
             }            
-            printAtom(cur, out);
-            if(iter != body.end() - 1 && (iter+1)->get_formula()->predicate_id != PRED_FALSE &&
-                (iter+1)->get_formula()->predicate_id != PRED_TRUE) 
-                fprintf(out, ",");            
+            Utils::printAtom(cur, _out);
+            if(it != m_pBodyFormulas->end() - 1 && (it+1)->getFormula()->predicate_id != PRED_FALSE &&
+                (it+1)->getFormula()->predicate_id != PRED_TRUE) {
+                fprintf(_out, ",");            
+            }
         }
-        fflush(out);
     }  
-    
-    fprintf(out, ".\n");    
-    fflush(out);
+    if (m_pHeadFormulas->size() + m_pBodyFormulas->size() != 0) {
+        fprintf(_out, ".\n");
+    }
 }
-
-void Rule::printAtom(_formula* atom, FILE* out) {
-    fprintf(out, "%s", vocabulary.query_name(atom->predicate_id, PREDICATE));
-
-    if(atom->parameters != NULL) {
-        _term* ft = atom->parameters;
-        int ftc = vocabulary.predicate_arity(atom->predicate_id);
-
-        for(int i = 0; i < ftc; i++) {
-            if(i == 0)
-            fprintf(out, "(%s", vocabulary.query_name(ft[i].variable_id, VARIABLE));
-            else 
-            fprintf(out, ",%s", vocabulary.query_name(ft[i].variable_id, VARIABLE));  
-            
-            if(i == ftc - 1) fprintf(out, ")");
-        }        
-    }    
-}
-
-bool Rule::isUseless() {
-    for(vector<Formula>::iterator hit = head.begin(); hit != head.end(); hit++) {
-        for(vector<Formula>::iterator bit = body.begin(); bit != body.end(); bit++) {
-            if(compare_formula(hit->get_formula(), bit->get_formula())) {
+/**
+ * 判断该规则是否多余
+ * @return 
+ */
+bool Rule::isUseless() const {
+    for (FORMULAS_ITERATOR headIt = m_pHeadFormulas->begin(); 
+            headIt != m_pHeadFormulas->end(); ++ headIt) {
+        for (FORMULAS_ITERATOR bodyIt = m_pBodyFormulas->begin();
+                bodyIt != m_pBodyFormulas->end(); ++ bodyIt) {
+            if (*headIt == *bodyIt) {
                 return true;
             }
         }
     }
-    
     return false;
+}
+/**
+ * 生成规则的头部
+ * @param _head
+ */
+void Rule::divideHead(const _formula* _head) {
+    if (_head->formula_type != DISJ) {
+        _formula* newHead = Utils::copyFormula(_head);
+        m_pHeadFormulas->pushBack(Formula(newHead, false));
+    }
+    else {
+        divideHead(_head->subformula_l);
+        divideHead(_head->subformula_r);
+    }
+}
+/**
+ * 生成规则的体部
+ * @param _body
+ */
+void Rule::divideBody(const _formula* _body) {
+    if (_body->formula_type != CONJ) {
+        _formula* newBody = Utils::copyFormula(_body);
+        m_pBodyFormulas->pushBack(Formula(newBody, false));
+    }
+    else {
+        divideBody(_body->subformula_l);
+        divideBody(_body->subformula_r);
+    }
+}
+/**
+ * 把公式转化成规则
+ * @param _fml
+ */
+void Rule::convertFormulaToRule(const _formula* _fml) {
+    if (_fml == NULL) {
+        return;
+    }
+    switch (_fml->formula_type) {
+    case IMPL:
+        divideHead(_fml->subformula_r);
+        divideBody(_fml->subformula_l);
+        break;
+    case NEGA:
+    case DISJ:
+    case ATOM:
+        divideHead(_fml);
+        break;
+    default:
+        break;
+    }
+    aspModify();
+}
+/**
+ * 处理多余的非
+ */
+void Rule::aspModify() {
+    //把带非的，出现在头部的外延谓词，加上非，放到体部
+    for (FORMULAS_ITERATOR iter = m_pHeadFormulas->begin(); 
+            iter != m_pHeadFormulas->end(); ) {
+        _formula* headPart = iter->getFormula();
+        _formula* cur = headPart;
+        while (cur->formula_type != ATOM) {
+            cur = cur->subformula_l;
+        }
+        
+        bool flag = false;
+        if (headPart->formula_type == NEGA || 
+                (cur->predicate_id >= 0 && 
+                        ! Vocabulary::instance()
+                                .isIntensionPredicate(cur->predicate_id))) {
+            _formula* newHeadPart = Utils::compositeByConnective(NEGA, 
+                                        Utils::copyFormula(headPart), NULL);
+            flag = true;
+            iter = m_pHeadFormulas->erase(iter);
+            m_pBodyFormulas->pushBack(Formula(newHeadPart, false));
+        }               
+        if (! flag) {
+            ++ iter;
+        }
+    }
+    
+    //体部消除多余的非
+    for (FORMULAS_ITERATOR iter = m_pBodyFormulas->begin(); 
+            iter != m_pBodyFormulas->end(); ++ iter) {
+        _formula* bodyPart = iter->getFormula();
+        _formula* cur = bodyPart;
+        
+        while (cur->formula_type != ATOM) {
+            cur = cur->subformula_l;
+        }
+        //外延谓词  ～～fml => fml
+        if (! Vocabulary::instance().isIntensionPredicate(cur->predicate_id)
+                && cur->predicate_id >=0 &&
+                ! Vocabulary::instance().isSuccOrMax(cur->predicate_id)) {
+            while (bodyPart->formula_type == NEGA && bodyPart->subformula_l->formula_type == NEGA) {
+                bodyPart = bodyPart->subformula_l->subformula_l;
+            }
+            iter->setFormula(Utils::copyFormula(bodyPart));
+        }
+        //内涵谓词要 ~~~fml => ~fml
+        else {
+            while(bodyPart->formula_type == NEGA && bodyPart->subformula_l->formula_type == NEGA 
+                        && bodyPart->subformula_l->subformula_l->formula_type == NEGA) {
+                bodyPart = bodyPart->subformula_l->subformula_l;
+            }
+            iter->setFormula(Utils::copyFormula(bodyPart));
+        }
+    }
 }

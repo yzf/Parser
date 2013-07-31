@@ -1,30 +1,37 @@
-#ifndef _RULE_H_
-#define _RULE_H_
+/* 
+ * File:   Rule.h
+ * Author: yzf
+ *
+ * Created on July 30, 2013, 7:59 AM
+ */
+
+#ifndef RULE_H
+#define	RULE_H
+
+#include <cstdio>
 #include "Formula.h"
 #include "Formulas.h"
-#include <vector>
 
-class Rule{
-    public:
-        vector<Formula> head;
-        vector<Formula> body;
+class Formula;
+class Formulas;
 
-        void convert_formula_rule(_formula*);
-        void divide_body(_formula* body);
-        void divide_head(_formula* head);
-        void asp_modify();
-        
-        void printAtom(_formula*, FILE*);
-        vector<Formula> nega_atoms;
-    public:
-        Rule(Formula);
-        ~Rule();
-        Rule(const Rule& rhs);
-        Rule& operator = (const Rule& rhs);
-        
-
-        bool isUseless();
-        void output(FILE* out);
+class Rule {
+private:
+    Formulas* m_pHeadFormulas;
+    Formulas* m_pBodyFormulas;
+private:
+    void divideHead(const _formula* _head);
+    void divideBody(const _formula* _body);
+    void convertFormulaToRule(const _formula* _fml);
+public:
+    Rule(const Formula& _fml);
+    Rule(const Rule& _rhs);
+    ~Rule();
+    Rule& operator = (const Rule& _rhs);
+    void output(FILE* _out) const;
+    bool isUseless() const;
+    void aspModify();
 };
 
-#endif
+#endif	/* RULE_H */
+

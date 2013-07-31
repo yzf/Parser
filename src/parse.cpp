@@ -68,38 +68,33 @@
 /* Line 268 of yacc.c  */
 #line 1 "parse.y"
 
-#include <stdio.h>
-#include <string.h>
+#include <cstdio>
+#include <cstring>
 #include <assert.h>
-
 #include "structs.h"
 #include "Vocabulary.h"
-#include "utility.h"
-#include "S2DLP.h"
+#include "Utils.h"
 #include "Formula.h"
-#include "Formulas.h"
 
 extern "C" {
-	void yyerror(const char *s);
-	extern int yylex(void);
+    void yyerror(const char *s);
+    extern int yylex(void);
 }
 
-extern Vocabulary vocabulary;
 extern int context_flag;
 extern _formula* gformula; 
 
 int id;
 char str_buf[512];
 
-void yyerror(const char* s)
-{
-	printf("Parser error: %s\n", s);
+void yyerror(const char* s) {
+    printf("Parser error: %s\n", s);
 }
 
 
 
 /* Line 268 of yacc.c  */
-#line 103 "../src/parse.cpp"
+#line 98 "../src/parse.cpp"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -184,17 +179,17 @@ typedef union YYSTYPE
 {
 
 /* Line 293 of yacc.c  */
-#line 32 "parse.y"
+#line 27 "parse.y"
 
-	char* s;
-	struct __formula* f;
-	struct __term* t;
-        struct __terms* ts;
+    char* s;
+    struct __formula* f;
+    struct __term* t;
+    struct __terms* ts;
 
 
 
 /* Line 293 of yacc.c  */
-#line 198 "../src/parse.cpp"
+#line 193 "../src/parse.cpp"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -206,7 +201,7 @@ typedef union YYSTYPE
 
 
 /* Line 343 of yacc.c  */
-#line 210 "../src/parse.cpp"
+#line 205 "../src/parse.cpp"
 
 #ifdef short
 # undef short
@@ -432,7 +427,7 @@ union yyalloc
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  13
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  29
+#define YYNRULES  27
 /* YYNRULES -- Number of states.  */
 #define YYNSTATES  59
 
@@ -482,32 +477,32 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     7,    11,    12,    16,    18,    20,    24,
-      25,    29,    31,    35,    39,    42,    46,    50,    54,    57,
-      63,    69,    71,    75,    80,    82,    86,    88,    90,    92
+       0,     0,     3,     7,    11,    15,    17,    19,    23,    27,
+      29,    33,    37,    40,    44,    48,    52,    55,    61,    67,
+      69,    73,    78,    80,    84,    86,    88,    90
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
       27,     0,    -1,    34,    28,    31,    -1,    20,    29,    21,
-      -1,    -1,    29,    17,    30,    -1,    30,    -1,     4,    -1,
-      24,    32,    25,    -1,    -1,    32,    22,    33,    -1,    33,
-      -1,     3,    23,     4,    -1,    34,    35,    12,    -1,    35,
-      12,    -1,    35,     7,    35,    -1,    35,     8,    35,    -1,
-      35,     9,    35,    -1,     6,    35,    -1,    15,    10,     3,
-      16,    35,    -1,    15,    11,     3,    16,    35,    -1,    36,
-      -1,    13,    35,    14,    -1,     4,    13,    37,    14,    -1,
-       4,    -1,    37,    17,    38,    -1,    38,    -1,     3,    -1,
-       5,    -1,     5,    13,    37,    14,    -1
+      -1,    29,    17,    30,    -1,    30,    -1,     4,    -1,    24,
+      32,    25,    -1,    32,    22,    33,    -1,    33,    -1,     3,
+      23,     4,    -1,    34,    35,    12,    -1,    35,    12,    -1,
+      35,     7,    35,    -1,    35,     8,    35,    -1,    35,     9,
+      35,    -1,     6,    35,    -1,    15,    10,     3,    16,    35,
+      -1,    15,    11,     3,    16,    35,    -1,    36,    -1,    13,
+      35,    14,    -1,     4,    13,    37,    14,    -1,     4,    -1,
+      37,    17,    38,    -1,    38,    -1,     3,    -1,     5,    -1,
+       5,    13,    37,    14,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    73,    73,    81,    84,    87,    90,    95,   102,   105,
-     108,   111,   116,   123,   127,   134,   140,   146,   152,   157,
-     169,   180,   184,   191,   220,   253,   273,   286,   298,   319
+       0,    68,    68,    76,    81,    84,    89,    95,    99,   102,
+     107,   114,   118,   125,   131,   137,   143,   148,   160,   171,
+     175,   182,   211,   246,   265,   279,   291,   313
 };
 #endif
 
@@ -539,17 +534,17 @@ static const yytype_uint16 yytoknum[] =
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    26,    27,    28,    28,    29,    29,    30,    31,    31,
-      32,    32,    33,    34,    34,    35,    35,    35,    35,    35,
-      35,    35,    35,    36,    36,    37,    37,    38,    38,    38
+       0,    26,    27,    28,    29,    29,    30,    31,    32,    32,
+      33,    34,    34,    35,    35,    35,    35,    35,    35,    35,
+      35,    36,    36,    37,    37,    38,    38,    38
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     3,     3,     0,     3,     1,     1,     3,     0,
-       3,     1,     3,     3,     2,     3,     3,     3,     2,     5,
-       5,     1,     3,     4,     1,     3,     1,     1,     1,     4
+       0,     2,     3,     3,     3,     1,     1,     3,     3,     1,
+       3,     3,     2,     3,     3,     3,     2,     5,     5,     1,
+       3,     4,     1,     3,     1,     1,     1,     4
 };
 
 /* YYDEFACT[STATE-NAME] -- Default reduction number in state STATE-NUM.
@@ -557,12 +552,12 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,    24,     0,     0,     0,     0,     4,     0,    21,     0,
-      18,     0,     0,     0,     1,     0,     9,     0,     0,     0,
-       0,    14,    27,    28,     0,    26,    22,     0,     0,     7,
-       0,     6,     0,     2,    13,    15,    16,    17,     0,    23,
-       0,     0,     0,     0,     3,     0,     0,    11,     0,    25,
-      19,    20,     5,     0,     0,     8,    29,    12,    10
+       0,    22,     0,     0,     0,     0,     0,     0,    19,     0,
+      16,     0,     0,     0,     1,     0,     0,     0,     0,     0,
+       0,    12,    25,    26,     0,    24,    20,     0,     0,     6,
+       0,     5,     0,     2,    11,    13,    14,    15,     0,    21,
+       0,     0,     0,     0,     3,     0,     0,     9,     0,    23,
+      17,    18,     4,     0,     0,     7,    27,    10,     8
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -1470,7 +1465,7 @@ yyreduce:
         case 2:
 
 /* Line 1806 of yacc.c  */
-#line 73 "parse.y"
+#line 68 "parse.y"
     {
             assert((yyvsp[(1) - (3)].f));
             printf("root\n");
@@ -1481,16 +1476,25 @@ yyreduce:
   case 3:
 
 /* Line 1806 of yacc.c  */
-#line 81 "parse.y"
+#line 76 "parse.y"
     {
         
+        }
+    break;
+
+  case 4:
+
+/* Line 1806 of yacc.c  */
+#line 81 "parse.y"
+    {
+            
         }
     break;
 
   case 5:
 
 /* Line 1806 of yacc.c  */
-#line 87 "parse.y"
+#line 84 "parse.y"
     {
             
         }
@@ -1499,9 +1503,10 @@ yyreduce:
   case 6:
 
 /* Line 1806 of yacc.c  */
-#line 90 "parse.y"
-    {
-            
+#line 89 "parse.y"
+    {           
+            Vocabulary::instance().addIntensionPredicate((yyvsp[(1) - (1)].s));
+            context_flag = 0;
         }
     break;
 
@@ -1509,365 +1514,355 @@ yyreduce:
 
 /* Line 1806 of yacc.c  */
 #line 95 "parse.y"
-    {           
-            vocabulary.set_intension_predicate((yyvsp[(1) - (1)].s));
-
-            context_flag = 0;
+    {
         }
     break;
 
   case 8:
 
 /* Line 1806 of yacc.c  */
+#line 99 "parse.y"
+    {
+        
+        }
+    break;
+
+  case 9:
+
+/* Line 1806 of yacc.c  */
 #line 102 "parse.y"
     {
-
+            
         }
     break;
 
   case 10:
 
 /* Line 1806 of yacc.c  */
-#line 108 "parse.y"
+#line 107 "parse.y"
     {
-        
+            Vocabulary::instance().setVariableDomain((yyvsp[(1) - (3)].s), (yyvsp[(3) - (3)].s));
+            context_flag = 0;
         }
     break;
 
   case 11:
 
 /* Line 1806 of yacc.c  */
-#line 111 "parse.y"
+#line 114 "parse.y"
     {
-            
-        }
+            printf("formulas recursive\n");
+            (yyval.f) = Utils::compositeByConnective(CONJ, (yyvsp[(1) - (3)].f), (yyvsp[(2) - (3)].f));
+	}
     break;
 
   case 12:
 
 /* Line 1806 of yacc.c  */
-#line 116 "parse.y"
+#line 118 "parse.y"
     {
-            vocabulary.set_domain((yyvsp[(1) - (3)].s), (yyvsp[(3) - (3)].s));
-            context_flag = 0;
-        }
+            printf("formulas single\n");
+            (yyval.f) = (yyvsp[(1) - (2)].f);
+	}
     break;
 
   case 13:
 
 /* Line 1806 of yacc.c  */
-#line 123 "parse.y"
+#line 125 "parse.y"
     {
-		printf("formulas recursive\n");
-		(yyval.f) = composite_bool(CONJ, (yyvsp[(1) - (3)].f), (yyvsp[(2) - (3)].f));
+            printf("formula conj\n");
+            assert((yyvsp[(1) - (3)].f));
+            assert((yyvsp[(3) - (3)].f));
+            (yyval.f) = Utils::compositeByConnective(CONJ, (yyvsp[(1) - (3)].f), (yyvsp[(3) - (3)].f));
 	}
     break;
 
   case 14:
 
 /* Line 1806 of yacc.c  */
-#line 127 "parse.y"
+#line 131 "parse.y"
     {
-		printf("formulas single\n");
-		(yyval.f) = (yyvsp[(1) - (2)].f);
+            printf("formula disj\n");
+            assert((yyvsp[(1) - (3)].f));
+            assert((yyvsp[(3) - (3)].f));
+            (yyval.f) = Utils::compositeByConnective(DISJ, (yyvsp[(1) - (3)].f), (yyvsp[(3) - (3)].f));
 	}
     break;
 
   case 15:
 
 /* Line 1806 of yacc.c  */
-#line 134 "parse.y"
+#line 137 "parse.y"
     {
-		printf("formula conj\n");
-		assert((yyvsp[(1) - (3)].f));
-		assert((yyvsp[(3) - (3)].f));
-		(yyval.f) = composite_bool(CONJ, (yyvsp[(1) - (3)].f), (yyvsp[(3) - (3)].f));
+            printf("formula impl\n");
+            assert((yyvsp[(1) - (3)].f));
+            assert((yyvsp[(3) - (3)].f));
+            (yyval.f) = Utils::compositeByConnective(IMPL, (yyvsp[(1) - (3)].f), (yyvsp[(3) - (3)].f));
 	}
     break;
 
   case 16:
 
 /* Line 1806 of yacc.c  */
-#line 140 "parse.y"
+#line 143 "parse.y"
     {
-		printf("formula disj\n");
-		assert((yyvsp[(1) - (3)].f));
-		assert((yyvsp[(3) - (3)].f));
-		(yyval.f) = composite_bool(DISJ, (yyvsp[(1) - (3)].f), (yyvsp[(3) - (3)].f));
+            printf("formula nega\n");
+            assert((yyvsp[(2) - (2)].f));
+            (yyval.f) = Utils::compositeByConnective(NEGA, (yyvsp[(2) - (2)].f), NULL);
 	}
     break;
 
   case 17:
 
 /* Line 1806 of yacc.c  */
-#line 146 "parse.y"
+#line 148 "parse.y"
     {
-		printf("formula impl\n");
-		assert((yyvsp[(1) - (3)].f));
-		assert((yyvsp[(3) - (3)].f));
-		(yyval.f) = composite_bool(IMPL, (yyvsp[(1) - (3)].f), (yyvsp[(3) - (3)].f));
+            printf("formula univ\n");
+            assert((yyvsp[(3) - (5)].s));
+            assert((yyvsp[(5) - (5)].f));
+
+            if ((id = Vocabulary::instance().getSymbolId((yyvsp[(3) - (5)].s), VARIABLE)) < 0) {
+                id = Vocabulary::instance().addSymbol((yyvsp[(3) - (5)].s), VARIABLE, 0);
+            }
+	    (yyval.f) = Utils::compositeByQuantifier(UNIV, (yyvsp[(5) - (5)].f), id);
+	    
+	    //free($3);
 	}
     break;
 
   case 18:
 
 /* Line 1806 of yacc.c  */
-#line 152 "parse.y"
+#line 160 "parse.y"
     {
-		printf("formula nega\n");
-		assert((yyvsp[(2) - (2)].f));
-		(yyval.f) = composite_bool(NEGA, (yyvsp[(2) - (2)].f), NULL);
+            printf("formula exis\n");
+            assert((yyvsp[(3) - (5)].s));
+            assert((yyvsp[(5) - (5)].f));
+            if ((id = Vocabulary::instance().getSymbolId((yyvsp[(3) - (5)].s), VARIABLE)) < 0) {
+                    id = Vocabulary::instance().addSymbol((yyvsp[(3) - (5)].s), VARIABLE, 0);
+            }
+	    (yyval.f) = Utils::compositeByQuantifier(EXIS, (yyvsp[(5) - (5)].f), id);
+	    
+	    //free($2);
 	}
     break;
 
   case 19:
 
 /* Line 1806 of yacc.c  */
-#line 157 "parse.y"
+#line 171 "parse.y"
     {
-		printf("formula univ\n");
-		assert((yyvsp[(3) - (5)].s));
-		assert((yyvsp[(5) - (5)].f));
-		
-		if ((id = vocabulary.query_symbol((yyvsp[(3) - (5)].s), VARIABLE)) < 0) {
-			id = vocabulary.add_symbol((yyvsp[(3) - (5)].s), VARIABLE, 0);
-		}
-	    (yyval.f) = composite_qntf(UNIV, (yyvsp[(5) - (5)].f), id);
-	    
-	    //free($3);
+            printf("formula atom\n");
+            (yyval.f) = (yyvsp[(1) - (1)].f);
 	}
     break;
 
   case 20:
 
 /* Line 1806 of yacc.c  */
-#line 169 "parse.y"
+#line 175 "parse.y"
     {
-		printf("formula exis\n");
-		assert((yyvsp[(3) - (5)].s));
-		assert((yyvsp[(5) - (5)].f));
-		if ((id = vocabulary.query_symbol((yyvsp[(3) - (5)].s), VARIABLE)) < 0) {
-			id = vocabulary.add_symbol((yyvsp[(3) - (5)].s), VARIABLE, 0);
-		}
-	    (yyval.f) = composite_qntf(EXIS, (yyvsp[(5) - (5)].f), id);
-	    
-	    //free($2);
+            printf("formula paren\n");
+            (yyval.f) = (yyvsp[(2) - (3)].f);
 	}
     break;
 
   case 21:
 
 /* Line 1806 of yacc.c  */
-#line 180 "parse.y"
+#line 182 "parse.y"
     {
-		printf("formula atom\n");
-		(yyval.f) = (yyvsp[(1) - (1)].f);
+            printf("atom terms\n");
+            assert((yyvsp[(1) - (4)].s));
+            assert((yyvsp[(3) - (4)].ts));
+
+            (yyval.f) = (_formula*)malloc(sizeof(_formula));
+
+            if ((id = Vocabulary::instance().getSymbolId((yyvsp[(1) - (4)].s), PREDICATE)) < 0) {
+                id = Vocabulary::instance().addSymbol((yyvsp[(1) - (4)].s), PREDICATE, (yyvsp[(3) - (4)].ts)->num_term);
+            } 
+            else if (Vocabulary::instance().getPredicateArity(id) != (yyvsp[(3) - (4)].ts)->num_term) {
+                sprintf(str_buf, "the predicate \"%s\" has too many definitions!", (yyvsp[(1) - (4)].s));
+                yyerror(str_buf);
+                exit(-1);
+            }
+
+            printf("atom terms: id ok\n");
+
+            (yyval.f)->formula_type = ATOM;
+            (yyval.f)->predicate_id = id;
+            (yyval.f)->parameters = (_term*)malloc(sizeof(_term)*(yyvsp[(3) - (4)].ts)->num_term);
+            memcpy((yyval.f)->parameters, (yyvsp[(3) - (4)].ts)->terms, sizeof(_term)*(yyvsp[(3) - (4)].ts)->num_term);
+
+            _formula* atom = Utils::copyFormula((yyval.f));
+            Vocabulary::instance().addAtom(Formula(atom, false));
+            free((yyvsp[(3) - (4)].ts));
+
+            context_flag = 0;
 	}
     break;
 
   case 22:
 
 /* Line 1806 of yacc.c  */
-#line 184 "parse.y"
+#line 211 "parse.y"
     {
-		printf("formula paren\n");
-		(yyval.f) = (yyvsp[(2) - (3)].f);
+            printf("atom no terms\n");
+            assert((yyvsp[(1) - (1)].s));
+
+            (yyval.f) = (_formula*)malloc(sizeof(_formula));
+
+            if(strcmp((yyvsp[(1) - (1)].s), "true") == 0)
+            {
+                id = PRED_TRUE;
+            }
+            else if(strcmp((yyvsp[(1) - (1)].s), "false") == 0)
+            {
+                id = PRED_FALSE;
+            }
+            else if ((id = Vocabulary::instance().getSymbolId((yyvsp[(1) - (1)].s), PREDICATE)) < 0) {
+                id = Vocabulary::instance().addSymbol((yyvsp[(1) - (1)].s), PREDICATE, 0);
+                Formula atom = Formula(Utils::compositeToAtom(id, NULL), false);
+                Vocabulary::instance().addAtom(atom);
+            } 
+            else if (Vocabulary::instance().getPredicateArity(id) != 0)
+            {
+                sprintf(str_buf, "the predicate \"%s\" has too many definitions!", (yyvsp[(1) - (1)].s));
+                yyerror(str_buf);
+                exit(-1);
+            }
+
+            (yyval.f)->formula_type = ATOM;
+            (yyval.f)->predicate_id = id;
+            (yyval.f)->parameters   = NULL;
+
+            context_flag = 0;
 	}
     break;
 
   case 23:
 
 /* Line 1806 of yacc.c  */
-#line 191 "parse.y"
+#line 246 "parse.y"
     {
-		printf("atom terms\n");
-		assert((yyvsp[(1) - (4)].s));
-		assert((yyvsp[(3) - (4)].ts));
-		
-		(yyval.f) = (_formula*)malloc(sizeof(_formula));
+            printf("terms comma\n");
+            assert((yyvsp[(1) - (3)].ts));
+            assert((yyvsp[(3) - (3)].t));
 
-		if ((id = vocabulary.query_symbol((yyvsp[(1) - (4)].s), PREDICATE)) < 0) {
-			id = vocabulary.add_symbol((yyvsp[(1) - (4)].s), PREDICATE, (yyvsp[(3) - (4)].ts)->num_term);
-		} 
-		else if (vocabulary.predicate_arity(id) != (yyvsp[(3) - (4)].ts)->num_term)
-		{
-			sprintf(str_buf, "the predicate \"%s\" has too many definitions!", (yyvsp[(1) - (4)].s));
-			yyerror(str_buf);
-			exit(-1);
-		}
-		
-		printf("atom terms: id ok\n");
+            (yyval.ts) = (yyvsp[(1) - (3)].ts);
 
-		(yyval.f)->formula_type = ATOM;
-		(yyval.f)->predicate_id = id;
-		(yyval.f)->parameters   = (_term*)malloc(sizeof(_term)*(yyvsp[(3) - (4)].ts)->num_term);
-		memcpy((yyval.f)->parameters, (yyvsp[(3) - (4)].ts)->terms, sizeof(_term)*(yyvsp[(3) - (4)].ts)->num_term);
-		
-		free((yyvsp[(3) - (4)].ts));
-		//free($1);
+            if ((yyval.ts)->num_term+1 < MAX_LEN_PARAMETER) {	
+                memcpy((yyval.ts)->terms+(yyval.ts)->num_term, (yyvsp[(3) - (3)].t), sizeof(_term));
+                (yyval.ts)->num_term ++;
+            }
+            else {
+                sprintf(str_buf, "too many parameters!");
+                yyerror(str_buf);
+                exit(-1);
+            }
 
-		context_flag = 0;
+            free((yyvsp[(3) - (3)].t));
 	}
     break;
 
   case 24:
 
 /* Line 1806 of yacc.c  */
-#line 220 "parse.y"
+#line 265 "parse.y"
     {
-		printf("atom no terms\n");
-		assert((yyvsp[(1) - (1)].s));
-		
-		(yyval.f) = (_formula*)malloc(sizeof(_formula));
+            printf("terms single\n");
+            (yyval.ts) = (_terms*)malloc(sizeof(_terms));
 
-		if(strcmp((yyvsp[(1) - (1)].s), "true") == 0)
-		{
-			id = PRED_TRUE;
-		}
-		else if(strcmp((yyvsp[(1) - (1)].s), "false") == 0)
-		{
-			id = PRED_FALSE;
-		}
-		else if ((id = vocabulary.query_symbol((yyvsp[(1) - (1)].s), PREDICATE)) < 0) {
-			id = vocabulary.add_symbol((yyvsp[(1) - (1)].s), PREDICATE, 0);
-		} 
-		else if (vocabulary.predicate_arity(id) != 0)
-		{
-			sprintf(str_buf, "the predicate \"%s\" has too many definitions!", (yyvsp[(1) - (1)].s));
-			yyerror(str_buf);
-			exit(-1);
-		}
-	
-		(yyval.f)->formula_type = ATOM;
-		(yyval.f)->predicate_id = id;
-		(yyval.f)->parameters   = NULL;
+            assert((yyvsp[(1) - (1)].t));
 
-		context_flag = 0;
+            memcpy(&((yyval.ts)->terms), (yyvsp[(1) - (1)].t), sizeof(_term));
+
+            (yyval.ts)->num_term = 1;
+            free((yyvsp[(1) - (1)].t));
 	}
     break;
 
   case 25:
 
 /* Line 1806 of yacc.c  */
-#line 253 "parse.y"
+#line 279 "parse.y"
     {
-		printf("terms comma\n");
-		assert((yyvsp[(1) - (3)].ts));
-		assert((yyvsp[(3) - (3)].t));
-		
-		(yyval.ts) = (yyvsp[(1) - (3)].ts);
+            assert((yyvsp[(1) - (1)].s));
 
-		if ((yyval.ts)->num_term+1 < MAX_LEN_PARAMETER) {	
-			memcpy((yyval.ts)->terms+(yyval.ts)->num_term, (yyvsp[(3) - (3)].t), sizeof(_term));
-		 
-			(yyval.ts)->num_term ++;
-		}
-		else {
-			sprintf(str_buf, "too many parameters!");
-			yyerror(str_buf);
-			exit(-1);
-		}
-		
-		free((yyvsp[(3) - (3)].t));
+            printf("term var\n");
+
+            (yyval.t) = (_term*)malloc(sizeof(_term));
+            (yyval.t)->term_type = VARI;
+            id = Vocabulary::instance().addSymbol((yyvsp[(1) - (1)].s), VARIABLE, 0);
+            (yyval.t)->variable_id = id;
+
+            free((yyvsp[(1) - (1)].s));
 	}
     break;
 
   case 26:
 
 /* Line 1806 of yacc.c  */
-#line 273 "parse.y"
+#line 291 "parse.y"
     {
-		printf("terms single\n");
-		(yyval.ts) = (_terms*)malloc(sizeof(_terms));
-		
-		assert((yyvsp[(1) - (1)].t));
-		
-		memcpy(&((yyval.ts)->terms), (yyvsp[(1) - (1)].t), sizeof(_term));
-		 
-		(yyval.ts)->num_term = 1;
+            assert((yyvsp[(1) - (1)].s));
+
+            printf("term cons %s\n", (yyvsp[(1) - (1)].s));
+
+            (yyval.t) = (_term*)malloc(sizeof(_term));
+            (yyval.t)->term_type = FUNC;
+
+            if ((Vocabulary::instance().getSymbolId((yyvsp[(1) - (1)].s), FUNCTION)) < 0) {
+                id = Vocabulary::instance().addSymbol((yyvsp[(1) - (1)].s), FUNCTION, 0);
+            }
+            else if (Vocabulary::instance().getFunctionArity(id) != 0) {
+                sprintf(str_buf, "the function \"%s\" has too many definitions!", (yyvsp[(1) - (1)].s));
+                yyerror(str_buf);
+                exit(-1);
+            }
+
+            (yyval.t)->function_id = id;
+            (yyval.t)->parameters  = NULL;
+
+            free((yyvsp[(1) - (1)].s));
 	}
     break;
 
   case 27:
 
 /* Line 1806 of yacc.c  */
-#line 286 "parse.y"
+#line 313 "parse.y"
     {
-		printf("term var\n");
-		assert((yyvsp[(1) - (1)].s));
-		
-		(yyval.t) = (_term*)malloc(sizeof(_term));
-		(yyval.t)->term_type = VARI;
-                
-                id = vocabulary.add_symbol((yyvsp[(1) - (1)].s), VARIABLE, 0);
+            printf("term func\n");
+            assert((yyvsp[(1) - (4)].s));
+            assert((yyvsp[(3) - (4)].ts));
 
-		(yyval.t)->variable_id = id;
-		//free($1);
-	}
-    break;
+            (yyval.t) = (_term*)malloc(sizeof(_term));
+            (yyval.t)->term_type = FUNC;
 
-  case 28:
+            if ((id = Vocabulary::instance().getSymbolId((yyvsp[(1) - (4)].s), FUNCTION)) < 0) {
+                id = Vocabulary::instance().addSymbol((yyvsp[(1) - (4)].s), FUNCTION, (yyvsp[(3) - (4)].ts)->num_term);
+            }
+            else if (Vocabulary::instance().getFunctionArity(id) != (yyvsp[(3) - (4)].ts)->num_term) {
+                sprintf(str_buf, "the function \"%s\" has too many definitions!", (yyvsp[(1) - (4)].s));
+                yyerror(str_buf);
+                exit(-1);
+            }
 
-/* Line 1806 of yacc.c  */
-#line 298 "parse.y"
-    {
-		assert((yyvsp[(1) - (1)].s));
-		printf("term cons %s\n",(yyvsp[(1) - (1)].s));
-		(yyval.t) = (_term*)malloc(sizeof(_term));
-		(yyval.t)->term_type = FUNC;
+            (yyval.t)->function_id = id;
+            (yyval.t)->parameters = (_term*)malloc(sizeof(_term)*(yyvsp[(3) - (4)].ts)->num_term);
+            memcpy((yyval.t)->parameters, (yyvsp[(3) - (4)].ts)->terms, sizeof(_term)*(yyvsp[(3) - (4)].ts)->num_term);
 
-		if ((vocabulary.query_symbol((yyvsp[(1) - (1)].s), FUNCTION)) < 0) {
-			id = vocabulary.add_symbol((yyvsp[(1) - (1)].s), FUNCTION, 0);
-		}
-		else if (vocabulary.function_arity(id) != 0)
-		{
-			sprintf(str_buf, "the function \"%s\" has too many definitions!", (yyvsp[(1) - (1)].s));
-			yyerror(str_buf);
-			exit(-1);
-		}
-		
-		(yyval.t)->function_id = id;
-		(yyval.t)->parameters  = NULL;
-		
-		//free($1);
-	}
-    break;
-
-  case 29:
-
-/* Line 1806 of yacc.c  */
-#line 319 "parse.y"
-    {
-		printf("term func\n");
-		assert((yyvsp[(1) - (4)].s));
-		assert((yyvsp[(3) - (4)].ts));
-		
-		(yyval.t) = (_term*)malloc(sizeof(_term));
-		(yyval.t)->term_type = FUNC;
-
-		if ((id = vocabulary.query_symbol((yyvsp[(1) - (4)].s), FUNCTION)) < 0) {
-			id = vocabulary.add_symbol((yyvsp[(1) - (4)].s), FUNCTION, (yyvsp[(3) - (4)].ts)->num_term);
-		}
-		else if (vocabulary.function_arity(id) != (yyvsp[(3) - (4)].ts)->num_term)
-		{
-			sprintf(str_buf, "the function \"%s\" has too many definitions!", (yyvsp[(1) - (4)].s));
-			yyerror(str_buf);
-			exit(-1);
-		}
-		
-		(yyval.t)->function_id = id;
-		(yyval.t)->parameters = (_term*)malloc(sizeof(_term)*(yyvsp[(3) - (4)].ts)->num_term);
-		memcpy((yyval.t)->parameters, (yyvsp[(3) - (4)].ts)->terms, sizeof(_term)*(yyvsp[(3) - (4)].ts)->num_term);
-		
-		free((yyvsp[(3) - (4)].ts)); 
-		//free($1);
+            free((yyvsp[(3) - (4)].ts)); 
+            free((yyvsp[(1) - (4)].s));
 	}
     break;
 
 
 
 /* Line 1806 of yacc.c  */
-#line 1871 "../src/parse.cpp"
+#line 1866 "../src/parse.cpp"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2098,6 +2093,6 @@ yyreturn:
 
 
 /* Line 2067 of yacc.c  */
-#line 345 "parse.y"
+#line 338 "parse.y"
 
 

@@ -95,12 +95,12 @@ typedef union YYSTYPE
 {
 
 /* Line 2068 of yacc.c  */
-#line 32 "parse.y"
+#line 27 "parse.y"
 
-	char* s;
-	struct __formula* f;
-	struct __term* t;
-        struct __terms* ts;
+    char* s;
+    struct __formula* f;
+    struct __term* t;
+    struct __terms* ts;
 
 
 

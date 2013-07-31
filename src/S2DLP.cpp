@@ -1,207 +1,277 @@
 #include "S2DLP.h"
-#include "cstring"
+#include "HengZhang.h"
+#include "Cabalar.h"
+#include "Vocabulary.h"
+#include "Utils.h"
 #include <assert.h>
+#include <cstring>
 
-S2DLP::S2DLP() : output_file(NULL){
-}
-
-S2DLP::S2DLP(const S2DLP& rhs) {
-    this->dlp_formulas = rhs.dlp_formulas;
-    this->dlp_rules = rhs.dlp_rules;
-    this->nega_predicates = rhs.nega_predicates;
-    this->origin_formulas = rhs.origin_formulas;
-    this->output_file = rhs.output_file;
-    this->zhangheng_formulas = rhs.zhangheng_formulas;
-}
-
-S2DLP& S2DLP::operator = (const S2DLP& rhs) {
-    this->dlp_formulas = rhs.dlp_formulas;
-    this->dlp_rules = rhs.dlp_rules;
-    this->nega_predicates = rhs.nega_predicates;
-    this->origin_formulas = rhs.origin_formulas;
-    this->output_file = rhs.output_file;
-    this->zhangheng_formulas = rhs.zhangheng_formulas;
-    return *this;
+S2DLP::S2DLP() :
+        m_pOriginalFormulas(NULL),
+        m_pHengZhangFormulas(NULL),
+        m_pDlpFormulas(NULL) {
+    m_pNegaPredicates = new Formulas();
 }
 
 S2DLP::~S2DLP() {
-    if (this->output_file != NULL) {
-        fclose(this->output_file);
-    }
+    destroy();
 }
 
 S2DLP& S2DLP::instance() {
-    static S2DLP the_instance;
-    return the_instance;
+    static S2DLP theInstance;
+    return theInstance;
 }
-
-void S2DLP::convert() {
-    this->zhangheng_formulas = HengZhang::instance().create(this->origin_formulas);
-    this->dlp_formulas = Cabalar::instance().convert_Cabalar(this->zhangheng_formulas);
-    Formulas cabalar_result = this->dlp_formulas;
-    while (cabalar_result.size_formulas() > 0) {
-        Formula cur_fml = cabalar_result.top_formula();
-        cabalar_result.pop_formula();
-        Rule rule(cur_fml);
-        this->dlp_rules.push_back(rule);
+/**
+ * 初始化S2DLP求解器
+ * @param _originalFml  调用divedeFormula方法，将原公式划分为多条子公式
+ */
+void S2DLP::init(const Formula& _originalFml) {
+    m_pOriginalFormulas = _originalFml.divideFormula();
+}
+/**
+ * 初始化S2DLP求解器
+ * @param _originalFmls
+ */
+void S2DLP::init(const Formulas& _originalFmls) {
+    m_pOriginalFormulas = new Formulas(_originalFmls);
+}
+/**
+ * 销毁
+ */
+void S2DLP::destroy() {
+    if (m_pOriginalFormulas != NULL) {
+        delete m_pOriginalFormulas;
+        m_pOriginalFormulas = NULL;
+    }
+    if (m_pHengZhangFormulas != NULL) {
+        delete m_pHengZhangFormulas;
+        m_pHengZhangFormulas = NULL;
+    }
+    if (m_pDlpFormulas != NULL) {
+        delete m_pDlpFormulas;
+        m_pDlpFormulas = NULL;
+    }
+    if (m_pNegaPredicates != NULL) {
+        delete m_pNegaPredicates;
+        m_pNegaPredicates = NULL;
+    }
+    m_listRules.clear();
+}
+/**
+ * 进行章衡量词消去转化
+ */
+void S2DLP::hengZhangTransform() {
+    assert(m_pOriginalFormulas);
+    m_pHengZhangFormulas = HengZhang::instance().convert(*(m_pOriginalFormulas));
+}
+/**
+ * 输出章衡转化结果
+ * @param _out
+ */
+void S2DLP::outputHengZhangFormulas(FILE* _out) const {
+    assert(m_pHengZhangFormulas);
+    m_pHengZhangFormulas->output(_out);
+}
+/**
+ * 对章衡转化结果进行Cabalar转化
+ */
+void S2DLP::cabalarTransform() {
+    assert(m_pOriginalFormulas);
+    m_pDlpFormulas = Cabalar::instance().convert(*(m_pHengZhangFormulas));
+}
+/**
+ * 输出Cabalar转化结果
+ * @param _out
+ */
+void S2DLP::outputCabalarFormulas(FILE* _out) const {
+    assert(m_pDlpFormulas);
+    m_pDlpFormulas->output(_out);
+}
+void S2DLP::ruleTransform() {
+    for (FORMULAS_ITERATOR it = m_pDlpFormulas->begin();
+            it != m_pDlpFormulas->end(); ++ it) {
+        m_listRules.push_back(Rule(*it));
     }
 }
-
-void S2DLP::set_output_file(FILE*& f) {
-    this->output_file = f;
+void S2DLP::outputRules(FILE* _out) {
+    int i = 0;
+    for (list<Rule>::iterator it = m_listRules.begin();
+            it != m_listRules.end(); ++ it) {
+        it->output(_out);
+        if (++ i % 500 == 0) {
+            fflush(_out);
+        } 
+    }
 }
-void S2DLP::output_origin_formulas() {
-    assert(this->output_file != NULL);
-    fprintf(this->output_file, "origin_formulas:\n");
-    this->origin_formulas.output_formulas(this->output_file);
+/**
+ * 获取所有出现过非非的谓词公式
+ * @return 
+ */
+Formulas* S2DLP::getNegaPredicates() const {
+    return m_pNegaPredicates;
 }
-void S2DLP::output_zhangheng_formulas() {    
-    assert(this->output_file != NULL);
-    fprintf(this->output_file, "zhangheng_formulas:\n");
-    this->zhangheng_formulas.output_formulas(this->output_file);
-//    this->zhangheng_formulas.output_formulas(stdout);
+/**
+ * 添加出现非非的谓词的公式
+ * @param _negaPredicate
+ */
+void S2DLP::addNegaPredicates(const Formula& _negaPredicate) {
+    m_pNegaPredicates->pushBack(_negaPredicate);
 }
-void S2DLP::output_dlp_formulas() {   
-    assert(this->output_file != NULL);
-    fprintf(this->output_file, "dlp_formulas:\n");
-    this->dlp_formulas.output_formulas(this->output_file);
+/**
+ * 章衡、Cabalar、规则全套服务
+ */
+void S2DLP::convert() {
+    hengZhangTransform();
+    cabalarTransform();
+    ruleTransform();
+    //由于出现~~的谓词需要输出后再知道，所以先随便输出到一个文件，再把该文件删除
+    FILE* tmpFile = fopen("out.tmp", "w+");
+    outputRules(tmpFile);
+    fclose(tmpFile);
+    remove("out.tmp");
 }
-void S2DLP::set_origin_formulas(_formula* input) {
-    Formula* origin = new Formula(input, false);
-    this->origin_formulas = origin->divide_clause();
-}
-void S2DLP::output_addition() {
-    fprintf(this->output_file, "%%MIN and MAX domain\n");
-    for(int i = 0; i < vocabulary.num_names_domain; i++) {
-        fprintf(this->output_file, "#domain min_%s(MIN_%s).\n", vocabulary.names_domain[i], vocabulary.names_domain[i]);
-        fprintf(this->output_file, "#domain max_%s(MAX_%s).\n", vocabulary.names_domain[i], vocabulary.names_domain[i]);
+/**
+ * 输出附加信息
+ * @param _out
+ */
+void S2DLP::outputAddition(FILE* _out) {
+    fprintf(_out, "%%MIN and MAX domain\n");
+    map<int, string> domainNames = Vocabulary::instance().getDomainNames();
+    for (map<int, string>::const_iterator it = domainNames.begin();
+            it != domainNames.end(); ++ it) {
+        fprintf(_out, "#domain min_%s(MIN_%s).\n", it->second.c_str(), it->second.c_str());
+        fprintf(_out, "#domain max_%s(MAX_%s).\n", it->second.c_str(), it->second.c_str());
     }
     
-    fprintf(this->output_file, "%%Variable domain\n");
-    for(int i = 0; i < vocabulary.num_variable; i++) {
-        string str = vocabulary.names_variable[i];
-        if (str.find("MIN") == string::npos && 
-                str.find("MAX") == string::npos) {
-            fprintf(this->output_file, "#domain %s(%s).\n", vocabulary.names_domain[vocabulary.variable_at_domain[i]], vocabulary.names_variable[i]);
+    fprintf(_out, "%%Variable domain\n");
+    map<int, int> variablesDomains = Vocabulary::instance().getVariablesDomains();
+    for (map<int, int>::const_iterator it = variablesDomains.begin();
+            it != variablesDomains.end(); ++ it) {
+        const char* variName = Vocabulary::instance().getNameById(it->first, VARIABLE);
+        const char* domainName = Vocabulary::instance().getNameById(it->second, DOMAIN);
+        if (strncmp("MIN", variName, 3) == 0 || 
+                strncmp("MAX", variName, 3) == 0) {
+            continue;
+        }
+        fprintf(_out, "#domain %s(%s).\n", domainName, variName);
+    }
+    fprintf(_out, "%%NEW variable define\n");
+    for (FORMULAS_ITERATOR iter = m_pNegaPredicates->begin(); 
+            iter != m_pNegaPredicates->end(); ++ iter) {
+        fprintf(_out, "_");
+        Utils::printAtom(iter->getFormula(), _out);
+        fprintf(_out, ":- not ");
+        Utils::printAtom(iter->getFormula(), _out);        
+        fprintf(_out, ".\n");
+    }
+    fprintf(_out, "%%Addition define\n");
+    for(FORMULAS_ITERATOR iter = Vocabulary::instance().getAtomList()->begin(); 
+            iter < Vocabulary::instance().getAtomList()->end(); ++ iter) {
+        if(! Vocabulary::instance().isIntensionPredicate(iter->getFormula()->predicate_id)
+                && ! Vocabulary::instance().isSuccOrMax(iter->getFormula()->predicate_id)) {
+            fprintf(_out, "_");
+            Utils::printAtom(iter->getFormula(), _out);
+            fprintf(_out, " :- not ");
+            Utils::printAtom(iter->getFormula(), _out);
+            fprintf(_out, ".\n");
+//            Utils::printAtom(iter->getFormula(), _out);
+//            fprintf(_out, " | _");
+//            Utils::printAtom(iter->getFormula(), _out);
+//            fprintf(_out, ".\n");
         }
     }
-    
-//    fprintf(this->output_file, "%%Addition rule for not intension\n");
-//    for(int i = 0; i < vocabulary.num_predicate; i++) {
-//        if(!vocabulary.is_intension_predicate(i)) {
-//            fprintf(this->output_file, "%s", vocabulary.names_predicate[i]);
-//            int arties = vocabulary.predicate_arity(i);
-//            for(int j = 0; j < arties; j++) {
-//                if(j == 0) fprintf(this->output_file, "(");
-//                if(j != arties - 1) fprintf(this->output_file, "%c,", 'A' + j);
-//                else fprintf(this->output_file, "%c)", 'A' + j);
-//            }
-//            fprintf(this->output_file, "|_%s", vocabulary.names_predicate[i]);
-//            for(int j = 0; j < arties; j++) {
-//                if(j == 0) fprintf(this->output_file, "(");
-//                if(j != arties - 1) fprintf(this->output_file, "%c,", 'A' + j);
-//                else fprintf(this->output_file, "%c)", 'A' + j);
-//            }
-//        }
-//    }
-    
-    fprintf(this->output_file, "\n%%Succ predicate definition\n");
-    
-    for(int i = 0; i < HengZhang::instance().domain_names.size(); i++) {
-        addSucc(HengZhang::instance().domain_names.at(i));
-    }    
+    fprintf(_out, "%%Succ predicate definition\n");
+    for(unsigned int i = 0; i < HengZhang::instance().m_vDomainNames.size(); i++) {
+        addSucc(_out, HengZhang::instance().m_vDomainNames.at(i));
+    }  
+    fprintf(_out, "\n");
+    fflush(_out);
 }
-
-void S2DLP::addSucc(vector<string> domains) {
+/**
+ * 输出线序
+ * @param _out
+ * @param domains
+ */
+void S2DLP::addSucc(FILE* _out, vector<string> domains) {
     int size = domains.size();
     
-    if(size == 1) {
-        fprintf(this->output_file, "succ");
-        for(int i = 0; i < size; i++) {
-            fprintf(this->output_file, "_%s", domains.at(i).c_str());
+    if (size == 1) {
+        fprintf(_out, "succ");
+        for (int i = 0; i < size; ++ i) {
+            fprintf(_out, "_%s", domains[i].c_str());
         }
-        fprintf(this->output_file, "(A1, A2):-A1==A2-1,%s(A1),%s(A2).\n", domains.at(0).c_str(), domains.at(0).c_str());
+        fprintf(_out, "(A1, A2):-A1==A2-1,%s(A1),%s(A2).\n", 
+                domains[0].c_str(), domains[0].c_str());
     }
     else {
-        for(int i = 0; i < size; i++) {
-            fprintf(this->output_file, "succ");
-            for(int j = 0; j < size; j++) {
-                fprintf(this->output_file, "_%s", domains.at(j).c_str());
+        for (int i = 0; i < size; ++ i) {
+            fprintf(_out, "succ");
+            for (int j = 0; j < size; ++ j) {
+                fprintf(_out, "_%s", domains[j].c_str());
             }
-            fprintf(this->output_file, "(");
-            for(int j = 0; j < size; j++) {
-                if(j >= size - i) fprintf(this->output_file, "MAX_%s,", domains.at(j).c_str());
-                else if(j == size - i - 1) fprintf(this->output_file, "%c1,", 'A' + j);
-                else fprintf(this->output_file, "%c,", 'A' + j); 
+            fprintf(_out, "(");
+            for (int j = 0; j < size; ++ j) {
+                if (j >= size - i) {
+                    fprintf(_out, "MAX_%s,", domains[j].c_str());
+                }
+                else if (j == size - i - 1) {
+                    fprintf(_out, "%c1,", 'A' + j);
+                }
+                else {
+                    fprintf(_out, "%c,", 'A' + j); 
+                }
             }
-            for(int j = 0; j < size; j++) {
-                if(j >= size - i) fprintf(this->output_file, "MIN_%s", domains.at(j).c_str());
-                else if(j == size - i - 1) fprintf(this->output_file, "%c2", 'A' + j);
-                else fprintf(this->output_file, "%c", 'A' + j);
-                if(j == size - 1) fprintf(this->output_file, ")");
-                else fprintf(this->output_file, ",");
+            for (int j = 0; j < size; ++ j) {
+                if (j >= size - i) {
+                    fprintf(_out, "MIN_%s", domains.at(j).c_str());
+                }
+                else if (j == size - i - 1) {
+                    fprintf(_out, "%c2", 'A' + j);
+                }
+                else {
+                    fprintf(_out, "%c", 'A' + j);
+                }
+                if (j == size - 1) {
+                    fprintf(_out, ")");
+                }
+                else {
+                    fprintf(_out, ",");
+                }
             }
             
             bool exis = false;
-            for(int j = 0; j < HengZhang::instance().domain_names.size(); j++) {
-                if(HengZhang::instance().domain_names.at(j).size() == 1 && HengZhang::instance().domain_names.at(j).at(0) == domains[size - j - 1]) {
+            for (unsigned int j = 0; j < HengZhang::instance().m_vDomainNames.size(); ++ j) {
+                if(HengZhang::instance().m_vDomainNames[j].size() == 1 && HengZhang::instance().m_vDomainNames[j][0] == domains[size - j - 1]) {
                     exis = true;
                 }
             }
-            if(!exis) {
+            if (! exis) {
                 vector<string> d;
                 d.push_back(domains[size - i - 1]);
-                HengZhang::instance().domain_names.push_back(d);
+                HengZhang::instance().m_vDomainNames.push_back(d);
             }
-            fprintf(this->output_file, ":-succ_%s(%c1,%c2),", domains.at(size - i - 1).c_str(), 'A' + size - i - 1, 'A' + size - i - 1);
+            fprintf(_out, ":-succ_%s(%c1,%c2),", 
+                    domains[size - i - 1].c_str(), 'A' + size - i - 1, 'A' + size - i - 1);
             
-            for(int j = 0; j < size - i; j++) {
-                if(j == size - i - 1)
-                    fprintf(this->output_file, "%s(%c1),%s(%c2).", domains.at(j).c_str(), 'A' + j, domains.at(j).c_str(), 'A' + j);
-                else
-                    fprintf(this->output_file, "%s(%c),", domains.at(j).c_str(), 'A' + j);            
+            for (int j = 0; j < size - i; ++ j) {
+                if (j == size - i - 1) {
+                    fprintf(_out, "%s(%c1),%s(%c2).", 
+                            domains[j].c_str(), 'A' + j, domains[j].c_str(), 'A' + j);
+                }
+                else {
+                    fprintf(_out, "%s(%c),", domains[j].c_str(), 'A' + j);            
+                }
             }
             
-            fprintf(this->output_file, "\n");
+            fprintf(_out, "\n");
         }      
     }
 }
-
-void S2DLP::printAtom(_formula* atom, FILE* out) {
-    fprintf(out, "%s", vocabulary.query_name(atom->predicate_id, PREDICATE));
-
-    if(atom->parameters != NULL) {
-        _term* ft = atom->parameters;
-        int ftc = vocabulary.predicate_arity(atom->predicate_id);
-
-        for(int i = 0; i < ftc; i++) {
-            if(i == 0)
-            fprintf(out, "(%s", vocabulary.query_name(ft[i].variable_id, VARIABLE));
-            else 
-            fprintf(out, ",%s", vocabulary.query_name(ft[i].variable_id, VARIABLE));
-            if (i == ftc - 1) {
-                fprintf(out, ")");
-            }
-        }
-        
-    }    
-}
-
-void S2DLP::output_asp() {
-    assert(this->output_file != NULL);
-    output_addition();
-    
-    for(vector<Rule>::iterator it = this->dlp_rules.begin(); it != this->dlp_rules.end(); it++) {
-        (*it).output(this->output_file);
-    }
-    
-    fprintf(this->output_file, "%%NEW variable define\n");
-    for(vector<Formula>::iterator iter = S2DLP::instance().nega_predicates.begin(); 
-            iter != S2DLP::instance().nega_predicates.end(); iter++) {
-        fprintf(this->output_file, "_");
-        printAtom(iter->get_formula(), this->output_file);
-        fprintf(this->output_file, ":- not ");
-        printAtom(iter->get_formula(), this->output_file);        
-        fprintf(this->output_file, ".\n");
-    } 
+/**
+ * 输出供ASP使用的结果
+ * @param _out
+ */
+void S2DLP::outputFinalResult(FILE* _out) {
+    outputAddition(_out);
+    outputRules(_out);
 }
