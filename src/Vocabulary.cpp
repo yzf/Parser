@@ -17,22 +17,32 @@ Vocabulary& Vocabulary::instance() {
 }
 
 Vocabulary::Vocabulary() {
-    this->m_mapVariableName.clear();
-    this->m_mapDomainName.clear();
-    this->m_mapFunctionName.clear();
-    this->m_mapPredicateName.clear();
+    m_mapVariableName.clear();
+    m_mapDomainName.clear();
+    m_mapFunctionName.clear();
+    m_mapPredicateName.clear();
     
-    this->m_mapVariableDomain.clear();
-    this->m_mapFunctionArity.clear();
-    this->m_mapPredicateArity.clear();
-    this->m_mapIsIntensionPredicate.clear();
-    this->m_fmlAtomList = new Formulas();
+    m_mapVariableDomain.clear();
+    m_mapFunctionArity.clear();
+    m_mapPredicateArity.clear();
+    m_mapIsIntensionPredicate.clear();
+    m_mapDomainVariables.clear();
+    m_fmlAtomList = new Formulas();
 }
 
 Vocabulary::~Vocabulary() {
-    if (this->m_fmlAtomList != NULL) {
-        delete this->m_fmlAtomList;
-        this->m_fmlAtomList = NULL;
+    m_mapVariableName.clear();
+    m_mapDomainName.clear();
+    m_mapFunctionName.clear();
+    m_mapPredicateName.clear();
+    m_mapVariableDomain.clear();
+    m_mapFunctionArity.clear();
+    m_mapPredicateArity.clear();
+    m_mapIsIntensionPredicate.clear();
+    m_mapDomainVariables.clear();
+    if (m_fmlAtomList != NULL) {
+        delete m_fmlAtomList;
+        m_fmlAtomList = NULL;
     }
 }
 /**
@@ -42,7 +52,7 @@ Vocabulary::~Vocabulary() {
  */
 void Vocabulary::addIntensionPredicate(const char* _name) {
     int id = getSymbolId(_name, PREDICATE);
-    this->m_mapIsIntensionPredicate[id] = true;
+    m_mapIsIntensionPredicate[id] = true;
 }
 /**
  * 获取变量所在论域
@@ -50,7 +60,7 @@ void Vocabulary::addIntensionPredicate(const char* _name) {
  * @return 
  */
 const char* Vocabulary::getVariableDomain(int _variableId) {
-    int domainId = this->m_mapVariableDomain[_variableId];
+    int domainId = m_mapVariableDomain[_variableId];
     return getNameById(domainId, DOMAIN);
 }
 /**
@@ -64,11 +74,11 @@ void Vocabulary::setVariableDomain(const char* _variable, const char* _domain) {
     
     if(domainId == -1) {
         domainId = Vocabulary::ms_nDomainId ++;
-        this->m_mapDomainName[domainId] = string(_domain);
+        m_mapDomainName[domainId] = string(_domain);
     }
     if((variableId = getSymbolId(_variable, VARIABLE)) != -1) {
-        this->m_mapVariableDomain[variableId] = domainId;
-        this->m_mapDomainVariables[domainId].push_back(variableId);
+        m_mapVariableDomain[variableId] = domainId;
+        m_mapDomainVariables[domainId].push_back(variableId);
     }
 }
 /**
@@ -87,16 +97,16 @@ int Vocabulary::getSymbolId(const char* _name, SYMBOL_TYPE _type) {
     switch(_type)
     {
     case VARIABLE:
-        mapIdName = this->m_mapVariableName;
+        mapIdName = m_mapVariableName;
         break;
     case FUNCTION:
-        mapIdName = this->m_mapFunctionName;
+        mapIdName = m_mapFunctionName;
         break;
     case PREDICATE:
-        mapIdName = this->m_mapPredicateName;
+        mapIdName = m_mapPredicateName;
         break;
     case DOMAIN:
-        mapIdName = this->m_mapDomainName;
+        mapIdName = m_mapDomainName;
         break;  
     default:
         assert(0);
@@ -132,17 +142,17 @@ int Vocabulary::addSymbol(const char* _name, SYMBOL_TYPE _type, int _arity )
         switch (_type) {
         case VARIABLE:
             id = Vocabulary::ms_nVariableId ++;
-            this->m_mapVariableName[id] = name;
+            m_mapVariableName[id] = name;
             break;
         case FUNCTION:
             id = Vocabulary::ms_nFunctionId ++;
-            this->m_mapFunctionName[id] = name;
-            this->m_mapFunctionArity[id] = _arity;
+            m_mapFunctionName[id] = name;
+            m_mapFunctionArity[id] = _arity;
             break;
         case PREDICATE:
             id = Vocabulary::ms_nPredicateId ++;
-            this->m_mapPredicateName[id] = name;
-            this->m_mapPredicateArity[id] = _arity;
+            m_mapPredicateName[id] = name;
+            m_mapPredicateArity[id] = _arity;
             break;
         default:
             assert(0);
@@ -162,8 +172,8 @@ int Vocabulary::getPredicateArity(int _id) {
         return spec_pred_arities[-_id-1];
     }
     else { 
-        map<int, int>::const_iterator it = this->m_mapPredicateArity.find(_id);
-        assert(it != this->m_mapPredicateArity.end());
+        map<int, int>::const_iterator it = m_mapPredicateArity.find(_id);
+        assert(it != m_mapPredicateArity.end());
         return it->second;
     }
 }
@@ -173,8 +183,8 @@ int Vocabulary::getPredicateArity(int _id) {
  * @return 参数个数
  */
 int Vocabulary::getFunctionArity(int _id) {
-    map<int, int>::const_iterator it = this->m_mapFunctionArity.find(_id);
-    assert(it != this->m_mapFunctionArity.end());
+    map<int, int>::const_iterator it = m_mapFunctionArity.find(_id);
+    assert(it != m_mapFunctionArity.end());
     return it->second;
 }
 /**
@@ -208,26 +218,26 @@ const char* Vocabulary::getNameById(int _id, SYMBOL_TYPE _type) const {
     switch (_type)
     {
     case VARIABLE:
-        it = this->m_mapVariableName.find(_id);
-        if (it != this->m_mapVariableName.end()) {
+        it = m_mapVariableName.find(_id);
+        if (it != m_mapVariableName.end()) {
             return (it->second).c_str();
         }
         break;
     case FUNCTION:
-        it = this->m_mapFunctionName.find(_id);
-        if (it != this->m_mapFunctionName.end()) {
+        it = m_mapFunctionName.find(_id);
+        if (it != m_mapFunctionName.end()) {
             return (it->second).c_str();
         }
         break;
     case PREDICATE:
-        it = this->m_mapPredicateName.find(_id);
-        if (it != this->m_mapPredicateName.end()) {
+        it = m_mapPredicateName.find(_id);
+        if (it != m_mapPredicateName.end()) {
             return (it->second).c_str();
         }
         break;
     case DOMAIN:
-        it = this->m_mapDomainName.find(_id);
-        if (it != this->m_mapDomainName.end()) {
+        it = m_mapDomainName.find(_id);
+        if (it != m_mapDomainName.end()) {
             return (it->second).c_str();
         }
         break;
@@ -243,39 +253,39 @@ const char* Vocabulary::getNameById(int _id, SYMBOL_TYPE _type) const {
 void Vocabulary::dumpVocabulary(FILE* _out)  {
     
     fprintf(_out, "\nvariable:\n");
-    for (map<int, string>::const_iterator it = this->m_mapVariableName.begin(); 
-            it != this->m_mapVariableName.end(); ++ it) {
+    for (map<int, string>::const_iterator it = m_mapVariableName.begin(); 
+            it != m_mapVariableName.end(); ++ it) {
         fprintf(_out, "%s ", (it->second).c_str());
     }
     
     fprintf(_out, "\nfunction:\n");
-    for (map<int, string>::const_iterator it = this->m_mapFunctionName.begin(); 
-            it != this->m_mapFunctionName.end(); ++ it) {
+    for (map<int, string>::const_iterator it = m_mapFunctionName.begin(); 
+            it != m_mapFunctionName.end(); ++ it) {
         fprintf(_out, "%s ", (it->second).c_str());
     }
     
     fprintf(_out, "\npredicate:\n");
-    for (map<int, string>::const_iterator it = this->m_mapPredicateName.begin(); 
-            it != this->m_mapPredicateName.end(); ++ it) {
+    for (map<int, string>::const_iterator it = m_mapPredicateName.begin(); 
+            it != m_mapPredicateName.end(); ++ it) {
         fprintf(_out, "%s:%d\t", (it->second).c_str(), it->first);
     }
     
     fprintf(_out, "\nintension predicate:\n");
-    for (map<int, string>::const_iterator it = this->m_mapPredicateName.begin(); 
-            it != this->m_mapPredicateName.end(); ++ it) {
+    for (map<int, string>::const_iterator it = m_mapPredicateName.begin(); 
+            it != m_mapPredicateName.end(); ++ it) {
         if (isIntensionPredicate(it->first)) {
             fprintf(_out, "%s ", (it->second).c_str());
         }
     }
     
     fprintf(_out, "\ndomains:\n");    
-    for (map<int, string>::const_iterator it = this->m_mapDomainName.begin(); 
-            it != this->m_mapDomainName.end(); ++ it) {
+    for (map<int, string>::const_iterator it = m_mapDomainName.begin(); 
+            it != m_mapDomainName.end(); ++ it) {
         fprintf(_out, "variables at domain %s: ", (it->second).c_str());
-        vector<int> variables = this->m_mapDomainVariables[it->first];
+        vector<int> variables = m_mapDomainVariables[it->first];
         for (vector<int>::const_iterator it2 = variables.begin();
                 it2 != variables.end(); ++ it2) {
-            fprintf(_out, "%s", this->m_mapVariableName[*it2].c_str());
+            fprintf(_out, "%s", m_mapVariableName[*it2].c_str());
             if (it2 != variables.end() - 1) {
                 fprintf(_out, ", ");
             }
@@ -306,7 +316,7 @@ void Vocabulary::addAtom(const Formula& _newAtom) {
             return;
         }
     }
-    this->m_fmlAtomList->pushBack(_newAtom);
+    m_fmlAtomList->pushBack(_newAtom);
 }
 
 bool Vocabulary::isSuccOrMax(int _predicateId) const {
@@ -318,13 +328,13 @@ bool Vocabulary::isSuccOrMax(int _predicateId) const {
     return false;
 }
 map<int, string> Vocabulary::getDomainNames() const {
-    return this->m_mapDomainName;
+    return m_mapDomainName;
 }
 
 map<int, int> Vocabulary::getVariablesDomains() const {
-    return this->m_mapVariableDomain;
+    return m_mapVariableDomain;
 }
 
 Formulas* Vocabulary::getAtomList() const {
-    return this->m_fmlAtomList;
+    return m_fmlAtomList;
 }

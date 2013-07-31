@@ -49,7 +49,7 @@ Formula HengZhang::recordQuantifier(Formula _originalFml) {
         int idMax = Vocabulary::instance().addSymbol(strBuf, VARIABLE);
         m_vTermsMAX.push_back(idMax);
 
-        sprintf(strBuf,"NV_%d", this->m_nNumNV ++);
+        sprintf(strBuf,"NV_%d", m_nNumNV ++);
         int idNV = Vocabulary::instance().addSymbol(strBuf, VARIABLE);
         Vocabulary::instance().setVariableDomain(strBuf, 
                         Vocabulary::instance().getVariableDomain(idNV));
@@ -120,7 +120,7 @@ Formulas HengZhang::transform(Formula _originalFml) {
         domainNames.push_back(string(domainName));
     }
     if (Vocabulary::instance().getSymbolId(succName.c_str(), PREDICATE) == -1) {
-        this->m_vDomainNames.push_back(domainNames);
+        m_vDomainNames.push_back(domainNames);
     }
     m_nSymbolSucc = Vocabulary::instance().addSymbol(succName.c_str(), 
                         PREDICATE, m_vTermsY.size() + m_vTermsZ.size());

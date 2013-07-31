@@ -5,27 +5,27 @@
 #include <cstdlib>
 
 Rule::Rule(const Formula& _fml) {
-    this->m_pHeadFormulas = new Formulas();
-    this->m_pBodyFormulas = new Formulas();
+    m_pHeadFormulas = new Formulas();
+    m_pBodyFormulas = new Formulas();
     convertFormulaToRule(_fml.getFormula());
 }
 Rule::Rule(const Rule& _rhs) {
-    this->m_pHeadFormulas = new Formulas(*(_rhs.m_pHeadFormulas));
-    this->m_pBodyFormulas = new Formulas(*(_rhs.m_pBodyFormulas));
+    m_pHeadFormulas = new Formulas(*(_rhs.m_pHeadFormulas));
+    m_pBodyFormulas = new Formulas(*(_rhs.m_pBodyFormulas));
 }
 Rule::~Rule() {
-    if (this->m_pHeadFormulas != NULL) {
-        delete this->m_pHeadFormulas;
-        this->m_pHeadFormulas = NULL;
+    if (m_pHeadFormulas != NULL) {
+        delete m_pHeadFormulas;
+        m_pHeadFormulas = NULL;
     }
-    if (this->m_pBodyFormulas != NULL) {
-        delete this->m_pBodyFormulas;
-        this->m_pBodyFormulas = NULL;
+    if (m_pBodyFormulas != NULL) {
+        delete m_pBodyFormulas;
+        m_pBodyFormulas = NULL;
     }
 }
 Rule& Rule::operator = (const Rule& _rhs) {
-    this->m_pHeadFormulas = new Formulas(*(_rhs.m_pHeadFormulas));
-    this->m_pBodyFormulas = new Formulas(*(_rhs.m_pBodyFormulas));
+    m_pHeadFormulas = new Formulas(*(_rhs.m_pHeadFormulas));
+    m_pBodyFormulas = new Formulas(*(_rhs.m_pBodyFormulas));
     return *this;
 }
 /**
@@ -120,7 +120,7 @@ bool Rule::isUseless() const {
 void Rule::divideHead(const _formula* _head) {
     if (_head->formula_type != DISJ) {
         _formula* newHead = Utils::copyFormula(_head);
-        this->m_pHeadFormulas->pushBack(Formula(newHead, false));
+        m_pHeadFormulas->pushBack(Formula(newHead, false));
     }
     else {
         divideHead(_head->subformula_l);
@@ -134,7 +134,7 @@ void Rule::divideHead(const _formula* _head) {
 void Rule::divideBody(const _formula* _body) {
     if (_body->formula_type != CONJ) {
         _formula* newBody = Utils::copyFormula(_body);
-        this->m_pBodyFormulas->pushBack(Formula(newBody, false));
+        m_pBodyFormulas->pushBack(Formula(newBody, false));
     }
     else {
         divideBody(_body->subformula_l);

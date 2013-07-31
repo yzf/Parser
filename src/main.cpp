@@ -13,7 +13,6 @@
 #include "Utils.h"
 #include "Formula.h"
 #include "Formulas.h"
-#include "HengZhang.h"
 #include "S2DLP.h"
 #include <iostream>
 #include <unistd.h>

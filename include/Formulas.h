@@ -34,7 +34,7 @@ public:
     Formula popFront();
     Formula front();
     Formula back();
-    void joinFormulas(const Formulas& _tail);
+    void joinFormulas(Formulas& _tail);
     bool operator == (const Formulas& _rhs) const;
     bool operator != (const Formulas& _rhs) const;
     void output(FILE* _out) const;

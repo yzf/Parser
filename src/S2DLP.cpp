@@ -10,7 +10,7 @@ S2DLP::S2DLP() :
         m_pOriginalFormulas(NULL),
         m_pHengZhangFormulas(NULL),
         m_pDlpFormulas(NULL) {
-    this->m_pNegaPredicates = new Formulas();
+    m_pNegaPredicates = new Formulas();
 }
 
 S2DLP::~S2DLP() {
@@ -26,71 +26,71 @@ S2DLP& S2DLP::instance() {
  * @param _originalFml  调用divedeFormula方法，将原公式划分为多条子公式
  */
 void S2DLP::init(const Formula& _originalFml) {
-    this->m_pOriginalFormulas = _originalFml.divideFormula();
+    m_pOriginalFormulas = _originalFml.divideFormula();
 }
 /**
  * 初始化S2DLP求解器
  * @param _originalFmls
  */
 void S2DLP::init(const Formulas& _originalFmls) {
-    this->m_pOriginalFormulas = new Formulas(_originalFmls);
+    m_pOriginalFormulas = new Formulas(_originalFmls);
 }
 /**
  * 销毁
  */
 void S2DLP::destroy() {
-    if (this->m_pOriginalFormulas != NULL) {
-        delete this->m_pOriginalFormulas;
-        this->m_pOriginalFormulas = NULL;
+    if (m_pOriginalFormulas != NULL) {
+        delete m_pOriginalFormulas;
+        m_pOriginalFormulas = NULL;
     }
-    if (this->m_pHengZhangFormulas != NULL) {
-        delete this->m_pHengZhangFormulas;
-        this->m_pHengZhangFormulas = NULL;
+    if (m_pHengZhangFormulas != NULL) {
+        delete m_pHengZhangFormulas;
+        m_pHengZhangFormulas = NULL;
     }
-    if (this->m_pDlpFormulas != NULL) {
-        delete this->m_pDlpFormulas;
-        this->m_pDlpFormulas = NULL;
+    if (m_pDlpFormulas != NULL) {
+        delete m_pDlpFormulas;
+        m_pDlpFormulas = NULL;
     }
-    if (this->m_pNegaPredicates != NULL) {
-        delete this->m_pNegaPredicates;
-        this->m_pNegaPredicates = NULL;
+    if (m_pNegaPredicates != NULL) {
+        delete m_pNegaPredicates;
+        m_pNegaPredicates = NULL;
     }
-    this->m_listRules.clear();
+    m_listRules.clear();
 }
 /**
  * 进行章衡量词消去转化
  */
 void S2DLP::hengZhangTransform() {
-    assert(this->m_pOriginalFormulas);
-    this->m_pHengZhangFormulas = HengZhang::instance().convert(*(this->m_pOriginalFormulas));
+    assert(m_pOriginalFormulas);
+    m_pHengZhangFormulas = HengZhang::instance().convert(*(m_pOriginalFormulas));
 }
 /**
  * 输出章衡转化结果
  * @param _out
  */
 void S2DLP::outputHengZhangFormulas(FILE* _out) const {
-    assert(this->m_pHengZhangFormulas);
-    this->m_pHengZhangFormulas->output(_out);
+    assert(m_pHengZhangFormulas);
+    m_pHengZhangFormulas->output(_out);
 }
 /**
  * 对章衡转化结果进行Cabalar转化
  */
 void S2DLP::cabalarTransform() {
-    assert(this->m_pOriginalFormulas);
-    this->m_pDlpFormulas = Cabalar::instance().convert(*(this->m_pHengZhangFormulas));
+    assert(m_pOriginalFormulas);
+    m_pDlpFormulas = Cabalar::instance().convert(*(m_pHengZhangFormulas));
 }
 /**
  * 输出Cabalar转化结果
  * @param _out
  */
 void S2DLP::outputCabalarFormulas(FILE* _out) const {
-    assert(this->m_pDlpFormulas);
-    this->m_pDlpFormulas->output(_out);
+    assert(m_pDlpFormulas);
+    m_pDlpFormulas->output(_out);
 }
 void S2DLP::ruleTransform() {
     for (FORMULAS_ITERATOR it = m_pDlpFormulas->begin();
             it != m_pDlpFormulas->end(); ++ it) {
-        this->m_listRules.push_back(Rule(*it));
+        m_listRules.push_back(Rule(*it));
     }
 }
 void S2DLP::outputRules(FILE* _out) {
@@ -108,14 +108,14 @@ void S2DLP::outputRules(FILE* _out) {
  * @return 
  */
 Formulas* S2DLP::getNegaPredicates() const {
-    return this->m_pNegaPredicates;
+    return m_pNegaPredicates;
 }
 /**
  * 添加出现非非的谓词的公式
  * @param _negaPredicate
  */
 void S2DLP::addNegaPredicates(const Formula& _negaPredicate) {
-    this->m_pNegaPredicates->pushBack(_negaPredicate);
+    m_pNegaPredicates->pushBack(_negaPredicate);
 }
 /**
  * 章衡、Cabalar、规则全套服务
