@@ -41,6 +41,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Formulas.o \
 	${OBJECTDIR}/src/HengZhang.o \
 	${OBJECTDIR}/src/NNFUtils.o \
+	${OBJECTDIR}/src/PointerSensitive.o \
 	${OBJECTDIR}/src/Rule.o \
 	${OBJECTDIR}/src/S2DLP.o \
 	${OBJECTDIR}/src/Utils.o \
@@ -69,11 +70,11 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/alpha
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/parser
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/alpha: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/parser: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/alpha ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/parser ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/src/Cabalar.o: src/Cabalar.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -104,6 +105,11 @@ ${OBJECTDIR}/src/NNFUtils.o: src/NNFUtils.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/NNFUtils.o src/NNFUtils.cpp
+
+${OBJECTDIR}/src/PointerSensitive.o: src/PointerSensitive.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/PointerSensitive.o src/PointerSensitive.cpp
 
 ${OBJECTDIR}/src/Rule.o: src/Rule.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -151,7 +157,7 @@ ${OBJECTDIR}/src/parse.o: src/parse.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/alpha
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/parser
 
 # Subprojects
 .clean-subprojects:

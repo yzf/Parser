@@ -89,9 +89,13 @@ void S2DLP::ruleTransform() {
     }
 }
 void S2DLP::outputRules(FILE* _out) {
+    int i = 0;
     for (list<Rule>::iterator it = m_listRules.begin();
             it != m_listRules.end(); ++ it) {
         it->output(_out);
+        if (++ i % 500 == 0) {
+            fflush(_out);
+        }
     }
 }
 /**
@@ -165,17 +169,27 @@ void S2DLP::outputAddition(FILE* _out) {
             fprintf(_out, " :- not ");
             Utils::printAtom(iter->getFormula(), _out);
             fprintf(_out, ".\n");
-            Utils::printAtom(iter->getFormula(), _out);
-            fprintf(_out, " | _");
-            Utils::printAtom(iter->getFormula(), _out);
-            fprintf(_out, ".\n");
+//            Utils::printAtom(iter->getFormula(), _out);
+//            fprintf(_out, " | _");
+//            Utils::printAtom(iter->getFormula(), _out);
+//            fprintf(_out, ".\n");
         }
     }
     fprintf(_out, "%%Succ predicate definition\n");
+//    printf("succ size : %u\n", HengZhang::instance().m_vDomainNames.size());
+//    for(unsigned int si = 0; si < HengZhang::instance().m_vDomainNames.size(); si++)
+//    {
+//        for(int sj = 0; sj < HengZhang::instance().m_vDomainNames.at(si).size(); sj++)    
+//                fprintf(_out, "%s", HengZhang::instance().m_vDomainNames.at(si).at(sj).c_str());
+//        fprintf(_out, "\n");
+//    }
+//    
     for(unsigned int i = 0; i < HengZhang::instance().m_vDomainNames.size(); i++) {
         addSucc(_out, HengZhang::instance().m_vDomainNames.at(i));
     }  
     fprintf(_out, "\n");
+  
+    fflush(_out);
 }
 /**
  * 输出线序

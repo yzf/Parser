@@ -59,7 +59,8 @@
      SEMICO = 277,
      AT = 278,
      LL = 279,
-     RR = 280
+     RR = 280,
+     SLASH = 281
    };
 #endif
 /* Tokens.  */
@@ -86,6 +87,7 @@
 #define AT 278
 #define LL 279
 #define RR 280
+#define SLASH 281
 
 
 
@@ -105,7 +107,7 @@ typedef union YYSTYPE
 
 
 /* Line 2068 of yacc.c  */
-#line 109 "../src/parse.h"
+#line 111 "../src/parse.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

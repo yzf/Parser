@@ -10,6 +10,9 @@ int Vocabulary::ms_nDomainId = 0;
 int Vocabulary::ms_nFunctionId = 0;
 int Vocabulary::ms_nPredicateId = 0;
 int Vocabulary::ms_nRenameVariablePostfix = 0;
+int Vocabulary::ms_nNewNexName = 0;
+int Vocabulary::ms_nNamesVary = 0;
+int Vocabulary::ms_nIntensionPredicate = 0;
 
 Vocabulary& Vocabulary::instance() {
     static Vocabulary vocabulary;
@@ -17,6 +20,9 @@ Vocabulary& Vocabulary::instance() {
 }
 
 Vocabulary::Vocabulary() {
+    memset(this->IntensionPredicateId, -1, sizeof(int)*MAX_NUM_PREDICATE);
+    memset(this->PredicateInVary, -1, sizeof(int)*MAX_NUM_PREDICATE);
+    
     this->m_mapVariableName.clear();
     this->m_mapDomainName.clear();
     this->m_mapFunctionName.clear();
@@ -35,6 +41,17 @@ Vocabulary::~Vocabulary() {
         this->m_fmlAtomList = NULL;
     }
 }
+
+void Vocabulary::setNewNexName(int n)
+{
+    this->ms_nNewNexName = n;
+}
+
+int Vocabulary::getNewNexName()
+{
+    return this->ms_nNewNexName;
+}
+
 /**
  * 保存内涵谓词
  * @param _name 内涵谓词名
@@ -42,8 +59,10 @@ Vocabulary::~Vocabulary() {
  */
 void Vocabulary::addIntensionPredicate(const char* _name) {
     int id = getSymbolId(_name, PREDICATE);
-    this->m_mapIsIntensionPredicate[id] = true;
+    this->m_mapIsIntensionPredicate[id] = true;  
+    this->IntensionPredicateId[this->ms_nIntensionPredicate++] = id;   
 }
+
 /**
  * 获取变量所在论域
  * @param _variableId
@@ -71,6 +90,19 @@ void Vocabulary::setVariableDomain(const char* _variable, const char* _domain) {
         this->m_mapDomainVariables[domainId].push_back(variableId);
     }
 }
+void Vocabulary::setPredicateVary(const char* _predicate, const char* _vary) {
+    int varyId = getSymbolId(_vary, VARY);
+    int predicateId;
+    
+    if(varyId == -1) {
+        varyId = this->ms_nNamesVary ++;
+        this->m_mapVaryName[varyId] = string(_vary);
+    }
+    if((predicateId = getSymbolId(_predicate, PREDICATE)) != -1) {
+        this->PredicateInVary[predicateId] = varyId;
+    }
+}
+
 /**
  * 查询符号的id
  * @param _name 符号名字
@@ -98,6 +130,9 @@ int Vocabulary::getSymbolId(const char* _name, SYMBOL_TYPE _type) {
     case DOMAIN:
         mapIdName = this->m_mapDomainName;
         break;  
+    case VARY:
+        mapIdName = this->m_mapVaryName;  
+        break;
     default:
         assert(0);
         return -2;
@@ -231,6 +266,12 @@ const char* Vocabulary::getNameById(int _id, SYMBOL_TYPE _type) const {
             return (it->second).c_str();
         }
         break;
+    case VARY:
+        it = this->m_mapVaryName.find(_id);
+        if (it != this->m_mapVaryName.end()) {
+            return (it->second).c_str();
+        }
+        break; 
     default:
         assert ( 0 );
     }
@@ -271,7 +312,7 @@ void Vocabulary::dumpVocabulary(FILE* _out)  {
     fprintf(_out, "\ndomains:\n");    
     for (map<int, string>::const_iterator it = this->m_mapDomainName.begin(); 
             it != this->m_mapDomainName.end(); ++ it) {
-        fprintf(_out, "variables at domain %s: ", (it->second).c_str());
+        fprintf(_out, "\nvariables at domain %s: ", (it->second).c_str());
         vector<int> variables = this->m_mapDomainVariables[it->first];
         for (vector<int>::const_iterator it2 = variables.begin();
                 it2 != variables.end(); ++ it2) {
@@ -282,11 +323,26 @@ void Vocabulary::dumpVocabulary(FILE* _out)  {
         }
     }
     
+    fprintf(_out, "\nvary:\n");
+    int count = 0;
+    for(int n = 0; n < this->ms_nPredicateId; n++) {
+        if(Vocabulary::instance().isVaryPredicate(n))
+        {
+            fprintf(_out, "%s in %s", Vocabulary::instance().getNameById(n,PREDICATE),
+              Vocabulary::instance().getNameById(Vocabulary::instance().getVaryWithPredicate(n),VARY));
+            count++;
+        }
+        if(n != this->ms_nPredicateId - 1 && count != 0) {
+            fprintf(_out, ", ");
+        }
+    }
+    
     fprintf(_out, "\natom\n");
     for (FORMULAS_ITERATOR it = m_fmlAtomList->begin();
             it != m_fmlAtomList->end(); ++ it) {
-        fprintf(_out, "%s", getNameById(it->getFormula()->predicate_id, PREDICATE));
+        fprintf(_out, "%s ", getNameById(it->getFormula()->predicate_id, PREDICATE));
     }
+    fprintf(_out, "\n\n");
 }
 
 Formula Vocabulary::getAtom(int _predicateId) const {
@@ -326,4 +382,39 @@ map<int, int> Vocabulary::getVariablesDomains() const {
 
 Formulas* Vocabulary::getAtomList() const {
     return this->m_fmlAtomList;
+}
+
+bool Vocabulary::isVaryPredicate(int _predicateId) const {
+    if(this->PredicateInVary[_predicateId] > -1)
+        return true;
+    return false;
+}
+
+void Vocabulary::setR(char* r)
+{
+    this->r = r;
+}
+
+const char* Vocabulary::getR()
+{
+    return this->r;
+}
+
+const int Vocabulary::getNumIntensionPredicate()
+{
+    return this->ms_nIntensionPredicate;
+}
+
+const int Vocabulary::getIntensionPredicateId(int id){
+    return this->IntensionPredicateId[id];
+}
+
+int Vocabulary::getNumPredicate()
+{
+    return this->ms_nPredicateId;
+}
+
+int Vocabulary::getVaryWithPredicate(int _predicateId)
+{
+    return this->PredicateInVary[_predicateId];
 }

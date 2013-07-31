@@ -100,7 +100,11 @@ void Formula::output(FILE* _out) const {
  * @param _intensionPredicates 内涵谓词名单
  */
 void Formula::doubleNegationIntensionPredicates() {
-    this->m_pFormula = Utils::doubleNegationIntensionPredicates(this->m_pFormula);
+    this->m_pFormula = Utils::doubleNegationPredicates(this->m_pFormula);
+}
+
+void Formula::doubleNegationPredicates(int* _p, int _size) {
+    this->m_pFormula = Utils::doubleNegationPredicates(this->m_pFormula, _p, _size);
 }
 /**
  * 替换参数

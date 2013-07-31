@@ -93,8 +93,9 @@ void Rule::output(FILE* _out) const {
             }
         }
     }  
-    
-    fprintf(_out, ".\n");
+    if (m_pHeadFormulas->size() + m_pBodyFormulas->size() > 0) {
+        fprintf(_out, ".\n");
+    }
 }
 /**
  * 判断该规则是否多余

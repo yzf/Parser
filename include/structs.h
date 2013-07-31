@@ -45,6 +45,7 @@ enum SYMBOL_TYPE {
     FUNCTION,
     PREDICATE,
     DOMAIN,
+    VARY,
 };
 
 enum FORMULA_TYPE {

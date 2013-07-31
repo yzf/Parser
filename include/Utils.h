@@ -4,7 +4,6 @@
  *
  * Created on July 27, 2013, 1:33 AM
  */
-
 #ifndef UTIL_H
 #define	UTIL_H
 
@@ -28,6 +27,9 @@ public:
     static void replaceTerm(_term* _ts, int _arity, const vector<int>& _originals, 
                         const vector<int>& _replacements);
     static _term* combineTerms(const vector<int>& _head, const vector<int>& _tail);
+    static _term* combineTerms(const _term* head, int head_size, 
+					   const _term* tail, int tail_size);
+    static _term* constructTerms(const _term* terms, int size);
     static bool compareTerm(const _term* _lhs, const _term* _rhs);
     static _term* copyTerms(const _term* _ts, int _size);
     static void deleteTerms(_term* _ts, int _size);
@@ -43,8 +45,9 @@ public:
     static void renameFormulaVariables(_formula* _fml, int _oldVariableId, int _newVariableId);
     static void convertToPrenex(_formula* _fml);
     static void getNoQuantifierVariables(map<int, bool>& _flag, vector<int>& _varis, _formula* _fml);
-    static bool isNegativeFormula(_formula* _fml, bool _negative);
-    static _formula* doubleNegationIntensionPredicates(_formula* _fml);
+    static bool isNegativeFormula(_formula* _fml, bool _negative, int* _p = NULL, int _size = 0);
+    static bool inList(int _target, int* _p, int _size);
+    static _formula* doubleNegationPredicates(_formula* _fml, int* _p = NULL, int _size = 0);
     static void replaceFormulaTerms(_formula* _fml, 
                                 const vector<int>& _originals, 
 				const vector<int>& _replacements);

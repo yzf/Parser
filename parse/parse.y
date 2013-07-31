@@ -54,39 +54,49 @@ void yyerror(const char* s) {
 %token <s> AT
 %token <s> LL
 %token <s> RR
+%token <s> SLASH
 
 %type <f>  s2dlp formulas formula atom
 %type <t>  term 
 %type <ts> terms
+%type <s>  associate_pred
 
-%left S_IMPL S_CONJ S_DISJ
+%left S_IMPL
+%left  S_CONJ S_DISJ
 %right S_NEGA S_EXIS S_UNIV
 
 %%
 s2dlp 
-	: formulas intensionP domain_section{
+	: formulas predicate_section domain_section{
             assert($1);
             printf("root\n");
             gformula = $1;
 	}
 ;
 
-intensionP
-        : LBRACE inten_preds RBRACE {
+predicate_section
+        : LBRACE associate_pred SLASH associate_pred SEMICO varys RBRACE {
+          Vocabulary::instance().addIntensionPredicate($2);
+          Vocabulary::instance().setR($4);
+        }
+;
+varys
+        : vary COMMA varys{
         
         }
+        | vary {
+
+        }
+        |
 ;
-inten_preds
-        : inten_preds COMMA intent_pred {
-            
-        } 
-        | intent_pred {
-            
+vary
+        : associate_pred SLASH associate_pred {
+            Vocabulary::instance().setPredicateVary($1,$3);
         }
 ;
-intent_pred
-        : S_PRED {           
-            Vocabulary::instance().addIntensionPredicate($1);
+associate_pred
+        : S_PRED {
+            $$ = $1;
             context_flag = 0;
         }
 ;
@@ -223,6 +233,8 @@ atom
             }
             else if ((id = Vocabulary::instance().getSymbolId($1, PREDICATE)) < 0) {
                 id = Vocabulary::instance().addSymbol($1, PREDICATE, 0);
+                Formula atom = Formula(Utils::compositeToAtom(id, NULL), false);
+                Vocabulary::instance().addAtom(atom);
             } 
             else if (Vocabulary::instance().getPredicateArity(id) != 0)
             {

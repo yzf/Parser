@@ -10,6 +10,7 @@
       <itemPath>include/Formulas.h</itemPath>
       <itemPath>include/HengZhang.h</itemPath>
       <itemPath>include/NNFUtils.h</itemPath>
+      <itemPath>include/PointerSensitive.h</itemPath>
       <itemPath>include/Rule.h</itemPath>
       <itemPath>include/S2DLP.h</itemPath>
       <itemPath>include/Utils.h</itemPath>
@@ -26,7 +27,9 @@
                    displayName="Resource Files"
                    projectFiles="true">
       <logicalFolder name="C.sample" displayName="C.sample" projectFiles="true">
+        <itemPath>res/C.sample/2clique.in</itemPath>
         <itemPath>res/C.sample/sample.in</itemPath>
+        <itemPath>res/C.sample/sample2.in</itemPath>
       </logicalFolder>
       <logicalFolder name="output" displayName="output" projectFiles="true">
         <logicalFolder name="C.sample" displayName="C.sample" projectFiles="true">
@@ -44,6 +47,7 @@
       <itemPath>src/Formulas.cpp</itemPath>
       <itemPath>src/HengZhang.cpp</itemPath>
       <itemPath>src/NNFUtils.cpp</itemPath>
+      <itemPath>src/PointerSensitive.cpp</itemPath>
       <itemPath>src/Rule.cpp</itemPath>
       <itemPath>src/S2DLP.cpp</itemPath>
       <itemPath>src/Utils.cpp</itemPath>
@@ -108,6 +112,8 @@
       </item>
       <item path="include/NNFUtils.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/PointerSensitive.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Rule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/S2DLP.h" ex="false" tool="3" flavor2="0">
@@ -130,7 +136,11 @@
       </item>
       <item path="parse/parse.y" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/C.sample/2clique.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/C.sample/sample.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/sample2.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -143,6 +153,8 @@
       <item path="src/HengZhang.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/NNFUtils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/PointerSensitive.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Rule.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -196,6 +208,8 @@
       </item>
       <item path="include/NNFUtils.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/PointerSensitive.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Rule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/S2DLP.h" ex="false" tool="3" flavor2="0">
@@ -218,7 +232,11 @@
       </item>
       <item path="parse/parse.y" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/C.sample/2clique.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/C.sample/sample.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/C.sample/sample2.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -231,6 +249,8 @@
       <item path="src/HengZhang.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/NNFUtils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/PointerSensitive.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Rule.cpp" ex="false" tool="1" flavor2="0">
       </item>

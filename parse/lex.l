@@ -56,6 +56,7 @@ constant			[a-z0-9][a-zA-Z0-9_]*
 ";"                             {return SEMICO;                 }
 "@"                             {return AT;                     }
 {blank}                         {/* skip blankspace */	}
+"/"                             {return SLASH;                  }
 
 "%"                             {BEGIN COMMENT;                 }
 <COMMENT>\n                     {BEGIN INITIAL;                 }

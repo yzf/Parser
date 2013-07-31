@@ -15,6 +15,7 @@
 #include "Formulas.h"
 #include "HengZhang.h"
 #include "S2DLP.h"
+#include "PointerSensitive.h"
 #include <iostream>
 #include <unistd.h>
 
@@ -25,6 +26,7 @@ extern FILE *yyin;
 extern _formula* gformula;
 FILE* fout;
 extern int yyparse();
+
 
 void io(const char* iPathName, const char* oPathName) {
     yyin = fopen (iPathName, "r");
@@ -40,10 +42,11 @@ void io(const char* iPathName, const char* oPathName) {
     }
 }
 
+
 int main(int argc, char** argv) {
     
     if(argc < 3) {
-        io("res/C.sample/sample.in","output/C.sample/sample.out");
+        io("res/C.sample/sample2.in","output/C.sample/sample.out");
     }
     else {
         io(argv[1], argv[2]);
@@ -52,12 +55,16 @@ int main(int argc, char** argv) {
     yyparse();
     fclose(yyin);
     
-    Formula* f = new Formula(gformula, false);
-
-    S2DLP::instance().init(f);
+    Formulas* fmls = PointerSensitive::instance().PointerSensitive_Convert(gformula);
+//    Utils::outputFormula(stdout, gformula);
+    Vocabulary::instance().dumpVocabulary(stdout);
+//    Formula* f = new Formula(gformula, false);
+//    f->output(stdout);
+    S2DLP::instance().init(fmls);
     S2DLP::instance().convert();
     S2DLP::instance().outputFinalResult(fout);
-    delete f;
+//    delete f;
+
     fclose(fout);
     
     FILE* asp = popen("gringo output/C.sample/sample.fact output/C.sample/sample.out | claspD 0", "r");
@@ -67,7 +74,6 @@ int main(int argc, char** argv) {
         printf("%s", line);
     }
     pclose(asp);
-    
     
     return 0;
 }
