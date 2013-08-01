@@ -6,6 +6,7 @@ Parser 一阶逻辑到命题逻辑转换器
     sudo apt-get install flex bison libcppunit-dev libcppunit-doc
 ================================================================================
 附录：命名规范：
+
     1. 函数    小写字母，单词间用下划线
             void test_me();
     2. 类名    大驼峰式命名法
@@ -37,17 +38,14 @@ Parser 一阶逻辑到命题逻辑转换器
                     int m_nSize;
                     static int ms_nCount;
             };
-
     5. 宏	大写字母，单词间使用下划线
             #define MAX_NUM 100
-
     6. 联合体 uni_ type [class_name|struct_name] variable_name
             union Variant {
                     char uni_chVal;
                     int uni_nVal;
                     float uni_ftVal;
             }
-
     7. 局部变量	type [class_name|struct_name] variable_name
             int nCount;
             若是函数参数，则加下划线
