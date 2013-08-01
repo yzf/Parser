@@ -61,8 +61,8 @@ int main(int argc, char** argv) {
     S2DLP::instance().init(f);
     S2DLP::instance().convert();
     S2DLP::instance().outputFinalResult(fout);
-    fclose(fout);
     S2DLP::instance().destroy();
+    fclose(fout);
 #endif
     Vocabulary::instance().dumpVocabulary(stdout);
 #ifdef RUN_ASP
