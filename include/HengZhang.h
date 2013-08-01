@@ -44,14 +44,14 @@ public:
     
 private:
     Formulas transform(Formula _originalFml);
-    Formula recordQuantifier(Formula _originalFml);
-    Formula createFormula_1(Formula _originalFml);
-    Formula createFormula_2(Formula _originalFml);
-    Formula createFormula_3(Formula _originalFml);
-    Formula createFormula_4_1(Formula _originalFml);
-    Formula createFormula_4_2(Formula _originalFml);
-    Formula createFormula_5_1(Formula _originalFml);
-    Formula createFormula_5_2(Formula _originalFml);
+    Formula recordQuantifier(const Formula& _originalFml);
+    Formula createFormula_1(const Formula& _originalFml);
+    Formula createFormula_2(const Formula& _originalFml);
+    Formula createFormula_3(const Formula& _originalFml);
+    Formula createFormula_4_1(const Formula& _originalFml);
+    Formula createFormula_4_2(const Formula& _originalFml);
+    Formula createFormula_5_1(const Formula& _originalFml);
+    Formula createFormula_5_2(const Formula& _originalFml);
     _formula* generateFormulaLeft_4();
     
     HengZhang();

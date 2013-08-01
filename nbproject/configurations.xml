@@ -56,14 +56,6 @@
                    displayName="Test Files"
                    projectFiles="false"
                    kind="TEST_LOGICAL_FOLDER">
-      <logicalFolder name="f1"
-                     displayName="HelloWorldTest"
-                     projectFiles="true"
-                     kind="TEST">
-        <itemPath>src/tests/TestHelloWorld.cpp</itemPath>
-        <itemPath>src/tests/TestHelloWorld.h</itemPath>
-        <itemPath>src/tests/TestHelloWorldRunner.cpp</itemPath>
-      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -207,12 +199,6 @@
       </item>
       <item path="src/parse.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/tests/TestHelloWorld.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/tests/TestHelloWorld.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/tests/TestHelloWorldRunner.cpp" ex="false" tool="1" flavor2="0">
-      </item>
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
@@ -332,12 +318,6 @@
       <item path="src/parse.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/parse.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/tests/TestHelloWorld.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/tests/TestHelloWorld.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/tests/TestHelloWorldRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

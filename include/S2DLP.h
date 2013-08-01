@@ -36,6 +36,7 @@ private:
     void hengZhangTransform();
     void cabalarTransform();
     void ruleTransform();
+    void addSucc(FILE* _out, vector<string> domains);
     void outputAddition(FILE* _out);
 public:
     static S2DLP& instance();
@@ -52,8 +53,6 @@ public:
     void outputFinalResult(FILE* _out);
     Formulas* getNegaPredicates() const;
     void addNegaPredicates(const Formula& _negaPredicate);
-    void addSucc(FILE* _out, vector<string> domains);
-    
 };
 
 #endif	/* S2DLP_H */

@@ -14,8 +14,8 @@ Formula::Formula(const Formula& rhs) {
     m_pFormula = Utils::copyFormula(rhs.getFormula());
     m_nFormulaId = rhs.m_nFormulaId;
 }
-Formula::Formula(_formula* _fml, bool _isCopy) {
-    if (_isCopy) {
+Formula::Formula(_formula* _fml, bool _bIsCopy) {
+    if (_bIsCopy) {
         m_pFormula = Utils::copyFormula(_fml);
     }
     else {
@@ -102,8 +102,8 @@ void Formula::output(FILE* _out) const {
 void Formula::doubleNegationIntensionPredicates() {
     m_pFormula = Utils::doubleNegationPredicates(m_pFormula);
 }
-void Formula::doubleNegationPredicates(int* _p, int _size) {
-    m_pFormula = Utils::doubleNegationPredicates(m_pFormula, _p, _size);
+void Formula::doubleNegationPredicates(int* _pPredicateIds, int _nSize) {
+    m_pFormula = Utils::doubleNegationPredicates(m_pFormula, _pPredicateIds, _nSize);
 }
 /**
  * 替换参数

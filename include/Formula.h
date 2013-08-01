@@ -25,8 +25,8 @@ public:
     static int ms_nNewFormulaId;//下一个新公式的id
 public:
     Formula();
-    Formula(const Formula& rhs);
-    Formula(_formula* _fml, bool _isCopy);
+    Formula(const Formula& _rhs);
+    Formula(_formula* _fml, bool _bIsCopy);
     ~Formula();
     Formula& operator = (const Formula& _rhs);
     bool operator == (const Formula& _rhs) const;
@@ -40,7 +40,7 @@ public:
     void removeUniversalQuantifier();
     void output(FILE* _out) const;
     void doubleNegationIntensionPredicates();
-    void doubleNegationPredicates(int* _p, int _size);
+    void doubleNegationPredicates(int* _pPredicateIds, int _nSize);
     void replaceTerms(const vector<int>& _originals, 
 				const vector<int>& _replacements);
     Formulas* divideFormula() const;
