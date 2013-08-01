@@ -25,14 +25,12 @@
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
                    projectFiles="true">
-      <logicalFolder name="C.sample" displayName="C.sample" projectFiles="true">
-        <itemPath>res/C.sample/sample.in</itemPath>
+      <logicalFolder name="input" displayName="input" projectFiles="true">
+        <itemPath>res/input/sample.in</itemPath>
       </logicalFolder>
       <logicalFolder name="output" displayName="output" projectFiles="true">
-        <logicalFolder name="C.sample" displayName="C.sample" projectFiles="true">
-          <itemPath>output/C.sample/sample.fact</itemPath>
-          <itemPath>output/C.sample/sample.out</itemPath>
-        </logicalFolder>
+        <itemPath>res/output/sample.fact</itemPath>
+        <itemPath>res/output/sample.out</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
@@ -58,6 +56,14 @@
                    displayName="Test Files"
                    projectFiles="false"
                    kind="TEST_LOGICAL_FOLDER">
+      <logicalFolder name="f1"
+                     displayName="HelloWorldTest"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>src/tests/TestHelloWorld.cpp</itemPath>
+        <itemPath>src/tests/TestHelloWorld.h</itemPath>
+        <itemPath>src/tests/TestHelloWorldRunner.cpp</itemPath>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -73,6 +79,7 @@
     <Elem>res</Elem>
     <Elem>output</Elem>
     <Elem>include</Elem>
+    <Elem>test</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -96,6 +103,44 @@
           <warningLevel>2</warningLevel>
         </ccTool>
       </compileType>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="include/Cabalar.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/CabalarUtils.h" ex="false" tool="3" flavor2="0">
@@ -118,10 +163,6 @@
       </item>
       <item path="include/structs.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="output/C.sample/sample.fact" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="output/C.sample/sample.out" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="parse/clean.sh" ex="false" tool="3" flavor2="0">
       </item>
       <item path="parse/generate.sh" ex="false" tool="3" flavor2="0">
@@ -130,7 +171,11 @@
       </item>
       <item path="parse/parse.y" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/C.sample/sample.in" ex="false" tool="3" flavor2="0">
+      <item path="res/input/sample.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sample.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sample.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -161,6 +206,12 @@
       <item path="src/parse.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/parse.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/tests/TestHelloWorld.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/tests/TestHelloWorld.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/tests/TestHelloWorldRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -184,6 +235,38 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="include/Cabalar.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/CabalarUtils.h" ex="false" tool="3" flavor2="0">
@@ -206,10 +289,6 @@
       </item>
       <item path="include/structs.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="output/C.sample/sample.fact" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="output/C.sample/sample.out" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="parse/clean.sh" ex="false" tool="3" flavor2="0">
       </item>
       <item path="parse/generate.sh" ex="false" tool="3" flavor2="0">
@@ -218,7 +297,11 @@
       </item>
       <item path="parse/parse.y" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/C.sample/sample.in" ex="false" tool="3" flavor2="0">
+      <item path="res/input/sample.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sample.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sample.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -249,6 +332,12 @@
       <item path="src/parse.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/parse.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/tests/TestHelloWorld.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/tests/TestHelloWorld.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/tests/TestHelloWorldRunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>
