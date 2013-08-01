@@ -1,9 +1,11 @@
 Parser 一阶逻辑到命题逻辑转换器
 ================================================================================
 一、相关依赖
-    主要有3个依赖需要安装：flex、bison、cppunit
+
+    主要有3个依赖需要安装：
+        flex、bison、cppunit
     ubuntu下的安装命令为：
-    sudo apt-get install flex bison libcppunit-dev libcppunit-doc
+        sudo apt-get install flex bison libcppunit-dev libcppunit-doc
 ================================================================================
 附录：命名规范：
 
