@@ -12,7 +12,9 @@
 #include "Formulas.h"
 
 class Formulas;
-
+/*
+ * 进行Cabalar转换的工具类
+ */
 class CabalarUtils {
 public:
     static _formula* disjLeftTrue(_formula* _originalFml);

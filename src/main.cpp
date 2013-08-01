@@ -20,9 +20,9 @@
 
 using namespace std;
 
-extern FILE *yyin;
-extern _formula* gformula;
 FILE* fout;
+extern FILE* yyin;
+extern _formula* gformula;
 extern int yyparse();
 
 #define RUN_S2DLP

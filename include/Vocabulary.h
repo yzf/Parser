@@ -11,7 +11,9 @@
 class Formulas;
 
 using namespace std;
-
+/*
+ * 字符表类，保存各种信息
+ */
 class Vocabulary {
 private:
     static int ms_nVariableId;

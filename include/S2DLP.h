@@ -19,14 +19,16 @@
 class Formula;
 class Formulas;
 class Rule;
-
+/*
+ * StableModel转换器，单例
+ */
 class S2DLP {
 private:
     Formulas* m_pOriginalFormulas;      //原公式
     Formulas* m_pHengZhangFormulas;     //章衡转化结果
     Formulas* m_pDlpFormulas;           //Cabalar转化结果
     Formulas* m_pNegaPredicates;        //出现非非的谓词公式
-    list<Rule> m_listRules;
+    list<Rule> m_listRules;             //转换后的所有规则
 private:
     S2DLP();
     S2DLP(const S2DLP& _rhs) {};

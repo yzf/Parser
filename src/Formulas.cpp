@@ -80,6 +80,9 @@ bool Formulas::operator == (const Formulas& _rhs) const {
 bool Formulas::operator != (const Formulas& _rhs) const {
     return ! (*this == _rhs);
 }
+Formula& Formulas::operator [] (int _id) {
+    return m_dequeFormulas.at(_id);
+}
 /**
  * 输出公式组
  * @param _out

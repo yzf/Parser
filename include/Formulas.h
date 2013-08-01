@@ -16,7 +16,9 @@ using namespace std;
 class Formula;
 
 #define FORMULAS_ITERATOR deque<Formula>::iterator
-
+/*
+ * 公式组类
+ */
 class Formulas {
 private:
     deque<Formula> m_dequeFormulas;
@@ -37,6 +39,7 @@ public:
     void joinFormulas(Formulas& _tail);
     bool operator == (const Formulas& _rhs) const;
     bool operator != (const Formulas& _rhs) const;
+    Formula& operator [] (int _id);
     void output(FILE* _out) const;
     FORMULAS_ITERATOR begin();
     FORMULAS_ITERATOR end();

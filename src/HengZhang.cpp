@@ -88,7 +88,7 @@ Formulas* HengZhang::convert(const Formulas& _originalFmls) {
  * @param _originalFml
  * @return 
  */
-Formulas HengZhang::transform(Formula _originalFml) {
+Formulas HengZhang::transform(const Formula& _originalFml) {
     Formula originalFml = recordQuantifier(_originalFml);
 
     if(m_vTermsY.size() == 0) {

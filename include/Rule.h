@@ -14,11 +14,13 @@
 
 class Formula;
 class Formulas;
-
+/*
+ * 规则类
+ */
 class Rule {
 private:
-    Formulas* m_pHeadFormulas;
-    Formulas* m_pBodyFormulas;
+    Formulas* m_pHeadFormulas;//规则的头部
+    Formulas* m_pBodyFormulas;//规则的体部
 private:
     void divideHead(const _formula* _head);
     void divideBody(const _formula* _body);

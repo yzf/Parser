@@ -16,7 +16,9 @@
 using namespace std;
 
 class Formulas;
-
+/*
+ * 公式类
+ */
 class Formula {
 private:
     _formula* m_pFormula;//公式
