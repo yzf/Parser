@@ -47,7 +47,7 @@ void io(const char* iPathName, const char* oPathName) {
 int main(int argc, char** argv) {
     
     if(argc < 3) {
-        io("res/C.sample/sample.in","output/C.sample/sample.out");
+        io("res/input/sample.in","res/output/sample.out");
     }
     else {
         io(argv[1], argv[2]);
@@ -56,9 +56,8 @@ int main(int argc, char** argv) {
     yyparse();
     fclose(yyin);
     
-    Formula f = Formula(gformula, false);
-    
 #ifdef RUN_S2DLP
+    Formula f = Formula(gformula, false);
     S2DLP::instance().init(f);
     S2DLP::instance().convert();
     S2DLP::instance().outputFinalResult(fout);
@@ -67,7 +66,7 @@ int main(int argc, char** argv) {
 #endif
     Vocabulary::instance().dumpVocabulary(stdout);
 #ifdef RUN_ASP
-    FILE* asp = popen("gringo output/C.sample/sample.fact output/C.sample/sample.out | claspD 0", "r");
+    FILE* asp = popen("gringo res/output/sample.fact res/output/sample.out | claspD 0", "r");
     const int MAX = 1024;
     char line[MAX];
     while (fgets(line, MAX, asp) != NULL) {
