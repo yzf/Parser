@@ -71,7 +71,7 @@ void Rule::output(FILE* _out) const {
                 bodyPart = bodyPart->subformula_l;
                 if (bodyPart->formula_type == NEGA) {
                     bool exis = false;
-                    for (FORMULAS_ITERATOR it_2 = S2DLP::instance().getNegaPredicates()->begin();
+                    for (FORMULAS_CONST_ITERATOR it_2 = S2DLP::instance().getNegaPredicates()->begin();
                             it_2 != S2DLP::instance().getNegaPredicates()->end(); ++ it_2) {
                         if (it_2->getFormula()->predicate_id == bodyPart->subformula_l->predicate_id) {
                             exis = true;

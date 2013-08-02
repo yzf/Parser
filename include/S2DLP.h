@@ -38,8 +38,8 @@ private:
     void hengZhangTransform();
     void cabalarTransform();
     void ruleTransform();
-    void addSucc(FILE* _out, vector<string> domains);
-    void outputAddition(FILE* _out);
+    void addSucc(FILE* _out, vector<string> domains) const;
+    void outputAddition(FILE* _out) const;
 public:
     static S2DLP& instance();
     
@@ -50,10 +50,10 @@ public:
     void convert();
     void outputHengZhangFormulas(FILE* _out) const;
     void outputCabalarFormulas(FILE* _out) const;
-    void outputRules(FILE* _out);
+    void outputRules(FILE* _out) const;
     
-    void outputFinalResult(FILE* _out);
-    Formulas* getNegaPredicates() const;
+    void outputFinalResult(FILE* _out) const;
+    const Formulas* getNegaPredicates() const;
     void addNegaPredicates(const Formula& _negaPredicate);
 };
 

@@ -88,14 +88,14 @@ void S2DLP::outputCabalarFormulas(FILE* _out) const {
     m_pDlpFormulas->output(_out);
 }
 void S2DLP::ruleTransform() {
-    for (FORMULAS_ITERATOR it = m_pDlpFormulas->begin();
+    for (FORMULAS_CONST_ITERATOR it = m_pDlpFormulas->begin();
             it != m_pDlpFormulas->end(); ++ it) {
         m_listRules.push_back(Rule(*it));
     }
 }
-void S2DLP::outputRules(FILE* _out) {
+void S2DLP::outputRules(FILE* _out) const {
     int i = 0;
-    for (list<Rule>::iterator it = m_listRules.begin();
+    for (list<Rule>::const_iterator it = m_listRules.begin();
             it != m_listRules.end(); ++ it) {
         it->output(_out);
         if (++ i % 500 == 0) {
@@ -107,7 +107,7 @@ void S2DLP::outputRules(FILE* _out) {
  * 获取所有出现过非非的谓词公式
  * @return 
  */
-Formulas* S2DLP::getNegaPredicates() const {
+const Formulas* S2DLP::getNegaPredicates() const {
     return m_pNegaPredicates;
 }
 /**
@@ -134,7 +134,7 @@ void S2DLP::convert() {
  * 输出附加信息
  * @param _out
  */
-void S2DLP::outputAddition(FILE* _out) {
+void S2DLP::outputAddition(FILE* _out) const {
     fprintf(_out, "%%MIN and MAX domain\n");
     map<int, string> domainNames = Vocabulary::instance().getDomainNames();
     for (map<int, string>::const_iterator it = domainNames.begin();
@@ -156,7 +156,7 @@ void S2DLP::outputAddition(FILE* _out) {
         fprintf(_out, "#domain %s(%s).\n", domainName, variName);
     }
     fprintf(_out, "%%NEW variable define\n");
-    for (FORMULAS_ITERATOR iter = m_pNegaPredicates->begin(); 
+    for (FORMULAS_CONST_ITERATOR iter = m_pNegaPredicates->begin(); 
             iter != m_pNegaPredicates->end(); ++ iter) {
         fprintf(_out, "_");
         Utils::printAtom(iter->getFormula(), _out);
@@ -165,7 +165,7 @@ void S2DLP::outputAddition(FILE* _out) {
         fprintf(_out, ".\n");
     }
     fprintf(_out, "%%Addition define\n");
-    for(FORMULAS_ITERATOR iter = Vocabulary::instance().getAtomList()->begin(); 
+    for(FORMULAS_CONST_ITERATOR iter = Vocabulary::instance().getAtomList()->begin(); 
             iter < Vocabulary::instance().getAtomList()->end(); ++ iter) {
         if(! Vocabulary::instance().isIntensionPredicate(iter->getFormula()->predicate_id)
                 && ! Vocabulary::instance().isSuccOrMax(iter->getFormula()->predicate_id)) {
@@ -192,7 +192,7 @@ void S2DLP::outputAddition(FILE* _out) {
  * @param _out
  * @param domains
  */
-void S2DLP::addSucc(FILE* _out, vector<string> domains) {
+void S2DLP::addSucc(FILE* _out, vector<string> domains) const {
     int size = domains.size();
     
     if (size == 1) {
@@ -271,7 +271,7 @@ void S2DLP::addSucc(FILE* _out, vector<string> domains) {
  * 输出供ASP使用的结果
  * @param _out
  */
-void S2DLP::outputFinalResult(FILE* _out) {
+void S2DLP::outputFinalResult(FILE* _out) const {
     outputAddition(_out);
     outputRules(_out);
 }
