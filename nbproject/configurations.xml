@@ -79,7 +79,6 @@
     <Elem>res</Elem>
     <Elem>output</Elem>
     <Elem>include</Elem>
-    <Elem>test</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

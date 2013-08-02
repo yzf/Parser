@@ -3,9 +3,12 @@ Parser 一阶逻辑到命题逻辑转换器
 一、相关依赖
 
     主要有3个依赖需要安装：
-        flex、bison
+        flex、bison、gringo、claspD
     ubuntu下的安装命令为：
         sudo apt-get install flex bison
+    gringo和claspD则到网站：
+    http://sourceforge.net/projects/potassco/files/
+    下载,gringo版本请使用3.0.5，claspD版本请使用1.1.4。
 ================================================================================
 附录：命名规范：
 

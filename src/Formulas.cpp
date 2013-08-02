@@ -51,9 +51,10 @@ Formula Formulas::back() {
  * 注意：{d,e} -> {}
  * @param _tail
  */
-void Formulas::joinFormulas(Formulas& _tail) {
-    while (! _tail.isEmpty()) {
-        pushBack(_tail.popFront());
+void Formulas::joinFormulas(const Formulas& _tail) {
+    for (FORMULAS_CONST_ITERATOR it = _tail.begin(); 
+            it != _tail.end(); ++ it) {
+        pushBack(*it);
     }
 }
 /**
@@ -62,8 +63,8 @@ void Formulas::joinFormulas(Formulas& _tail) {
  * @return 
  */
 bool Formulas::operator == (const Formulas& _rhs) const {
-    deque<Formula>::const_iterator it1;
-    deque<Formula>::const_iterator it2;
+    FORMULAS_CONST_ITERATOR it1;
+    FORMULAS_CONST_ITERATOR it2;
     if (m_dequeFormulas.size() != _rhs.m_dequeFormulas.size()) {
         return false;
     }
@@ -88,7 +89,7 @@ Formula& Formulas::operator [] (int _id) {
  * @param _out
  */
 void Formulas::output(FILE* _out) const {
-    for (deque<Formula>::const_iterator it = m_dequeFormulas.begin();
+    for (FORMULAS_CONST_ITERATOR it = m_dequeFormulas.begin();
             it != m_dequeFormulas.end(); ++ it) {
         it->output(_out);
     }
@@ -105,6 +106,12 @@ FORMULAS_ITERATOR Formulas::begin() {
  * @return FORMULAS_ITERATOR
  */
 FORMULAS_ITERATOR Formulas::end() {
+    return m_dequeFormulas.end();
+}
+FORMULAS_CONST_ITERATOR Formulas::begin() const {
+    return m_dequeFormulas.begin();
+}
+FORMULAS_CONST_ITERATOR Formulas::end() const {
     return m_dequeFormulas.end();
 }
 /**
