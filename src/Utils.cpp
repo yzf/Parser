@@ -435,12 +435,7 @@ _formula* Utils::findPrenexQuanlifier(_formula* _fml, int _variableId) {
     if(_fml->variable_id == _variableId) {
         return _fml;
     }
-    else if(_fml->subformula_l->formula_type == UNIV || _fml->subformula_l->formula_type == EXIS) {
-        return findPrenexQuanlifier(_fml->subformula_l, _variableId);
-    }
-    else {
-        return NULL;
-    }
+    return findPrenexQuanlifier(_fml->subformula_l, _variableId);
 }
 /**
  * 删除多余的量词
@@ -541,22 +536,23 @@ void Utils::convertToPrenex(_formula* _fml) {
         convertToPrenex(_fml->subformula_l);
         convertToPrenex(_fml->subformula_r);
 
-        _formula* sub_l = _fml->subformula_l;
-        _formula* sub_r = _fml->subformula_r;
-        _formula* curr_fml = _fml;                      
+        _formula* curr_fml = _fml; 
+        _formula* sub_l = curr_fml->subformula_l;
+        _formula* sub_r = curr_fml->subformula_r;  
 
-        while(sub_l->formula_type == UNIV || sub_l->formula_type == EXIS || 
+        while (sub_l->formula_type == UNIV || sub_l->formula_type == EXIS || 
                 sub_r->formula_type == UNIV || sub_r->formula_type == EXIS) {
-
-            if(curr_fml->formula_type == IMPL && (sub_l->formula_type == EXIS 
+            //蕴含体部的量词提前的预处理：存在=>全称    全称=>存在
+            if (curr_fml->formula_type == IMPL && (sub_l->formula_type == EXIS 
                     || sub_l->formula_type == UNIV)) {
                 sub_l->formula_type = (sub_l->formula_type == UNIV) ? EXIS : UNIV;
             }
+            
             FORMULA_TYPE priority_type = UNIV;
-
             if(sub_l->formula_type != priority_type && sub_r->formula_type != priority_type) {
                 priority_type = EXIS;
             }
+            // 提取左子公式的量词
             if(sub_l->formula_type == priority_type || sub_l->formula_type == sub_r->formula_type) {
                 _formula* same_variable = findPrenexQuanlifier(sub_r, sub_l->variable_id);
 
@@ -572,12 +568,12 @@ void Utils::convertToPrenex(_formula* _fml) {
                 }
 
                 FORMULA_TYPE temp = curr_fml->formula_type;
-                sub_r = curr_fml->subformula_r;
                 curr_fml->formula_type = sub_l->formula_type;
                 curr_fml->variable_id = sub_l->variable_id;
                 sub_l->formula_type = temp;
                 sub_l->subformula_r = sub_r;
             }
+            // 提取右子公式的量词
             else {
                 _formula* same_variable = findPrenexQuanlifier(sub_l, sub_r->variable_id);
 
@@ -593,14 +589,12 @@ void Utils::convertToPrenex(_formula* _fml) {
                 }
 
                 FORMULA_TYPE temp = curr_fml->formula_type;
-                sub_l = curr_fml->subformula_l;
-                _formula* r_sub_l = sub_r->subformula_l;
                 curr_fml->formula_type = sub_r->formula_type;
                 curr_fml->variable_id = sub_r->variable_id;
                 curr_fml->subformula_l = sub_r;
                 sub_r->formula_type = temp;
+                sub_r->subformula_r = sub_r->subformula_l;
                 sub_r->subformula_l = sub_l;
-                sub_r->subformula_r = r_sub_l;
             }
             curr_fml = curr_fml->subformula_l;
             sub_l = curr_fml->subformula_l;
@@ -781,18 +775,15 @@ void Utils::replaceFormulaTerms(_formula* _fml,
  * @param _parent
  * @param _result
  */
-void Utils::divideFormula(_formula* _fml, _formula* _parent, Formulas* _result) {
-    if(_fml != NULL) {
-        if((_parent == NULL || _parent->formula_type == CONJ) && _fml->formula_type == CONJ) {
-            Formula new_formula = Formula(_fml->subformula_r, true);  
-            _result->pushBack(new_formula);
-            divideFormula(_fml->subformula_l, _fml, _result);   
-        }
-        else {
-            Formula new_formula = Formula(_fml, true);
-            _result->pushBack(new_formula);
-        }
-        
+void Utils::divideFormula(_formula* _fml, Formulas* _result) {
+    assert(_fml);
+    if(_fml->formula_type == CONJ) {
+        divideFormula(_fml->subformula_l, _result);   
+        divideFormula(_fml->subformula_r, _result);
+    }
+    else {
+        Formula new_formula = Formula(_fml, true);
+        _result->pushBack(new_formula);
     }
 }
 /**

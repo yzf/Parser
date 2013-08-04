@@ -90,7 +90,7 @@ Formulas* HengZhang::convert(const Formulas& _originalFmls) {
  */
 Formulas HengZhang::transform(const Formula& _originalFml) {
     Formula originalFml = recordQuantifier(_originalFml);
-
+    //无存在量词
     if(m_vTermsY.size() == 0) {
         Formulas fmls;
         fmls.pushBack(_originalFml);

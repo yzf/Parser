@@ -1,151 +1,75 @@
 %MIN and MAX domain
-#domain min_node(MIN_node).
-#domain max_node(MAX_node).
+#domain min_i(MIN_i).
+#domain max_i(MAX_i).
+#domain min_e(MIN_e).
+#domain max_e(MAX_e).
 %Variable domain
-#domain node(X).
-#domain node(Y).
-#domain node(NV_0).
-#domain node(NV_1).
-#domain node(NV_2).
+#domain i(X).
+#domain e(Y).
+#domain i(Z).
+#domain i(NV_0).
 %NEW variable define
-_ok:- not ok.
-_unset(X):- not unset(X).
-_t_0(X,Y):- not t_0(X,Y).
-_t_1(X,Y):- not t_1(X,Y).
+_cvr(X):- not cvr(X).
+_t_0(X,Y,Z):- not t_0(X,Y,Z).
 %Addition define
-_eq(X,Y) :- not eq(X,Y).
-_edge(X,Y) :- not edge(X,Y).
+_i(X) :- not i(X).
+_set(X,Y) :- not set(X,Y).
 %Succ predicate definition
-succ_node(A1, A2):-A1==A2-1,node(A1),node(A2).
-succ_node_node(A,B1,A,B2):-succ_node(B1,B2),node(A),node(B1),node(B2).
-succ_node_node(A1,MAX_node,A2,MIN_node):-succ_node(A1,A2),node(A1),node(A2).
+succ_i(A1, A2):-A1==A2-1,i(A1),i(A2).
 
-:-not ok.
-ok:-set(X),set(Y),col(X),uncol(Y).
-ok:-set(X),set(Y),not eq(X,Y),not edge(X,Y).
-set(X)|unset(X).
-col(X)|uncol(X).
-:-not s_0(X,MIN_node).
-:-not s_1(MIN_node,MIN_node).
-set(X):-ok.
-unset(X):-ok.
-s_0(X,Y):-succ_node(Y,NV_0),s_0(X,NV_0).
-s_1(X,Y):-succ_node_node(X,Y,NV_1,NV_2),s_1(NV_1,NV_2).
-s_0(X,Y):-not _ok.
-ok|t_0(X,MIN_node):-unset(X),unset(MIN_node).
-ok|t_0(X,MIN_node):-unset(X),edge(X,MIN_node).
-t_0(X,MIN_node):-not ok,not _unset(MIN_node),not _unset(X).
-t_0(X,MIN_node):-not ok,edge(X,MIN_node),not _unset(X).
-t_0(X,Y):-t_0(X,NV_0),succ_node(Y,NV_0).
-:-not t_0(X,Y),succ_node(Y,NV_0),not _t_0(X,NV_0).
-s_1(X,Y):-not eq(X,Y),not unset(X),not unset(Y).
-s_1(X,Y):-not _ok.
-ok|t_1(MIN_node,MIN_node):-eq(MIN_node,MIN_node).
-ok|t_1(MIN_node,MIN_node):-not _unset(MIN_node),eq(MIN_node,MIN_node).
-ok|t_1(MIN_node,MIN_node):-not _unset(MIN_node),eq(MIN_node,MIN_node).
-t_1(MIN_node,MIN_node):-not ok,eq(MIN_node,MIN_node).
-t_1(X,Y):-t_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2).
-:-not t_1(X,Y),succ_node_node(X,Y,NV_1,NV_2),not _t_1(NV_1,NV_2).
-s_0(X,Y):-not unset(X).
-s_0(X,Y):-not unset(Y),not edge(X,Y).
-t_0(X,MAX_node):-ok,not s_0(X,NV_0),succ_node(Y,NV_0),s_0(X,Y).
-:-not t_0(X,MAX_node),not s_0(X,NV_0),succ_node(Y,NV_0),s_0(X,Y),not _ok.
-t_0(X,MAX_node):-ok,max_node(Y),s_0(X,Y).
-:-not t_0(X,MAX_node),max_node(Y),s_0(X,Y),not _ok.
-ok|t_0(X,NV_0):-unset(NV_0),unset(X),t_0(X,Y),succ_node(Y,NV_0).
-ok|t_0(X,NV_0):-edge(X,NV_0),unset(X),t_0(X,Y),succ_node(Y,NV_0).
-t_0(X,NV_0):-not ok,t_0(X,Y),succ_node(Y,NV_0),not _unset(X),not _unset(NV_0).
-t_0(X,NV_0):-not ok,t_0(X,Y),succ_node(Y,NV_0),not _unset(X),edge(X,NV_0).
-t_0(X,Y):-ok,succ_node(Y,NV_0).
-:-not t_0(X,Y),succ_node(Y,NV_0),not _ok.
-ok|t_1(MIN_node,MIN_node):-unset(MIN_node).
-ok|t_1(MIN_node,MIN_node):-unset(MIN_node).
-t_1(MIN_node,MIN_node):-not ok,not _unset(MIN_node).
-t_1(MIN_node,MIN_node):-not ok,not _unset(MIN_node).
-t_1(MAX_node,MAX_node):-not eq(X,Y),not unset(X),not unset(Y),not s_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),s_1(X,Y).
-t_1(MAX_node,MAX_node):-ok,not s_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),s_1(X,Y).
-:-not t_1(MAX_node,MAX_node),not s_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),s_1(X,Y),not _ok.
-t_1(MAX_node,MAX_node):-not eq(X,Y),not unset(X),not unset(Y),max_node(X),max_node(Y),s_1(X,Y).
-t_1(MAX_node,MAX_node):-ok,max_node(X),max_node(Y),s_1(X,Y).
-:-not t_1(MAX_node,MAX_node),max_node(X),max_node(Y),s_1(X,Y),not _ok.
-t_1(NV_1,NV_2):-not ok,t_1(X,Y),succ_node_node(X,Y,NV_1,NV_2),eq(NV_1,NV_2).
-:-succ_node_node(X,Y,NV_1,NV_2),not ok,not t_1(NV_1,NV_2),eq(NV_1,NV_2),not _t_1(X,Y).
-t_1(X,Y):-not eq(NV_1,NV_2),not unset(NV_1),not unset(NV_2),succ_node_node(X,Y,NV_1,NV_2).
-t_1(X,Y):-ok,succ_node_node(X,Y,NV_1,NV_2).
-:-not t_1(X,Y),succ_node_node(X,Y,NV_1,NV_2),not _ok.
-s_0(X,Y):-not unset(X),not _ok.
-s_0(X,Y):-not unset(Y),not _ok,not edge(X,Y).
-ok:-unset(Y),unset(X),t_0(X,MAX_node),not s_0(X,NV_0),succ_node(Y,NV_0),s_0(X,Y).
-ok:-edge(X,Y),unset(X),t_0(X,MAX_node),not s_0(X,NV_0),succ_node(Y,NV_0),s_0(X,Y).
-:-not ok,t_0(X,MAX_node),not s_0(X,NV_0),succ_node(Y,NV_0),s_0(X,Y),not _unset(X),not _unset(Y).
-:-not ok,t_0(X,MAX_node),not s_0(X,NV_0),succ_node(Y,NV_0),s_0(X,Y),not _unset(X),edge(X,Y).
-ok:-unset(Y),unset(X),t_0(X,MAX_node),max_node(Y),s_0(X,Y).
-ok:-edge(X,Y),unset(X),t_0(X,MAX_node),max_node(Y),s_0(X,Y).
-:-not ok,t_0(X,MAX_node),max_node(Y),s_0(X,Y),not _unset(X),not _unset(Y).
-:-not ok,t_0(X,MAX_node),max_node(Y),s_0(X,Y),not _unset(X),edge(X,Y).
-t_0(X,MAX_node):-not unset(X),not s_0(X,NV_0),succ_node(Y,NV_0),s_0(X,Y).
-t_0(X,MAX_node):-not unset(Y),not edge(X,Y),not s_0(X,NV_0),succ_node(Y,NV_0),s_0(X,Y).
-unset(X)|t_0(X,MAX_node):-not s_0(X,NV_0),succ_node(Y,NV_0),s_0(X,Y),not _ok.
-unset(Y)|t_0(X,MAX_node):-not s_0(X,NV_0),succ_node(Y,NV_0),s_0(X,Y),not edge(X,Y),not _ok.
-:-not unset(X),not t_0(X,MAX_node),not s_0(X,NV_0),succ_node(Y,NV_0),s_0(X,Y).
-t_0(X,MAX_node):-not unset(X),max_node(Y),s_0(X,Y).
-t_0(X,MAX_node):-not unset(Y),not edge(X,Y),max_node(Y),s_0(X,Y).
-unset(X)|t_0(X,MAX_node):-max_node(Y),s_0(X,Y),not _ok.
-unset(Y)|t_0(X,MAX_node):-max_node(Y),s_0(X,Y),not edge(X,Y),not _ok.
-:-not unset(X),not t_0(X,MAX_node),max_node(Y),s_0(X,Y).
-:-succ_node(Y,NV_0),not t_0(X,NV_0),not ok,not _unset(NV_0),not _unset(X),not _t_0(X,Y).
-:-succ_node(Y,NV_0),not t_0(X,NV_0),not ok,edge(X,NV_0),not _unset(X),not _t_0(X,Y).
-t_0(X,Y):-not unset(X),succ_node(Y,NV_0).
-t_0(X,Y):-not unset(NV_0),not edge(X,NV_0),succ_node(Y,NV_0).
-unset(X)|t_0(X,Y):-succ_node(Y,NV_0),not _ok.
-unset(NV_0)|t_0(X,Y):-succ_node(Y,NV_0),not edge(X,NV_0),not _ok.
-:-not unset(X),not t_0(X,Y),succ_node(Y,NV_0).
-s_1(X,Y):-not eq(X,Y),not unset(X),not unset(Y),not _ok.
-:-not ok,t_1(MAX_node,MAX_node),not s_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),s_1(X,Y),eq(X,Y).
-:-not s_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),s_1(X,Y),not ok,eq(X,Y),not _t_1(MAX_node,MAX_node).
-:-not ok,t_1(MAX_node,MAX_node),max_node(X),max_node(Y),s_1(X,Y),eq(X,Y).
-:-max_node(X),max_node(Y),s_1(X,Y),not ok,eq(X,Y),not _t_1(MAX_node,MAX_node).
-unset(X)|unset(Y)|t_1(MAX_node,MAX_node):-not eq(X,Y),not s_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),s_1(X,Y),not _ok.
-unset(X)|unset(Y)|t_1(MAX_node,MAX_node):-not eq(X,Y),max_node(X),max_node(Y),s_1(X,Y),not _ok.
-ok|t_1(NV_1,NV_2):-t_1(X,Y),succ_node_node(X,Y,NV_1,NV_2),eq(NV_1,NV_2).
-ok|t_1(NV_1,NV_2):-unset(NV_1),t_1(X,Y),succ_node_node(X,Y,NV_1,NV_2).
-ok|t_1(NV_1,NV_2):-unset(NV_2),t_1(X,Y),succ_node_node(X,Y,NV_1,NV_2).
-ok|t_1(NV_1,NV_2):-t_1(X,Y),succ_node_node(X,Y,NV_1,NV_2),eq(NV_1,NV_2),not _unset(NV_1).
-ok|t_1(NV_1,NV_2):-t_1(X,Y),succ_node_node(X,Y,NV_1,NV_2),eq(NV_1,NV_2),not _unset(NV_2).
-t_1(NV_1,NV_2):-not ok,t_1(X,Y),succ_node_node(X,Y,NV_1,NV_2),not _unset(NV_1).
-t_1(NV_1,NV_2):-not ok,t_1(X,Y),succ_node_node(X,Y,NV_1,NV_2),not _unset(NV_2).
-:-succ_node_node(X,Y,NV_1,NV_2),not ok,not t_1(NV_1,NV_2),not _unset(NV_1),not _t_1(X,Y).
-:-succ_node_node(X,Y,NV_1,NV_2),not ok,not t_1(NV_1,NV_2),not _unset(NV_2),not _t_1(X,Y).
-unset(NV_1)|unset(NV_2)|t_1(X,Y):-not eq(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),not _ok.
-:-not s_0(X,NV_0),succ_node(Y,NV_0),s_0(X,Y),not ok,not _unset(Y),not _unset(X),not _t_0(X,MAX_node).
-:-not s_0(X,NV_0),succ_node(Y,NV_0),s_0(X,Y),not ok,edge(X,Y),not _unset(X),not _t_0(X,MAX_node).
-:-max_node(Y),s_0(X,Y),not ok,not _unset(Y),not _unset(X),not _t_0(X,MAX_node).
-:-max_node(Y),s_0(X,Y),not ok,edge(X,Y),not _unset(X),not _t_0(X,MAX_node).
-s_1(X,Y):-not unset(Y),not unset(X),not eq(X,Y),not _ok.
-ok:-t_1(MAX_node,MAX_node),not s_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),s_1(X,Y),eq(X,Y).
-ok:-unset(X),t_1(MAX_node,MAX_node),not s_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),s_1(X,Y).
-ok:-unset(Y),t_1(MAX_node,MAX_node),not s_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),s_1(X,Y).
-ok:-t_1(MAX_node,MAX_node),not s_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),s_1(X,Y),eq(X,Y),not _unset(X).
-ok:-t_1(MAX_node,MAX_node),not s_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),s_1(X,Y),eq(X,Y),not _unset(Y).
-:-not ok,t_1(MAX_node,MAX_node),not s_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),s_1(X,Y),not _unset(X).
-:-not ok,t_1(MAX_node,MAX_node),not s_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),s_1(X,Y),not _unset(Y).
-:-not s_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),s_1(X,Y),not ok,not _unset(X),not _t_1(MAX_node,MAX_node).
-:-not s_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),s_1(X,Y),not ok,not _unset(Y),not _t_1(MAX_node,MAX_node).
-ok:-t_1(MAX_node,MAX_node),max_node(X),max_node(Y),s_1(X,Y),eq(X,Y).
-ok:-unset(X),t_1(MAX_node,MAX_node),max_node(X),max_node(Y),s_1(X,Y).
-ok:-unset(Y),t_1(MAX_node,MAX_node),max_node(X),max_node(Y),s_1(X,Y).
-ok:-t_1(MAX_node,MAX_node),max_node(X),max_node(Y),s_1(X,Y),eq(X,Y),not _unset(X).
-ok:-t_1(MAX_node,MAX_node),max_node(X),max_node(Y),s_1(X,Y),eq(X,Y),not _unset(Y).
-:-not ok,t_1(MAX_node,MAX_node),max_node(X),max_node(Y),s_1(X,Y),not _unset(X).
-:-not ok,t_1(MAX_node,MAX_node),max_node(X),max_node(Y),s_1(X,Y),not _unset(Y).
-:-max_node(X),max_node(Y),s_1(X,Y),not ok,not _unset(X),not _t_1(MAX_node,MAX_node).
-:-max_node(X),max_node(Y),s_1(X,Y),not ok,not _unset(Y),not _t_1(MAX_node,MAX_node).
-t_1(MAX_node,MAX_node):-not eq(X,Y),not unset(X),not unset(Y),not s_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),s_1(X,Y),not _ok.
-t_1(MAX_node,MAX_node):-not eq(X,Y),not unset(X),not unset(Y),max_node(X),max_node(Y),s_1(X,Y),not _ok.
-t_1(X,Y):-not eq(NV_1,NV_2),not unset(NV_1),not unset(NV_2),succ_node_node(X,Y,NV_1,NV_2),not _ok.
-:-not edge(X,Y),not unset(Y),not t_0(X,MAX_node),not s_0(X,NV_0),succ_node(Y,NV_0),s_0(X,Y).
-:-not edge(X,Y),not unset(Y),not t_0(X,MAX_node),max_node(Y),s_0(X,Y).
-:-not edge(X,NV_0),not unset(NV_0),not t_0(X,Y),succ_node(Y,NV_0).
-:-not unset(Y),not unset(X),not eq(X,Y),not t_1(MAX_node,MAX_node),not s_1(NV_1,NV_2),succ_node_node(X,Y,NV_1,NV_2),s_1(X,Y).
-:-not unset(Y),not unset(X),not eq(X,Y),not t_1(MAX_node,MAX_node),max_node(X),max_node(Y),s_1(X,Y).
-:-not unset(NV_2),not unset(NV_1),not eq(NV_1,NV_2),not t_1(X,Y),succ_node_node(X,Y,NV_1,NV_2).
+:-cvr(X),not i(X).
+:-not s_0(X,Y,MIN_i).
+s_0(X,Y,Z):-succ_i(Z,NV_0),s_0(X,Y,NV_0).
+s_0(X,Y,Z):-not i(X),not _cvr(Z),set(Z,Y).
+s_0(X,Y,Z):-not set(X,Y),not _cvr(Z),set(Z,Y).
+cvr(MIN_i)|t_0(X,Y,MIN_i):-i(X),set(X,Y).
+t_0(X,Y,MIN_i):-i(X),set(X,Y),not set(MIN_i,Y).
+t_0(X,Y,MIN_i):-not cvr(MIN_i),i(X),set(X,Y).
+t_0(X,Y,MIN_i):-not set(MIN_i,Y),i(X),set(X,Y).
+t_0(X,Y,Z):-t_0(X,Y,NV_0),succ_i(Z,NV_0).
+:-not t_0(X,Y,Z),succ_i(Z,NV_0),not _t_0(X,Y,NV_0).
+s_0(X,Y,Z):-not i(X).
+s_0(X,Y,Z):-not set(X,Y).
+s_0(X,Y,Z):-set(Z,Y),not _cvr(Z).
+t_0(X,Y,MAX_i):-cvr(Z),set(Z,Y),not s_0(X,Y,NV_0),succ_i(Z,NV_0),s_0(X,Y,Z).
+:-not t_0(X,Y,MAX_i),not s_0(X,Y,NV_0),succ_i(Z,NV_0),s_0(X,Y,Z),not _cvr(Z),set(Z,Y).
+t_0(X,Y,MAX_i):-cvr(Z),set(Z,Y),max_i(Z),s_0(X,Y,Z).
+:-not t_0(X,Y,MAX_i),max_i(Z),s_0(X,Y,Z),not _cvr(Z),set(Z,Y).
+cvr(NV_0)|t_0(X,Y,NV_0):-i(X),set(X,Y),t_0(X,Y,Z),succ_i(Z,NV_0).
+t_0(X,Y,NV_0):-i(X),set(X,Y),t_0(X,Y,Z),succ_i(Z,NV_0),not set(NV_0,Y).
+t_0(X,Y,NV_0):-not cvr(NV_0),t_0(X,Y,Z),succ_i(Z,NV_0),i(X),set(X,Y).
+t_0(X,Y,NV_0):-not set(NV_0,Y),t_0(X,Y,Z),succ_i(Z,NV_0),i(X),set(X,Y).
+t_0(X,Y,Z):-cvr(NV_0),set(NV_0,Y),succ_i(Z,NV_0).
+:-not t_0(X,Y,Z),succ_i(Z,NV_0),not _cvr(NV_0),set(NV_0,Y).
+cvr(Z):-i(X),set(X,Y),t_0(X,Y,MAX_i),not s_0(X,Y,NV_0),succ_i(Z,NV_0),s_0(X,Y,Z).
+:-i(X),set(X,Y),t_0(X,Y,MAX_i),not s_0(X,Y,NV_0),succ_i(Z,NV_0),s_0(X,Y,Z),not set(Z,Y).
+:-not cvr(Z),t_0(X,Y,MAX_i),not s_0(X,Y,NV_0),succ_i(Z,NV_0),s_0(X,Y,Z),i(X),set(X,Y).
+:-not set(Z,Y),t_0(X,Y,MAX_i),not s_0(X,Y,NV_0),succ_i(Z,NV_0),s_0(X,Y,Z),i(X),set(X,Y).
+cvr(Z):-i(X),set(X,Y),t_0(X,Y,MAX_i),max_i(Z),s_0(X,Y,Z).
+:-i(X),set(X,Y),t_0(X,Y,MAX_i),max_i(Z),s_0(X,Y,Z),not set(Z,Y).
+:-not cvr(Z),t_0(X,Y,MAX_i),max_i(Z),s_0(X,Y,Z),i(X),set(X,Y).
+:-not set(Z,Y),t_0(X,Y,MAX_i),max_i(Z),s_0(X,Y,Z),i(X),set(X,Y).
+t_0(X,Y,MAX_i):-not i(X),not s_0(X,Y,NV_0),succ_i(Z,NV_0),s_0(X,Y,Z).
+t_0(X,Y,MAX_i):-not set(X,Y),not s_0(X,Y,NV_0),succ_i(Z,NV_0),s_0(X,Y,Z).
+t_0(X,Y,MAX_i):-not s_0(X,Y,NV_0),succ_i(Z,NV_0),s_0(X,Y,Z),not i(X),not _cvr(Z),set(Z,Y).
+t_0(X,Y,MAX_i):-not s_0(X,Y,NV_0),succ_i(Z,NV_0),s_0(X,Y,Z),not set(X,Y),not _cvr(Z),set(Z,Y).
+:-not i(X),not t_0(X,Y,MAX_i),not s_0(X,Y,NV_0),succ_i(Z,NV_0),s_0(X,Y,Z).
+:-not set(X,Y),not t_0(X,Y,MAX_i),not s_0(X,Y,NV_0),succ_i(Z,NV_0),s_0(X,Y,Z).
+t_0(X,Y,MAX_i):-not i(X),max_i(Z),s_0(X,Y,Z).
+t_0(X,Y,MAX_i):-not set(X,Y),max_i(Z),s_0(X,Y,Z).
+t_0(X,Y,MAX_i):-max_i(Z),s_0(X,Y,Z),not i(X),not _cvr(Z),set(Z,Y).
+t_0(X,Y,MAX_i):-max_i(Z),s_0(X,Y,Z),not set(X,Y),not _cvr(Z),set(Z,Y).
+:-not i(X),not t_0(X,Y,MAX_i),max_i(Z),s_0(X,Y,Z).
+:-not set(X,Y),not t_0(X,Y,MAX_i),max_i(Z),s_0(X,Y,Z).
+:-not cvr(NV_0),succ_i(Z,NV_0),not t_0(X,Y,NV_0),set(X,Y),i(X),not _t_0(X,Y,Z).
+:-not set(NV_0,Y),succ_i(Z,NV_0),not t_0(X,Y,NV_0),set(X,Y),i(X),not _t_0(X,Y,Z).
+t_0(X,Y,Z):-not i(X),succ_i(Z,NV_0).
+t_0(X,Y,Z):-not set(X,Y),succ_i(Z,NV_0).
+t_0(X,Y,Z):-succ_i(Z,NV_0),not i(X),not _cvr(NV_0),set(NV_0,Y).
+t_0(X,Y,Z):-succ_i(Z,NV_0),not set(X,Y),not _cvr(NV_0),set(NV_0,Y).
+:-not i(X),not t_0(X,Y,Z),succ_i(Z,NV_0).
+:-not set(X,Y),not t_0(X,Y,Z),succ_i(Z,NV_0).
+:-not cvr(Z),not s_0(X,Y,NV_0),succ_i(Z,NV_0),s_0(X,Y,Z),set(X,Y),i(X),not _t_0(X,Y,MAX_i).
+:-not set(Z,Y),not s_0(X,Y,NV_0),succ_i(Z,NV_0),s_0(X,Y,Z),set(X,Y),i(X),not _t_0(X,Y,MAX_i).
+:-not cvr(Z),max_i(Z),s_0(X,Y,Z),set(X,Y),i(X),not _t_0(X,Y,MAX_i).
+:-not set(Z,Y),max_i(Z),s_0(X,Y,Z),set(X,Y),i(X),not _t_0(X,Y,MAX_i).

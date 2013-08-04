@@ -123,6 +123,6 @@ void Formula::replaceTerms(const vector<int>& _originals,
  */
 Formulas* Formula::divideFormula() const{
     Formulas* pResult = new Formulas();
-    Utils::divideFormula(m_pFormula, NULL, pResult);
+    Utils::divideFormula(m_pFormula, pResult);
     return pResult;
 }

@@ -51,7 +51,7 @@ public:
     static void replaceFormulaTerms(_formula* _fml, 
                                 const vector<int>& _originals, 
 				const vector<int>& _replacements);
-    static void divideFormula(_formula* _fml, _formula* _parent, Formulas* _result);
+    static void divideFormula(_formula* _fml, Formulas* _result);
     
     //对于rule
     static void printAtom(const _formula* _atom, FILE* _out);

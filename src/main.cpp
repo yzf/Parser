@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
     
     yyparse();
     fclose(yyin);
-    
+
 #ifdef RUN_S2DLP
     Formula f = Formula(gformula, false);
     S2DLP::instance().init(f);
