@@ -41,6 +41,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Formulas.o \
 	${OBJECTDIR}/src/HengZhang.o \
 	${OBJECTDIR}/src/NNFUtils.o \
+	${OBJECTDIR}/src/PNFUtils.o \
 	${OBJECTDIR}/src/Rule.o \
 	${OBJECTDIR}/src/S2DLP.o \
 	${OBJECTDIR}/src/Utils.o \
@@ -110,6 +111,11 @@ ${OBJECTDIR}/src/NNFUtils.o: src/NNFUtils.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/NNFUtils.o src/NNFUtils.cpp
+
+${OBJECTDIR}/src/PNFUtils.o: src/PNFUtils.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/PNFUtils.o src/PNFUtils.cpp
 
 ${OBJECTDIR}/src/Rule.o: src/Rule.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -249,6 +255,19 @@ ${OBJECTDIR}/src/NNFUtils_nomain.o: ${OBJECTDIR}/src/NNFUtils.o src/NNFUtils.cpp
 	    $(COMPILE.cc) -O2 `cppunit-config --cflags` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/NNFUtils_nomain.o src/NNFUtils.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/NNFUtils.o ${OBJECTDIR}/src/NNFUtils_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/PNFUtils_nomain.o: ${OBJECTDIR}/src/PNFUtils.o src/PNFUtils.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/PNFUtils.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -O2 `cppunit-config --cflags` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/PNFUtils_nomain.o src/PNFUtils.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/PNFUtils.o ${OBJECTDIR}/src/PNFUtils_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/Rule_nomain.o: ${OBJECTDIR}/src/Rule.o src/Rule.cpp 

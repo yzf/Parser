@@ -10,6 +10,7 @@
       <itemPath>include/Formulas.h</itemPath>
       <itemPath>include/HengZhang.h</itemPath>
       <itemPath>include/NNFUtils.h</itemPath>
+      <itemPath>include/PNFUtils.h</itemPath>
       <itemPath>include/Rule.h</itemPath>
       <itemPath>include/S2DLP.h</itemPath>
       <itemPath>include/Utils.h</itemPath>
@@ -42,6 +43,7 @@
       <itemPath>src/Formulas.cpp</itemPath>
       <itemPath>src/HengZhang.cpp</itemPath>
       <itemPath>src/NNFUtils.cpp</itemPath>
+      <itemPath>src/PNFUtils.cpp</itemPath>
       <itemPath>src/Rule.cpp</itemPath>
       <itemPath>src/S2DLP.cpp</itemPath>
       <itemPath>src/Utils.cpp</itemPath>
@@ -143,6 +145,8 @@
       </item>
       <item path="include/NNFUtils.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/PNFUtils.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Rule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/S2DLP.h" ex="false" tool="3" flavor2="0">
@@ -178,6 +182,8 @@
       <item path="src/HengZhang.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/NNFUtils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/PNFUtils.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Rule.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -264,6 +270,8 @@
       </item>
       <item path="include/NNFUtils.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/PNFUtils.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Rule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/S2DLP.h" ex="false" tool="3" flavor2="0">
@@ -299,6 +307,8 @@
       <item path="src/HengZhang.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/NNFUtils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/PNFUtils.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Rule.cpp" ex="false" tool="1" flavor2="0">
       </item>

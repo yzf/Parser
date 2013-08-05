@@ -40,8 +40,8 @@ private:
 
 private:
     Vocabulary();
-    Vocabulary(const Vocabulary& rhs){}
-    Vocabulary& operator =(const Vocabulary& rhs){return *this;}
+    Vocabulary(const Vocabulary&);
+    Vocabulary& operator =(const Vocabulary&);
     ~Vocabulary();
 
 public:

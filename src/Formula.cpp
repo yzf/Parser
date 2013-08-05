@@ -3,6 +3,7 @@
 #include <cstring>
 #include <algorithm>
 #include "Vocabulary.h"
+#include "PNFUtils.h"
 
 int Formula::ms_nNewFormulaId = 0;
 
@@ -63,7 +64,7 @@ bool Formula::isUniversal() const {
  * 把公式转化成前束范式
  */
 void Formula::convertToPrenex() {
-    Utils::convertToPrenex(m_pFormula);
+    PNFUtils::convertToPrenex(m_pFormula);
 }
 /**
  * 为公式中没有量词限定的参数补上全称量词限定

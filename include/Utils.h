@@ -38,10 +38,7 @@ public:
     static _formula* copyFormula(const _formula* _fml);
     static void deleteFormula(_formula* _fml);
     static bool isUniversal(_formula* _fml);
-    static _formula* findPrenexQuanlifier(_formula* _fml, int _nVariableId);
-    static void removeFromPrenex(_formula* _parent, int _d, _formula* _tag);
     static void renameFormulaVariables(_formula* _fml, int _nOldVariableId, int _nNewVariableId);
-    static void convertToPrenex(_formula* _fml);
     static void getNoQuantifierVariables(map<int, bool>& _flag, vector<int>& _varis, _formula* _fml);
     static bool isNegativeFormula(_formula* _fml, bool _negative, 
                                         int* _pPredicateIds = NULL, int _nSize = 0);

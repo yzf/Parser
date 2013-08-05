@@ -57,9 +57,9 @@ private:
     _formula* generateFormulaLeft_4();
     
     HengZhang();
-    HengZhang(const HengZhang& _rhs);
+    HengZhang(const HengZhang&);
     ~HengZhang();
-    HengZhang& operator = (const HengZhang& _rhs);
+    HengZhang& operator = (const HengZhang&);
 public:
     //creators
     Formulas* convert(const Formulas& _originalFmls);

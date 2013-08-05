@@ -4,12 +4,6 @@
 
 HengZhang::HengZhang() {
 }
-
-HengZhang::HengZhang(const HengZhang& _rhs) {
-}
-HengZhang& HengZhang::operator = (const HengZhang& _rhs) {
-    return *this;
-}
 HengZhang::~HengZhang() {
 }
 

@@ -31,8 +31,8 @@ private:
     list<Rule> m_listRules;             //转换后的所有规则
 private:
     S2DLP();
-    S2DLP(const S2DLP& _rhs) {};
-    S2DLP& operator = (const S2DLP& _rhs) {return *this;}
+    S2DLP(const S2DLP&);
+    S2DLP& operator = (const S2DLP&);
     ~S2DLP();
     
     void hengZhangTransform();
