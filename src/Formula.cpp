@@ -7,22 +7,20 @@
 
 int Formula::ms_nNewFormulaId = 0;
 
-Formula::Formula() {
-    m_pFormula = NULL;
-    m_nFormulaId = Formula::ms_nNewFormulaId ++;
+Formula::Formula() : m_pFormula(NULL), m_nFormulaId(ms_nNewFormulaId) {
+    ++ ms_nNewFormulaId;
 }
-Formula::Formula(const Formula& rhs) {
-    m_pFormula = Utils::copyFormula(rhs.getFormula());
-    m_nFormulaId = rhs.m_nFormulaId;
+Formula::Formula(const Formula& _rhs) : m_nFormulaId(_rhs.m_nFormulaId) {
+    m_pFormula = Utils::copyFormula(_rhs.getFormula());
 }
-Formula::Formula(_formula* _fml, bool _bIsCopy) {
+Formula::Formula(_formula* _fml, bool _bIsCopy) : m_nFormulaId(ms_nNewFormulaId) {
     if (_bIsCopy) {
         m_pFormula = Utils::copyFormula(_fml);
     }
     else {
         m_pFormula = _fml;
     }
-    m_nFormulaId = Formula::ms_nNewFormulaId ++;
+    ++ ms_nNewFormulaId;
 }
 Formula::~Formula() {
     if (m_pFormula != NULL) {
@@ -70,6 +68,9 @@ void Formula::convertToPrenex() {
  * 为公式中没有量词限定的参数补上全称量词限定
  */
 void Formula::fixUniversalQuantifier() {
+    if (m_pFormula == NULL) {
+        return;
+    }
     map<int, bool> variablesFlag;
     vector<int> variables;
     Utils::getNoQuantifierVariables(variablesFlag, variables, m_pFormula);
@@ -85,6 +86,9 @@ void Formula::fixUniversalQuantifier() {
     }
 }
 void Formula::removeUniversalQuantifier() {
+    if (m_pFormula == NULL) {
+        return;
+    }
     while (m_pFormula->formula_type == UNIV) {
         _formula* pre = m_pFormula;
         m_pFormula = m_pFormula->subformula_l;

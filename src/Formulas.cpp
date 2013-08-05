@@ -4,12 +4,10 @@
 Formulas::Formulas() {
 }
 
-Formulas::Formulas(const deque<Formula>& _formulas) {
-    m_dequeFormulas = _formulas;
+Formulas::Formulas(const deque<Formula>& _formulas) : m_dequeFormulas(_formulas) {
 }
 
-Formulas::Formulas(const Formulas& _rhs) {
-    m_dequeFormulas = _rhs.m_dequeFormulas;
+Formulas::Formulas(const Formulas& _rhs) : m_dequeFormulas(_rhs.m_dequeFormulas) {
 }
 
 Formulas::~Formulas() {
