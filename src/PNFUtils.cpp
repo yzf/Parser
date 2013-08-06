@@ -68,6 +68,13 @@ void PNFUtils::extractQuantifier_IMPL_CONJ_DISJ(_formula* _fml) {
         if (sub_l->formula_type != priority_type && sub_r->formula_type != priority_type) {
             priority_type = EXIS;
         }
+        // [!X]p(X) & q  =>  [!X](p(X) & q)
+        // [?X]p(X) & q  =>  [?X](p(X) & q)
+        // [!X]p(X) | q  =>  [!X](p(X) | q)
+        // [?X]p(X) | q  =>  [?X](p(X) | q)
+        // q -> [!X]p(X) =>  [!X](q -> p(X))
+        // q -> [?X]p(X) =>  [?X](q -> p(X))
+        // 其中 q 不带变元X．
         // 提取左子公式的量词
         if (sub_l->formula_type == priority_type || sub_l->formula_type == sub_r->formula_type) {
             // 特殊情况：
@@ -94,6 +101,7 @@ void PNFUtils::extractQuantifier_IMPL_CONJ_DISJ(_formula* _fml) {
             sub_l->formula_type = temp;
             sub_l->subformula_r = sub_r;
         }
+        // 相关公式与提取左子公式相似
         // 提取右子公式的量词
         else {
             // 特殊情况：
