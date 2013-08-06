@@ -44,10 +44,10 @@ Formulas* Cabalar::convert(const Formulas& _originalFmls) {
     while (! tmpFormulas.isEmpty()) {
         Formula curFml = tmpFormulas.popFront();
         curFml.removeUniversalQuantifier();
-        deque<Formula> tmpDeq;
-        tmpDeq.push_back(curFml);
         
-        Formulas beforeTrans(tmpDeq);
+        Formulas beforeTrans;
+        beforeTrans.pushBack(curFml);
+        
         Formulas afterTrans = CabalarUtils::transform(Utils::copyFormula(curFml.getFormula()));
         if (beforeTrans == afterTrans) {
             pFinalFormulas->pushBack(curFml);
