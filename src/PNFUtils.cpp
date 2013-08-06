@@ -156,6 +156,7 @@ void PNFUtils::convertToPrenex(_formula* _fml) {
         convertToPrenex(_fml->subformula_l);
         break;
     default:
+        assert(0);
         break;           
     }
 }

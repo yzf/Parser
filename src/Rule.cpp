@@ -4,14 +4,14 @@
 #include <assert.h>
 #include <cstdlib>
 
-Rule::Rule(const Formula& _fml) {
-    m_pHeadFormulas = new Formulas();
-    m_pBodyFormulas = new Formulas();
+Rule::Rule(const Formula& _fml) : 
+        m_pHeadFormulas(new Formulas()),
+        m_pBodyFormulas(new Formulas()) {
     convertFormulaToRule(_fml.getFormula());
 }
-Rule::Rule(const Rule& _rhs) {
-    m_pHeadFormulas = new Formulas(*(_rhs.m_pHeadFormulas));
-    m_pBodyFormulas = new Formulas(*(_rhs.m_pBodyFormulas));
+Rule::Rule(const Rule& _rhs) : 
+        m_pHeadFormulas(new Formulas(*(_rhs.m_pHeadFormulas))),
+        m_pBodyFormulas(new Formulas(*(_rhs.m_pBodyFormulas))) {
 }
 Rule::~Rule() {
     if (m_pHeadFormulas != NULL) {

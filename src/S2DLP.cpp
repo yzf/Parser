@@ -9,8 +9,8 @@
 S2DLP::S2DLP() :
         m_pOriginalFormulas(NULL),
         m_pHengZhangFormulas(NULL),
-        m_pDlpFormulas(NULL) {
-    m_pNegaPredicates = new Formulas();
+        m_pDlpFormulas(NULL),
+        m_pNegaPredicates(new Formulas()) {
 }
 
 S2DLP::~S2DLP() {
