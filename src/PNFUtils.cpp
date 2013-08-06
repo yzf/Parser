@@ -139,7 +139,7 @@ void PNFUtils::extractQuantifier_IMPL_CONJ_DISJ(_formula* _fml) {
  * 把公式_fml转化成前束范式
  * @param _fml
  */
-void PNFUtils::convertToPrenex(_formula* _fml) {
+void PNFUtils::convertToPNF(_formula* _fml) {
     if(_fml == NULL) {
         return;
     }
@@ -148,20 +148,20 @@ void PNFUtils::convertToPrenex(_formula* _fml) {
     case ATOM:
         break;
     case NEGA:
-        convertToPrenex(_fml->subformula_l);
+        convertToPNF(_fml->subformula_l);
         extractQuantifier_NEGA(_fml);
         break;
     case IMPL:
     case CONJ:
     case DISJ: {
-        convertToPrenex(_fml->subformula_l);
-        convertToPrenex(_fml->subformula_r);
+        convertToPNF(_fml->subformula_l);
+        convertToPNF(_fml->subformula_r);
         extractQuantifier_IMPL_CONJ_DISJ(_fml);
     }
         break;
     case UNIV:
     case EXIS:
-        convertToPrenex(_fml->subformula_l);
+        convertToPNF(_fml->subformula_l);
         break;
     default:
         assert(0);

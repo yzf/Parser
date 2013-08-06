@@ -12,6 +12,28 @@ HengZhang& HengZhang::instance() {
     return theSingleton;
 }
 /**
+ * 对每条公式进行章衡公式转换
+ * @param _originalFmls Formulas 需要进行转换的公式
+ * @return 返回Formulas*，需要手动销毁
+ */
+Formulas* HengZhang::convert(const Formulas& _originalFmls) {
+    Formulas tempFmls = _originalFmls;
+    Formulas* pFinalFmls = new Formulas();
+    while (! tempFmls.isEmpty()) {
+        Formula curFml = tempFmls.popFront();
+        curFml.convertToPNF();
+        if (curFml.isUniversal()) {
+            pFinalFmls->pushBack(curFml);
+            continue;
+        }
+        curFml.fixUniversalQuantifier();
+        Formulas hzFmls = transform(curFml);
+        tempFmls.joinFront(hzFmls);
+    }
+    
+    return pFinalFmls;
+}
+/**
  * 把量词保存到对应的vector
  * @param originalFml 一阶语句
  * @return 
@@ -54,28 +76,6 @@ Formula HengZhang::recordQuantifier(const Formula& _originalFml) {
     Formula ret = Formula(fml, true);
     ret.m_nFormulaId = _originalFml.m_nFormulaId;
     return ret;
-}
-/**
- * 对每条公式进行章衡公式转换
- * @param _originalFmls Formulas 需要进行转换的公式
- * @return 返回Formulas*，需要手动销毁
- */
-Formulas* HengZhang::convert(const Formulas& _originalFmls) {
-    Formulas tempFmls = _originalFmls;
-    Formulas* pFinalFmls = new Formulas();
-    while (! tempFmls.isEmpty()) {
-        Formula curFml = tempFmls.popFront();
-        curFml.convertToPrenex();
-        if (curFml.isUniversal()) {
-            pFinalFmls->pushBack(curFml);
-            continue;
-        }
-        curFml.fixUniversalQuantifier();
-        Formulas hzFmls = transform(curFml);
-        tempFmls.joinFormulas(hzFmls);
-    }
-    
-    return pFinalFmls;
 }
 /**
  * 新产生的谓词 s、t为内涵谓词，succ、max为“特殊”外延谓词

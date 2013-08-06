@@ -61,8 +61,8 @@ bool Formula::isUniversal() const {
 /**
  * 把公式转化成前束范式
  */
-void Formula::convertToPrenex() {
-    PNFUtils::convertToPrenex(m_pFormula);
+void Formula::convertToPNF() {
+    PNFUtils::convertToPNF(m_pFormula);
 }
 /**
  * 为公式中没有量词限定的参数补上全称量词限定

@@ -46,13 +46,22 @@ Formula Formulas::back() {
 }
 /**
  * 连接公式数组 如 {a,b,c}{d,e} -> {a,b,c,d,e}
- * 注意：{d,e} -> {}
  * @param _tail
  */
-void Formulas::joinFormulas(const Formulas& _tail) {
+void Formulas::joinBack(const Formulas& _tail) {
     for (FORMULAS_CONST_ITERATOR it = _tail.begin(); 
             it != _tail.end(); ++ it) {
         pushBack(*it);
+    }
+}
+/**
+ * 连接公式数组 如 {a,b,c}{d,e} -> {d,e,a,b,c}
+ * @param _tail
+ */
+void Formulas::joinFront(const Formulas& _head) {
+    for (FORMULAS_CONST_REV_ITERATOR it = _head.rbegin();
+            it != _head.rend(); ++ it) {
+        pushFront(*it);
     }
 }
 /**
@@ -111,6 +120,12 @@ FORMULAS_CONST_ITERATOR Formulas::begin() const {
 }
 FORMULAS_CONST_ITERATOR Formulas::end() const {
     return m_dequeFormulas.end();
+}
+FORMULAS_CONST_REV_ITERATOR Formulas::rbegin() const {
+    return m_dequeFormulas.rbegin();
+}
+FORMULAS_CONST_REV_ITERATOR Formulas::rend() const {
+    return m_dequeFormulas.rend();
 }
 /**
  * 删除迭代器_it指向的元素，返回下一个有效元素

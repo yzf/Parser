@@ -53,7 +53,7 @@ Formulas* Cabalar::convert(const Formulas& _originalFmls) {
             pFinalFormulas->pushBack(curFml);
         }
         else {
-            tmpFormulas.joinFormulas(afterTrans);
+            tmpFormulas.joinFront(afterTrans);
         }
     }
     return pFinalFormulas;

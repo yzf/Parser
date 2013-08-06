@@ -37,7 +37,7 @@ public:
     _formula* getFormula() const;
     void setFormula(_formula* _newFormula);
     bool isUniversal() const;
-    void convertToPrenex();
+    void convertToPNF();
     void fixUniversalQuantifier();
     void removeUniversalQuantifier();
     void output(FILE* _out) const;
