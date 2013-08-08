@@ -293,7 +293,7 @@ void Vocabulary::dumpVocabulary(FILE* _out)  {
     }
     
     fprintf(_out, "\natom\n");
-    for (FORMULAS_ITERATOR it = m_fmlAtomList->begin();
+    for (FORMULAS_CONST_ITERATOR it = m_fmlAtomList->begin();
             it != m_fmlAtomList->end(); ++ it) {
         fprintf(_out, "%s:%d ", getNameById(it->getFormula()->predicate_id, PREDICATE),
                 it->getFormula()->predicate_id);
@@ -301,7 +301,7 @@ void Vocabulary::dumpVocabulary(FILE* _out)  {
 }
 
 Formula Vocabulary::getAtom(int _predicateId) const {
-    for (FORMULAS_ITERATOR it = m_fmlAtomList->begin();
+    for (FORMULAS_CONST_ITERATOR it = m_fmlAtomList->begin();
             it != m_fmlAtomList->end(); ++ it) {
         if (it->getFormula()->predicate_id == _predicateId) {
             return *it;
@@ -310,7 +310,7 @@ Formula Vocabulary::getAtom(int _predicateId) const {
     return Formula();
 }
 void Vocabulary::addAtom(const Formula& _newAtom) {
-    for (FORMULAS_ITERATOR iter = m_fmlAtomList->begin();
+    for (FORMULAS_CONST_ITERATOR iter = m_fmlAtomList->begin();
             iter != m_fmlAtomList->end(); ++ iter) {
         if (iter->getFormula()->predicate_id == _newAtom.getFormula()->predicate_id) {
             return;

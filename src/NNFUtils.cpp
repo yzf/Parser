@@ -126,49 +126,49 @@ _formula* NNFUtils::convertToNegativeNormalForm(_formula* _originalFml) {
                _originalFml->formula_type == IMPL || _originalFml->formula_type == UNIV);
 
     //Cabalar. (2005)
-    if(_originalFml->formula_type == ATOM) {
+    if (_originalFml->formula_type == ATOM) {
         //do nothing
     }
-	
-    else if(_originalFml->formula_type == NEGA) {
+    
+    else if (_originalFml->formula_type == NEGA) {
         _formula* subformula_l = _originalFml->subformula_l;
 
-        if(subformula_l->formula_type == ATOM) {
+        if (subformula_l->formula_type == ATOM) {
             //N1
-            if(subformula_l->predicate_id == PRED_TRUE) {
+            if (subformula_l->predicate_id == PRED_TRUE) {
                 return negativeNormalForm_1(_originalFml);
             }
             //N2
-            if(subformula_l->predicate_id == PRED_FALSE) {
+            else if (subformula_l->predicate_id == PRED_FALSE) {
                 return negativeNormalForm_2(_originalFml);
             }
         }
         
-        if(subformula_l->formula_type == NEGA) {
+        else if (subformula_l->formula_type == NEGA) {
             //N3
-            if(subformula_l->subformula_l->formula_type == NEGA) {
+            if (subformula_l->subformula_l->formula_type == NEGA) {
                 return negativeNormalForm_3(_originalFml);
             }
         }
         //N4
-        if(subformula_l->formula_type == CONJ) {
+        else if (subformula_l->formula_type == CONJ) {
             return negativeNormalForm_4(_originalFml);
         }
         //N5
-        if(subformula_l->formula_type == DISJ) {
+        else if (subformula_l->formula_type == DISJ) {
             return negativeNormalForm_5(_originalFml);
         }
         //N6
-        if(subformula_l->formula_type == IMPL) {
+        else if (subformula_l->formula_type == IMPL) {
             return negativeNormalForm_6(_originalFml);
         }
     }
     
-    else if (_originalFml->formula_type == UNIV) {
+    else if (_originalFml->formula_type == UNIV || _originalFml->formula_type == EXIS) {
         _originalFml->subformula_l = convertToNegativeNormalForm(_originalFml->subformula_l);
     }
     
-    else {
+    else {// CONJ,DISJ,IMPL
         _originalFml->subformula_l = convertToNegativeNormalForm(_originalFml->subformula_l);
 	_originalFml->subformula_r = convertToNegativeNormalForm(_originalFml->subformula_r);
     }

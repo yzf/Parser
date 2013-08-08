@@ -20,9 +20,9 @@
 
 using namespace std;
 
-extern FILE *yyin;
-extern _formula* gformula;
 FILE* fout;
+extern FILE* yyin;
+extern _formula* gformula;
 extern int yyparse();
 
 #define RUN_S2DLP
@@ -55,7 +55,7 @@ int main(int argc, char** argv) {
     
     yyparse();
     fclose(yyin);
-    
+
 #ifdef RUN_S2DLP
     Formula f = Formula(gformula, false);
     S2DLP::instance().init(f);

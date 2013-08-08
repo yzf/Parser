@@ -2,7 +2,7 @@
  * File:   newtestclass.h
  * Author: yzf
  *
- * Created on Aug 1, 2013, 1:43:34 PM
+ * Created on Aug 1, 2013, 5:01:24 PM
  */
 
 #ifndef NEWTESTCLASS_H

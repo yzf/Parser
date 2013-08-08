@@ -4,12 +4,6 @@
 
 HengZhang::HengZhang() {
 }
-
-HengZhang::HengZhang(const HengZhang& _rhs) {
-}
-HengZhang& HengZhang::operator = (const HengZhang& _rhs) {
-    return *this;
-}
 HengZhang::~HengZhang() {
 }
 
@@ -18,12 +12,34 @@ HengZhang& HengZhang::instance() {
     return theSingleton;
 }
 /**
+ * 对每条公式进行章衡公式转换
+ * @param _originalFmls Formulas 需要进行转换的公式
+ * @return 返回Formulas*，需要手动销毁
+ */
+Formulas* HengZhang::convert(const Formulas& _originalFmls) {
+    Formulas tempFmls = _originalFmls;
+    Formulas* pFinalFmls = new Formulas();
+    while (! tempFmls.isEmpty()) {
+        Formula curFml = tempFmls.popFront();
+        curFml.convertToPNF();
+        if (curFml.isUniversal()) {
+            pFinalFmls->pushBack(curFml);
+            continue;
+        }
+        curFml.fixUniversalQuantifier();
+        Formulas hzFmls = transform(curFml);
+        tempFmls.joinFront(hzFmls);
+    }
+    
+    return pFinalFmls;
+}
+/**
  * 把量词保存到对应的vector
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::recordQuantifier(Formula _originalFml) {
-    char strBuf[32];
+Formula HengZhang::recordQuantifier(const Formula& _originalFml) {
+    char sBuf[32];
 
     m_vTermsX.clear();
     m_vTermsY.clear();
@@ -39,21 +55,21 @@ Formula HengZhang::recordQuantifier(Formula _originalFml) {
     while (fml->formula_type == EXIS) {
         m_vTermsY.push_back(fml->variable_id);
         
-        const char* domainName = Vocabulary::instance().getVariableDomain(fml->variable_id);
+        const char* sDomainName = Vocabulary::instance().getVariableDomain(fml->variable_id);
         
-        sprintf(strBuf, "MIN_%s", domainName);
-        int idMin = Vocabulary::instance().addSymbol(strBuf, VARIABLE);
-        m_vTermsMIN.push_back(idMin);
+        sprintf(sBuf, "MIN_%s", sDomainName);
+        int nIdMin = Vocabulary::instance().addSymbol(sBuf, VARIABLE);
+        m_vTermsMIN.push_back(nIdMin);
 
-        sprintf(strBuf, "MAX_%s", domainName);
-        int idMax = Vocabulary::instance().addSymbol(strBuf, VARIABLE);
-        m_vTermsMAX.push_back(idMax);
+        sprintf(sBuf, "MAX_%s", sDomainName);
+        int nIdMax = Vocabulary::instance().addSymbol(sBuf, VARIABLE);
+        m_vTermsMAX.push_back(nIdMax);
 
-        sprintf(strBuf,"NV_%d", m_nNumNV ++);
-        int idNV = Vocabulary::instance().addSymbol(strBuf, VARIABLE);
-        Vocabulary::instance().setVariableDomain(strBuf, 
-                        Vocabulary::instance().getVariableDomain(idNV));
-        m_vTermsZ.push_back(idNV);
+        sprintf(sBuf,"NV_%d", m_nNumNV ++);
+        int nIdNV = Vocabulary::instance().addSymbol(sBuf, VARIABLE);
+        Vocabulary::instance().setVariableDomain(sBuf, 
+                        Vocabulary::instance().getVariableDomain(nIdNV));
+        m_vTermsZ.push_back(nIdNV);
 
         fml = fml->subformula_l;
     }
@@ -62,68 +78,51 @@ Formula HengZhang::recordQuantifier(Formula _originalFml) {
     return ret;
 }
 /**
- * 对每条公式进行章衡公式转换
- * @param _originalFmls Formulas 需要进行转换的公式
- * @return 返回Formulas*，需要手动销毁
+ * 新产生的谓词 s、t为内涵谓词，succ、max为“特殊”外延谓词
+ * @param _originalFml
+ * @return 
  */
-Formulas* HengZhang::convert(const Formulas& _originalFmls) {
-    Formulas tempFmls = _originalFmls;
-    Formulas* pFinalFmls = new Formulas();
-    while (! tempFmls.isEmpty()) {
-        Formula curFml = tempFmls.popFront();
-        curFml.convertToPrenex();
-        if (curFml.isUniversal()) {
-            pFinalFmls->pushBack(curFml);
-            continue;
-        }
-        curFml.fixUniversalQuantifier();
-        Formulas hzFmls = transform(curFml);
-        tempFmls.joinFormulas(hzFmls);
-    }
-    
-    return pFinalFmls;
-}
-
-Formulas HengZhang::transform(Formula _originalFml) {
+Formulas HengZhang::transform(const Formula& _originalFml) {
     Formula originalFml = recordQuantifier(_originalFml);
-
+    //无存在量词
     if(m_vTermsY.size() == 0) {
         Formulas fmls;
         fmls.pushBack(_originalFml);
         return fmls;
     }
-    
-    char nameBuf[32];
-    sprintf(nameBuf, "s_%d", m_nNumS ++);
-    m_nSymbolS = Vocabulary::instance().addSymbol(nameBuf, 
+    //生成谓词s
+    char sBuf[32];
+    sprintf(sBuf, "s_%d", m_nNumS ++);
+    m_nSymbolS = Vocabulary::instance().addSymbol(sBuf, 
                         PREDICATE, m_vTermsX.size() + m_vTermsY.size());
-    Vocabulary::instance().addIntensionPredicate(nameBuf);
-    
+    Vocabulary::instance().addIntensionPredicate(sBuf);
+    //保存谓词原型
     _term* term_x_y   = Utils::combineTerms(m_vTermsX, m_vTermsY);
     _formula* s_x_y = Utils::compositeToAtom(m_nSymbolS, term_x_y);
     Vocabulary::instance().addAtom(Formula(s_x_y, false));
- 
-    sprintf(nameBuf, "t_%d", m_nNumT ++);
-    m_nSymbolT = Vocabulary::instance().addSymbol(nameBuf, 
+    //生成谓词t
+    sprintf(sBuf, "t_%d", m_nNumT ++);
+    m_nSymbolT = Vocabulary::instance().addSymbol(sBuf, 
                         PREDICATE, m_vTermsX.size() + m_vTermsY.size());
-    Vocabulary::instance().addIntensionPredicate(nameBuf);
-    
+    Vocabulary::instance().addIntensionPredicate(sBuf);
+    //保存谓词原型
     term_x_y   = Utils::combineTerms(m_vTermsX, m_vTermsY);
     _formula* t_x_y = Utils::compositeToAtom(m_nSymbolT, term_x_y);
     Vocabulary::instance().addAtom(Formula(t_x_y, false));
- 
+    //生成谓词succ
     string succName = "succ";
     vector<string> domainNames;
     for (unsigned int i = 0; i < m_vTermsY.size(); ++ i) {
-        const char* domainName = Vocabulary::instance().getVariableDomain(m_vTermsY[i]);
-        succName += string("_") + domainName;
-        domainNames.push_back(string(domainName));
+        const char* sDomainName = Vocabulary::instance().getVariableDomain(m_vTermsY[i]);
+        succName += string("_") + sDomainName;
+        domainNames.push_back(string(sDomainName));
     }
     if (Vocabulary::instance().getSymbolId(succName.c_str(), PREDICATE) == -1) {
         m_vDomainNames.push_back(domainNames);
     }
     m_nSymbolSucc = Vocabulary::instance().addSymbol(succName.c_str(), 
                         PREDICATE, m_vTermsY.size() + m_vTermsZ.size());
+    //保存谓词原型
     _term* term_y_z   = Utils::combineTerms(m_vTermsY, m_vTermsZ);
     _formula* succ_y_z = Utils::compositeToAtom(m_nSymbolSucc, term_y_z);
     Vocabulary::instance().addAtom(Formula(succ_y_z, false));
@@ -143,7 +142,7 @@ Formulas HengZhang::transform(Formula _originalFml) {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::createFormula_1(Formula _originalFml) {
+Formula HengZhang::createFormula_1(const Formula& _originalFml) {
     // Add S(_X, _MIN)
     _term* term_x_min   = Utils::combineTerms(m_vTermsX, m_vTermsMIN);
     _formula* s_x_min = Utils::compositeToAtom(m_nSymbolS, term_x_min);
@@ -164,7 +163,7 @@ Formula HengZhang::createFormula_1(Formula _originalFml) {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::createFormula_2(Formula _originalFml) {
+Formula HengZhang::createFormula_2(const Formula& _originalFml) {
     //create atom formulas
     //1 (succ(_Y,_Z)
     _term* term_y_z = Utils::combineTerms(m_vTermsY, m_vTermsZ);
@@ -173,8 +172,9 @@ Formula HengZhang::createFormula_2(Formula _originalFml) {
     _term* term_x_z = Utils::combineTerms(m_vTermsX, m_vTermsZ);
     _formula* s_x_z = Utils::compositeToAtom(m_nSymbolS, term_x_z);
     //3 theta__(_X,_Y)
-    _originalFml.doubleNegationIntensionPredicates();
-    _formula* theta__ = Utils::copyFormula(_originalFml.getFormula());
+    Formula copyOriginalFml = _originalFml;
+    copyOriginalFml.doubleNegationIntensionPredicates();
+    _formula* theta__ = Utils::copyFormula(copyOriginalFml.getFormula());
     //4 s(_X,_Y)
     _term* term_x_y = Utils::combineTerms(m_vTermsX, m_vTermsY);
     _formula* s_x_y   = Utils::compositeToAtom(m_nSymbolS, term_x_y);
@@ -194,13 +194,14 @@ Formula HengZhang::createFormula_2(Formula _originalFml) {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::createFormula_3(Formula _originalFml) {
+Formula HengZhang::createFormula_3(const Formula& _originalFml) {
     //create left sub-formula t(_X,_MIN)
     _term* term_x_min = Utils::combineTerms(m_vTermsX, m_vTermsMIN);
     _formula* t_x_min   = Utils::compositeToAtom(m_nSymbolT, term_x_min);
     //create right sub-formula theta(_X,_MIN)
-    _originalFml.replaceTerms(m_vTermsY, m_vTermsMIN);
-    _formula* theta_x_min = Utils::copyFormula(_originalFml.getFormula());
+    Formula copyOriginalFml = _originalFml;
+    copyOriginalFml.replaceTerms(m_vTermsY, m_vTermsMIN);
+    _formula* theta_x_min = Utils::copyFormula(copyOriginalFml.getFormula());
 
     //create structure
     _formula* F   = Utils::compositeByConnective(DISJ, t_x_min, theta_x_min);
@@ -249,12 +250,12 @@ _formula* HengZhang::generateFormulaLeft_4() {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::createFormula_4_1(Formula original_fml) {
+Formula HengZhang::createFormula_4_1(const Formula& _originalFml) {
     // 5 T(_X,_MAX)
     _term* term_x_max = Utils::combineTerms(m_vTermsX, m_vTermsMAX);
     _formula* t_x_max  = Utils::compositeToAtom(m_nSymbolT, term_x_max);
     // 6 theta(_X,_Y)
-    _formula* theta_x_y  = Utils::copyFormula(original_fml.getFormula());
+    _formula* theta_x_y  = Utils::copyFormula(_originalFml.getFormula());
     
     _formula* left = generateFormulaLeft_4();
     _formula* right = Utils::compositeByConnective(IMPL, t_x_max, theta_x_y);
@@ -271,7 +272,7 @@ Formula HengZhang::createFormula_4_1(Formula original_fml) {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::createFormula_4_2(Formula _originalFml) {
+Formula HengZhang::createFormula_4_2(const Formula& _originalFml) {
     // 5 theta(_X,_Y)
     _formula* theta_x_y  = Utils::copyFormula(_originalFml.getFormula());
     // 6 T(_X,_MAX)
@@ -292,7 +293,7 @@ Formula HengZhang::createFormula_4_2(Formula _originalFml) {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::createFormula_5_1(Formula _originalFml) {
+Formula HengZhang::createFormula_5_1(const Formula& _originalFml) {
     //1 _succ(_Y,_Z)
     _term* term_y_z = Utils::combineTerms(m_vTermsY, m_vTermsZ);
     _formula* succ_y_z  = Utils::compositeToAtom(m_nSymbolSucc, term_y_z);
@@ -302,8 +303,9 @@ Formula HengZhang::createFormula_5_1(Formula _originalFml) {
     _formula* t_x_y  = Utils::compositeToAtom(m_nSymbolT, term_x_y);
 
     //3 theta(_X,_Z)
-    _originalFml.replaceTerms(m_vTermsY, m_vTermsZ);
-    _formula* theta_x_z = Utils::copyFormula(_originalFml.getFormula());
+    Formula copyOriginalFml = _originalFml;
+    copyOriginalFml.replaceTerms(m_vTermsY, m_vTermsZ);
+    _formula* theta_x_z = Utils::copyFormula(copyOriginalFml.getFormula());
 
     //4 T(_X,_Z)
     _term* term_x_z = Utils::combineTerms(m_vTermsX, m_vTermsZ);
@@ -324,7 +326,7 @@ Formula HengZhang::createFormula_5_1(Formula _originalFml) {
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::createFormula_5_2(Formula _originalFml) {
+Formula HengZhang::createFormula_5_2(const Formula& _originalFml) {
     //1 _succ(_Y,_Z)
     _term* term_y_z = Utils::combineTerms(m_vTermsY, m_vTermsZ);
     _formula* succ_y_z  = Utils::compositeToAtom(m_nSymbolSucc, term_y_z);
@@ -334,8 +336,9 @@ Formula HengZhang::createFormula_5_2(Formula _originalFml) {
     _formula* t_x_y  = Utils::compositeToAtom(m_nSymbolT, term_x_y);
 
     //3 theta(_X,_Z)
-    _originalFml.replaceTerms(m_vTermsY, m_vTermsZ);
-    _formula* theta_x_z = Utils::copyFormula(_originalFml.getFormula());
+    Formula copyOriginalFml = _originalFml;
+    copyOriginalFml.replaceTerms(m_vTermsY, m_vTermsZ);
+    _formula* theta_x_z = Utils::copyFormula(copyOriginalFml.getFormula());
 
     //4 T(_X,_Z)
     _term* term_x_z = Utils::combineTerms(m_vTermsX, m_vTermsZ);

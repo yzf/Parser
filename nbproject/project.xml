@@ -15,7 +15,6 @@
                 <sourceRootElem>res</sourceRootElem>
                 <sourceRootElem>output</sourceRootElem>
                 <sourceRootElem>include</sourceRootElem>
-                <sourceRootElem>test</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

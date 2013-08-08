@@ -19,24 +19,27 @@
 class Formula;
 class Formulas;
 class Rule;
-
+/*
+ * StableModel转换器，单例
+ */
 class S2DLP {
 private:
     Formulas* m_pOriginalFormulas;      //原公式
     Formulas* m_pHengZhangFormulas;     //章衡转化结果
     Formulas* m_pDlpFormulas;           //Cabalar转化结果
     Formulas* m_pNegaPredicates;        //出现非非的谓词公式
-    list<Rule> m_listRules;
+    list<Rule> m_listRules;             //转换后的所有规则
 private:
     S2DLP();
-    S2DLP(const S2DLP& _rhs) {};
-    S2DLP& operator = (const S2DLP& _rhs) {return *this;}
+    S2DLP(const S2DLP&);
+    S2DLP& operator = (const S2DLP&);
     ~S2DLP();
     
     void hengZhangTransform();
     void cabalarTransform();
     void ruleTransform();
-    void outputAddition(FILE* _out);
+    void outputSucc(FILE* _out, vector<string> domains) const;
+    void outputAddition(FILE* _out) const;
 public:
     static S2DLP& instance();
     
@@ -47,13 +50,11 @@ public:
     void convert();
     void outputHengZhangFormulas(FILE* _out) const;
     void outputCabalarFormulas(FILE* _out) const;
-    void outputRules(FILE* _out);
+    void outputRules(FILE* _out) const;
     
-    void outputFinalResult(FILE* _out);
-    Formulas* getNegaPredicates() const;
+    void outputFinalResult(FILE* _out) const;
+    const Formulas* getNegaPredicates() const;
     void addNegaPredicates(const Formula& _negaPredicate);
-    void addSucc(FILE* _out, vector<string> domains);
-    
 };
 
 #endif	/* S2DLP_H */

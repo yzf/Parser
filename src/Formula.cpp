@@ -3,25 +3,24 @@
 #include <cstring>
 #include <algorithm>
 #include "Vocabulary.h"
+#include "PNFUtils.h"
 
 int Formula::ms_nNewFormulaId = 0;
 
-Formula::Formula() {
-    m_pFormula = NULL;
-    m_nFormulaId = Formula::ms_nNewFormulaId ++;
+Formula::Formula() : m_pFormula(NULL), m_nFormulaId(ms_nNewFormulaId) {
+    ++ ms_nNewFormulaId;
 }
-Formula::Formula(const Formula& rhs) {
-    m_pFormula = Utils::copyFormula(rhs.getFormula());
-    m_nFormulaId = rhs.m_nFormulaId;
+Formula::Formula(const Formula& _rhs) : m_nFormulaId(_rhs.m_nFormulaId) {
+    m_pFormula = Utils::copyFormula(_rhs.getFormula());
 }
-Formula::Formula(_formula* _fml, bool _isCopy) {
-    if (_isCopy) {
+Formula::Formula(_formula* _fml, bool _bIsCopy) : m_nFormulaId(ms_nNewFormulaId) {
+    if (_bIsCopy) {
         m_pFormula = Utils::copyFormula(_fml);
     }
     else {
         m_pFormula = _fml;
     }
-    m_nFormulaId = Formula::ms_nNewFormulaId ++;
+    ++ ms_nNewFormulaId;
 }
 Formula::~Formula() {
     if (m_pFormula != NULL) {
@@ -46,6 +45,9 @@ _formula* Formula::getFormula() const {
     return m_pFormula;
 }
 void Formula::setFormula(_formula* _newFormula) {
+    if (m_pFormula == _newFormula) {
+        return;
+    }
     Utils::deleteFormula(m_pFormula);
     m_pFormula = _newFormula;
 }
@@ -59,13 +61,16 @@ bool Formula::isUniversal() const {
 /**
  * 把公式转化成前束范式
  */
-void Formula::convertToPrenex() {
-    Utils::convertToPrenex(m_pFormula);
+void Formula::convertToPNF() {
+    PNFUtils::convertToPNF(m_pFormula);
 }
 /**
  * 为公式中没有量词限定的参数补上全称量词限定
  */
 void Formula::fixUniversalQuantifier() {
+    if (m_pFormula == NULL) {
+        return;
+    }
     map<int, bool> variablesFlag;
     vector<int> variables;
     Utils::getNoQuantifierVariables(variablesFlag, variables, m_pFormula);
@@ -81,6 +86,9 @@ void Formula::fixUniversalQuantifier() {
     }
 }
 void Formula::removeUniversalQuantifier() {
+    if (m_pFormula == NULL) {
+        return;
+    }
     while (m_pFormula->formula_type == UNIV) {
         _formula* pre = m_pFormula;
         m_pFormula = m_pFormula->subformula_l;
@@ -102,8 +110,8 @@ void Formula::output(FILE* _out) const {
 void Formula::doubleNegationIntensionPredicates() {
     m_pFormula = Utils::doubleNegationPredicates(m_pFormula);
 }
-void Formula::doubleNegationPredicates(int* _p, int _size) {
-    m_pFormula = Utils::doubleNegationPredicates(m_pFormula, _p, _size);
+void Formula::doubleNegationPredicates(int* _pPredicateIds, int _nSize) {
+    m_pFormula = Utils::doubleNegationPredicates(m_pFormula, _pPredicateIds, _nSize);
 }
 /**
  * 替换参数
@@ -120,6 +128,6 @@ void Formula::replaceTerms(const vector<int>& _originals,
  */
 Formulas* Formula::divideFormula() const{
     Formulas* pResult = new Formulas();
-    Utils::divideFormula(m_pFormula, NULL, pResult);
+    Utils::divideFormula(m_pFormula, pResult);
     return pResult;
 }
