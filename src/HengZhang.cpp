@@ -21,12 +21,12 @@ Formulas* HengZhang::convert(const Formulas& _originalFmls) {
     Formulas* pFinalFmls = new Formulas();
     while (! tempFmls.isEmpty()) {
         Formula curFml = tempFmls.popFront();
+        curFml.fixUniversalQuantifier();
         curFml.convertToPNF();
         if (curFml.isUniversal()) {
             pFinalFmls->pushBack(curFml);
             continue;
         }
-        curFml.fixUniversalQuantifier();
         Formulas hzFmls = transform(curFml);
         tempFmls.joinFront(hzFmls);
     }

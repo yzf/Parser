@@ -62,9 +62,6 @@
                      displayName="New CppUnit Test"
                      projectFiles="true"
                      kind="TEST">
-        <itemPath>tests/newtestclass.cpp</itemPath>
-        <itemPath>tests/newtestclass.h</itemPath>
-        <itemPath>tests/newtestrunner.cpp</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -203,12 +200,6 @@
       </item>
       <item path="src/parse.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/newtestclass.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="tests/newtestclass.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/newtestrunner.cpp" ex="false" tool="1" flavor2="0">
-      </item>
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
@@ -327,12 +318,6 @@
       <item path="src/parse.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/parse.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/newtestclass.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="tests/newtestclass.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/newtestrunner.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>
