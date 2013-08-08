@@ -17,10 +17,10 @@ class Cabalar {
 private:
     Cabalar();
     ~Cabalar();
-    Cabalar(const Cabalar& _rhs) {};
-    Cabalar& operator = (const Cabalar& _rhs) {return *this;};
+    Cabalar(const Cabalar&);
+    Cabalar& operator = (const Cabalar&);
     
-    Formulas convertToNegativeNormalForms(Formulas _originalFmls); 
+    Formulas* convertToNegativeNormalForms(const Formulas& _originalFmls); 
 public:
     Formulas* convert(const Formulas& _originalFmls);
     static Cabalar& instance();

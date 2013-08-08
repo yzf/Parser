@@ -4,12 +4,10 @@
 Formulas::Formulas() {
 }
 
-Formulas::Formulas(const deque<Formula>& _formulas) {
-    m_dequeFormulas = _formulas;
+Formulas::Formulas(const deque<Formula>& _formulas) : m_dequeFormulas(_formulas) {
 }
 
-Formulas::Formulas(const Formulas& _rhs) {
-    m_dequeFormulas = _rhs.m_dequeFormulas;
+Formulas::Formulas(const Formulas& _rhs) : m_dequeFormulas(_rhs.m_dequeFormulas) {
 }
 
 Formulas::~Formulas() {
@@ -48,12 +46,22 @@ Formula Formulas::back() {
 }
 /**
  * 连接公式数组 如 {a,b,c}{d,e} -> {a,b,c,d,e}
- * 注意：{d,e} -> {}
  * @param _tail
  */
-void Formulas::joinFormulas(Formulas& _tail) {
-    while (! _tail.isEmpty()) {
-        pushBack(_tail.popFront());
+void Formulas::joinBack(const Formulas& _tail) {
+    for (FORMULAS_CONST_ITERATOR it = _tail.begin(); 
+            it != _tail.end(); ++ it) {
+        pushBack(*it);
+    }
+}
+/**
+ * 连接公式数组 如 {a,b,c}{d,e} -> {d,e,a,b,c}
+ * @param _tail
+ */
+void Formulas::joinFront(const Formulas& _head) {
+    for (FORMULAS_CONST_REV_ITERATOR it = _head.rbegin();
+            it != _head.rend(); ++ it) {
+        pushFront(*it);
     }
 }
 /**
@@ -62,8 +70,8 @@ void Formulas::joinFormulas(Formulas& _tail) {
  * @return 
  */
 bool Formulas::operator == (const Formulas& _rhs) const {
-    deque<Formula>::const_iterator it1;
-    deque<Formula>::const_iterator it2;
+    FORMULAS_CONST_ITERATOR it1;
+    FORMULAS_CONST_ITERATOR it2;
     if (m_dequeFormulas.size() != _rhs.m_dequeFormulas.size()) {
         return false;
     }
@@ -80,12 +88,15 @@ bool Formulas::operator == (const Formulas& _rhs) const {
 bool Formulas::operator != (const Formulas& _rhs) const {
     return ! (*this == _rhs);
 }
+Formula& Formulas::operator [] (int _id) {
+    return m_dequeFormulas.at(_id);
+}
 /**
  * 输出公式组
  * @param _out
  */
 void Formulas::output(FILE* _out) const {
-    for (deque<Formula>::const_iterator it = m_dequeFormulas.begin();
+    for (FORMULAS_CONST_ITERATOR it = m_dequeFormulas.begin();
             it != m_dequeFormulas.end(); ++ it) {
         it->output(_out);
     }
@@ -103,6 +114,18 @@ FORMULAS_ITERATOR Formulas::begin() {
  */
 FORMULAS_ITERATOR Formulas::end() {
     return m_dequeFormulas.end();
+}
+FORMULAS_CONST_ITERATOR Formulas::begin() const {
+    return m_dequeFormulas.begin();
+}
+FORMULAS_CONST_ITERATOR Formulas::end() const {
+    return m_dequeFormulas.end();
+}
+FORMULAS_CONST_REV_ITERATOR Formulas::rbegin() const {
+    return m_dequeFormulas.rbegin();
+}
+FORMULAS_CONST_REV_ITERATOR Formulas::rend() const {
+    return m_dequeFormulas.rend();
 }
 /**
  * 删除迭代器_it指向的元素，返回下一个有效元素

@@ -9,7 +9,9 @@
 #define	NNFUTILS_H
 
 #include "structs.h"
-
+/*
+ * 否定标准式的工具类
+ */
 class NNFUtils {
 private:
     static _formula* negativeNormalForm_1(_formula* _originalFml);

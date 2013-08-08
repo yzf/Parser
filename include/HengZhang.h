@@ -18,7 +18,9 @@ using namespace std;
 
 class Formula;
 class Formulas;
-
+/*
+ * 章衡转换类，单例
+ */
 class HengZhang{
 public:
     vector<int> m_vTermsX;
@@ -43,21 +45,21 @@ public:
     vector< vector<string> > m_vDomainNames;
     
 private:
-    Formulas transform(Formula _originalFml);
-    Formula recordQuantifier(Formula _originalFml);
-    Formula createFormula_1(Formula _originalFml);
-    Formula createFormula_2(Formula _originalFml);
-    Formula createFormula_3(Formula _originalFml);
-    Formula createFormula_4_1(Formula _originalFml);
-    Formula createFormula_4_2(Formula _originalFml);
-    Formula createFormula_5_1(Formula _originalFml);
-    Formula createFormula_5_2(Formula _originalFml);
+    Formulas transform(const Formula& _originalFml);
+    Formula recordQuantifier(const Formula& _originalFml);
+    Formula createFormula_1(const Formula& _originalFml);
+    Formula createFormula_2(const Formula& _originalFml);
+    Formula createFormula_3(const Formula& _originalFml);
+    Formula createFormula_4_1(const Formula& _originalFml);
+    Formula createFormula_4_2(const Formula& _originalFml);
+    Formula createFormula_5_1(const Formula& _originalFml);
+    Formula createFormula_5_2(const Formula& _originalFml);
     _formula* generateFormulaLeft_4();
     
     HengZhang();
-    HengZhang(const HengZhang& _rhs);
+    HengZhang(const HengZhang&);
     ~HengZhang();
-    HengZhang& operator = (const HengZhang& _rhs);
+    HengZhang& operator = (const HengZhang&);
 public:
     //creators
     Formulas* convert(const Formulas& _originalFmls);

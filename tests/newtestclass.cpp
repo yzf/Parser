@@ -2,7 +2,7 @@
  * File:   newtestclass.cpp
  * Author: yzf
  *
- * Created on Aug 1, 2013, 1:43:34 PM
+ * Created on Aug 1, 2013, 5:01:24 PM
  */
 
 #include "newtestclass.h"

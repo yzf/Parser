@@ -11,7 +11,9 @@
 class Formulas;
 
 using namespace std;
-
+/*
+ * 字符表类，保存各种信息
+ */
 class Vocabulary {
 private:
     static int ms_nVariableId;
@@ -38,30 +40,30 @@ private:
 
 private:
     Vocabulary();
-    Vocabulary(const Vocabulary& rhs){}
-    Vocabulary& operator =(const Vocabulary& rhs){return *this;}
+    Vocabulary(const Vocabulary&);
+    Vocabulary& operator =(const Vocabulary&);
     ~Vocabulary();
 
 public:
     static Vocabulary& instance();
     void dumpVocabulary(FILE* _out) ;
     //setter adder
-    void setVariableDomain(const char* _variable, const char* _domain);
-    int addSymbol(const char* _name, SYMBOL_TYPE _type, int _arity = 0);
+    void setVariableDomain(const char* _sVariable, const char* _sDomain);
+    int addSymbol(const char* _sName, SYMBOL_TYPE _type, int _nArity = 0);
     int addRenameVariable();
-    void addIntensionPredicate(const char*_name);
+    void addIntensionPredicate(const char*_sName);
     void addAtom(const Formula& _newAtom);
     //getter
-    bool isIntensionPredicate(int _predicateId) const;
-    bool isSuccOrMax(int _predicateId) const;
-    int getSymbolId(const char* _name, SYMBOL_TYPE _type);
+    bool isIntensionPredicate(int _nPredicateId) const;
+    bool isSuccOrMax(int _nPredicateId) const;
+    int getSymbolId(const char* _sName, SYMBOL_TYPE _type);
     int getPredicateArity(int _id);
     int getFunctionArity(int _id);
-    const char* getVariableDomain(int _variableId);
-    const char* getNameById(int _id, SYMBOL_TYPE _type) const;
+    const char* getVariableDomain(int _nVariableId);
+    const char* getNameById(int _nId, SYMBOL_TYPE _type) const;
     map<int, string> getDomainNames() const;
     map<int, int> getVariablesDomains() const;
-    Formula getAtom(int _predicateId) const;
+    Formula getAtom(int _nPredicateId) const;
     Formulas* getAtomList() const;
 };
 

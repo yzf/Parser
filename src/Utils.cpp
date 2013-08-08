@@ -423,60 +423,6 @@ bool Utils::isUniversal(_formula* _fml) {
     return false;
 }
 /**
- * 在公式_fml中寻找_variableId，如存在，则返回_fml，不存在，则返回NULL
- * @param _fml
- * @param _variableId
- * @return 
- */
-_formula* Utils::findPrenexQuanlifier(_formula* _fml, int _variableId) {
-    if(_fml == NULL || (_fml->formula_type != UNIV && _fml->formula_type != EXIS)) {
-        return NULL;
-    }
-    if(_fml->variable_id == _variableId) {
-        return _fml;
-    }
-    else if(_fml->subformula_l->formula_type == UNIV || _fml->subformula_l->formula_type == EXIS) {
-        return findPrenexQuanlifier(_fml->subformula_l, _variableId);
-    }
-    else {
-        return NULL;
-    }
-}
-/**
- * 删除多余的量词
- * @param _parent
- * @param _d 0表示左子树， 1表示右子树
- * @param _tag
- */
-void Utils::removeFromPrenex(_formula* _parent, int _d, _formula* _tag) {
-    _formula* sf;
-    
-    if (_d == 0) {
-        sf = _parent->subformula_l;
-    }
-    else {
-        sf = _parent->subformula_r;
-    }
-    
-    if (sf == NULL || (sf->formula_type != UNIV && sf->formula_type != EXIS)) {
-        return;
-    }
-    
-    if (sf == _tag) {
-        if(_d == 0) {
-            _parent->subformula_l = sf->subformula_l;
-        }
-        else {
-            _parent->subformula_r = sf->subformula_l;
-        }
-        free(sf);
-        removeFromPrenex(sf, 0, _tag);
-    }
-    else {
-        removeFromPrenex(sf, 0, _tag);
-    }
-}
-/**
  * 把需要重命名的变量重命名
  * @param _fml 公式
  * @param _oldVariableId 需要重命名的变量id
@@ -511,109 +457,6 @@ void Utils::renameFormulaVariables(_formula* _fml, int _oldVariableId, int _newV
         assert(_fml->subformula_r);
         renameFormulaVariables(_fml->subformula_l, _oldVariableId, _newVariableId);
         renameFormulaVariables(_fml->subformula_r, _oldVariableId, _newVariableId);
-    }
-}
-/**
- * 把公式转化成前束范式
- * @param _fml
- */
-void Utils::convertToPrenex(_formula* _fml) {
-    if(_fml == NULL) {
-        return;
-    }
-    
-    switch(_fml->formula_type) {
-    case ATOM:
-        break;
-    case NEGA:
-        convertToPrenex(_fml->subformula_l);
-        while(_fml->subformula_l->formula_type == EXIS || _fml->subformula_l->formula_type == UNIV) {
-            FORMULA_TYPE flt = (_fml->subformula_l->formula_type == UNIV) ? EXIS : UNIV;
-            _fml->formula_type = flt;
-            _fml->variable_id = _fml->subformula_l->variable_id;
-            _fml->subformula_l->formula_type = NEGA;
-            _fml = _fml->subformula_l;
-        }
-        break;
-    case IMPL:
-    case CONJ:
-    case DISJ: {
-        convertToPrenex(_fml->subformula_l);
-        convertToPrenex(_fml->subformula_r);
-
-        _formula* sub_l = _fml->subformula_l;
-        _formula* sub_r = _fml->subformula_r;
-        _formula* curr_fml = _fml;                      
-
-        while(sub_l->formula_type == UNIV || sub_l->formula_type == EXIS || 
-                sub_r->formula_type == UNIV || sub_r->formula_type == EXIS) {
-
-            if(curr_fml->formula_type == IMPL && (sub_l->formula_type == EXIS 
-                    || sub_l->formula_type == UNIV)) {
-                sub_l->formula_type = (sub_l->formula_type == UNIV) ? EXIS : UNIV;
-            }
-            FORMULA_TYPE priority_type = UNIV;
-
-            if(sub_l->formula_type != priority_type && sub_r->formula_type != priority_type) {
-                priority_type = EXIS;
-            }
-            if(sub_l->formula_type == priority_type || sub_l->formula_type == sub_r->formula_type) {
-                _formula* same_variable = findPrenexQuanlifier(sub_r, sub_l->variable_id);
-
-                if(same_variable != NULL) {
-                    if((sub_l->formula_type == UNIV && curr_fml->formula_type == CONJ && same_variable->formula_type == UNIV)||
-                            (sub_l->formula_type == EXIS && curr_fml->formula_type == DISJ && same_variable->formula_type == EXIS)) {
-                        removeFromPrenex(curr_fml, 1, same_variable);
-                    }
-                    else {
-                        int new_id = Vocabulary::instance().addRenameVariable();
-                        renameFormulaVariables(sub_r, sub_l->variable_id, new_id);
-                    }
-                }
-
-                FORMULA_TYPE temp = curr_fml->formula_type;
-                sub_r = curr_fml->subformula_r;
-                curr_fml->formula_type = sub_l->formula_type;
-                curr_fml->variable_id = sub_l->variable_id;
-                sub_l->formula_type = temp;
-                sub_l->subformula_r = sub_r;
-            }
-            else {
-                _formula* same_variable = findPrenexQuanlifier(sub_l, sub_r->variable_id);
-
-                if(same_variable != NULL) {
-                    if((sub_r->formula_type == UNIV && curr_fml->formula_type == CONJ && same_variable->formula_type == UNIV)||
-                            (sub_r->formula_type == EXIS && curr_fml->formula_type == DISJ && same_variable->formula_type == EXIS)) {
-                        removeFromPrenex(curr_fml, 0, same_variable);
-                    }
-                    else {
-                        int new_id = Vocabulary::instance().addRenameVariable();
-                        renameFormulaVariables(sub_r, sub_l->variable_id, new_id);
-                    }
-                }
-
-                FORMULA_TYPE temp = curr_fml->formula_type;
-                sub_l = curr_fml->subformula_l;
-                _formula* r_sub_l = sub_r->subformula_l;
-                curr_fml->formula_type = sub_r->formula_type;
-                curr_fml->variable_id = sub_r->variable_id;
-                curr_fml->subformula_l = sub_r;
-                sub_r->formula_type = temp;
-                sub_r->subformula_l = sub_l;
-                sub_r->subformula_r = r_sub_l;
-            }
-            curr_fml = curr_fml->subformula_l;
-            sub_l = curr_fml->subformula_l;
-            sub_r = curr_fml->subformula_r;
-        }
-    }
-        break;
-    case UNIV:
-    case EXIS:
-        convertToPrenex(_fml->subformula_l);
-        break;
-    default:
-        break;           
     }
 }
 /**
@@ -781,18 +624,15 @@ void Utils::replaceFormulaTerms(_formula* _fml,
  * @param _parent
  * @param _result
  */
-void Utils::divideFormula(_formula* _fml, _formula* _parent, Formulas* _result) {
-    if(_fml != NULL) {
-        if((_parent == NULL || _parent->formula_type == CONJ) && _fml->formula_type == CONJ) {
-            Formula new_formula = Formula(_fml->subformula_r, true);  
-            _result->pushBack(new_formula);
-            divideFormula(_fml->subformula_l, _fml, _result);   
-        }
-        else {
-            Formula new_formula = Formula(_fml, true);
-            _result->pushBack(new_formula);
-        }
-        
+void Utils::divideFormula(_formula* _fml, Formulas* _result) {
+    assert(_fml);
+    if(_fml->formula_type == CONJ) {
+        divideFormula(_fml->subformula_l, _result);   
+        divideFormula(_fml->subformula_r, _result);
+    }
+    else {
+        Formula new_formula = Formula(_fml, true);
+        _result->pushBack(new_formula);
     }
 }
 /**
@@ -876,4 +716,32 @@ void Utils::printAtom(const _formula* _atom, FILE* _out) {
             }
         }        
     }    
+}
+/**
+ * 把原子转化成字符串
+ * @param atom
+ * @return 
+ */
+string Utils::convertAtomToString(const _formula* _atom) {
+    assert(_atom->formula_type == ATOM);
+    string sRet = "";
+    sRet += Vocabulary::instance().getNameById(_atom->predicate_id, PREDICATE);
+    if (_atom->parameters != NULL) {
+        _term* ft = _atom->parameters;
+        int ftc = Vocabulary::instance().getPredicateArity(_atom->predicate_id);
+        for (int i = 0; i < ftc; ++ i) {
+            if (0 == i) {
+                sRet += "(";
+            }
+            else {
+                sRet += ",";
+            }
+            sRet += Vocabulary::instance().getNameById(ft[i].variable_id, VARIABLE);
+            
+            if (i == ftc - 1) {
+                sRet += ")";
+            }
+        }        
+    }    
+    return sRet;
 }

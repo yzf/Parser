@@ -143,7 +143,7 @@ _formula* CabalarUtils::implRightFalse(_formula* _originalFml) {
  * @param _originalFml
  * @return 
  */
-Formulas CabalarUtils::leftRule_1(_formula* _originalFml) {
+Formulas* CabalarUtils::leftRule_1(_formula* _originalFml) {
     assert(_originalFml);
     assert(_originalFml->formula_type == IMPL);
     assert(_originalFml->subformula_l);
@@ -160,8 +160,8 @@ Formulas CabalarUtils::leftRule_1(_formula* _originalFml) {
     free(_originalFml->subformula_l);//^
     free(_originalFml);// ->
     
-    Formulas ret;
-    ret.pushBack(Formula(fg, false));
+    Formulas* ret = new Formulas();
+    ret->pushBack(Formula(fg, false));
     return ret;
 }
 /**
@@ -169,7 +169,7 @@ Formulas CabalarUtils::leftRule_1(_formula* _originalFml) {
  * @param _originalFml
  * @return 
  */
-Formulas CabalarUtils::leftRule_2(_formula* _originalFml) {
+Formulas* CabalarUtils::leftRule_2(_formula* _originalFml) {
     assert(_originalFml);
     assert(_originalFml->formula_type == IMPL);
     assert(_originalFml->subformula_l);
@@ -180,7 +180,7 @@ Formulas CabalarUtils::leftRule_2(_formula* _originalFml) {
     
     Utils::deleteFormula(_originalFml);//_originalFml
     
-    Formulas ret;
+    Formulas* ret = new Formulas();
     return ret;
 }
 /**
@@ -188,7 +188,7 @@ Formulas CabalarUtils::leftRule_2(_formula* _originalFml) {
  * @param _originalFml
  * @return 
  */
-Formulas CabalarUtils::leftRule_3(_formula* _originalFml) {
+Formulas* CabalarUtils::leftRule_3(_formula* _originalFml) {
     assert(_originalFml);
     assert(_originalFml->formula_type == IMPL);
     assert(_originalFml->subformula_l);
@@ -211,8 +211,8 @@ Formulas CabalarUtils::leftRule_3(_formula* _originalFml) {
     free(_originalFml->subformula_l); // ^
     free(_originalFml);// ->
     
-    Formulas ret;
-    ret.pushBack(Formula(g_fh, false));
+    Formulas* ret = new Formulas();
+    ret->pushBack(Formula(g_fh, false));
     return ret;
 }
 /**
@@ -221,7 +221,7 @@ Formulas CabalarUtils::leftRule_3(_formula* _originalFml) {
  * @param _originalFml
  * @return 
  */
-Formulas CabalarUtils::leftRule_4(_formula* _originalFml) {
+Formulas* CabalarUtils::leftRule_4(_formula* _originalFml) {
     assert(_originalFml);//->
     assert(_originalFml->formula_type == IMPL);
     assert(_originalFml->subformula_l);//^
@@ -246,9 +246,9 @@ Formulas CabalarUtils::leftRule_4(_formula* _originalFml) {
     free(_originalFml->subformula_l);
     free(_originalFml);
     
-    Formulas ret;
-    ret.pushBack(Formula(fml_1, false));
-    ret.pushBack(Formula(fml_2, false));
+    Formulas* ret = new Formulas();
+    ret->pushBack(Formula(fml_1, false));
+    ret->pushBack(Formula(fml_2, false));
     return ret;
 }
 /**
@@ -258,7 +258,7 @@ Formulas CabalarUtils::leftRule_4(_formula* _originalFml) {
  * @param _originalFml
  * @return 
  */
-Formulas CabalarUtils::leftRule_5(_formula* _originalFml) {
+Formulas* CabalarUtils::leftRule_5(_formula* _originalFml) {
     assert(_originalFml);//->
     assert(_originalFml->formula_type == IMPL);
     assert(_originalFml->subformula_l);//^
@@ -299,10 +299,10 @@ Formulas CabalarUtils::leftRule_5(_formula* _originalFml) {
     free(_originalFml->subformula_l);
     free(_originalFml);
     
-    Formulas ret;
-    ret.pushBack(Formula(fml_1, false));
-    ret.pushBack(Formula(fml_2, false));
-    ret.pushBack(Formula(fml_3, false));
+    Formulas* ret = new Formulas();
+    ret->pushBack(Formula(fml_1, false));
+    ret->pushBack(Formula(fml_2, false));
+    ret->pushBack(Formula(fml_3, false));
     return ret;
 }
 /**
@@ -310,7 +310,7 @@ Formulas CabalarUtils::leftRule_5(_formula* _originalFml) {
  * @param _originalFml
  * @return 
  */
-Formulas CabalarUtils::rightRule_1(_formula* _originalFml) {
+Formulas* CabalarUtils::rightRule_1(_formula* _originalFml) {
     assert(_originalFml);//->
     assert(_originalFml->formula_type == IMPL);
     assert(_originalFml->subformula_r);//v
@@ -328,8 +328,8 @@ Formulas CabalarUtils::rightRule_1(_formula* _originalFml) {
     free(_originalFml->subformula_r);//v
     free(_originalFml);
     
-    Formulas ret;
-    ret.pushBack(Formula(fml, false));
+    Formulas* ret = new Formulas();
+    ret->pushBack(Formula(fml, false));
     return ret;
 }
 /**
@@ -337,7 +337,7 @@ Formulas CabalarUtils::rightRule_1(_formula* _originalFml) {
  * @param _originalFml
  * @return 
  */
-Formulas CabalarUtils::rightRule_2(_formula* _originalFml) {
+Formulas* CabalarUtils::rightRule_2(_formula* _originalFml) {
     assert(_originalFml);//->
     assert(_originalFml->formula_type == IMPL);
     assert(_originalFml->subformula_r);//v
@@ -349,7 +349,7 @@ Formulas CabalarUtils::rightRule_2(_formula* _originalFml) {
     
     Utils::deleteFormula(_originalFml);
     
-    Formulas ret;
+    Formulas* ret = new Formulas();
     return ret;
 }
 /**
@@ -357,7 +357,7 @@ Formulas CabalarUtils::rightRule_2(_formula* _originalFml) {
  * @param _originalFml
  * @return 
  */
-Formulas CabalarUtils::rightRule_3(_formula* _originalFml) {
+Formulas* CabalarUtils::rightRule_3(_formula* _originalFml) {
     assert(_originalFml);//->
     assert(_originalFml->formula_type == IMPL);
     assert(_originalFml->subformula_r);//v
@@ -380,8 +380,8 @@ Formulas CabalarUtils::rightRule_3(_formula* _originalFml) {
     free(_originalFml->subformula_r);//v
     free(_originalFml);//->
 
-    Formulas ret;
-    ret.pushBack(Formula(fml, false));
+    Formulas* ret = new Formulas();
+    ret->pushBack(Formula(fml, false));
     return ret;
 }
 /**
@@ -390,7 +390,7 @@ Formulas CabalarUtils::rightRule_3(_formula* _originalFml) {
  * @param _originalFml
  * @return 
  */
-Formulas CabalarUtils::rightRule_4(_formula* _originalFml) {
+Formulas* CabalarUtils::rightRule_4(_formula* _originalFml) {
     assert(_originalFml);//->
     assert(_originalFml->formula_type == IMPL);
     assert(_originalFml->subformula_l);//f
@@ -417,9 +417,9 @@ Formulas CabalarUtils::rightRule_4(_formula* _originalFml) {
     free(_originalFml->subformula_r);
     free(_originalFml);
     
-    Formulas ret;
-    ret.pushBack(Formula(fml_1, false));
-    ret.pushBack(Formula(fml_2, false));
+    Formulas* ret = new Formulas();
+    ret->pushBack(Formula(fml_1, false));
+    ret->pushBack(Formula(fml_2, false));
     return ret;
 }
 /**
@@ -428,7 +428,7 @@ Formulas CabalarUtils::rightRule_4(_formula* _originalFml) {
  * @param _originalFml
  * @return 
  */
-Formulas CabalarUtils::rightRule_5(_formula* _originalFml) {
+Formulas* CabalarUtils::rightRule_5(_formula* _originalFml) {
     assert(_originalFml);//->
     assert(_originalFml->formula_type == IMPL);
     assert(_originalFml->subformula_l);//f
@@ -465,24 +465,17 @@ Formulas CabalarUtils::rightRule_5(_formula* _originalFml) {
     free(_originalFml->subformula_r);
     free(_originalFml);
     
-    Formulas ret;
-    ret.pushBack(Formula(fml_1, false));
-    ret.pushBack(Formula(fml_2, false));
+    Formulas* ret = new Formulas();
+    ret->pushBack(Formula(fml_1, false));
+    ret->pushBack(Formula(fml_2, false));
     return ret;
 }
-/**
- * find sub-formula different from (input)>commutativeSymbol,
- * and swap it to the left side of (input)>root.
- * example:
- *              CONJ                               CONJ
- *       ------------------                   ----------------
- *       |                |                   |              |
- *    ----------         CONJ2     ====>     DISJ       -----------
- *  DISJ      CONJ1                                   CONJ2      CONJ1
+/** 把特殊子公式提前到最左端，因为Cabalar转换中，特殊子公式都在最左端
+ * 所谓特殊子公式，指的是Cabalar要消去的部分，即true,false,~~,体部的v和->,头部的^和->
  * @param _root
  * @param _cur
  * @param _commutativeSymbol
- * @return 0 - no need to swap, 1- need swap, 2- swap finish
+ * @return 0 - 无需转换, 1- 需要转换, 2- 转换完成
  */
 int CabalarUtils::commutaiveTrans(_formula* _root, _formula* _cur, 
                         FORMULA_TYPE _commutativeSymbol) {
@@ -491,47 +484,48 @@ int CabalarUtils::commutaiveTrans(_formula* _root, _formula* _cur,
     assert(_commutativeSymbol == DISJ || _commutativeSymbol == CONJ);
 
     static bool isLeftSide;
-    int value_l;
-    int value_r;
     _formula* temp;
 
     // terminals
     if (_cur->formula_type != _commutativeSymbol) {
-        if (_cur->formula_type == ATOM &&
-                _cur->predicate_id != PRED_TRUE && 
-                _cur->predicate_id != PRED_FALSE) {
-            return 0;//normal predicates
+        // 特殊子公式  Cabalar的目的在于消除 true,false,~~,体部的v和->,头部的^和->
+        if (_cur->formula_type == ATOM && 
+                (_cur->predicate_id == PRED_TRUE || 
+                        _cur->predicate_id == PRED_FALSE)) {
+            return 1;// true or false
         }
-        if (_cur->formula_type == NEGA &&
-                _cur->subformula_l->formula_type != NEGA) {
-            return 0;//normal predicates
+        else if (_cur->formula_type == NEGA && 
+                    _cur->subformula_l->formula_type == NEGA) {
+            return 1;// ~~
         }
-        if (_cur->formula_type == UNIV || _cur->formula_type == EXIS) {
-            return 0;//normal predicates
+        else if (_cur->formula_type == CONJ || _cur->formula_type == DISJ ||
+                        _cur->formula_type == IMPL) {
+            return 1;// ^ v ->
         }
-        return 1;// predicates need to swap
+        // 非特殊子公式
+        else {
+            return 0;
+        }
     }
 
     // left sub-formula
     if (_cur == _root) { 
         isLeftSide = true; 
     }
-    value_l = commutaiveTrans(_root,_cur->subformula_l,_commutativeSymbol);
+    int value_l = commutaiveTrans(_root, _cur->subformula_l, _commutativeSymbol);
 
     if (value_l == 2) { 
         return 2; 
     }
     if (value_l == 1) {
-        if(isLeftSide)
-        {
+        if (isLeftSide) {//transform 1
             temp = _cur->subformula_l;
             _cur->subformula_l = _root->subformula_r;
 
             _root->subformula_r = _root->subformula_l;
             _root->subformula_l = temp;
         }
-        else
-        {
+        else {//transform 2
             temp = _cur->subformula_l;
             _cur->subformula_l = _root->subformula_l;
 
@@ -544,20 +538,20 @@ int CabalarUtils::commutaiveTrans(_formula* _root, _formula* _cur,
     if(_cur == _root) { 
         isLeftSide = false; 
     }
-    value_r = commutaiveTrans(_root,_cur->subformula_r,_commutativeSymbol);
+    int value_r = commutaiveTrans(_root, _cur->subformula_r, _commutativeSymbol);
 
     if(value_r == 2) { 
         return 2; 
     }
     if(value_r == 1) {
-        if(isLeftSide) {
+        if (isLeftSide) {//transform 3
             temp = _cur->subformula_r;
             _cur->subformula_r = _root->subformula_r;
 
             _root->subformula_r = _root->subformula_l;
             _root->subformula_l = temp;
         }
-        else {
+        else {//transform 4
             temp = _cur->subformula_r;
             _cur->subformula_r = _root->subformula_l;
 
@@ -569,242 +563,213 @@ int CabalarUtils::commutaiveTrans(_formula* _root, _formula* _cur,
     return 0;
 }
 /**
- * 
+ * !!请确保 _originalFml不存在任何量词
  * @param _originalFml 在调用该函数前申请的空间，这里会处理这些空间的销毁
  * @return 
  */
-Formulas CabalarUtils::transform(_formula* _originalFml) {
+Formulas* CabalarUtils::transform(_formula* _originalFml) {
     assert(_originalFml);
-
-    while(_originalFml->formula_type == UNIV) {
-        _formula* pre = _originalFml;
-        _originalFml = _originalFml->subformula_l;
-        free(pre);
-    }
-    
     // Cabalar. (2005) Left/Right side rules
-    if(_originalFml->formula_type == IMPL) {
+    if (_originalFml->formula_type == IMPL) {
         _formula* subformula_l = _originalFml->subformula_l;
         _formula* subformula_r = _originalFml->subformula_r;
 
-        commutaiveTrans(subformula_l,subformula_l,CONJ);
-        commutaiveTrans(subformula_r,subformula_r,DISJ);
+        commutaiveTrans(subformula_l, subformula_l, CONJ);
+        commutaiveTrans(subformula_r, subformula_r, DISJ);
 		
 	_formula* CD_l = subformula_l->subformula_l;
 	_formula* CD_r = subformula_r->subformula_l;
         
-        if(subformula_l->formula_type == CONJ) {
-            if(CD_l->formula_type == ATOM) {
+        if (subformula_l->formula_type == CONJ) {
+            if (CD_l->formula_type == ATOM) {
                 //L1
-                if(CD_l->predicate_id == PRED_TRUE) {
+                if (CD_l->predicate_id == PRED_TRUE) {
                     return leftRule_1(_originalFml);
                 }
                 //L2
-                if(CD_l->predicate_id == PRED_FALSE) {
+                if (CD_l->predicate_id == PRED_FALSE) {
                     return leftRule_2(_originalFml);
                 }
             }
             //L3
-	    if(CD_l->formula_type == NEGA && 
+	    if (CD_l->formula_type == NEGA && 
                     CD_l->subformula_l->formula_type == NEGA) {
 		return leftRule_3(_originalFml);
 	    }
             //L4
-            if(CD_l->formula_type == DISJ) {
+            if (CD_l->formula_type == DISJ) {
                 return leftRule_4(_originalFml);
             }
             //L5
-            if(CD_l->formula_type == IMPL) {
+            if (CD_l->formula_type == IMPL) {
                 return leftRule_5(_originalFml);
             }
         }//end of Cabalar Left Translation (full pattern)
 		
         // Cabalar. (2005) Right side rules
-        if(subformula_r->formula_type == DISJ) {
-            if(CD_r->formula_type == ATOM) {
+        if (subformula_r->formula_type == DISJ) {
+            if (CD_r->formula_type == ATOM) {
                 //R1
-                if(CD_r->predicate_id == PRED_FALSE) {
+                if (CD_r->predicate_id == PRED_FALSE) {
                     return rightRule_1(_originalFml);
                 }
                 //R2
-                if(CD_r->predicate_id == PRED_TRUE) {
+                if (CD_r->predicate_id == PRED_TRUE) {
                     return rightRule_2(_originalFml);
                 }
             }
             //R3
-	    if(CD_r->formula_type == NEGA &&
+	    if (CD_r->formula_type == NEGA &&
                     CD_r->subformula_l->formula_type == NEGA) {
 		return rightRule_3(_originalFml);
 	    }
             //R4
-            if(CD_r->formula_type == CONJ) {
+            if (CD_r->formula_type == CONJ) {
                 return rightRule_4(_originalFml);
             }
             //R5
-            if(CD_r->formula_type == IMPL) {
+            if (CD_r->formula_type == IMPL) {
                 return rightRule_5(_originalFml);
             }
         }//end of Cabalar Right Translation(full pattern)
 
 		
 	//start of Commutative missing Translation
-	if(subformula_l->formula_type == ATOM) {
+	if (subformula_l->formula_type == ATOM) {
             //L1 TRUE->G ------> G
-	    if(subformula_l->predicate_id == PRED_TRUE) {
-                //return push_formulas(Cabalar_ILT(_originalFml),NULL); 
-                //// convert_rules() does this.
-                //// may also product problem like Cabalar_IRF()
+	    if (subformula_l->predicate_id == PRED_TRUE) {
+                _formula* temp1 = implLeftTrue(_originalFml);
+                Formula temp2(temp1, false);
+                Formulas* ffs = new Formulas();
+                ffs->pushBack(temp2);
+                return ffs;
 	    }
 	    //L2 FALSE->G ------> ALWAYS BE TRUE
-	    if(subformula_l->predicate_id == PRED_FALSE) {
+	    if (subformula_l->predicate_id == PRED_FALSE) {
                 _formula* temp1 = implLeftFalse(_originalFml);
                 Formula temp2(temp1, false);
-                Formulas ffs;
-                ffs.pushBack(temp2);
+                Formulas* ffs = new Formulas();
+                ffs->pushBack(temp2);
                 return ffs;
-            //  return push_formulas(Cabalar_ILF(_originalFml),NULL);
 	    }
 	}
         //L3
-        if(subformula_l->formula_type == NEGA &&
+        if (subformula_l->formula_type == NEGA &&
                 subformula_l->subformula_l->formula_type == NEGA) {
-            _originalFml->subformula_l = Utils::compositeByConnective(CONJ,subformula_l,NULL);
+            _originalFml->subformula_l = Utils::compositeByConnective(CONJ, subformula_l, NULL);
             _originalFml->subformula_l
-                            ->subformula_r = Utils::compositeToAtom(PRED_TRUE,NULL);
+                            ->subformula_r = Utils::compositeToAtom(PRED_TRUE, NULL);
             return leftRule_3(_originalFml);
         }
         //L4
-        if(subformula_l->formula_type == DISJ) {
-            _originalFml->subformula_l = Utils::compositeByConnective(CONJ,subformula_l,NULL);
+        if (subformula_l->formula_type == DISJ) {
+            _originalFml->subformula_l = Utils::compositeByConnective(CONJ, subformula_l, NULL);
             _originalFml->subformula_l
-                            ->subformula_r = Utils::compositeToAtom(PRED_TRUE,NULL);
+                            ->subformula_r = Utils::compositeToAtom(PRED_TRUE, NULL);
             return leftRule_4(_originalFml);
         }
         //L5
-        if(subformula_l->formula_type == IMPL) {
-            _originalFml->subformula_l = Utils::compositeByConnective(CONJ,subformula_l,NULL);
+        if (subformula_l->formula_type == IMPL) {
+            _originalFml->subformula_l = Utils::compositeByConnective(CONJ, subformula_l, NULL);
             _originalFml->subformula_l
-                            ->subformula_r = Utils::compositeToAtom(PRED_TRUE,NULL);
+                            ->subformula_r = Utils::compositeToAtom(PRED_TRUE, NULL);
             return leftRule_5(_originalFml);
         }
 		
         //R1
-        if(subformula_r->formula_type == ATOM) {
+        if (subformula_r->formula_type == ATOM) {
             //R1 F->FALSE -------->~F
-            if(subformula_r->predicate_id == PRED_FALSE) {
-                //return push_formulas(Cabalar_IRF(_originalFml),NULL); 
-                //// convert_rules() does this. 
-                //// also leads s to ~~s.
+            if (subformula_r->predicate_id == PRED_FALSE) {
+                _formula* temp1 = implRightFalse(_originalFml);
+                Formula temp2(temp1, false);
+                Formulas* ffs = new Formulas();
+                ffs->pushBack(temp2);
+                return ffs;
             }
             //R2 F->TRUE --------->ALWAYS BE TRUE
-            if(subformula_r->predicate_id == PRED_TRUE) {
+            if (subformula_r->predicate_id == PRED_TRUE) {
                 _formula* temp1 = implRightTrue(_originalFml);
                 Formula temp2(temp1, false);
-                Formulas ffs;
-                ffs.pushBack(temp2);
+                Formulas* ffs = new Formulas();
+                ffs->pushBack(temp2);
                 return ffs;
-            //  return push_formulas(Cabalar_IRT(_originalFml),NULL);
             }
         }
-        //R3
-        if(subformula_r->formula_type == NEGA &&
+        //R3 F -> ~~G v false
+        if (subformula_r->formula_type == NEGA &&
                 subformula_r->subformula_l->formula_type == NEGA) {
-            _originalFml->subformula_r = Utils::compositeByConnective(DISJ,subformula_r,NULL);
+            _originalFml->subformula_r = Utils::compositeByConnective(DISJ, subformula_r, NULL);
             _originalFml->subformula_r
-                            ->subformula_r = Utils::compositeToAtom(PRED_FALSE,NULL);
+                            ->subformula_r = Utils::compositeToAtom(PRED_FALSE, NULL);
             return rightRule_3(_originalFml);
         }
-        //R4
-        if(subformula_r->formula_type == CONJ) {
-            _originalFml->subformula_r = Utils::compositeByConnective(DISJ,subformula_r,NULL);
+        //R4 F -> (G ^ H) v false
+        if (subformula_r->formula_type == CONJ) {
+            _originalFml->subformula_r = Utils::compositeByConnective(DISJ, subformula_r, NULL);
             _originalFml->subformula_r
-                            ->subformula_r = Utils::compositeToAtom(PRED_FALSE,NULL);
+                            ->subformula_r = Utils::compositeToAtom(PRED_FALSE, NULL);
             return rightRule_4(_originalFml);
         }
-        //R5
-        if(subformula_r->formula_type == IMPL) {
-            _originalFml->subformula_r = Utils::compositeByConnective(DISJ,subformula_r,NULL);
-	    _originalFml->subformula_r->subformula_r = Utils::compositeToAtom(PRED_FALSE,NULL);
+        //R5 F -> (G -> H) v false
+        if (subformula_r->formula_type == IMPL) {
+            _originalFml->subformula_r = Utils::compositeByConnective(DISJ,subformula_r, NULL);
+	    _originalFml->subformula_r->subformula_r = Utils::compositeToAtom(PRED_FALSE, NULL);
             return rightRule_5(_originalFml);
         }
     }
 	
     //start of imply missing
-    if(_originalFml->formula_type == CONJ) {
-	commutaiveTrans(_originalFml,_originalFml, CONJ);
-	_formula* CD_o = _originalFml->subformula_l;
-		
-	//L1
-	if(CD_o->formula_type == ATOM && 
-                CD_o->predicate_id == PRED_TRUE) {
-            _formula* temp1 = conjLeftTrue(_originalFml);
-            Formula temp2(temp1, false);
-            Formulas ffs;
-            ffs.pushBack(temp2);
-            return ffs;
-        //  return push_formulas(Cabalar_CLT(_originalFml),NULL);
-        }
-        //L2
-        if(CD_o->formula_type == ATOM && 
-                CD_o->predicate_id == PRED_FALSE) {
-            _formula* temp1 = conjLeftFalse(_originalFml);
-            Formula temp2(temp1, false);
-            Formulas ffs;
-            ffs.pushBack(temp2);
-            return ffs;
-        //  return push_formulas(Cabalar_CLF(_originalFml),NULL);
-        }
-		//Note: L3,L4,L5 lead to recursive translation
+    if (_originalFml->formula_type == CONJ) {//直接进行分割
+        Formula f(_originalFml, false);
+        return f.divideFormula();
     }
 	
-    if(_originalFml->formula_type == DISJ) {
-        commutaiveTrans(_originalFml,_originalFml, DISJ);
+    if (_originalFml->formula_type == DISJ) {
+        commutaiveTrans(_originalFml, _originalFml, DISJ);
         _formula* CD_o = _originalFml->subformula_l;
 		
-        //R1
-        if(CD_o->formula_type == ATOM &&
-                CD_o->predicate_id == PRED_FALSE) {
+        //disjLeftFalse，也可看成R1的转换
+        if (CD_o->formula_type == ATOM &&
+                CD_o->predicate_id == PRED_FALSE) {// false v G => G
             _formula* temp1 = disjLeftFalse(_originalFml);
             Formula temp2(temp1, false);
-            Formulas ffs;
-            ffs.pushBack(temp2);
+            Formulas* ffs = new Formulas();
+            ffs->pushBack(temp2);
             return ffs;
-        //	return push_formulas(Cabalar_DLF(_originalFml),NULL);
         }
-        //R2
-        if(CD_o->formula_type == ATOM &&
-                CD_o->predicate_id == PRED_TRUE) {
+        //disjLeftTrue，也可看成R2的转换
+        if (CD_o->formula_type == ATOM &&
+                CD_o->predicate_id == PRED_TRUE) {// true v G => true
             _formula* temp1 = disjLeftTrue(_originalFml);
             Formula temp2(temp1, false);
-            Formulas ffs;
-            ffs.pushBack(temp2);
+            Formulas* ffs = new Formulas();
+            ffs->pushBack(temp2);
             return ffs;
-        //  return push_formulas(Cabalar_DLT(_originalFml),NULL);
         }
         //R3
-        if(CD_o->formula_type == NEGA && 
-                CD_o->subformula_l->formula_type == NEGA) {
-            _originalFml = Utils::compositeByConnective(IMPL,NULL,_originalFml);
-            _originalFml->subformula_l = Utils::compositeToAtom(PRED_TRUE,NULL);
+        if (CD_o->formula_type == NEGA && 
+                CD_o->subformula_l->formula_type == NEGA) {// true -> ~~G v K
+            _originalFml = Utils::compositeByConnective(IMPL, NULL, _originalFml);
+            _originalFml->subformula_l = Utils::compositeToAtom(PRED_TRUE, NULL);
             return rightRule_3(_originalFml);
         }
         //R4
-        if(CD_o->formula_type == CONJ) {
-            _originalFml = Utils::compositeByConnective(IMPL,NULL,_originalFml);
-            _originalFml->subformula_l = Utils::compositeToAtom(PRED_TRUE,NULL);
+        if (CD_o->formula_type == CONJ) {// true -> (G ^ H) v K
+            _originalFml = Utils::compositeByConnective(IMPL, NULL, _originalFml);
+            _originalFml->subformula_l = Utils::compositeToAtom(PRED_TRUE, NULL);
             return rightRule_4(_originalFml);
         }
         //R5
-        if(CD_o->formula_type == IMPL) {
-            _originalFml = Utils::compositeByConnective(IMPL,NULL,_originalFml);
-            _originalFml->subformula_l = Utils::compositeToAtom(PRED_TRUE,NULL);
+        if (CD_o->formula_type == IMPL) {// true -> (G -> H) v K
+            _originalFml = Utils::compositeByConnective(IMPL, NULL, _originalFml);
+            _originalFml->subformula_l = Utils::compositeToAtom(PRED_TRUE, NULL);
             return rightRule_5(_originalFml);
         }
     }//end of _originalFml->formula_type == DISJ
 	
     
     Formula f_result(_originalFml, false);
-    Formulas fs_result;
-    fs_result.pushBack(f_result);
+    Formulas* fs_result = new Formulas();
+    fs_result->pushBack(f_result);
     return fs_result;
 }

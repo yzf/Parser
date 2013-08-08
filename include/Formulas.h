@@ -16,7 +16,11 @@ using namespace std;
 class Formula;
 
 #define FORMULAS_ITERATOR deque<Formula>::iterator
-
+#define FORMULAS_CONST_ITERATOR deque<Formula>::const_iterator
+#define FORMULAS_CONST_REV_ITERATOR deque<Formula>::const_reverse_iterator
+/*
+ * 公式组类
+ */
 class Formulas {
 private:
     deque<Formula> m_dequeFormulas;
@@ -34,12 +38,18 @@ public:
     Formula popFront();
     Formula front();
     Formula back();
-    void joinFormulas(Formulas& _tail);
+    void joinBack(const Formulas& _tail);
+    void joinFront(const Formulas& _head);
     bool operator == (const Formulas& _rhs) const;
     bool operator != (const Formulas& _rhs) const;
+    Formula& operator [] (int _id);
     void output(FILE* _out) const;
     FORMULAS_ITERATOR begin();
     FORMULAS_ITERATOR end();
+    FORMULAS_CONST_ITERATOR begin() const;
+    FORMULAS_CONST_ITERATOR end() const;
+    FORMULAS_CONST_REV_ITERATOR rbegin() const;
+    FORMULAS_CONST_REV_ITERATOR rend() const;
     FORMULAS_ITERATOR erase(FORMULAS_ITERATOR _it);
 };
 
