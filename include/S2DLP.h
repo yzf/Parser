@@ -38,7 +38,7 @@ private:
     void hengZhangTransform();
     void cabalarTransform();
     void ruleTransform();
-    void addSucc(FILE* _out, vector<string> domains) const;
+    void outputSucc(FILE* _out, vector<string> domains) const;
     void outputAddition(FILE* _out) const;
 public:
     static S2DLP& instance();

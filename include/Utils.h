@@ -12,6 +12,7 @@
 #include "structs.h"
 #include <map>
 #include <vector>
+#include <string>
 #include "Vocabulary.h"
 #include "Formulas.h"
 
@@ -52,6 +53,7 @@ public:
     
     //对于rule
     static void printAtom(const _formula* _atom, FILE* _out);
+    static string convertAtomToString(const _formula* _atom);
     
     static _formula* compositeByConnective(FORMULA_TYPE _formulaType, 
                          _formula* _subformulaL, _formula* _subformulaR);

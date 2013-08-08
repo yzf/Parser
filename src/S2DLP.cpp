@@ -62,7 +62,7 @@ void S2DLP::destroy() {
  */
 void S2DLP::hengZhangTransform() {
     assert(m_pOriginalFormulas);
-    m_pHengZhangFormulas = HengZhang::instance().convert(*(m_pOriginalFormulas));
+    m_pHengZhangFormulas = HengZhang::instance().convert(*m_pOriginalFormulas);
 }
 /**
  * 输出章衡转化结果
@@ -76,8 +76,8 @@ void S2DLP::outputHengZhangFormulas(FILE* _out) const {
  * 对章衡转化结果进行Cabalar转化
  */
 void S2DLP::cabalarTransform() {
-    assert(m_pOriginalFormulas);
-    m_pDlpFormulas = Cabalar::instance().convert(*(m_pHengZhangFormulas));
+    assert(m_pHengZhangFormulas);
+    m_pDlpFormulas = Cabalar::instance().convert(*m_pHengZhangFormulas);
 }
 /**
  * 输出Cabalar转化结果
@@ -87,12 +87,21 @@ void S2DLP::outputCabalarFormulas(FILE* _out) const {
     assert(m_pDlpFormulas);
     m_pDlpFormulas->output(_out);
 }
+/**
+ * 把Cabalar转化的结果转成供ASP使用的规则
+ */
 void S2DLP::ruleTransform() {
+    assert(m_pDlpFormulas);
     for (FORMULAS_CONST_ITERATOR it = m_pDlpFormulas->begin();
             it != m_pDlpFormulas->end(); ++ it) {
-        m_listRules.push_back(Rule(*it));
+        Rule rule = Rule(*it);
+        m_listRules.push_back(rule);
     }
 }
+/**
+ * 输出规则
+ * @param _out
+ */
 void S2DLP::outputRules(FILE* _out) const {
     int i = 0;
     for (list<Rule>::const_iterator it = m_listRules.begin();
@@ -124,11 +133,6 @@ void S2DLP::convert() {
     hengZhangTransform();
     cabalarTransform();
     ruleTransform();
-    //由于出现~~的谓词需要输出后再知道，所以先随便输出到一个文件，再把该文件删除
-    FILE* tmpFile = fopen("out.tmp", "w+");
-    outputRules(tmpFile);
-    fclose(tmpFile);
-    remove("out.tmp");
 }
 /**
  * 输出附加信息
@@ -155,7 +159,7 @@ void S2DLP::outputAddition(FILE* _out) const {
         }
         fprintf(_out, "#domain %s(%s).\n", domainName, variName);
     }
-    fprintf(_out, "%%NEW variable define\n");
+    fprintf(_out, "%%Nega nega predicate define\n");
     for (FORMULAS_CONST_ITERATOR iter = m_pNegaPredicates->begin(); 
             iter != m_pNegaPredicates->end(); ++ iter) {
         fprintf(_out, "_");
@@ -164,7 +168,7 @@ void S2DLP::outputAddition(FILE* _out) const {
         Utils::printAtom(iter->getFormula(), _out);        
         fprintf(_out, ".\n");
     }
-    fprintf(_out, "%%Addition define\n");
+    fprintf(_out, "%%Extension predicate define(except succ and max)\n");
     for(FORMULAS_CONST_ITERATOR iter = Vocabulary::instance().getAtomList()->begin(); 
             iter < Vocabulary::instance().getAtomList()->end(); ++ iter) {
         if(! Vocabulary::instance().isIntensionPredicate(iter->getFormula()->predicate_id)
@@ -182,7 +186,7 @@ void S2DLP::outputAddition(FILE* _out) const {
     }
     fprintf(_out, "%%Succ predicate definition\n");
     for(unsigned int i = 0; i < HengZhang::instance().m_vDomainNames.size(); i++) {
-        addSucc(_out, HengZhang::instance().m_vDomainNames.at(i));
+        outputSucc(_out, HengZhang::instance().m_vDomainNames.at(i));
     }  
     fprintf(_out, "\n");
     fflush(_out);
@@ -192,7 +196,7 @@ void S2DLP::outputAddition(FILE* _out) const {
  * @param _out
  * @param domains
  */
-void S2DLP::addSucc(FILE* _out, vector<string> domains) const {
+void S2DLP::outputSucc(FILE* _out, vector<string> domains) const {
     int size = domains.size();
     
     if (size == 1) {

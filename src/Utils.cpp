@@ -717,3 +717,31 @@ void Utils::printAtom(const _formula* _atom, FILE* _out) {
         }        
     }    
 }
+/**
+ * 把原子转化成字符串
+ * @param atom
+ * @return 
+ */
+string Utils::convertAtomToString(const _formula* _atom) {
+    assert(_atom->formula_type == ATOM);
+    string sRet = "";
+    sRet += Vocabulary::instance().getNameById(_atom->predicate_id, PREDICATE);
+    if (_atom->parameters != NULL) {
+        _term* ft = _atom->parameters;
+        int ftc = Vocabulary::instance().getPredicateArity(_atom->predicate_id);
+        for (int i = 0; i < ftc; ++ i) {
+            if (0 == i) {
+                sRet += "(";
+            }
+            else {
+                sRet += ",";
+            }
+            sRet += Vocabulary::instance().getNameById(ft[i].variable_id, VARIABLE);
+            
+            if (i == ftc - 1) {
+                sRet += ")";
+            }
+        }        
+    }    
+    return sRet;
+}
