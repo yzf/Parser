@@ -41,6 +41,7 @@ public:
     static bool isUniversal(_formula* _fml);
     static void renameFormulaVariables(_formula* _fml, int _nOldVariableId, int _nNewVariableId);
     static void getNoQuantifierVariables(map<int, bool>& _flag, vector<int>& _varis, _formula* _fml);
+    static void getNoQuantifierVariablesInTerms(map<int, bool>& _flag, vector<int>& _varis, _term* _t);
     static bool isNegativeFormula(_formula* _fml, bool _negative, 
                                         int* _pPredicateIds = NULL, int _nSize = 0);
     static bool inList(int _target, int *_p, int size);

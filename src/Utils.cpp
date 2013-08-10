@@ -31,10 +31,10 @@ void Utils::outputTerm(FILE* _out, const _term* _t) {
 }
 /**
  * 替换参数
- * @param _t
- * @param _arity
- * @param _originals
- * @param _replacements
+ * @param _t 参数
+ * @param _arity　参数个数
+ * @param _originals　带替换的参数
+ * @param _replacements　替换值
  */
 void Utils::replaceTerm(_term* _ts, int _arity, const vector<int>& _originals, 
                         const vector<int>& _replacements) {
@@ -56,10 +56,10 @@ void Utils::replaceTerm(_term* _ts, int _arity, const vector<int>& _originals,
     }
 }
 /**
- * 连接参数
+ * 连接参数 {X,Y} {Z,R}=>{X,Y,Z,R}
  * @param _head
  * @param _tail
- * @return 
+ * @return _term* 结果:{X,Y,Z,R}
  */
 _term* Utils::combineTerms(const vector<int>& _head, const vector<int>& _tail) {
     _term* terms = (_term*)malloc(sizeof(_term) * (_head.size() + _tail.size()));
@@ -81,7 +81,7 @@ _term* Utils::combineTerms(const vector<int>& _head, const vector<int>& _tail) {
  * 比较两个term是否相同
  * @param _lhs
  * @param _rhs
- * @return 
+ * @return bool
  */
 bool Utils::compareTerm(const _term* _lhs, const _term* _rhs) {
     assert(_lhs);
@@ -280,7 +280,7 @@ void Utils::outputFormula(FILE* _out, const _formula* _fml) {
  * 比较两条公式是否相同
  * @param _lhs
  * @param _rhs
- * @return 
+ * @return bool
  */
 bool Utils::compareFormula(const _formula* _lhs, const _formula* _rhs) {
     assert(_lhs);
@@ -330,7 +330,7 @@ bool Utils::compareFormula(const _formula* _lhs, const _formula* _rhs) {
 /**
  * 拷贝公式
  * @param _fml
- * @return 
+ * @return _formula* 公式的拷贝
  */
 _formula* Utils::copyFormula(const _formula* _fml) {
     if (_fml == NULL) {
@@ -399,7 +399,7 @@ void Utils::deleteFormula(_formula* _fml) {
 /**
  * 判断公式是否含有存在量词
  * @param _fml
- * @return 
+ * @return bool
  */
 bool Utils::isUniversal(_formula* _fml) {
     if(_fml != NULL) {
@@ -440,7 +440,7 @@ void Utils::renameFormulaVariables(_formula* _fml, int _oldVariableId, int _newV
     case ATOM:
         assert(_fml->parameters);
         for (int i = 0; i < Vocabulary::instance().getPredicateArity(_fml->predicate_id); ++ i) {
-            renameTermVariables(_fml->parameters+i, _oldVariableId, _newVariableId);
+            renameTermVariables(_fml->parameters + i, _oldVariableId, _newVariableId);
         }
         break;
     case UNIV:
@@ -484,57 +484,45 @@ void Utils::getNoQuantifierVariables(map<int, bool>& _flag, vector<int>& _varis,
     case ATOM:
         for(int i = 0; i < Vocabulary::instance().getPredicateArity(_fml->predicate_id); ++ i) {
             _term* term = _fml->parameters + i;
-            if (! _flag[term->variable_id]) {
-                _flag[term->variable_id] = true;
-                _varis.push_back(-(term->variable_id));
-            }
+            getNoQuantifierVariablesInTerms(_flag, _varis, term);
         }
         break;
     default:
         assert(0);
     }
 }
-bool Utils::isNegativeFormula(_formula* _fml, bool _negative, int* _p, int _size) {
-    assert(_fml);
-
-    switch (_fml->formula_type)
-    {
-    case ATOM:
-        if (_p == NULL || _size == 0) {
-            if(_negative || ! Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
-                return true;
-            }
-        }
-        else {
-            if (_negative || ! inList(_fml->predicate_id, _p, _size)) {
-                return true;
-            }
+/**
+ * 获取参数中，没有量词限定的变量
+ * @param _flag 标记
+ * @param _varis 存放结果
+ * @param _t 参数
+ */
+void Utils::getNoQuantifierVariablesInTerms(map<int, bool>& _flag, vector<int>& _varis, _term* _t) {
+    assert(_t);
+    switch (_t->term_type) {
+    case VARI:
+        if (! _flag[_t->variable_id]) {
+            _flag[_t->variable_id] = true;
+            _varis.push_back(-(_t->variable_id));
         }
         break;
-    case NEGA:
-        assert(_fml->subformula_l);
-        return isNegativeFormula(_fml->subformula_l, !_negative, _p, _size);
-    case CONJ:
-    case DISJ:
-        assert(_fml->subformula_l);
-        assert(_fml->subformula_r);
-        return (isNegativeFormula(_fml->subformula_l, _negative, _p, _size) &&
-               isNegativeFormula(_fml->subformula_r, _negative, _p, _size));
-    case IMPL:
-        assert(_fml->subformula_l);
-        assert(_fml->subformula_r);
-        return (isNegativeFormula(_fml->subformula_l, !_negative, _p, _size) &&
-               isNegativeFormula(_fml->subformula_r, _negative, _p, _size));
-    case UNIV:
-    case EXIS:
-        assert(_fml->subformula_l);
-        return isNegativeFormula(_fml->subformula_l, _negative, _p, _size);
+    case FUNC:
+        for(int i = 0; i < Vocabulary::instance().getFunctionArity(_t->function_id); ++ i) {
+            _term* term = _t->parameters + i;
+            getNoQuantifierVariablesInTerms(_flag, _varis, term);
+        }
+        break;
     default:
         assert(0);
     }
-
-    return false;
 }
+/**
+ * 判断_target是否在数组_p中
+ * @param _target　查找值
+ * @param _p　数组
+ * @param size　数组大小
+ * @return bool
+ */
 bool Utils::inList(int _target, int *_p, int size) {
     for (int i = 0; i < size; ++ i) {
         if (_p[i] == _target) {
@@ -544,16 +532,14 @@ bool Utils::inList(int _target, int *_p, int size) {
     return false;
 }
 /**
- * 在公式所有不带非的内涵谓词前添加非非
+ * 在指定的谓词前添加非非，_p == NULL或_size = 0时，则对内涵谓词操作
  * @param _fml
- * @return 
+ * @param _p 谓词Id数组
+ * @param _size 谓词Id数组的大小
+ * @return _formula* 处理后的公式
  */
 _formula* Utils::doubleNegationPredicates(_formula* _fml, int *_p, int _size) {
     assert(_fml);
-
-    if (isNegativeFormula(_fml, false, _p, _size)) {
-        return _fml;
-    }
 
     switch (_fml->formula_type)
     {
@@ -619,7 +605,7 @@ void Utils::replaceFormulaTerms(_formula* _fml,
     }
 }
 /**
- * 拆分公式
+ * 拆分公式，把用&连接的公式拆分成多条公式
  * @param _fml
  * @param _parent
  * @param _result
