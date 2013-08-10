@@ -28,7 +28,7 @@ public:
 public:
     Formula();
     Formula(const Formula& _rhs);
-    Formula(_formula* _fml, bool _bIsCopy);
+    Formula(_formula* _fml, bool _bIsCopy = true);
     ~Formula();
     Formula& operator = (const Formula& _rhs);
     bool operator == (const Formula& _rhs) const;
