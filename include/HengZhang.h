@@ -42,7 +42,7 @@ public:
     int m_nNumSucc;
     int m_nNumNV;
     
-    vector< vector<string> > m_vDomainNames;
+    static vector< vector<string> > ms_vDomainNames;
     
 private:
     Formulas transform(const Formula& _originalFml);

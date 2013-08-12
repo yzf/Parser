@@ -185,8 +185,8 @@ void SMTranslator::outputAddition(FILE* _out) const {
         }
     }
     fprintf(_out, "%%Succ predicate definition\n");
-    for(unsigned int i = 0; i < HengZhang::instance().m_vDomainNames.size(); i++) {
-        outputSucc(_out, HengZhang::instance().m_vDomainNames.at(i));
+    for(unsigned int i = 0; i < HengZhang::ms_vDomainNames.size(); i++) {
+        outputSucc(_out, HengZhang::ms_vDomainNames.at(i));
     }  
     fprintf(_out, "\n");
     fflush(_out);
@@ -244,15 +244,15 @@ void SMTranslator::outputSucc(FILE* _out, vector<string> domains) const {
             }
             
             bool exis = false;
-            for (unsigned int j = 0; j < HengZhang::instance().m_vDomainNames.size(); ++ j) {
-                if(HengZhang::instance().m_vDomainNames[j].size() == 1 && HengZhang::instance().m_vDomainNames[j][0] == domains[size - j - 1]) {
+            for (unsigned int j = 0; j < HengZhang::ms_vDomainNames.size(); ++ j) {
+                if(HengZhang::ms_vDomainNames[j].size() == 1 && HengZhang::ms_vDomainNames[j][0] == domains[size - j - 1]) {
                     exis = true;
                 }
             }
             if (! exis) {
                 vector<string> d;
                 d.push_back(domains[size - i - 1]);
-                HengZhang::instance().m_vDomainNames.push_back(d);
+                HengZhang::ms_vDomainNames.push_back(d);
             }
             fprintf(_out, ":-succ_%s(%c1,%c2),", 
                     domains[size - i - 1].c_str(), 'A' + size - i - 1, 'A' + size - i - 1);
