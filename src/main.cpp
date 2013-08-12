@@ -13,7 +13,7 @@
 #include "Utils.h"
 #include "Formula.h"
 #include "Formulas.h"
-#include "S2DLP.h"
+#include "SMTranslator.h"
 #include <iostream>
 #include <unistd.h>
 
@@ -58,10 +58,10 @@ int main(int argc, char** argv) {
 
 #ifdef RUN_S2DLP
     Formula f = Formula(gformula, false);
-    S2DLP::instance().init(f);
-    S2DLP::instance().convert();
-    S2DLP::instance().outputFinalResult(fout);
-    S2DLP::instance().destroy();
+    SMTranslator::instance().init(f);
+    SMTranslator::instance().convert();
+    SMTranslator::instance().outputFinalResult(fout);
+    SMTranslator::instance().destroy();
     fclose(fout);
 #endif
     Vocabulary::instance().dumpVocabulary(stdout);

@@ -43,7 +43,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/NNFUtils.o \
 	${OBJECTDIR}/src/PNFUtils.o \
 	${OBJECTDIR}/src/Rule.o \
-	${OBJECTDIR}/src/S2DLP.o \
+	${OBJECTDIR}/src/SMTranslator.o \
 	${OBJECTDIR}/src/Utils.o \
 	${OBJECTDIR}/src/Vocabulary.o \
 	${OBJECTDIR}/src/global.o \
@@ -122,10 +122,10 @@ ${OBJECTDIR}/src/Rule.o: src/Rule.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Rule.o src/Rule.cpp
 
-${OBJECTDIR}/src/S2DLP.o: src/S2DLP.cpp 
+${OBJECTDIR}/src/SMTranslator.o: src/SMTranslator.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/S2DLP.o src/S2DLP.cpp
+	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/SMTranslator.o src/SMTranslator.cpp
 
 ${OBJECTDIR}/src/Utils.o: src/Utils.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -271,17 +271,17 @@ ${OBJECTDIR}/src/Rule_nomain.o: ${OBJECTDIR}/src/Rule.o src/Rule.cpp
 	    ${CP} ${OBJECTDIR}/src/Rule.o ${OBJECTDIR}/src/Rule_nomain.o;\
 	fi
 
-${OBJECTDIR}/src/S2DLP_nomain.o: ${OBJECTDIR}/src/S2DLP.o src/S2DLP.cpp 
+${OBJECTDIR}/src/SMTranslator_nomain.o: ${OBJECTDIR}/src/SMTranslator.o src/SMTranslator.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/S2DLP.o`; \
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/SMTranslator.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/S2DLP_nomain.o src/S2DLP.cpp;\
+	    $(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/SMTranslator_nomain.o src/SMTranslator.cpp;\
 	else  \
-	    ${CP} ${OBJECTDIR}/src/S2DLP.o ${OBJECTDIR}/src/S2DLP_nomain.o;\
+	    ${CP} ${OBJECTDIR}/src/SMTranslator.o ${OBJECTDIR}/src/SMTranslator_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/Utils_nomain.o: ${OBJECTDIR}/src/Utils.o src/Utils.cpp 

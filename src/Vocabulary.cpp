@@ -1,5 +1,5 @@
 #include "Vocabulary.h"
-#include "S2DLP.h"
+#include "SMTranslator.h"
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>

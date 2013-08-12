@@ -1,6 +1,6 @@
 #include "Rule.h"
 #include "Utils.h"
-#include "S2DLP.h"
+#include "SMTranslator.h"
 #include <assert.h>
 #include <cstdlib>
 
@@ -195,8 +195,8 @@ void Rule::generateRuleString() {
                 bodyPart = bodyPart->subformula_l;
                 if (bodyPart->formula_type == NEGA) {
                     bool exis = false;
-                    for (FORMULAS_CONST_ITERATOR it_2 = S2DLP::instance().getNegaPredicates()->begin();
-                            it_2 != S2DLP::instance().getNegaPredicates()->end(); ++ it_2) {
+                    for (FORMULAS_CONST_ITERATOR it_2 = SMTranslator::instance().getNegaPredicates()->begin();
+                            it_2 != SMTranslator::instance().getNegaPredicates()->end(); ++ it_2) {
                         if (it_2->getFormula()->predicate_id == bodyPart->subformula_l->predicate_id) {
                             exis = true;
                         }
@@ -205,7 +205,7 @@ void Rule::generateRuleString() {
                         Formula newNegaPredicate = Vocabulary::instance()
                                         .getAtom(bodyPart->subformula_l->predicate_id); 
                         assert(newNegaPredicate.getFormula());
-                        S2DLP::instance().addNegaPredicates(newNegaPredicate);
+                        SMTranslator::instance().addNegaPredicates(newNegaPredicate);
                     }
                     m_sRuleString += "_";
                 }

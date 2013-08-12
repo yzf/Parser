@@ -1,4 +1,4 @@
-#include "S2DLP.h"
+#include "SMTranslator.h"
 #include "HengZhang.h"
 #include "Cabalar.h"
 #include "Vocabulary.h"
@@ -6,39 +6,39 @@
 #include <assert.h>
 #include <cstring>
 
-S2DLP::S2DLP() :
+SMTranslator::SMTranslator() :
         m_pOriginalFormulas(NULL),
         m_pHengZhangFormulas(NULL),
         m_pDlpFormulas(NULL),
         m_pNegaPredicates(new Formulas()) {
 }
 
-S2DLP::~S2DLP() {
+SMTranslator::~SMTranslator() {
     destroy();
 }
 
-S2DLP& S2DLP::instance() {
-    static S2DLP theInstance;
+SMTranslator& SMTranslator::instance() {
+    static SMTranslator theInstance;
     return theInstance;
 }
 /**
  * 初始化S2DLP求解器
  * @param _originalFml  调用divedeFormula方法，将原公式划分为多条子公式
  */
-void S2DLP::init(const Formula& _originalFml) {
+void SMTranslator::init(const Formula& _originalFml) {
     m_pOriginalFormulas = _originalFml.divideFormula();
 }
 /**
  * 初始化S2DLP求解器
  * @param _originalFmls
  */
-void S2DLP::init(const Formulas& _originalFmls) {
+void SMTranslator::init(const Formulas& _originalFmls) {
     m_pOriginalFormulas = new Formulas(_originalFmls);
 }
 /**
  * 销毁
  */
-void S2DLP::destroy() {
+void SMTranslator::destroy() {
     if (m_pOriginalFormulas != NULL) {
         delete m_pOriginalFormulas;
         m_pOriginalFormulas = NULL;
@@ -60,7 +60,7 @@ void S2DLP::destroy() {
 /**
  * 进行章衡量词消去转化
  */
-void S2DLP::hengZhangTransform() {
+void SMTranslator::hengZhangTransform() {
     assert(m_pOriginalFormulas);
     m_pHengZhangFormulas = HengZhang::instance().convert(*m_pOriginalFormulas);
 }
@@ -68,14 +68,14 @@ void S2DLP::hengZhangTransform() {
  * 输出章衡转化结果
  * @param _out
  */
-void S2DLP::outputHengZhangFormulas(FILE* _out) const {
+void SMTranslator::outputHengZhangFormulas(FILE* _out) const {
     assert(m_pHengZhangFormulas);
     m_pHengZhangFormulas->output(_out);
 }
 /**
  * 对章衡转化结果进行Cabalar转化
  */
-void S2DLP::cabalarTransform() {
+void SMTranslator::cabalarTransform() {
     assert(m_pHengZhangFormulas);
     m_pDlpFormulas = Cabalar::instance().convert(*m_pHengZhangFormulas);
 }
@@ -83,14 +83,14 @@ void S2DLP::cabalarTransform() {
  * 输出Cabalar转化结果
  * @param _out
  */
-void S2DLP::outputCabalarFormulas(FILE* _out) const {
+void SMTranslator::outputCabalarFormulas(FILE* _out) const {
     assert(m_pDlpFormulas);
     m_pDlpFormulas->output(_out);
 }
 /**
  * 把Cabalar转化的结果转成供ASP使用的规则
  */
-void S2DLP::ruleTransform() {
+void SMTranslator::ruleTransform() {
     assert(m_pDlpFormulas);
     for (FORMULAS_CONST_ITERATOR it = m_pDlpFormulas->begin();
             it != m_pDlpFormulas->end(); ++ it) {
@@ -102,7 +102,7 @@ void S2DLP::ruleTransform() {
  * 输出规则
  * @param _out
  */
-void S2DLP::outputRules(FILE* _out) const {
+void SMTranslator::outputRules(FILE* _out) const {
     int i = 0;
     for (list<Rule>::const_iterator it = m_listRules.begin();
             it != m_listRules.end(); ++ it) {
@@ -116,20 +116,20 @@ void S2DLP::outputRules(FILE* _out) const {
  * 获取所有出现过非非的谓词公式
  * @return 
  */
-const Formulas* S2DLP::getNegaPredicates() const {
+const Formulas* SMTranslator::getNegaPredicates() const {
     return m_pNegaPredicates;
 }
 /**
  * 添加出现非非的谓词的公式
  * @param _negaPredicate
  */
-void S2DLP::addNegaPredicates(const Formula& _negaPredicate) {
+void SMTranslator::addNegaPredicates(const Formula& _negaPredicate) {
     m_pNegaPredicates->pushBack(_negaPredicate);
 }
 /**
  * 章衡、Cabalar、规则全套服务
  */
-void S2DLP::convert() {
+void SMTranslator::convert() {
     hengZhangTransform();
     cabalarTransform();
     ruleTransform();
@@ -138,7 +138,7 @@ void S2DLP::convert() {
  * 输出附加信息
  * @param _out
  */
-void S2DLP::outputAddition(FILE* _out) const {
+void SMTranslator::outputAddition(FILE* _out) const {
     fprintf(_out, "%%MIN and MAX domain\n");
     map<int, string> domainNames = Vocabulary::instance().getDomainNames();
     for (map<int, string>::const_iterator it = domainNames.begin();
@@ -196,7 +196,7 @@ void S2DLP::outputAddition(FILE* _out) const {
  * @param _out
  * @param domains
  */
-void S2DLP::outputSucc(FILE* _out, vector<string> domains) const {
+void SMTranslator::outputSucc(FILE* _out, vector<string> domains) const {
     int size = domains.size();
     
     if (size == 1) {
@@ -275,7 +275,7 @@ void S2DLP::outputSucc(FILE* _out, vector<string> domains) const {
  * 输出供ASP使用的结果
  * @param _out
  */
-void S2DLP::outputFinalResult(FILE* _out) const {
+void SMTranslator::outputFinalResult(FILE* _out) const {
     outputAddition(_out);
     outputRules(_out);
 }

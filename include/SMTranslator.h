@@ -5,8 +5,8 @@
  * Created on July 29, 2013, 2:18 PM
  */
 
-#ifndef S2DLP_H
-#define	S2DLP_H
+#ifndef SMTRANSLATOR_H
+#define	SMTRANSLATOR_H
 
 #include "Formula.h"
 #include "Formulas.h"
@@ -22,7 +22,7 @@ class Rule;
 /*
  * StableModel转换器，单例
  */
-class S2DLP {
+class SMTranslator {
 private:
     Formulas* m_pOriginalFormulas;      //原公式
     Formulas* m_pHengZhangFormulas;     //章衡转化结果
@@ -30,10 +30,10 @@ private:
     Formulas* m_pNegaPredicates;        //出现非非的谓词公式
     list<Rule> m_listRules;             //转换后的所有规则
 private:
-    S2DLP();
-    S2DLP(const S2DLP&);
-    S2DLP& operator = (const S2DLP&);
-    ~S2DLP();
+    SMTranslator();
+    SMTranslator(const SMTranslator&);
+    SMTranslator& operator = (const SMTranslator&);
+    ~SMTranslator();
     
     void hengZhangTransform();
     void cabalarTransform();
@@ -41,7 +41,7 @@ private:
     void outputSucc(FILE* _out, vector<string> domains) const;
     void outputAddition(FILE* _out) const;
 public:
-    static S2DLP& instance();
+    static SMTranslator& instance();
     
     void init(const Formula& _originalFml);
     void init(const Formulas& _originalFmls);
@@ -57,5 +57,5 @@ public:
     void addNegaPredicates(const Formula& _negaPredicate);
 };
 
-#endif	/* S2DLP_H */
+#endif	/* SMTRANSLATOR_H */
 

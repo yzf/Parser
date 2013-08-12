@@ -12,7 +12,7 @@
       <itemPath>include/NNFUtils.h</itemPath>
       <itemPath>include/PNFUtils.h</itemPath>
       <itemPath>include/Rule.h</itemPath>
-      <itemPath>include/S2DLP.h</itemPath>
+      <itemPath>include/SMTranslator.h</itemPath>
       <itemPath>include/Utils.h</itemPath>
       <itemPath>include/Vocabulary.h</itemPath>
       <itemPath>include/structs.h</itemPath>
@@ -45,7 +45,7 @@
       <itemPath>src/NNFUtils.cpp</itemPath>
       <itemPath>src/PNFUtils.cpp</itemPath>
       <itemPath>src/Rule.cpp</itemPath>
-      <itemPath>src/S2DLP.cpp</itemPath>
+      <itemPath>src/SMTranslator.cpp</itemPath>
       <itemPath>src/Utils.cpp</itemPath>
       <itemPath>src/Vocabulary.cpp</itemPath>
       <itemPath>src/global.cpp</itemPath>
@@ -146,7 +146,7 @@
       </item>
       <item path="include/Rule.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/S2DLP.h" ex="false" tool="3" flavor2="0">
+      <item path="include/SMTranslator.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Utils.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -184,7 +184,7 @@
       </item>
       <item path="src/Rule.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/S2DLP.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/SMTranslator.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Utils.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -265,7 +265,7 @@
       </item>
       <item path="include/Rule.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="include/S2DLP.h" ex="false" tool="3" flavor2="0">
+      <item path="include/SMTranslator.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Utils.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -303,7 +303,7 @@
       </item>
       <item path="src/Rule.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/S2DLP.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/SMTranslator.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Utils.cpp" ex="false" tool="1" flavor2="0">
       </item>
