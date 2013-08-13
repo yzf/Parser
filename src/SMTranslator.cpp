@@ -78,7 +78,6 @@ void SMTranslator::hengZhangTransform() {
  * @param _out
  */
 void SMTranslator::outputHengZhangFormulas(FILE* _out) const {
-    assert(m_pHengZhangFormulas);
     output(_out, m_vHengZhangFormulas);
 }
 /**
@@ -96,7 +95,6 @@ void SMTranslator::cabalarTransform() {
  * @param _out
  */
 void SMTranslator::outputCabalarFormulas(FILE* _out) const {
-    assert(m_pDlpFormulas);
     output(_out, m_vDlpFormulas);
 }
 void SMTranslator::output(FILE* _out, vector<string> _vStr) const {

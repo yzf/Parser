@@ -134,17 +134,16 @@ void Rule::aspModify() {
         while (cur->formula_type != ATOM) {
             cur = cur->subformula_l;
         }
-        //外延谓词： ～～fml => fml 
-        if (! Vocabulary::instance().isIntensionPredicate(cur->predicate_id)
-                && cur->predicate_id >= 0) {
-            while (bodyPart->formula_type == NEGA && bodyPart->subformula_l->formula_type == NEGA) {
+        //外延谓词： ~~fml => fml
+        if (! Vocabulary::instance().isIntensionPredicate(cur->predicate_id)) {
+            if (bodyPart->formula_type == NEGA && bodyPart->subformula_l->formula_type == NEGA) {
                 bodyPart = bodyPart->subformula_l->subformula_l;
             }
             iter->setFormula(Utils::copyFormula(bodyPart));
         }
-        //内涵谓词： ~~~fml => ~fml
+        //内涵谓词： ～～~fml => ~fml 其实只有章衡中添加的内涵谓词s才会出现３个～，因为Cabalar中转会导致死循环,所以没有处理
         else {
-            while(bodyPart->formula_type == NEGA && bodyPart->subformula_l->formula_type == NEGA 
+            if (bodyPart->formula_type == NEGA && bodyPart->subformula_l->formula_type == NEGA 
                         && bodyPart->subformula_l->subformula_l->formula_type == NEGA) {
                 bodyPart = bodyPart->subformula_l->subformula_l;
             }
