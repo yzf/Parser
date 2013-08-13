@@ -10,7 +10,7 @@ SMTranslator::SMTranslator() :
         m_pOriginalFormulas(NULL),
         m_pHengZhangFormulas(NULL),
         m_pDlpFormulas(NULL),
-        m_pNegaPredicates(new Formulas()) {
+        m_pNegaPredicates(NULL) {
 }
 
 SMTranslator::~SMTranslator() {
@@ -26,14 +26,18 @@ SMTranslator& SMTranslator::instance() {
  * @param _originalFml  调用divedeFormula方法，将原公式划分为多条子公式
  */
 void SMTranslator::init(const Formula& _originalFml) {
+    destroy();
     m_pOriginalFormulas = _originalFml.divideFormula();
+    m_pNegaPredicates = new Formulas();
 }
 /**
  * 初始化S2DLP求解器
  * @param _originalFmls
  */
 void SMTranslator::init(const Formulas& _originalFmls) {
+    destroy();
     m_pOriginalFormulas = new Formulas(_originalFmls);
+    m_pNegaPredicates = new Formulas();
 }
 /**
  * 销毁
@@ -56,6 +60,8 @@ void SMTranslator::destroy() {
         m_pNegaPredicates = NULL;
     }
     m_listRules.clear();
+    m_vHengZhangFormulas.clear();
+    m_vDlpFormulas.clear();
 }
 /**
  * 进行章衡量词消去转化
@@ -63,6 +69,9 @@ void SMTranslator::destroy() {
 void SMTranslator::hengZhangTransform() {
     assert(m_pOriginalFormulas);
     m_pHengZhangFormulas = HengZhang::instance().convert(*m_pOriginalFormulas);
+    m_vHengZhangFormulas = Utils::convertFormulasToStrings(m_pHengZhangFormulas);
+    delete m_pOriginalFormulas;
+    m_pOriginalFormulas = NULL;
 }
 /**
  * 输出章衡转化结果
@@ -70,7 +79,7 @@ void SMTranslator::hengZhangTransform() {
  */
 void SMTranslator::outputHengZhangFormulas(FILE* _out) const {
     assert(m_pHengZhangFormulas);
-    m_pHengZhangFormulas->output(_out);
+    output(_out, m_vHengZhangFormulas);
 }
 /**
  * 对章衡转化结果进行Cabalar转化
@@ -78,6 +87,9 @@ void SMTranslator::outputHengZhangFormulas(FILE* _out) const {
 void SMTranslator::cabalarTransform() {
     assert(m_pHengZhangFormulas);
     m_pDlpFormulas = Cabalar::instance().convert(*m_pHengZhangFormulas);
+    m_vDlpFormulas = Utils::convertFormulasToStrings(m_pDlpFormulas);
+    delete m_pHengZhangFormulas;
+    m_pHengZhangFormulas = NULL;
 }
 /**
  * 输出Cabalar转化结果
@@ -85,7 +97,13 @@ void SMTranslator::cabalarTransform() {
  */
 void SMTranslator::outputCabalarFormulas(FILE* _out) const {
     assert(m_pDlpFormulas);
-    m_pDlpFormulas->output(_out);
+    output(_out, m_vDlpFormulas);
+}
+void SMTranslator::output(FILE* _out, vector<string> _vStr) const {
+    for (vector<string>::const_iterator it = _vStr.begin();
+            it != _vStr.end(); ++ it) {
+        fprintf(_out, "%s\n", it->c_str());
+    }
 }
 /**
  * 把Cabalar转化的结果转成供ASP使用的规则
@@ -97,6 +115,8 @@ void SMTranslator::ruleTransform() {
         Rule rule = Rule(*it);
         m_listRules.push_back(rule);
     }
+    delete m_pDlpFormulas;
+    m_pDlpFormulas = NULL;
 }
 /**
  * 输出规则
@@ -147,7 +167,7 @@ void SMTranslator::outputAddition(FILE* _out) const {
         fprintf(_out, "#domain max_%s(MAX_%s).\n", it->second.c_str(), it->second.c_str());
     }
     
-    fprintf(_out, "%%Variable domain\n");
+    fprintf(_out, "\n%%Variable domain\n");
     map<int, int> variablesDomains = Vocabulary::instance().getVariablesDomains();
     for (map<int, int>::const_iterator it = variablesDomains.begin();
             it != variablesDomains.end(); ++ it) {
@@ -159,32 +179,35 @@ void SMTranslator::outputAddition(FILE* _out) const {
         }
         fprintf(_out, "#domain %s(%s).\n", domainName, variName);
     }
-    fprintf(_out, "%%Nega nega predicate define\n");
+    fprintf(_out, "\n%%Nega nega predicate define\n");
     for (FORMULAS_CONST_ITERATOR iter = m_pNegaPredicates->begin(); 
             iter != m_pNegaPredicates->end(); ++ iter) {
+        // _p(X):- not p(X).
         fprintf(_out, "_");
         Utils::printAtom(iter->getFormula(), _out);
         fprintf(_out, ":- not ");
         Utils::printAtom(iter->getFormula(), _out);        
         fprintf(_out, ".\n");
+        // :- not _p(X), p(X).
+//        fprintf(_out, ":- not ");
+//        fprintf(_out, "_");
+//        Utils::printAtom(iter->getFormula(), _out);
+//        fprintf(_out, ", ");
+//        Utils::printAtom(iter->getFormula(), _out); 
+//        fprintf(_out, ".\n");
     }
-    fprintf(_out, "%%Extension predicate define(except succ and max)\n");
+    fprintf(_out, "\n%%Extension predicate define\n");
     for(FORMULAS_CONST_ITERATOR iter = Vocabulary::instance().getAtomList()->begin(); 
             iter < Vocabulary::instance().getAtomList()->end(); ++ iter) {
-        if(! Vocabulary::instance().isIntensionPredicate(iter->getFormula()->predicate_id)
-                && ! Vocabulary::instance().isSuccOrMax(iter->getFormula()->predicate_id)) {
+        if(! Vocabulary::instance().isIntensionPredicate(iter->getFormula()->predicate_id)) {
             fprintf(_out, "_");
             Utils::printAtom(iter->getFormula(), _out);
-            fprintf(_out, " :- not ");
+            fprintf(_out, ":- not ");
             Utils::printAtom(iter->getFormula(), _out);
             fprintf(_out, ".\n");
-//            Utils::printAtom(iter->getFormula(), _out);
-//            fprintf(_out, " | _");
-//            Utils::printAtom(iter->getFormula(), _out);
-//            fprintf(_out, ".\n");
         }
     }
-    fprintf(_out, "%%Succ predicate definition\n");
+    fprintf(_out, "\n%%Succ predicate definition\n");
     for(unsigned int i = 0; i < HengZhang::ms_vDomainNames.size(); i++) {
         outputSucc(_out, HengZhang::ms_vDomainNames.at(i));
     }  
@@ -204,7 +227,7 @@ void SMTranslator::outputSucc(FILE* _out, vector<string> domains) const {
         for (int i = 0; i < size; ++ i) {
             fprintf(_out, "_%s", domains[i].c_str());
         }
-        fprintf(_out, "(A1, A2):-A1==A2-1,%s(A1),%s(A2).\n", 
+        fprintf(_out, "(A1,A2):- A1==A2-1, %s(A1), %s(A2).\n", 
                 domains[0].c_str(), domains[0].c_str());
     }
     else {
@@ -254,16 +277,16 @@ void SMTranslator::outputSucc(FILE* _out, vector<string> domains) const {
                 d.push_back(domains[size - i - 1]);
                 HengZhang::ms_vDomainNames.push_back(d);
             }
-            fprintf(_out, ":-succ_%s(%c1,%c2),", 
+            fprintf(_out, ":- succ_%s(%c1,%c2), ", 
                     domains[size - i - 1].c_str(), 'A' + size - i - 1, 'A' + size - i - 1);
             
             for (int j = 0; j < size - i; ++ j) {
                 if (j == size - i - 1) {
-                    fprintf(_out, "%s(%c1),%s(%c2).", 
+                    fprintf(_out, "%s(%c1), %s(%c2).", 
                             domains[j].c_str(), 'A' + j, domains[j].c_str(), 'A' + j);
                 }
                 else {
-                    fprintf(_out, "%s(%c),", domains[j].c_str(), 'A' + j);            
+                    fprintf(_out, "%s(%c), ", domains[j].c_str(), 'A' + j);            
                 }
             }
             

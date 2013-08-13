@@ -134,16 +134,15 @@ void Rule::aspModify() {
         while (cur->formula_type != ATOM) {
             cur = cur->subformula_l;
         }
-        //外延谓词除了succ和max： ～～fml => fml 
+        //外延谓词： ～～fml => fml 
         if (! Vocabulary::instance().isIntensionPredicate(cur->predicate_id)
-                && cur->predicate_id >=0 &&
-                ! Vocabulary::instance().isSuccOrMax(cur->predicate_id)) {
+                && cur->predicate_id >= 0) {
             while (bodyPart->formula_type == NEGA && bodyPart->subformula_l->formula_type == NEGA) {
                 bodyPart = bodyPart->subformula_l->subformula_l;
             }
             iter->setFormula(Utils::copyFormula(bodyPart));
         }
-        //内涵谓词和succ,max： ~~~fml => ~fml
+        //内涵谓词： ~~~fml => ~fml
         else {
             while(bodyPart->formula_type == NEGA && bodyPart->subformula_l->formula_type == NEGA 
                         && bodyPart->subformula_l->subformula_l->formula_type == NEGA) {
@@ -168,7 +167,7 @@ void Rule::generateRuleString() {
             if (it != m_pHeadFormulas->end() - 1 && 
                     (it+1)->getFormula()->predicate_id != PRED_FALSE &&
                         (it+1)->getFormula()->predicate_id != PRED_TRUE) {
-                m_sRuleString += "|";
+                m_sRuleString += " | ";
             }
         }        
     }
@@ -186,7 +185,7 @@ void Rule::generateRuleString() {
         
         if (cur->predicate_id != PRED_TRUE && cur->predicate_id != PRED_FALSE) {            
             if (bodyBegin) {
-                m_sRuleString += ":-";
+                m_sRuleString += ":- ";
                 bodyBegin = false;
             }
             
@@ -213,7 +212,7 @@ void Rule::generateRuleString() {
             m_sRuleString += Utils::convertAtomToString(cur);
             if(it != m_pBodyFormulas->end() - 1 && (it+1)->getFormula()->predicate_id != PRED_FALSE &&
                 (it+1)->getFormula()->predicate_id != PRED_TRUE) {
-                m_sRuleString += ",";
+                m_sRuleString += ", ";
             }
         }
     }  

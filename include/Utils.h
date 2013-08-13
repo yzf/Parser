@@ -55,12 +55,17 @@ public:
     //对于rule
     static void printAtom(const _formula* _atom, FILE* _out);
     static string convertAtomToString(const _formula* _atom);
+    static string convertFormulaToString(const _formula* _fml);
+    static void generateFormulaString(const _formula* _fml, string& _sRet);
+    static void generateTermString(const _term* _t, string& _sRet);
     
     static _formula* compositeByConnective(FORMULA_TYPE _formulaType, 
                          _formula* _subformulaL, _formula* _subformulaR);
     static _formula* compositeByQuantifier(FORMULA_TYPE _formulaType, 
                          _formula* _subformulaL, int _variableId);
     static _formula* compositeToAtom(int _predicateId, _term* _parameters);
+    
+    static vector<string> convertFormulasToStrings(Formulas* _fmls);
 
 };
 

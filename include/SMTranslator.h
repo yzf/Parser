@@ -26,7 +26,9 @@ class SMTranslator {
 private:
     Formulas* m_pOriginalFormulas;      //原公式
     Formulas* m_pHengZhangFormulas;     //章衡转化结果
+    vector<string> m_vHengZhangFormulas;
     Formulas* m_pDlpFormulas;           //Cabalar转化结果
+    vector<string> m_vDlpFormulas;
     Formulas* m_pNegaPredicates;        //出现非非的谓词公式
     list<Rule> m_listRules;             //转换后的所有规则
 private:
@@ -38,6 +40,7 @@ private:
     void hengZhangTransform();
     void cabalarTransform();
     void ruleTransform();
+    void output(FILE* _out, vector<string> _vStr) const;
     void outputSucc(FILE* _out, vector<string> domains) const;
     void outputAddition(FILE* _out) const;
 public:
@@ -46,7 +49,6 @@ public:
     void init(const Formula& _originalFml);
     void init(const Formulas& _originalFmls);
     void destroy();
-    
     void convert();
     void outputHengZhangFormulas(FILE* _out) const;
     void outputCabalarFormulas(FILE* _out) const;

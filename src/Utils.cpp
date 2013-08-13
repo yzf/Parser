@@ -12,7 +12,6 @@ void Utils::outputTerm(FILE* _out, const _term* _t) {
 
     if (VARI==_t->term_type) {
         fprintf(_out, "%s", Vocabulary::instance().getNameById(_t->variable_id, VARIABLE));
-        fflush(_out);
     }
     else {
         fprintf(_out, "%s", Vocabulary::instance().getNameById(_t->function_id, FUNCTION));
@@ -730,4 +729,113 @@ string Utils::convertAtomToString(const _formula* _atom) {
         }        
     }    
     return sRet;
+}
+
+string Utils::convertFormulaToString(const _formula* _fml) {
+    assert(_fml);
+    string sRet;
+    generateFormulaString(_fml, sRet);
+    return sRet;
+}
+void Utils::generateFormulaString(const _formula* _fml, string& _sRet) {
+    assert(_fml);
+    
+    char* s_conn = NULL;
+    switch (_fml->formula_type) {
+    case ATOM:
+        if (_fml->predicate_id >= 0 && Vocabulary::instance().getPredicateArity(_fml->predicate_id) == 0) {
+            _sRet += Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
+        }
+        else{
+            if (_fml->predicate_id >= 0) {
+                _sRet += Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE) + string("(");
+                for(int i = 0; i < Vocabulary::instance().getPredicateArity(_fml->predicate_id); ++ i) {
+                    if (i > 0) {
+                        _sRet += ",";
+                    }
+                    generateTermString(_fml->parameters + i, _sRet);
+                }
+            }
+            else {
+                switch (_fml->predicate_id) {
+                case PRED_TRUE:
+                    _sRet += "(TRUE";
+                    break;
+                case PRED_FALSE:
+                    _sRet += "(FALSE";
+                    break;
+                default:
+                    assert ( 0 );
+                }
+            }
+            _sRet += ")";
+        }
+        break;
+    case NEGA:
+        _sRet += "~";
+        assert(_fml->subformula_l);
+        generateFormulaString(_fml->subformula_l, _sRet);
+        break;
+    case CONJ:
+        s_conn = (char*)"&";
+    case DISJ:
+        if ( NULL==s_conn ) {
+            s_conn = (char*)"|";
+        }
+    case IMPL:
+        if ( NULL==s_conn ) {
+            s_conn = (char*)"->";
+        }
+        _sRet += "(";
+        assert(_fml->subformula_l);
+        generateFormulaString(_fml->subformula_l, _sRet);
+        _sRet += s_conn;
+        assert(_fml->subformula_r);
+        generateFormulaString(_fml->subformula_r, _sRet);
+        _sRet += ")";
+        break;
+    case UNIV:
+        s_conn = (char*)"!";
+    case EXIS:
+        if ( NULL==s_conn ) {
+            s_conn = (char*)"?";
+        }
+        _sRet += "[" + string(s_conn) + string(Vocabulary::instance().getNameById(_fml->variable_id, VARIABLE)) + string("](");
+        assert(_fml->subformula_l);
+        generateFormulaString(_fml->subformula_l, _sRet);
+        _sRet += ")";
+        break;
+    default:
+        assert ( 0 );
+    }
+}
+void Utils::generateTermString(const _term* _t, string& _sRet) {
+    assert (_t);
+
+    if (VARI ==_t->term_type) {
+        _sRet += Vocabulary::instance().getNameById(_t->variable_id, VARIABLE);
+    }
+    else {
+        _sRet += Vocabulary::instance().getNameById(_t->function_id, FUNCTION);
+        int k = Vocabulary::instance().getFunctionArity(_t->function_id);
+        if (k > 0) {
+            _sRet += "(";
+            for (int i = 0; i < k; ++ i) {
+                if (0 < i) {
+                    _sRet += ", ";
+                }
+                generateTermString(_t->parameters + i, _sRet);
+            }
+            _sRet += ")";
+        }
+    }
+}
+
+vector<string> Utils::convertFormulasToStrings(Formulas* _fmls) {
+    vector<string> vRet;
+    for (FORMULAS_CONST_ITERATOR it = _fmls->begin(); 
+            it != _fmls->end(); ++ it) {
+        vRet.push_back(convertFormulaToString(it->getFormula()));
+    }
+    return vRet;
 }

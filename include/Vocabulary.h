@@ -55,7 +55,6 @@ public:
     void addAtom(const Formula& _newAtom);
     //getter
     bool isIntensionPredicate(int _nPredicateId) const;
-    bool isSuccOrMax(int _nPredicateId) const;
     int getSymbolId(const char* _sName, SYMBOL_TYPE _type);
     int getPredicateArity(int _id);
     int getFunctionArity(int _id);

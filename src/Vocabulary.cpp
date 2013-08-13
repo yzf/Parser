@@ -319,14 +319,6 @@ void Vocabulary::addAtom(const Formula& _newAtom) {
     m_fmlAtomList->pushBack(_newAtom);
 }
 
-bool Vocabulary::isSuccOrMax(int _predicateId) const {
-    const char* predicateName = getNameById(_predicateId, PREDICATE);
-    if (strncmp("max", predicateName, 3) == 0 ||
-            strncmp("succ", predicateName, 4) == 0) {
-        return true;
-    }
-    return false;
-}
 map<int, string> Vocabulary::getDomainNames() const {
     return m_mapDomainName;
 }
