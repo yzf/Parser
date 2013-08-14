@@ -64,6 +64,8 @@ public:
     map<int, int> getVariablesDomains() const;
     Formula getAtom(int _nPredicateId) const;
     Formulas* getAtomList() const;
+    vector<int> getAllPredicates() const;
+    vector<int> getAllIntensionPredicates() const;
 };
 
 #endif

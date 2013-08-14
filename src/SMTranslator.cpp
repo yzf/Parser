@@ -3,6 +3,7 @@
 #include "Cabalar.h"
 #include "Vocabulary.h"
 #include "Utils.h"
+#include "NNFUtils.h"
 #include <assert.h>
 #include <cstring>
 
@@ -28,6 +29,7 @@ SMTranslator& SMTranslator::instance() {
 void SMTranslator::init(const Formula& _originalFml) {
     destroy();
     m_pOriginalFormulas = _originalFml.divideFormula();
+    NNFUtils::convertToNegativeNormalForms(m_pOriginalFormulas);
     m_pNegaPredicates = new Formulas();
 }
 /**
@@ -37,6 +39,7 @@ void SMTranslator::init(const Formula& _originalFml) {
 void SMTranslator::init(const Formulas& _originalFmls) {
     destroy();
     m_pOriginalFormulas = new Formulas(_originalFmls);
+    NNFUtils::convertToNegativeNormalForms(m_pOriginalFormulas);
     m_pNegaPredicates = new Formulas();
 }
 /**

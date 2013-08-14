@@ -104,14 +104,11 @@ void Formula::output(FILE* _out) const {
     fprintf(_out, "\n");
 }
 /**
- * 将公式中的没有带非的内涵谓词加上 "非非(~~)"
- * @param _intensionPredicates 内涵谓词名单
+ * 将所有 p(X) => ~~p(X)
+ * @param _vPredicates
  */
-void Formula::doubleNegationIntensionPredicates() {
-    m_pFormula = Utils::doubleNegationPredicates(m_pFormula);
-}
-void Formula::doubleNegationPredicates(int* _pPredicateIds, int _nSize) {
-    m_pFormula = Utils::doubleNegationPredicates(m_pFormula, _pPredicateIds, _nSize);
+void Formula::doubleNegationPredicates(const vector<int>& _vPredicates) {
+    m_pFormula = Utils::doubleNegationPredicates(m_pFormula, _vPredicates);
 }
 /**
  * 替换参数

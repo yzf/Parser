@@ -134,6 +134,8 @@ void Rule::aspModify() {
         while (cur->formula_type != ATOM) {
             cur = cur->subformula_l;
         }
+        //Cabalar转换后，谓词最多只带一个～（除了章衡中引入的s），由于头部不能出现～，所以
+        //头部的～p被移到体部后，就变成~~p，即除s外的谓词，最多只带两个～
         //外延谓词： ~~fml => fml
         if (! Vocabulary::instance().isIntensionPredicate(cur->predicate_id)) {
             if (bodyPart->formula_type == NEGA && bodyPart->subformula_l->formula_type == NEGA) {

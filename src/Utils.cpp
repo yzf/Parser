@@ -522,48 +522,50 @@ void Utils::getNoQuantifierVariablesInTerms(map<int, bool>& _flag, vector<int>& 
  * @param size　数组大小
  * @return bool
  */
-bool Utils::inList(int _target, int *_p, int size) {
-    for (int i = 0; i < size; ++ i) {
-        if (_p[i] == _target) {
+bool Utils::inList(int _target, const vector<int>& _list) {
+    unsigned int size = _list.size();
+    for (unsigned int i = 0; i < size; ++ i) {
+        if (_list[i] == _target) {
             return true;
         }
     }
     return false;
 }
 /**
- * 在指定的谓词前添加非非，_p == NULL或_size = 0时，则对内涵谓词操作
+ * 在指定的不带非的谓词前添加非非，_p == NULL或_size = 0时，则对内涵谓词操作
  * @param _fml
  * @param _p 谓词Id数组
  * @param _size 谓词Id数组的大小
  * @return _formula* 处理后的公式
  */
-_formula* Utils::doubleNegationPredicates(_formula* _fml, int *_p, int _size) {
+_formula* Utils::doubleNegationPredicates(_formula* _fml, const vector<int>& _vPredicates, FORMULA_TYPE _fatherType) {
     assert(_fml);
 
-    switch (_fml->formula_type)
-    {
+    switch (_fml->formula_type) {
     case ATOM:
-        if (_p == NULL || _size == 0) {
-            if(Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
-                _fml = compositeByConnective(NEGA, _fml, NULL);
-                _fml = compositeByConnective(NEGA, _fml, NULL);
+        if (NEGA != _fatherType) {
+            if (_vPredicates.empty()) {
+                if(Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
+                    _fml = compositeByConnective(NEGA, _fml, NULL);
+                    _fml = compositeByConnective(NEGA, _fml, NULL);
+                }
             }
-        }
-        else {
-            if (inList(_fml->predicate_id, _p, _size)) {
-                _fml = compositeByConnective(NEGA, _fml, NULL);
-                _fml = compositeByConnective(NEGA, _fml, NULL);
+            else {
+                if (inList(_fml->predicate_id, _vPredicates)) {
+                    _fml = compositeByConnective(NEGA, _fml, NULL);
+                    _fml = compositeByConnective(NEGA, _fml, NULL);
+                }
             }
         }
         break;
     case CONJ:
     case DISJ:
     case IMPL:
-        _fml->subformula_r = doubleNegationPredicates(_fml->subformula_r, _p, _size);
+        _fml->subformula_r = doubleNegationPredicates(_fml->subformula_r, _vPredicates, _fml->formula_type);
     case NEGA:
     case UNIV:
     case EXIS:
-        _fml->subformula_l = doubleNegationPredicates(_fml->subformula_l, _p, _size);
+        _fml->subformula_l = doubleNegationPredicates(_fml->subformula_l, _vPredicates, _fml->formula_type);
         break;
     default:
         assert(0);
@@ -730,13 +732,22 @@ string Utils::convertAtomToString(const _formula* _atom) {
     }    
     return sRet;
 }
-
+/**
+ * 把公式转化成字符串
+ * @param _fml
+ * @return 
+ */
 string Utils::convertFormulaToString(const _formula* _fml) {
     assert(_fml);
     string sRet;
     generateFormulaString(_fml, sRet);
     return sRet;
 }
+/**
+ * 递归用
+ * @param _fml
+ * @param _sRet
+ */
 void Utils::generateFormulaString(const _formula* _fml, string& _sRet) {
     assert(_fml);
     
@@ -809,6 +820,11 @@ void Utils::generateFormulaString(const _formula* _fml, string& _sRet) {
         assert ( 0 );
     }
 }
+/**
+ * 递归用
+ * @param _t
+ * @param _sRet
+ */
 void Utils::generateTermString(const _term* _t, string& _sRet) {
     assert (_t);
 
@@ -830,7 +846,11 @@ void Utils::generateTermString(const _term* _t, string& _sRet) {
         }
     }
 }
-
+/**
+ * 把公式组转化成字符串
+ * @param _fmls Formulas*
+ * @return vector<string>
+ */
 vector<string> Utils::convertFormulasToStrings(Formulas* _fmls) {
     vector<string> vRet;
     for (FORMULAS_CONST_ITERATOR it = _fmls->begin(); 

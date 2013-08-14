@@ -123,7 +123,8 @@ _formula* NNFUtils::convertToNegativeNormalForm(_formula* _originalFml) {
     assert(_originalFml);
     assert(_originalFml->formula_type == ATOM || _originalFml->formula_type == NEGA ||
                _originalFml->formula_type == DISJ || _originalFml->formula_type == CONJ ||
-               _originalFml->formula_type == IMPL || _originalFml->formula_type == UNIV);
+               _originalFml->formula_type == IMPL || _originalFml->formula_type == UNIV ||
+               _originalFml->formula_type == EXIS);
 
     //Cabalar. (2005)
     if (_originalFml->formula_type == ATOM) {
@@ -174,4 +175,30 @@ _formula* NNFUtils::convertToNegativeNormalForm(_formula* _originalFml) {
     }
     
     return _originalFml;
+}
+/**
+ * 把所有公式转化成否定标准式
+ * @param _originalFmls
+ * @return Formulas*　需要手动delete
+ */
+Formulas* NNFUtils::convertToNegativeNormalForms(const Formulas& _originalFmls) {
+    Formulas* pRetFormulas = new Formulas();
+    for (FORMULAS_CONST_ITERATOR it = _originalFmls.begin();
+            it != _originalFmls.end(); ++ it) {
+        Formula newFml = Formula(
+                        NNFUtils::convertToNegativeNormalForm(
+                                Utils::copyFormula(it->getFormula())), false);
+        pRetFormulas->pushBack(newFml);
+    }
+    return pRetFormulas;
+}
+/**
+ * 把所有公式转化成否定标准式
+ * @param _originalFmls Formulas* 直接操作这些公式
+ */
+void NNFUtils::convertToNegativeNormalForms(Formulas* _originalFmls) {
+    for (FORMULAS_ITERATOR it = _originalFmls->begin();
+            it != _originalFmls->end(); ++ it) {
+        NNFUtils::convertToNegativeNormalForm(it->getFormula());
+    }
 }

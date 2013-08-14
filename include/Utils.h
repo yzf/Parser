@@ -23,6 +23,9 @@ class Formulas;
  * 工具类
  */
 class Utils {
+private:
+    static void generateFormulaString(const _formula* _fml, string& _sRet);
+    static void generateTermString(const _term* _t, string& _sRet);
 public: 
     //对term的操作
     static void outputTerm(FILE* _out, const _term* _t);
@@ -42,11 +45,9 @@ public:
     static void renameFormulaVariables(_formula* _fml, int _nOldVariableId, int _nNewVariableId);
     static void getNoQuantifierVariables(map<int, bool>& _flag, vector<int>& _varis, _formula* _fml);
     static void getNoQuantifierVariablesInTerms(map<int, bool>& _flag, vector<int>& _varis, _term* _t);
-    static bool isNegativeFormula(_formula* _fml, bool _negative, 
-                                        int* _pPredicateIds = NULL, int _nSize = 0);
-    static bool inList(int _target, int *_p, int size);
-    static _formula* doubleNegationPredicates(_formula* _fml, 
-                                        int* _pPredicateIds = NULL, int _nSize = 0);
+    static bool inList(int _target, const vector<int>& _vPredicates);
+    static _formula* doubleNegationPredicates(_formula* _fml, const vector<int>& _vPredicates, 
+                                        FORMULA_TYPE _fatherType = UNIV);
     static void replaceFormulaTerms(_formula* _fml, 
                                 const vector<int>& _originals, 
 				const vector<int>& _replacements);
@@ -56,8 +57,7 @@ public:
     static void printAtom(const _formula* _atom, FILE* _out);
     static string convertAtomToString(const _formula* _atom);
     static string convertFormulaToString(const _formula* _fml);
-    static void generateFormulaString(const _formula* _fml, string& _sRet);
-    static void generateTermString(const _term* _t, string& _sRet);
+    
     
     static _formula* compositeByConnective(FORMULA_TYPE _formulaType, 
                          _formula* _subformulaL, _formula* _subformulaR);

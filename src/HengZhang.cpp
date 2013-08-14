@@ -80,7 +80,7 @@ Formula HengZhang::recordQuantifier(const Formula& _originalFml) {
     return ret;
 }
 /**
- * 新产生的谓词 s、t为内涵谓词，succ、max为“特殊”外延谓词
+ * 新产生的谓词 s、t为内涵谓词，succ、max为外延谓词
  * @param _originalFml
  * @return 
  */
@@ -175,7 +175,8 @@ Formula HengZhang::createFormula_2(const Formula& _originalFml) {
     _formula* s_x_z = Utils::compositeToAtom(m_nSymbolS, term_x_z);
     //3 theta__(_X,_Y)
     Formula copyOriginalFml = _originalFml;
-    copyOriginalFml.doubleNegationIntensionPredicates();
+    vector<int> vPredicates = Vocabulary::instance().getAllPredicates();
+    copyOriginalFml.doubleNegationPredicates(vPredicates);
     _formula* theta__ = Utils::copyFormula(copyOriginalFml.getFormula());
     //4 s(_X,_Y)
     _term* term_x_y = Utils::combineTerms(m_vTermsX, m_vTermsY);
