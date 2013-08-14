@@ -1,16 +1,12 @@
 #!/bin/bash
+cd parse
+./generate.sh
+cd ..
 # 编译代码
 echo "run makefile"
 echo 
 make > /dev/null 2>&1
 runner="/home/yzf/NetBeansProjects/alpha/build/Debug/GNU-Linux-x86/tests/TestFiles/f2"
-# 清除操作
-echo "rm old files"
-echo 
-for oldFile in `ls res/output/*.out res/output/*.result`
-do
-    rm $oldFile
-done
 # 开始转化
 input=`ls res/input/*.in`
 factDir="res/output"

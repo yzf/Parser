@@ -1,2 +1,9 @@
-lex -o ../src/lex.cpp sm_lex.l
-yacc --defines=../src/parse.h -o ../src/parse.cpp sm_parse.y
+#!/bin/bash
+if [ $# = 0 ]
+then
+    lexFile="sm_lex.l"
+    parseFile="sm_parse.y"
+fi
+
+lex -o ../src/lex.cpp $lexFile
+yacc --defines=../src/parse.h -o ../src/parse.cpp $parseFile
