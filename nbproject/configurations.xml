@@ -20,8 +20,8 @@
     <logicalFolder name="parse" displayName="parse" projectFiles="true">
       <itemPath>parse/clean.sh</itemPath>
       <itemPath>parse/generate.sh</itemPath>
-      <itemPath>parse/lex.l</itemPath>
-      <itemPath>parse/parse.y</itemPath>
+      <itemPath>parse/sm_lex.l</itemPath>
+      <itemPath>parse/sm_parse.y</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -168,9 +168,9 @@
       </item>
       <item path="parse/generate.sh" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="parse/lex.l" ex="false" tool="3" flavor2="0">
+      <item path="parse/sm_lex.l" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="parse/parse.y" ex="false" tool="3" flavor2="0">
+      <item path="parse/sm_parse.y" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/2clique.in" ex="false" tool="3" flavor2="0">
       </item>
@@ -305,9 +305,9 @@
       </item>
       <item path="parse/generate.sh" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="parse/lex.l" ex="false" tool="3" flavor2="0">
+      <item path="parse/sm_lex.l" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="parse/parse.y" ex="false" tool="3" flavor2="0">
+      <item path="parse/sm_parse.y" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/2clique.in" ex="false" tool="3" flavor2="0">
       </item>
