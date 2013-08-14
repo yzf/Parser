@@ -851,3 +851,66 @@ vector<string> Utils::convertFormulasToStrings(Formulas* _fmls) {
     }
     return vRet;
 }
+/**
+ * 
+ * @param _fml
+ * @param _fatherType
+ * @return 
+ */
+_formula* Utils::circReplace(_formula* _fml, _formula* _fatherFml) {
+    assert(_fml);
+    switch (_fml->formula_type) {
+        case ATOM:
+            if (NULL != _fatherFml) {
+                if (NEGA == _fatherFml->formula_type) {
+                    if (Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
+                        // p->r 替换 ~p
+                        _fatherFml->formula_type = IMPL;
+                        int rId = Vocabulary::instance().addSymbol("r_new", PREDICATE, 0);
+                        _fatherFml->subformula_r = Utils::compositeToAtom(rId, NULL);
+                    }
+                    else if (Vocabulary::instance().isVaryPredicate(_fml->predicate_id)) {
+                        // Q_vary->r 替换 ~Q
+                        const char* qName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
+                        char qVaryName[64];
+                        sprintf(qVaryName, "%s_vary", qName);
+                        // ->
+                        _fatherFml->formula_type = IMPL;
+                        // Q_vary
+                        int qVaryId = Vocabulary::instance().addSymbol(qVaryName, PREDICATE, 
+                                        Vocabulary::instance().getPredicateArity(_fml->predicate_id));
+                        Vocabulary::instance().addIntensionPredicate(qVaryName);
+                        _fatherFml->subformula_l->predicate_id = qVaryId;
+                        // r
+                        int rId = Vocabulary::instance().addSymbol("r_new", PREDICATE, 0);
+                        Vocabulary::instance().addIntensionPredicate("r_new");
+                        _fatherFml->subformula_r = Utils::compositeToAtom(rId, NULL); 
+                    }
+                }
+                else { // Q_vary  替换 Q，Q_vary属于内涵谓词
+                    if (Vocabulary::instance().isVaryPredicate(_fml->predicate_id)) {
+                        const char* qName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
+                        char qVaryName[64];
+                        sprintf(qVaryName, "%s_vary", qName);
+                        int qVaryId = Vocabulary::instance().addSymbol(qVaryName, PREDICATE,
+                                Vocabulary::instance().getPredicateArity(_fml->predicate_id));
+                        Vocabulary::instance().addIntensionPredicate(qVaryName);
+                        _fml->predicate_id = qVaryId;
+                    }
+                }
+            }
+            break;
+        case CONJ:
+        case DISJ:
+        case IMPL:
+            circReplace(_fml->subformula_r, _fml);
+        case UNIV:
+        case EXIS:
+        case NEGA:
+            circReplace(_fml->subformula_l, _fml);
+            break;
+        default:
+            assert(0);
+    }
+    return _fml;
+}

@@ -55,7 +55,7 @@ void yyerror(const char* s) {
 %token <s> LL
 %token <s> RR
 
-%type <f>  s2dlp formulas formula atom
+%type <f>  circ formulas formula atom
 %type <t>  term 
 %type <ts> terms
 
@@ -64,25 +64,24 @@ void yyerror(const char* s) {
 %right S_NEGA S_EXIS S_UNIV
 
 %%
-s2dlp 
-	: formulas intensionP domain_section{
+circ            //整个输入文件
+	: formulas predicates domain_section{
             assert($1);
             printf("root\n");
             gformula = $1;
 	}
 ;
 
-intensionP
-        : LBRACE inten_preds RBRACE {
+predicates      //谓词部分：{内涵，内涵；可变，可变}
+        : LBRACE inten_preds SEMICO vary_preds RBRACE {
         
         }
 ;
-inten_preds
+inten_preds     //内涵谓词：谓词，谓词
         : inten_preds COMMA intent_pred {
             
         } 
         | intent_pred {
-            
         }
 ;
 intent_pred
@@ -91,7 +90,19 @@ intent_pred
             context_flag = 0;
         }
 ;
-domain_section
+vary_preds      //可变谓词：谓词，谓词
+        : vary_preds COMMA vary_pred {
+        }
+        | vary_pred {
+        }
+;
+vary_pred
+        : S_PRED {
+            Vocabulary::instance().addVaryPredicate($1);
+            context_flag = 0;
+        }
+;
+domain_section      //论域部分
         : LL domains RR {
         }
 ;

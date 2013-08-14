@@ -34,6 +34,7 @@ private:
     map<int, vector<int> > m_mapDomainVariables;// map[论域id] = 在该论域的变量的id的数组 
     
     map<int, bool> m_mapIsIntensionPredicate;   // 记录是否为内涵谓词
+    map<int, bool> m_mapIsVaryPredicate;        // 记录是否为可变谓词
      
     
     Formulas* m_fmlAtomList;
@@ -52,9 +53,11 @@ public:
     int addSymbol(const char* _sName, SYMBOL_TYPE _type, int _nArity = 0);
     int addRenameVariable();
     void addIntensionPredicate(const char*_sName);
+    void addVaryPredicate(const char* _sName);
     void addAtom(const Formula& _newAtom);
     //getter
     bool isIntensionPredicate(int _nPredicateId) const;
+    bool isVaryPredicate(int _nPredicateId) const;
     int getSymbolId(const char* _sName, SYMBOL_TYPE _type);
     int getPredicateArity(int _id);
     int getFunctionArity(int _id);

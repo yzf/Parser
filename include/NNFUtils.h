@@ -25,6 +25,7 @@ private:
     static _formula* negativeNormalForm_6(_formula* _originalFml);
 public:
     static _formula* convertToNegativeNormalForm(_formula* _originalFml);
+    static Formula convertToNegativeNormalForm(const Formula& _originalFml);
     static Formulas* convertToNegativeNormalForms(const Formulas& _originalFmls);
     static void convertToNegativeNormalForms(Formulas* _originalFmls);
 };

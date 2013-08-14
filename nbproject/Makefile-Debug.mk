@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/src/Cabalar.o \
 	${OBJECTDIR}/src/CabalarUtils.o \
+	${OBJECTDIR}/src/CircTranslator.o \
 	${OBJECTDIR}/src/Formula.o \
 	${OBJECTDIR}/src/Formulas.o \
 	${OBJECTDIR}/src/HengZhang.o \
@@ -91,6 +92,11 @@ ${OBJECTDIR}/src/CabalarUtils.o: src/CabalarUtils.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/CabalarUtils.o src/CabalarUtils.cpp
+
+${OBJECTDIR}/src/CircTranslator.o: src/CircTranslator.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/CircTranslator.o src/CircTranslator.cpp
 
 ${OBJECTDIR}/src/Formula.o: src/Formula.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -191,6 +197,19 @@ ${OBJECTDIR}/src/CabalarUtils_nomain.o: ${OBJECTDIR}/src/CabalarUtils.o src/Caba
 	    $(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/CabalarUtils_nomain.o src/CabalarUtils.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/CabalarUtils.o ${OBJECTDIR}/src/CabalarUtils_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/CircTranslator_nomain.o: ${OBJECTDIR}/src/CircTranslator.o src/CircTranslator.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/CircTranslator.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/CircTranslator_nomain.o src/CircTranslator.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/CircTranslator.o ${OBJECTDIR}/src/CircTranslator_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/Formula_nomain.o: ${OBJECTDIR}/src/Formula.o src/Formula.cpp 

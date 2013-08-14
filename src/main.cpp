@@ -16,6 +16,7 @@
 #include "SMTranslator.h"
 #include <iostream>
 #include <unistd.h>
+#include "CircTranslator.h"
 
 
 using namespace std;
@@ -24,6 +25,9 @@ FILE* fout;
 extern FILE* yyin;
 extern _formula* gformula;
 extern int yyparse();
+
+//#define SM
+#define CIRC
 
 void io(const char* iPathName, const char* oPathName) {
     yyin = fopen (iPathName, "r");
@@ -42,7 +46,7 @@ void io(const char* iPathName, const char* oPathName) {
 int main(int argc, char** argv) {
     
     if(argc < 3) {
-        io("res/input/sample.in","res/output/sample.out");
+        io("res/input/circ/sample.in","res/output/circ/sample.out");
     }
     else {
         io(argv[1], argv[2]);
@@ -50,13 +54,23 @@ int main(int argc, char** argv) {
     
     yyparse();
     fclose(yyin);
-
+    
+#ifdef SM
     Formula f = Formula(gformula, false);
     SMTranslator::instance().init(f);
     SMTranslator::instance().convert();
     SMTranslator::instance().outputFinalResult(fout);
     SMTranslator::instance().destroy();
     fclose(fout);
+#endif
+    
+#ifdef CIRC
+    Formula f = Formula(gformula, false);
+    CircTranslator circTranslator;
+    Formulas* fmls = circTranslator.convert(f);
+    fmls->output(stdout);
+    delete fmls;
+#endif
     Vocabulary::instance().dumpVocabulary(stdout);
     
     return 0;

@@ -60,13 +60,14 @@ public:
     
     
     static _formula* compositeByConnective(FORMULA_TYPE _formulaType, 
-                         _formula* _subformulaL, _formula* _subformulaR);
+                         _formula* _subformulaL, _formula* _subformulaR = NULL);
     static _formula* compositeByQuantifier(FORMULA_TYPE _formulaType, 
                          _formula* _subformulaL, int _variableId);
     static _formula* compositeToAtom(int _predicateId, _term* _parameters);
     
     static vector<string> convertFormulasToStrings(Formulas* _fmls);
 
+    static _formula* circReplace(_formula* _fml, _formula* _fatherFml = NULL);
 };
 
 

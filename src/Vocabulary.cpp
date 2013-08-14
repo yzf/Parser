@@ -1,5 +1,6 @@
 #include "Vocabulary.h"
 #include "SMTranslator.h"
+#include "Utils.h"
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
@@ -26,6 +27,7 @@ Vocabulary::Vocabulary() {
     m_mapFunctionArity.clear();
     m_mapPredicateArity.clear();
     m_mapIsIntensionPredicate.clear();
+    m_mapIsVaryPredicate.clear();
     m_mapDomainVariables.clear();
     m_fmlAtomList = new Formulas();
 }
@@ -43,16 +45,24 @@ Vocabulary::~Vocabulary() {
     m_mapFunctionArity.clear();
     m_mapPredicateArity.clear();
     m_mapIsIntensionPredicate.clear();
+    m_mapIsVaryPredicate.clear();
     m_mapDomainVariables.clear();
 }
 /**
  * 保存内涵谓词
  * @param _name 内涵谓词名
- * @return 内涵谓词的id
  */
 void Vocabulary::addIntensionPredicate(const char* _name) {
     int id = getSymbolId(_name, PREDICATE);
-    m_mapIsIntensionPredicate[id] = true;
+    m_mapIsIntensionPredicate.insert(make_pair<int, bool>(id, true));
+}
+/**
+ * 保存可变谓词
+ * @param _name
+ */
+void Vocabulary::addVaryPredicate(const char* _name) {
+    int id = getSymbolId(_name, PREDICATE);
+    m_mapIsVaryPredicate.insert(make_pair<int, bool>(id, true));
 }
 /**
  * 获取变量所在论域
@@ -201,9 +211,18 @@ int Vocabulary::addRenameVariable() {
  * @param _variableId
  * @return 
  */
-bool Vocabulary::isIntensionPredicate(int _predicateId) const {
-    map<int, bool>::const_iterator it = m_mapIsIntensionPredicate.find(_predicateId);
+bool Vocabulary::isIntensionPredicate(int _nPredicateId) const {
+    map<int, bool>::const_iterator it = m_mapIsIntensionPredicate.find(_nPredicateId);
     return it != m_mapIsIntensionPredicate.end() ? true : false;
+}
+/**
+ * 查询谓词是否为可变谓词
+ * @param _nPredicateId
+ * @return 
+ */
+bool Vocabulary::isVaryPredicate(int _nPredicateId) const {
+    map<int, bool>::const_iterator it = m_mapIsVaryPredicate.find(_nPredicateId);
+    return it != m_mapIsVaryPredicate.end() ? true : false;
 }
 /**
  * 获取id对应的名字
@@ -277,6 +296,13 @@ void Vocabulary::dumpVocabulary(FILE* _out)  {
             fprintf(_out, "%s ", (it->second).c_str());
         }
     }
+    fprintf(_out, "\nvary predicate:\n");
+    for (map<int, string>::const_iterator it = m_mapPredicateName.begin(); 
+            it != m_mapPredicateName.end(); ++ it) {
+        if (isVaryPredicate(it->first)) {
+            fprintf(_out, "%s ", (it->second).c_str());
+        }
+    }
     
     fprintf(_out, "\ndomains:\n");    
     for (map<int, string>::const_iterator it = m_mapDomainName.begin(); 
@@ -295,8 +321,7 @@ void Vocabulary::dumpVocabulary(FILE* _out)  {
     fprintf(_out, "\natom\n");
     for (FORMULAS_CONST_ITERATOR it = m_fmlAtomList->begin();
             it != m_fmlAtomList->end(); ++ it) {
-        fprintf(_out, "%s:%d ", getNameById(it->getFormula()->predicate_id, PREDICATE),
-                it->getFormula()->predicate_id);
+        it->output(stdout);
     }
 }
 

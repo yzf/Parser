@@ -176,6 +176,10 @@ _formula* NNFUtils::convertToNegativeNormalForm(_formula* _originalFml) {
     
     return _originalFml;
 }
+Formula NNFUtils::convertToNegativeNormalForm(const Formula& _originalFml) {
+    _formula* nnf = convertToNegativeNormalForm(Utils::copyFormula(_originalFml.getFormula()));
+    return Formula(nnf, false);
+}
 /**
  * 把所有公式转化成否定标准式
  * @param _originalFmls

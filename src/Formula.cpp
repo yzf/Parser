@@ -48,7 +48,9 @@ void Formula::setFormula(_formula* _newFormula) {
     if (m_pFormula == _newFormula) {
         return;
     }
-    Utils::deleteFormula(m_pFormula);
+    if (m_pFormula !=  NULL) {
+        Utils::deleteFormula(m_pFormula);
+    }
     m_pFormula = _newFormula;
 }
 /**

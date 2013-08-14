@@ -38,7 +38,13 @@ void SMTranslator::init(const Formula& _originalFml) {
  */
 void SMTranslator::init(const Formulas& _originalFmls) {
     destroy();
-    m_pOriginalFormulas = new Formulas(_originalFmls);
+    m_pOriginalFormulas = new Formulas();
+    for (FORMULAS_CONST_ITERATOR it = _originalFmls.begin(); 
+            it != _originalFmls.end(); ++ it) {
+        Formulas* tmp = it->divideFormula();
+        m_pOriginalFormulas->joinBack(*tmp);
+        delete tmp;
+    }
     NNFUtils::convertToNegativeNormalForms(m_pOriginalFormulas);
     m_pNegaPredicates = new Formulas();
 }
@@ -206,6 +212,11 @@ void SMTranslator::outputAddition(FILE* _out) const {
             fprintf(_out, ":- not ");
             Utils::printAtom(iter->getFormula(), _out);
             fprintf(_out, ".\n");
+            //p|_p
+//            Utils::printAtom(iter->getFormula(), _out);
+//            fprintf(_out, " | _");
+//            Utils::printAtom(iter->getFormula(), _out);
+//            fprintf(_out, ".\n");
         }
     }
     fprintf(_out, "\n%%Succ predicate definition\n");

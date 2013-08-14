@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>include/Cabalar.h</itemPath>
       <itemPath>include/CabalarUtils.h</itemPath>
+      <itemPath>include/CircTranslator.h</itemPath>
       <itemPath>include/Formula.h</itemPath>
       <itemPath>include/Formulas.h</itemPath>
       <itemPath>include/HengZhang.h</itemPath>
@@ -18,6 +19,8 @@
       <itemPath>include/structs.h</itemPath>
     </logicalFolder>
     <logicalFolder name="parse" displayName="parse" projectFiles="true">
+      <itemPath>parse/circ_lex.l</itemPath>
+      <itemPath>parse/circ_parse.y</itemPath>
       <itemPath>parse/clean.sh</itemPath>
       <itemPath>parse/generate.sh</itemPath>
       <itemPath>parse/sm_lex.l</itemPath>
@@ -27,20 +30,28 @@
                    displayName="Resource Files"
                    projectFiles="true">
       <logicalFolder name="input" displayName="input" projectFiles="true">
-        <itemPath>res/input/2clique.in</itemPath>
-        <itemPath>res/input/sample.in</itemPath>
-        <itemPath>res/input/setcover.in</itemPath>
+        <logicalFolder name="circ" displayName="circ" projectFiles="true">
+          <itemPath>res/input/circ/sample.in</itemPath>
+        </logicalFolder>
+        <logicalFolder name="sm" displayName="sm" projectFiles="true">
+          <itemPath>res/input/sm/2clique.in</itemPath>
+          <itemPath>res/input/sm/setcover.in</itemPath>
+        </logicalFolder>
       </logicalFolder>
       <logicalFolder name="output" displayName="output" projectFiles="true">
-        <itemPath>res/output/2clique.fact</itemPath>
-        <itemPath>res/output/2clique.out</itemPath>
-        <itemPath>res/output/2clique.result</itemPath>
-        <itemPath>res/output/sample.fact</itemPath>
-        <itemPath>res/output/sample.out</itemPath>
-        <itemPath>res/output/sample.result</itemPath>
-        <itemPath>res/output/setcover.fact</itemPath>
-        <itemPath>res/output/setcover.out</itemPath>
-        <itemPath>res/output/setcover.result</itemPath>
+        <logicalFolder name="circ" displayName="circ" projectFiles="true">
+          <itemPath>res/output/circ/sample.fact</itemPath>
+          <itemPath>res/output/circ/sample.out</itemPath>
+          <itemPath>res/output/circ/sample.result</itemPath>
+        </logicalFolder>
+        <logicalFolder name="sm" displayName="sm" projectFiles="true">
+          <itemPath>res/output/sm/2clique.fact</itemPath>
+          <itemPath>res/output/sm/2clique.out</itemPath>
+          <itemPath>res/output/sm/2clique.result</itemPath>
+          <itemPath>res/output/sm/setcover.fact</itemPath>
+          <itemPath>res/output/sm/setcover.out</itemPath>
+          <itemPath>res/output/sm/setcover.result</itemPath>
+        </logicalFolder>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
@@ -48,6 +59,7 @@
                    projectFiles="true">
       <itemPath>src/Cabalar.cpp</itemPath>
       <itemPath>src/CabalarUtils.cpp</itemPath>
+      <itemPath>src/CircTranslator.cpp</itemPath>
       <itemPath>src/Formula.cpp</itemPath>
       <itemPath>src/Formulas.cpp</itemPath>
       <itemPath>src/HengZhang.cpp</itemPath>
@@ -144,6 +156,8 @@
       </item>
       <item path="include/CabalarUtils.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/CircTranslator.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Formula.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Formulas.h" ex="false" tool="3" flavor2="0">
@@ -164,6 +178,10 @@
       </item>
       <item path="include/structs.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="parse/circ_lex.l" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="parse/circ_parse.y" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="parse/clean.sh" ex="false" tool="3" flavor2="0">
       </item>
       <item path="parse/generate.sh" ex="false" tool="3" flavor2="0">
@@ -172,33 +190,35 @@
       </item>
       <item path="parse/sm_parse.y" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/input/2clique.in" ex="false" tool="3" flavor2="0">
+      <item path="res/input/circ/sample.in" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/input/sample.in" ex="false" tool="3" flavor2="0">
+      <item path="res/input/sm/2clique.in" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/input/setcover.in" ex="false" tool="3" flavor2="0">
+      <item path="res/input/sm/setcover.in" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/2clique.fact" ex="false" tool="3" flavor2="0">
+      <item path="res/output/circ/sample.fact" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/2clique.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/circ/sample.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/2clique.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/circ/sample.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/sample.fact" ex="false" tool="3" flavor2="0">
+      <item path="res/output/sm/2clique.fact" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/sample.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/sm/2clique.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/sample.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/sm/2clique.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/setcover.fact" ex="false" tool="3" flavor2="0">
+      <item path="res/output/sm/setcover.fact" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/setcover.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/sm/setcover.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/setcover.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/sm/setcover.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/CabalarUtils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/CircTranslator.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Formula.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -281,6 +301,8 @@
       </item>
       <item path="include/CabalarUtils.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/CircTranslator.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Formula.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/Formulas.h" ex="false" tool="3" flavor2="0">
@@ -301,6 +323,10 @@
       </item>
       <item path="include/structs.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="parse/circ_lex.l" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="parse/circ_parse.y" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="parse/clean.sh" ex="false" tool="3" flavor2="0">
       </item>
       <item path="parse/generate.sh" ex="false" tool="3" flavor2="0">
@@ -309,33 +335,35 @@
       </item>
       <item path="parse/sm_parse.y" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/input/2clique.in" ex="false" tool="3" flavor2="0">
+      <item path="res/input/circ/sample.in" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/input/sample.in" ex="false" tool="3" flavor2="0">
+      <item path="res/input/sm/2clique.in" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/input/setcover.in" ex="false" tool="3" flavor2="0">
+      <item path="res/input/sm/setcover.in" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/2clique.fact" ex="false" tool="3" flavor2="0">
+      <item path="res/output/circ/sample.fact" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/2clique.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/circ/sample.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/2clique.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/circ/sample.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/sample.fact" ex="false" tool="3" flavor2="0">
+      <item path="res/output/sm/2clique.fact" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/sample.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/sm/2clique.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/sample.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/sm/2clique.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/setcover.fact" ex="false" tool="3" flavor2="0">
+      <item path="res/output/sm/setcover.fact" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/setcover.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/sm/setcover.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/setcover.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/sm/setcover.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/CabalarUtils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/CircTranslator.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Formula.cpp" ex="false" tool="1" flavor2="0">
       </item>
