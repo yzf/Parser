@@ -1,0 +1,24 @@
+claspD version 1.1.4. Reading...done
+Answer: 1
+uncol(4) uncol(3) col(2) uncol(1) 
+Answer: 2
+uncol(4) uncol(3) col(2) col(1) 
+Answer: 3
+uncol(4) col(3) uncol(2) uncol(1) 
+Answer: 4
+uncol(4) col(3) uncol(2) col(1) 
+Answer: 5
+uncol(4) col(3) col(2) uncol(1) 
+Answer: 6
+col(4) uncol(3) col(2) uncol(1) 
+Answer: 7
+col(4) col(3) uncol(2) uncol(1) 
+Answer: 8
+col(4) uncol(3) col(2) col(1) 
+Answer: 9
+col(4) col(3) uncol(2) col(1) 
+Answer: 10
+col(4) uncol(3) uncol(2) col(1) 
+
+Models     : 10    
+Time        : 0.000  (Parsing: 0.000)

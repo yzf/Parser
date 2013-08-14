@@ -25,11 +25,6 @@ extern FILE* yyin;
 extern _formula* gformula;
 extern int yyparse();
 
-#define RUN_S2DLP
-#ifdef RUN_S2DLP
-#define RUN_ASP
-#endif
-
 void io(const char* iPathName, const char* oPathName) {
     yyin = fopen (iPathName, "r");
     fout = fopen (oPathName, "w+");
@@ -56,24 +51,13 @@ int main(int argc, char** argv) {
     yyparse();
     fclose(yyin);
 
-#ifdef RUN_S2DLP
     Formula f = Formula(gformula, false);
     SMTranslator::instance().init(f);
     SMTranslator::instance().convert();
     SMTranslator::instance().outputFinalResult(fout);
     SMTranslator::instance().destroy();
     fclose(fout);
-#endif
     Vocabulary::instance().dumpVocabulary(stdout);
-#ifdef RUN_ASP
-    FILE* asp = popen("gringo res/output/sample.fact res/output/sample.out | claspD 0", "r");
-    const int MAX = 1024;
-    char line[MAX];
-    while (fgets(line, MAX, asp) != NULL) {
-        printf("%s", line);
-    }
-    pclose(asp);
-#endif
     
     return 0;
 }

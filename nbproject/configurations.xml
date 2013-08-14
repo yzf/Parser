@@ -27,11 +27,20 @@
                    displayName="Resource Files"
                    projectFiles="true">
       <logicalFolder name="input" displayName="input" projectFiles="true">
+        <itemPath>res/input/2clique.in</itemPath>
         <itemPath>res/input/sample.in</itemPath>
+        <itemPath>res/input/setcover.in</itemPath>
       </logicalFolder>
       <logicalFolder name="output" displayName="output" projectFiles="true">
+        <itemPath>res/output/2clique.fact</itemPath>
+        <itemPath>res/output/2clique.out</itemPath>
+        <itemPath>res/output/2clique.result</itemPath>
         <itemPath>res/output/sample.fact</itemPath>
         <itemPath>res/output/sample.out</itemPath>
+        <itemPath>res/output/sample.result</itemPath>
+        <itemPath>res/output/setcover.fact</itemPath>
+        <itemPath>res/output/setcover.out</itemPath>
+        <itemPath>res/output/setcover.result</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
@@ -70,6 +79,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
       <itemPath>README.md</itemPath>
+      <itemPath>run.sh</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -162,11 +172,29 @@
       </item>
       <item path="parse/parse.y" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/2clique.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/input/sample.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/setcover.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/2clique.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/2clique.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/2clique.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sample.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sample.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sample.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/setcover.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/setcover.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/setcover.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -281,11 +309,29 @@
       </item>
       <item path="parse/parse.y" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/2clique.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/input/sample.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/setcover.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/2clique.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/2clique.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/2clique.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sample.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sample.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sample.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/setcover.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/setcover.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/setcover.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
       </item>
