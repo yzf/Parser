@@ -1,10 +1,12 @@
 #!/bin/bash
 # 编译代码
-echo "run makefile\n"
+echo "run makefile"
+echo 
 make > /dev/null 2>&1
 runner="/home/yzf/NetBeansProjects/alpha/build/Debug/GNU-Linux-x86/tests/TestFiles/f2"
 # 清除操作
-echo "rm old files\n"
+echo "rm old files"
+echo 
 for oldFile in `ls res/output/*.out res/output/*.result`
 do
     rm $oldFile
@@ -28,7 +30,8 @@ do
         gringo $factFile $outFile | claspD 0 > $resultFile
     fi
 done
-echo "\nrun success!!"
+echo 
+echo "run success!!"
 exit 0
 
 

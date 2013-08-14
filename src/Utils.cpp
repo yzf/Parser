@@ -544,17 +544,9 @@ _formula* Utils::doubleNegationPredicates(_formula* _fml, const vector<int>& _vP
     switch (_fml->formula_type) {
     case ATOM:
         if (NEGA != _fatherType) {
-            if (_vPredicates.empty()) {
-                if(Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
-                    _fml = compositeByConnective(NEGA, _fml, NULL);
-                    _fml = compositeByConnective(NEGA, _fml, NULL);
-                }
-            }
-            else {
-                if (inList(_fml->predicate_id, _vPredicates)) {
-                    _fml = compositeByConnective(NEGA, _fml, NULL);
-                    _fml = compositeByConnective(NEGA, _fml, NULL);
-                }
+            if (inList(_fml->predicate_id, _vPredicates)) {
+                _fml = compositeByConnective(NEGA, _fml, NULL);
+                _fml = compositeByConnective(NEGA, _fml, NULL);
             }
         }
         break;
