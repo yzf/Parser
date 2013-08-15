@@ -27,7 +27,7 @@ make > /dev/null 2>&1
 runner="/home/yzf/NetBeansProjects/alpha/build/Debug/GNU-Linux-x86/tests/TestFiles/f2"
 # 开始转化
 input=`ls res/input/$tranType/*.in`
-factDir="res/output/$tranType"
+factDir="res/input/$tranType"
 outputDir="res/output/$tranType"
 # 以每个文件作为输入运行程序
 for inFile in $input
@@ -36,7 +36,15 @@ do
     outFile="$outputDir/$fileName.out"
     factFile="$factDir/$fileName.fact"
     resultFile="$outputDir/$fileName.result"
+    echo -n > $outFile
+    echo -n > $resultFile
+    echo "run: $runner $inFile $outFile"
     $runner $inFile $outFile > /dev/null 2>&1
+    if [ $? -ne 0 ]
+    then
+        echo "error!!!!!!!!!!!!!!!!!"
+        exit 1
+    fi
     # 执行ASP
     if [ -f $factFile -a -f $outFile ]
     then

@@ -46,7 +46,7 @@ void io(const char* iPathName, const char* oPathName) {
 int main(int argc, char** argv) {
     
     if(argc < 3) {
-        io("res/input/circ/sample.in","res/output/circ/sample.out");
+        io("res/input/circ/2clique.in","res/output/circ/2clique.out");
     }
     else {
         io(argv[1], argv[2]);
@@ -61,16 +61,20 @@ int main(int argc, char** argv) {
     SMTranslator::instance().convert();
     SMTranslator::instance().outputFinalResult(fout);
     SMTranslator::instance().destroy();
-    fclose(fout);
 #endif
-    
+
 #ifdef CIRC
     Formula f = Formula(gformula, false);
     CircTranslator circTranslator;
     Formulas* fmls = circTranslator.convert(f);
     fmls->output(stdout);
+    SMTranslator::instance().init(*fmls);
+    SMTranslator::instance().convert();
+    SMTranslator::instance().outputFinalResult(fout);
+    SMTranslator::instance().destroy();
     delete fmls;
 #endif
+    fclose(fout);
     Vocabulary::instance().dumpVocabulary(stdout);
     
     return 0;

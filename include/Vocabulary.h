@@ -69,6 +69,7 @@ public:
     Formulas* getAtomList() const;
     vector<int> getAllPredicates() const;
     vector<int> getAllIntensionPredicates() const;
+    map<int, string> getAllVaryPredicates() const;
 };
 
 #endif

@@ -11,11 +11,15 @@
 #include "structs.h"
 #include "Formula.h"
 #include "Formulas.h"
+#include <string>
 
 class Formula;
 class Formulas;
 
 class CircTranslator {
+public:
+    static const string ms_sRName;
+    static const string ms_sVaryPostfix;
 private:
     Formula createFormula_1(const Formula& _originalFml);
     Formula createFormula_2(const Formula& _originalFml);

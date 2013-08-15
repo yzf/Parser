@@ -157,8 +157,11 @@ void SMTranslator::addNegaPredicates(const Formula& _negaPredicate) {
  * 章衡、Cabalar、规则全套服务
  */
 void SMTranslator::convert() {
+    printf("hz\n");
     hengZhangTransform();
+    printf("cabalar\n");
     cabalarTransform();
+    printf("rule\n");
     ruleTransform();
 }
 /**

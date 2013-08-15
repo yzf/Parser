@@ -1,0 +1,721 @@
+%MIN and MAX domain
+#domain min_node(MIN_node).
+#domain max_node(MAX_node).
+
+%Variable domain
+#domain node(X).
+#domain node(Y).
+#domain node(NV_0).
+#domain node(NV_1).
+#domain node(NV_2).
+#domain node(NV_3).
+#domain node(NV_4).
+#domain node(NV_5).
+#domain node(NV_6).
+
+%Nega nega predicate define
+_ok:- not ok.
+_unset(X):- not unset(X).
+_t_0(X,Y):- not t_0(X,Y).
+_set(X):- not set(X).
+_t_1(X,Y):- not t_1(X,Y).
+_col(X):- not col(X).
+_uncol(X):- not uncol(X).
+_t_2(X,Y):- not t_2(X,Y).
+_t_3(X,Y):- not t_3(X,Y).
+_r_new:- not r_new.
+_t_4(X):- not t_4(X).
+
+%Extension predicate define
+_eq(X,Y):- not eq(X,Y).
+_edge(X,Y):- not edge(X,Y).
+_succ_node_node(X,Y,NV_0,NV_1):- not succ_node_node(X,Y,NV_0,NV_1).
+_max_node(X):- not max_node(X).
+_succ_node(Y,NV_2):- not succ_node(Y,NV_2).
+
+%Succ predicate definition
+succ_node_node(A,B1,A,B2):- succ_node(B1,B2), node(A), node(B1), node(B2).
+succ_node_node(A1,MAX_node,A2,MIN_node):- succ_node(A1,A2), node(A1), node(A2).
+succ_node(A1,A2):- A1==A2-1, node(A1), node(A2).
+
+:- not uncol(X), not col(X).
+:- not unset(X), not set(X).
+:- not s_0(MIN_node,MIN_node).
+s_0(X,Y):- succ_node_node(X,Y,NV_0,NV_1), s_0(NV_0,NV_1).
+s_0(X,Y):- not eq(X,Y), not unset(X), not unset(Y).
+s_0(X,Y):- not _ok.
+s_0(X,Y):- not unset(Y), not unset(X), not eq(X,Y), not _ok.
+s_0(X,Y):- not eq(X,Y), not unset(X), not unset(Y), not _ok.
+t_0(MIN_node,MIN_node):- not ok, eq(MIN_node,MIN_node).
+t_0(MIN_node,MIN_node):- not ok, not _unset(MIN_node).
+t_0(MIN_node,MIN_node):- not ok, not _unset(MIN_node).
+t_0(MIN_node,MIN_node):- not ok, eq(MIN_node,MIN_node), not _unset(MIN_node).
+t_0(MIN_node,MIN_node):- not ok, eq(MIN_node,MIN_node), not _unset(MIN_node).
+t_0(MIN_node,MIN_node):- not ok, eq(MIN_node,MIN_node).
+t_0(MIN_node,MIN_node):- not ok, not _unset(MIN_node).
+t_0(MIN_node,MIN_node):- not ok, not _unset(MIN_node).
+:- not ok, t_0(MAX_node,MAX_node), not s_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), s_0(X,Y), eq(X,Y).
+:- not ok, t_0(MAX_node,MAX_node), not s_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), s_0(X,Y), not _unset(X).
+:- not ok, t_0(MAX_node,MAX_node), not s_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), s_0(X,Y), not _unset(Y).
+:- not ok, t_0(MAX_node,MAX_node), not s_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), s_0(X,Y), not _unset(X), eq(X,Y).
+:- not ok, t_0(MAX_node,MAX_node), not s_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), s_0(X,Y), not _unset(Y), eq(X,Y).
+:- not ok, t_0(MAX_node,MAX_node), not s_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), s_0(X,Y), eq(X,Y).
+:- not ok, t_0(MAX_node,MAX_node), not s_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), s_0(X,Y), not _unset(X).
+:- not ok, t_0(MAX_node,MAX_node), not s_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), s_0(X,Y), not _unset(Y).
+:- not s_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), s_0(X,Y), not ok, eq(X,Y), not _t_0(MAX_node,MAX_node).
+:- not s_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), s_0(X,Y), not ok, not _unset(X), not _t_0(MAX_node,MAX_node).
+:- not s_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), s_0(X,Y), not ok, not _unset(Y), not _t_0(MAX_node,MAX_node).
+:- not ok, t_0(MAX_node,MAX_node), max_node(X), max_node(Y), s_0(X,Y), eq(X,Y).
+:- not ok, t_0(MAX_node,MAX_node), max_node(X), max_node(Y), s_0(X,Y), not _unset(X).
+:- not ok, t_0(MAX_node,MAX_node), max_node(X), max_node(Y), s_0(X,Y), not _unset(Y).
+:- not ok, t_0(MAX_node,MAX_node), max_node(X), max_node(Y), s_0(X,Y), not _unset(X), eq(X,Y).
+:- not ok, t_0(MAX_node,MAX_node), max_node(X), max_node(Y), s_0(X,Y), not _unset(Y), eq(X,Y).
+:- not ok, t_0(MAX_node,MAX_node), max_node(X), max_node(Y), s_0(X,Y), eq(X,Y).
+:- not ok, t_0(MAX_node,MAX_node), max_node(X), max_node(Y), s_0(X,Y), not _unset(X).
+:- not ok, t_0(MAX_node,MAX_node), max_node(X), max_node(Y), s_0(X,Y), not _unset(Y).
+:- max_node(X), max_node(Y), s_0(X,Y), not ok, eq(X,Y), not _t_0(MAX_node,MAX_node).
+:- max_node(X), max_node(Y), s_0(X,Y), not ok, not _unset(X), not _t_0(MAX_node,MAX_node).
+:- max_node(X), max_node(Y), s_0(X,Y), not ok, not _unset(Y), not _t_0(MAX_node,MAX_node).
+t_0(MAX_node,MAX_node):- not eq(X,Y), not unset(X), not unset(Y), not s_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), s_0(X,Y).
+t_0(MAX_node,MAX_node):- not s_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), s_0(X,Y), not _ok.
+t_0(MAX_node,MAX_node):- not unset(Y), not unset(X), not eq(X,Y), not s_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), s_0(X,Y), not _ok.
+t_0(MAX_node,MAX_node):- not eq(X,Y), not unset(X), not unset(Y), not s_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), s_0(X,Y), not _ok.
+:- not unset(Y), not unset(X), not eq(X,Y), not t_0(MAX_node,MAX_node), not s_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), s_0(X,Y).
+:- not t_0(MAX_node,MAX_node), not s_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), s_0(X,Y), not _ok.
+t_0(MAX_node,MAX_node):- not eq(X,Y), not unset(X), not unset(Y), max_node(X), max_node(Y), s_0(X,Y).
+t_0(MAX_node,MAX_node):- max_node(X), max_node(Y), s_0(X,Y), not _ok.
+t_0(MAX_node,MAX_node):- not unset(Y), not unset(X), not eq(X,Y), max_node(X), max_node(Y), s_0(X,Y), not _ok.
+t_0(MAX_node,MAX_node):- not eq(X,Y), not unset(X), not unset(Y), max_node(X), max_node(Y), s_0(X,Y), not _ok.
+:- not unset(Y), not unset(X), not eq(X,Y), not t_0(MAX_node,MAX_node), max_node(X), max_node(Y), s_0(X,Y).
+:- not t_0(MAX_node,MAX_node), max_node(X), max_node(Y), s_0(X,Y), not _ok.
+t_0(NV_0,NV_1):- not ok, t_0(X,Y), succ_node_node(X,Y,NV_0,NV_1), eq(NV_0,NV_1).
+t_0(NV_0,NV_1):- not ok, t_0(X,Y), succ_node_node(X,Y,NV_0,NV_1), not _unset(NV_0).
+t_0(NV_0,NV_1):- not ok, t_0(X,Y), succ_node_node(X,Y,NV_0,NV_1), not _unset(NV_1).
+t_0(NV_0,NV_1):- not ok, t_0(X,Y), succ_node_node(X,Y,NV_0,NV_1), not _unset(NV_0), eq(NV_0,NV_1).
+t_0(NV_0,NV_1):- not ok, t_0(X,Y), succ_node_node(X,Y,NV_0,NV_1), not _unset(NV_1), eq(NV_0,NV_1).
+t_0(NV_0,NV_1):- not ok, t_0(X,Y), succ_node_node(X,Y,NV_0,NV_1), eq(NV_0,NV_1).
+t_0(NV_0,NV_1):- not ok, t_0(X,Y), succ_node_node(X,Y,NV_0,NV_1), not _unset(NV_0).
+t_0(NV_0,NV_1):- not ok, t_0(X,Y), succ_node_node(X,Y,NV_0,NV_1), not _unset(NV_1).
+:- succ_node_node(X,Y,NV_0,NV_1), not ok, not t_0(NV_0,NV_1), eq(NV_0,NV_1), not _t_0(X,Y).
+:- succ_node_node(X,Y,NV_0,NV_1), not ok, not t_0(NV_0,NV_1), not _unset(NV_0), not _t_0(X,Y).
+:- succ_node_node(X,Y,NV_0,NV_1), not ok, not t_0(NV_0,NV_1), not _unset(NV_1), not _t_0(X,Y).
+t_0(X,Y):- not eq(NV_0,NV_1), not unset(NV_0), not unset(NV_1), succ_node_node(X,Y,NV_0,NV_1).
+t_0(X,Y):- succ_node_node(X,Y,NV_0,NV_1), not _ok.
+t_0(X,Y):- not unset(NV_1), not unset(NV_0), not eq(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1), not _ok.
+t_0(X,Y):- not eq(NV_0,NV_1), not unset(NV_0), not unset(NV_1), succ_node_node(X,Y,NV_0,NV_1), not _ok.
+t_0(X,Y):- t_0(NV_0,NV_1), succ_node_node(X,Y,NV_0,NV_1).
+:- not unset(NV_1), not unset(NV_0), not eq(NV_0,NV_1), not t_0(X,Y), succ_node_node(X,Y,NV_0,NV_1).
+:- not t_0(X,Y), succ_node_node(X,Y,NV_0,NV_1), not _ok.
+:- not t_0(X,Y), succ_node_node(X,Y,NV_0,NV_1), not _t_0(NV_0,NV_1).
+:- not ok, not edge(X,Y), not eq(X,Y), not _set(Y), not _set(X).
+:- not s_1(X,MIN_node).
+s_1(X,Y):- succ_node(Y,NV_2), s_1(X,NV_2).
+s_1(X,Y):- not unset(X).
+s_1(X,Y):- not unset(Y), not edge(X,Y).
+s_1(X,Y):- not _ok.
+s_1(X,Y):- not unset(X), not _ok.
+s_1(X,Y):- not unset(Y), not _ok, not edge(X,Y).
+t_1(X,MIN_node):- not ok, not _unset(MIN_node), not _unset(X).
+t_1(X,MIN_node):- edge(X,MIN_node), not ok, not _unset(X).
+t_1(X,MIN_node):- not ok, not _unset(MIN_node), not _unset(X).
+t_1(X,MIN_node):- not ok, edge(X,MIN_node), not _unset(X).
+:- not ok, t_1(X,MAX_node), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not _unset(X), not _unset(Y).
+:- not ok, edge(X,Y), t_1(X,MAX_node), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not _unset(X).
+:- not ok, t_1(X,MAX_node), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not _unset(X), not _unset(Y).
+:- not ok, t_1(X,MAX_node), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not _unset(X), edge(X,Y).
+:- not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not ok, not _unset(Y), not _unset(X), not _t_1(X,MAX_node).
+:- not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not ok, edge(X,Y), not _unset(X), not _t_1(X,MAX_node).
+:- not ok, t_1(X,MAX_node), max_node(Y), s_1(X,Y), not _unset(X), not _unset(Y).
+:- not ok, edge(X,Y), t_1(X,MAX_node), max_node(Y), s_1(X,Y), not _unset(X).
+:- not ok, t_1(X,MAX_node), max_node(Y), s_1(X,Y), not _unset(X), not _unset(Y).
+:- not ok, t_1(X,MAX_node), max_node(Y), s_1(X,Y), not _unset(X), edge(X,Y).
+:- max_node(Y), s_1(X,Y), not ok, not _unset(Y), not _unset(X), not _t_1(X,MAX_node).
+:- max_node(Y), s_1(X,Y), not ok, edge(X,Y), not _unset(X), not _t_1(X,MAX_node).
+t_1(X,MAX_node):- not unset(X), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y).
+t_1(X,MAX_node):- not unset(Y), not edge(X,Y), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y).
+t_1(X,MAX_node):- not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not _ok.
+t_1(X,MAX_node):- not unset(X), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not _ok.
+t_1(X,MAX_node):- not unset(Y), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not edge(X,Y), not _ok.
+:- not unset(X), not t_1(X,MAX_node), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y).
+:- not edge(X,Y), not unset(Y), not t_1(X,MAX_node), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y).
+:- not t_1(X,MAX_node), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not _ok.
+t_1(X,MAX_node):- not unset(X), max_node(Y), s_1(X,Y).
+t_1(X,MAX_node):- not unset(Y), not edge(X,Y), max_node(Y), s_1(X,Y).
+t_1(X,MAX_node):- max_node(Y), s_1(X,Y), not _ok.
+t_1(X,MAX_node):- not unset(X), max_node(Y), s_1(X,Y), not _ok.
+t_1(X,MAX_node):- not unset(Y), max_node(Y), s_1(X,Y), not edge(X,Y), not _ok.
+:- not unset(X), not t_1(X,MAX_node), max_node(Y), s_1(X,Y).
+:- not edge(X,Y), not unset(Y), not t_1(X,MAX_node), max_node(Y), s_1(X,Y).
+:- not t_1(X,MAX_node), max_node(Y), s_1(X,Y), not _ok.
+t_1(X,NV_2):- not ok, t_1(X,Y), succ_node(Y,NV_2), not _unset(X), not _unset(NV_2).
+t_1(X,NV_2):- not ok, edge(X,NV_2), t_1(X,Y), succ_node(Y,NV_2), not _unset(X).
+t_1(X,NV_2):- not ok, t_1(X,Y), succ_node(Y,NV_2), not _unset(X), not _unset(NV_2).
+t_1(X,NV_2):- not ok, t_1(X,Y), succ_node(Y,NV_2), not _unset(X), edge(X,NV_2).
+:- succ_node(Y,NV_2), not t_1(X,NV_2), not ok, not _unset(NV_2), not _unset(X), not _t_1(X,Y).
+:- succ_node(Y,NV_2), not t_1(X,NV_2), not ok, edge(X,NV_2), not _unset(X), not _t_1(X,Y).
+t_1(X,Y):- not unset(X), succ_node(Y,NV_2).
+t_1(X,Y):- not unset(NV_2), not edge(X,NV_2), succ_node(Y,NV_2).
+t_1(X,Y):- succ_node(Y,NV_2), not _ok.
+t_1(X,Y):- not unset(X), succ_node(Y,NV_2), not _ok.
+t_1(X,Y):- not unset(NV_2), succ_node(Y,NV_2), not edge(X,NV_2), not _ok.
+t_1(X,Y):- t_1(X,NV_2), succ_node(Y,NV_2).
+:- not unset(X), not t_1(X,Y), succ_node(Y,NV_2).
+:- not edge(X,NV_2), not unset(NV_2), not t_1(X,Y), succ_node(Y,NV_2).
+:- not t_1(X,Y), succ_node(Y,NV_2), not _ok.
+:- not t_1(X,Y), succ_node(Y,NV_2), not _t_1(X,NV_2).
+:- not ok, not _set(Y), not _col(X), not _uncol(Y), not _set(X).
+:- not set(X), not _ok.
+:- not unset(X), not _ok.
+:- not ok.
+col(X) | uncol(X).
+set(X) | unset(X).
+:- not s_2(MIN_node,MIN_node).
+s_2(X,Y):- succ_node_node(X,Y,NV_3,NV_4), s_2(NV_3,NV_4).
+s_2(X,Y):- not eq(X,Y), not unset(X), not unset(Y).
+s_2(X,Y):- not _ok.
+s_2(X,Y):- not unset(Y), not unset(X), not eq(X,Y), not _ok.
+s_2(X,Y):- not eq(X,Y), not unset(X), not unset(Y), not _ok.
+ok | t_2(MIN_node,MIN_node):- eq(MIN_node,MIN_node).
+ok | t_2(MIN_node,MIN_node):- unset(MIN_node).
+ok | t_2(MIN_node,MIN_node):- unset(MIN_node).
+ok | t_2(MIN_node,MIN_node):- not _unset(MIN_node), eq(MIN_node,MIN_node).
+ok | t_2(MIN_node,MIN_node):- not _unset(MIN_node), eq(MIN_node,MIN_node).
+t_2(MIN_node,MIN_node):- not ok, eq(MIN_node,MIN_node).
+t_2(MIN_node,MIN_node):- not ok, not _unset(MIN_node).
+t_2(MIN_node,MIN_node):- not ok, not _unset(MIN_node).
+ok:- t_2(MAX_node,MAX_node), not s_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), s_2(X,Y), eq(X,Y).
+ok:- unset(X), t_2(MAX_node,MAX_node), not s_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), s_2(X,Y).
+ok:- unset(Y), t_2(MAX_node,MAX_node), not s_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), s_2(X,Y).
+ok:- t_2(MAX_node,MAX_node), not s_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), s_2(X,Y), eq(X,Y), not _unset(X).
+ok:- t_2(MAX_node,MAX_node), not s_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), s_2(X,Y), eq(X,Y), not _unset(Y).
+:- not ok, t_2(MAX_node,MAX_node), not s_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), s_2(X,Y), eq(X,Y).
+:- not ok, t_2(MAX_node,MAX_node), not s_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), s_2(X,Y), not _unset(X).
+:- not ok, t_2(MAX_node,MAX_node), not s_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), s_2(X,Y), not _unset(Y).
+:- not s_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), s_2(X,Y), not ok, eq(X,Y), not _t_2(MAX_node,MAX_node).
+:- not s_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), s_2(X,Y), not ok, not _unset(X), not _t_2(MAX_node,MAX_node).
+:- not s_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), s_2(X,Y), not ok, not _unset(Y), not _t_2(MAX_node,MAX_node).
+ok:- t_2(MAX_node,MAX_node), max_node(X), max_node(Y), s_2(X,Y), eq(X,Y).
+ok:- unset(X), t_2(MAX_node,MAX_node), max_node(X), max_node(Y), s_2(X,Y).
+ok:- unset(Y), t_2(MAX_node,MAX_node), max_node(X), max_node(Y), s_2(X,Y).
+ok:- t_2(MAX_node,MAX_node), max_node(X), max_node(Y), s_2(X,Y), eq(X,Y), not _unset(X).
+ok:- t_2(MAX_node,MAX_node), max_node(X), max_node(Y), s_2(X,Y), eq(X,Y), not _unset(Y).
+:- not ok, t_2(MAX_node,MAX_node), max_node(X), max_node(Y), s_2(X,Y), eq(X,Y).
+:- not ok, t_2(MAX_node,MAX_node), max_node(X), max_node(Y), s_2(X,Y), not _unset(X).
+:- not ok, t_2(MAX_node,MAX_node), max_node(X), max_node(Y), s_2(X,Y), not _unset(Y).
+:- max_node(X), max_node(Y), s_2(X,Y), not ok, eq(X,Y), not _t_2(MAX_node,MAX_node).
+:- max_node(X), max_node(Y), s_2(X,Y), not ok, not _unset(X), not _t_2(MAX_node,MAX_node).
+:- max_node(X), max_node(Y), s_2(X,Y), not ok, not _unset(Y), not _t_2(MAX_node,MAX_node).
+t_2(MAX_node,MAX_node):- not eq(X,Y), not unset(X), not unset(Y), not s_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), s_2(X,Y).
+t_2(MAX_node,MAX_node):- ok, not s_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), s_2(X,Y).
+unset(X) | unset(Y) | t_2(MAX_node,MAX_node):- not eq(X,Y), not s_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), s_2(X,Y), not _ok.
+t_2(MAX_node,MAX_node):- not eq(X,Y), not unset(X), not unset(Y), not s_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), s_2(X,Y), not _ok.
+:- not unset(Y), not unset(X), not eq(X,Y), not t_2(MAX_node,MAX_node), not s_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), s_2(X,Y).
+:- not t_2(MAX_node,MAX_node), not s_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), s_2(X,Y), not _ok.
+t_2(MAX_node,MAX_node):- not eq(X,Y), not unset(X), not unset(Y), max_node(X), max_node(Y), s_2(X,Y).
+t_2(MAX_node,MAX_node):- ok, max_node(X), max_node(Y), s_2(X,Y).
+unset(X) | unset(Y) | t_2(MAX_node,MAX_node):- not eq(X,Y), max_node(X), max_node(Y), s_2(X,Y), not _ok.
+t_2(MAX_node,MAX_node):- not eq(X,Y), not unset(X), not unset(Y), max_node(X), max_node(Y), s_2(X,Y), not _ok.
+:- not unset(Y), not unset(X), not eq(X,Y), not t_2(MAX_node,MAX_node), max_node(X), max_node(Y), s_2(X,Y).
+:- not t_2(MAX_node,MAX_node), max_node(X), max_node(Y), s_2(X,Y), not _ok.
+ok | t_2(NV_3,NV_4):- t_2(X,Y), succ_node_node(X,Y,NV_3,NV_4), eq(NV_3,NV_4).
+ok | t_2(NV_3,NV_4):- unset(NV_3), t_2(X,Y), succ_node_node(X,Y,NV_3,NV_4).
+ok | t_2(NV_3,NV_4):- unset(NV_4), t_2(X,Y), succ_node_node(X,Y,NV_3,NV_4).
+ok | t_2(NV_3,NV_4):- t_2(X,Y), succ_node_node(X,Y,NV_3,NV_4), eq(NV_3,NV_4), not _unset(NV_3).
+ok | t_2(NV_3,NV_4):- t_2(X,Y), succ_node_node(X,Y,NV_3,NV_4), eq(NV_3,NV_4), not _unset(NV_4).
+t_2(NV_3,NV_4):- not ok, t_2(X,Y), succ_node_node(X,Y,NV_3,NV_4), eq(NV_3,NV_4).
+t_2(NV_3,NV_4):- not ok, t_2(X,Y), succ_node_node(X,Y,NV_3,NV_4), not _unset(NV_3).
+t_2(NV_3,NV_4):- not ok, t_2(X,Y), succ_node_node(X,Y,NV_3,NV_4), not _unset(NV_4).
+:- succ_node_node(X,Y,NV_3,NV_4), not ok, not t_2(NV_3,NV_4), eq(NV_3,NV_4), not _t_2(X,Y).
+:- succ_node_node(X,Y,NV_3,NV_4), not ok, not t_2(NV_3,NV_4), not _unset(NV_3), not _t_2(X,Y).
+:- succ_node_node(X,Y,NV_3,NV_4), not ok, not t_2(NV_3,NV_4), not _unset(NV_4), not _t_2(X,Y).
+t_2(X,Y):- not eq(NV_3,NV_4), not unset(NV_3), not unset(NV_4), succ_node_node(X,Y,NV_3,NV_4).
+t_2(X,Y):- ok, succ_node_node(X,Y,NV_3,NV_4).
+unset(NV_3) | unset(NV_4) | t_2(X,Y):- not eq(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4), not _ok.
+t_2(X,Y):- not eq(NV_3,NV_4), not unset(NV_3), not unset(NV_4), succ_node_node(X,Y,NV_3,NV_4), not _ok.
+t_2(X,Y):- t_2(NV_3,NV_4), succ_node_node(X,Y,NV_3,NV_4).
+:- not unset(NV_4), not unset(NV_3), not eq(NV_3,NV_4), not t_2(X,Y), succ_node_node(X,Y,NV_3,NV_4).
+:- not t_2(X,Y), succ_node_node(X,Y,NV_3,NV_4), not _ok.
+:- not t_2(X,Y), succ_node_node(X,Y,NV_3,NV_4), not _t_2(NV_3,NV_4).
+ok:- set(X), set(Y), not eq(X,Y), not edge(X,Y).
+:- not s_3(X,MIN_node).
+s_3(X,Y):- succ_node(Y,NV_5), s_3(X,NV_5).
+s_3(X,Y):- not unset(X).
+s_3(X,Y):- not unset(Y), not edge(X,Y).
+s_3(X,Y):- not _ok.
+s_3(X,Y):- not unset(X), not _ok.
+s_3(X,Y):- not unset(Y), not _ok, not edge(X,Y).
+ok | t_3(X,MIN_node):- unset(X), unset(MIN_node).
+ok | t_3(X,MIN_node):- unset(X), edge(X,MIN_node).
+t_3(X,MIN_node):- not ok, not _unset(MIN_node), not _unset(X).
+t_3(X,MIN_node):- not ok, edge(X,MIN_node), not _unset(X).
+ok:- unset(Y), unset(X), t_3(X,MAX_node), not s_3(X,NV_5), succ_node(Y,NV_5), s_3(X,Y).
+ok:- edge(X,Y), unset(X), t_3(X,MAX_node), not s_3(X,NV_5), succ_node(Y,NV_5), s_3(X,Y).
+:- not ok, t_3(X,MAX_node), not s_3(X,NV_5), succ_node(Y,NV_5), s_3(X,Y), not _unset(X), not _unset(Y).
+:- not ok, t_3(X,MAX_node), not s_3(X,NV_5), succ_node(Y,NV_5), s_3(X,Y), not _unset(X), edge(X,Y).
+:- not s_3(X,NV_5), succ_node(Y,NV_5), s_3(X,Y), not ok, not _unset(Y), not _unset(X), not _t_3(X,MAX_node).
+:- not s_3(X,NV_5), succ_node(Y,NV_5), s_3(X,Y), not ok, edge(X,Y), not _unset(X), not _t_3(X,MAX_node).
+ok:- unset(Y), unset(X), t_3(X,MAX_node), max_node(Y), s_3(X,Y).
+ok:- edge(X,Y), unset(X), t_3(X,MAX_node), max_node(Y), s_3(X,Y).
+:- not ok, t_3(X,MAX_node), max_node(Y), s_3(X,Y), not _unset(X), not _unset(Y).
+:- not ok, t_3(X,MAX_node), max_node(Y), s_3(X,Y), not _unset(X), edge(X,Y).
+:- max_node(Y), s_3(X,Y), not ok, not _unset(Y), not _unset(X), not _t_3(X,MAX_node).
+:- max_node(Y), s_3(X,Y), not ok, edge(X,Y), not _unset(X), not _t_3(X,MAX_node).
+t_3(X,MAX_node):- not unset(X), not s_3(X,NV_5), succ_node(Y,NV_5), s_3(X,Y).
+t_3(X,MAX_node):- not unset(Y), not edge(X,Y), not s_3(X,NV_5), succ_node(Y,NV_5), s_3(X,Y).
+t_3(X,MAX_node):- ok, not s_3(X,NV_5), succ_node(Y,NV_5), s_3(X,Y).
+unset(X) | t_3(X,MAX_node):- not s_3(X,NV_5), succ_node(Y,NV_5), s_3(X,Y), not _ok.
+unset(Y) | t_3(X,MAX_node):- not s_3(X,NV_5), succ_node(Y,NV_5), s_3(X,Y), not edge(X,Y), not _ok.
+:- not unset(X), not t_3(X,MAX_node), not s_3(X,NV_5), succ_node(Y,NV_5), s_3(X,Y).
+:- not edge(X,Y), not unset(Y), not t_3(X,MAX_node), not s_3(X,NV_5), succ_node(Y,NV_5), s_3(X,Y).
+:- not t_3(X,MAX_node), not s_3(X,NV_5), succ_node(Y,NV_5), s_3(X,Y), not _ok.
+t_3(X,MAX_node):- not unset(X), max_node(Y), s_3(X,Y).
+t_3(X,MAX_node):- not unset(Y), not edge(X,Y), max_node(Y), s_3(X,Y).
+t_3(X,MAX_node):- ok, max_node(Y), s_3(X,Y).
+unset(X) | t_3(X,MAX_node):- max_node(Y), s_3(X,Y), not _ok.
+unset(Y) | t_3(X,MAX_node):- max_node(Y), s_3(X,Y), not edge(X,Y), not _ok.
+:- not unset(X), not t_3(X,MAX_node), max_node(Y), s_3(X,Y).
+:- not edge(X,Y), not unset(Y), not t_3(X,MAX_node), max_node(Y), s_3(X,Y).
+:- not t_3(X,MAX_node), max_node(Y), s_3(X,Y), not _ok.
+ok | t_3(X,NV_5):- unset(NV_5), unset(X), t_3(X,Y), succ_node(Y,NV_5).
+ok | t_3(X,NV_5):- edge(X,NV_5), unset(X), t_3(X,Y), succ_node(Y,NV_5).
+t_3(X,NV_5):- not ok, t_3(X,Y), succ_node(Y,NV_5), not _unset(X), not _unset(NV_5).
+t_3(X,NV_5):- not ok, t_3(X,Y), succ_node(Y,NV_5), not _unset(X), edge(X,NV_5).
+:- succ_node(Y,NV_5), not t_3(X,NV_5), not ok, not _unset(NV_5), not _unset(X), not _t_3(X,Y).
+:- succ_node(Y,NV_5), not t_3(X,NV_5), not ok, edge(X,NV_5), not _unset(X), not _t_3(X,Y).
+t_3(X,Y):- not unset(X), succ_node(Y,NV_5).
+t_3(X,Y):- not unset(NV_5), not edge(X,NV_5), succ_node(Y,NV_5).
+t_3(X,Y):- ok, succ_node(Y,NV_5).
+unset(X) | t_3(X,Y):- succ_node(Y,NV_5), not _ok.
+unset(NV_5) | t_3(X,Y):- succ_node(Y,NV_5), not edge(X,NV_5), not _ok.
+t_3(X,Y):- t_3(X,NV_5), succ_node(Y,NV_5).
+:- not unset(X), not t_3(X,Y), succ_node(Y,NV_5).
+:- not edge(X,NV_5), not unset(NV_5), not t_3(X,Y), succ_node(Y,NV_5).
+:- not t_3(X,Y), succ_node(Y,NV_5), not _ok.
+:- not t_3(X,Y), succ_node(Y,NV_5), not _t_3(X,NV_5).
+ok:- set(X), set(Y), col(X), uncol(Y).
+set(X):- ok.
+unset(X):- ok.
+ok.
+col(X):- r_new, not _col(X).
+uncol(X):- r_new, not _uncol(X).
+set(X):- r_new, not _set(X).
+unset(X):- r_new, not _unset(X).
+ok:- r_new, not _ok.
+:- not s_4(MIN_node).
+s_4(X):- succ_node(X,NV_6), s_4(NV_6).
+s_4(X):- not col(X), not _col(X).
+s_4(X):- not uncol(X), not _uncol(X).
+s_4(X):- not set(X), not _set(X).
+s_4(X):- not unset(X), not _unset(X).
+s_4(X):- not ok, not _ok.
+s_4(X):- not _r_new.
+s_4(X):- not col(X), not _r_new, not _col(X).
+s_4(X):- not uncol(X), not _r_new, not _uncol(X).
+s_4(X):- not set(X), not _r_new, not _set(X).
+s_4(X):- not unset(X), not _r_new, not _unset(X).
+s_4(X):- not ok, not _r_new, not _ok.
+r_new | t_4(MIN_node):- unset(MIN_node), col(MIN_node), uncol(MIN_node), ok, set(MIN_node).
+r_new | t_4(MIN_node):- not unset(MIN_node), col(MIN_node), uncol(MIN_node), ok, set(MIN_node).
+r_new | t_4(MIN_node):- unset(MIN_node), col(MIN_node), uncol(MIN_node), ok, not set(MIN_node).
+r_new | t_4(MIN_node):- not unset(MIN_node), col(MIN_node), uncol(MIN_node), ok, not set(MIN_node).
+r_new | t_4(MIN_node):- unset(MIN_node), col(MIN_node), uncol(MIN_node), not ok, set(MIN_node).
+r_new | t_4(MIN_node):- not unset(MIN_node), col(MIN_node), uncol(MIN_node), not ok, set(MIN_node).
+r_new | t_4(MIN_node):- unset(MIN_node), col(MIN_node), uncol(MIN_node), not ok, not set(MIN_node).
+r_new | t_4(MIN_node):- not unset(MIN_node), col(MIN_node), uncol(MIN_node), not ok, not set(MIN_node).
+r_new | t_4(MIN_node):- unset(MIN_node), col(MIN_node), not uncol(MIN_node), ok, set(MIN_node).
+r_new | t_4(MIN_node):- not unset(MIN_node), col(MIN_node), not uncol(MIN_node), ok, set(MIN_node).
+r_new | t_4(MIN_node):- unset(MIN_node), col(MIN_node), not uncol(MIN_node), ok, not set(MIN_node).
+r_new | t_4(MIN_node):- not unset(MIN_node), col(MIN_node), not uncol(MIN_node), ok, not set(MIN_node).
+r_new | t_4(MIN_node):- unset(MIN_node), col(MIN_node), not uncol(MIN_node), not ok, set(MIN_node).
+r_new | t_4(MIN_node):- not unset(MIN_node), col(MIN_node), not uncol(MIN_node), not ok, set(MIN_node).
+r_new | t_4(MIN_node):- unset(MIN_node), col(MIN_node), not uncol(MIN_node), not ok, not set(MIN_node).
+r_new | t_4(MIN_node):- not unset(MIN_node), col(MIN_node), not uncol(MIN_node), not ok, not set(MIN_node).
+r_new | t_4(MIN_node):- unset(MIN_node), not col(MIN_node), uncol(MIN_node), ok, set(MIN_node).
+r_new | t_4(MIN_node):- not unset(MIN_node), not col(MIN_node), uncol(MIN_node), ok, set(MIN_node).
+r_new | t_4(MIN_node):- unset(MIN_node), not col(MIN_node), uncol(MIN_node), ok, not set(MIN_node).
+r_new | t_4(MIN_node):- not unset(MIN_node), not col(MIN_node), uncol(MIN_node), ok, not set(MIN_node).
+r_new | t_4(MIN_node):- unset(MIN_node), not col(MIN_node), uncol(MIN_node), not ok, set(MIN_node).
+r_new | t_4(MIN_node):- not unset(MIN_node), not col(MIN_node), uncol(MIN_node), not ok, set(MIN_node).
+r_new | t_4(MIN_node):- unset(MIN_node), not col(MIN_node), uncol(MIN_node), not ok, not set(MIN_node).
+r_new | t_4(MIN_node):- not unset(MIN_node), not col(MIN_node), uncol(MIN_node), not ok, not set(MIN_node).
+r_new | t_4(MIN_node):- unset(MIN_node), not col(MIN_node), not uncol(MIN_node), ok, set(MIN_node).
+r_new | t_4(MIN_node):- not unset(MIN_node), not col(MIN_node), not uncol(MIN_node), ok, set(MIN_node).
+r_new | t_4(MIN_node):- unset(MIN_node), not col(MIN_node), not uncol(MIN_node), ok, not set(MIN_node).
+r_new | t_4(MIN_node):- not unset(MIN_node), not col(MIN_node), not uncol(MIN_node), ok, not set(MIN_node).
+r_new | t_4(MIN_node):- unset(MIN_node), not col(MIN_node), not uncol(MIN_node), not ok, set(MIN_node).
+r_new | t_4(MIN_node):- not unset(MIN_node), not col(MIN_node), not uncol(MIN_node), not ok, set(MIN_node).
+r_new | t_4(MIN_node):- unset(MIN_node), not col(MIN_node), not uncol(MIN_node), not ok, not set(MIN_node).
+r_new | t_4(MIN_node):- not unset(MIN_node), not col(MIN_node), not uncol(MIN_node), not ok, not set(MIN_node).
+t_4(MIN_node):- not r_new, not _ok, not _col(MIN_node), not _uncol(MIN_node), not _set(MIN_node), not _unset(MIN_node).
+t_4(MIN_node):- not ok, not r_new, not _col(MIN_node), not _uncol(MIN_node), not _set(MIN_node), not _unset(MIN_node).
+t_4(MIN_node):- not unset(MIN_node), not r_new, not _ok, not _col(MIN_node), not _uncol(MIN_node), not _set(MIN_node).
+t_4(MIN_node):- not ok, not unset(MIN_node), not r_new, not _col(MIN_node), not _uncol(MIN_node), not _set(MIN_node).
+t_4(MIN_node):- not set(MIN_node), not r_new, not _ok, not _col(MIN_node), not _uncol(MIN_node), not _unset(MIN_node).
+t_4(MIN_node):- not ok, not set(MIN_node), not r_new, not _col(MIN_node), not _uncol(MIN_node), not _unset(MIN_node).
+t_4(MIN_node):- not unset(MIN_node), not set(MIN_node), not r_new, not _ok, not _col(MIN_node), not _uncol(MIN_node).
+t_4(MIN_node):- not ok, not unset(MIN_node), not set(MIN_node), not r_new, not _col(MIN_node), not _uncol(MIN_node).
+t_4(MIN_node):- not uncol(MIN_node), not r_new, not _unset(MIN_node), not _col(MIN_node), not _set(MIN_node), not _ok.
+t_4(MIN_node):- not unset(MIN_node), not uncol(MIN_node), not r_new, not _col(MIN_node), not _set(MIN_node), not _ok.
+t_4(MIN_node):- not ok, not uncol(MIN_node), not r_new, not _unset(MIN_node), not _col(MIN_node), not _set(MIN_node).
+t_4(MIN_node):- not unset(MIN_node), not ok, not uncol(MIN_node), not r_new, not _col(MIN_node), not _set(MIN_node).
+t_4(MIN_node):- not set(MIN_node), not uncol(MIN_node), not r_new, not _unset(MIN_node), not _col(MIN_node), not _ok.
+t_4(MIN_node):- not unset(MIN_node), not set(MIN_node), not uncol(MIN_node), not r_new, not _col(MIN_node), not _ok.
+t_4(MIN_node):- not ok, not set(MIN_node), not uncol(MIN_node), not r_new, not _unset(MIN_node), not _col(MIN_node).
+t_4(MIN_node):- not unset(MIN_node), not ok, not set(MIN_node), not uncol(MIN_node), not r_new, not _col(MIN_node).
+t_4(MIN_node):- not col(MIN_node), not r_new, not _unset(MIN_node), not _uncol(MIN_node), not _ok, not _set(MIN_node).
+t_4(MIN_node):- not unset(MIN_node), not col(MIN_node), not r_new, not _uncol(MIN_node), not _ok, not _set(MIN_node).
+t_4(MIN_node):- not set(MIN_node), not col(MIN_node), not r_new, not _unset(MIN_node), not _uncol(MIN_node), not _ok.
+t_4(MIN_node):- not unset(MIN_node), not set(MIN_node), not col(MIN_node), not r_new, not _uncol(MIN_node), not _ok.
+t_4(MIN_node):- not ok, not col(MIN_node), not r_new, not _unset(MIN_node), not _uncol(MIN_node), not _set(MIN_node).
+t_4(MIN_node):- not unset(MIN_node), not ok, not col(MIN_node), not r_new, not _uncol(MIN_node), not _set(MIN_node).
+t_4(MIN_node):- not set(MIN_node), not ok, not col(MIN_node), not r_new, not _unset(MIN_node), not _uncol(MIN_node).
+t_4(MIN_node):- not unset(MIN_node), not set(MIN_node), not ok, not col(MIN_node), not r_new, not _uncol(MIN_node).
+t_4(MIN_node):- not uncol(MIN_node), not col(MIN_node), not r_new, not _set(MIN_node), not _ok, not _unset(MIN_node).
+t_4(MIN_node):- not set(MIN_node), not uncol(MIN_node), not col(MIN_node), not r_new, not _ok, not _unset(MIN_node).
+t_4(MIN_node):- not unset(MIN_node), not uncol(MIN_node), not col(MIN_node), not r_new, not _set(MIN_node), not _ok.
+t_4(MIN_node):- not set(MIN_node), not unset(MIN_node), not uncol(MIN_node), not col(MIN_node), not r_new, not _ok.
+t_4(MIN_node):- not ok, not uncol(MIN_node), not col(MIN_node), not r_new, not _set(MIN_node), not _unset(MIN_node).
+t_4(MIN_node):- not set(MIN_node), not ok, not uncol(MIN_node), not col(MIN_node), not r_new, not _unset(MIN_node).
+t_4(MIN_node):- not unset(MIN_node), not ok, not uncol(MIN_node), not col(MIN_node), not r_new, not _set(MIN_node).
+t_4(MIN_node):- not set(MIN_node), not unset(MIN_node), not ok, not uncol(MIN_node), not col(MIN_node), not r_new.
+r_new:- ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), col(X), uncol(X), set(X), unset(X).
+r_new:- not ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), col(X), uncol(X), set(X), unset(X).
+r_new:- ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), col(X), uncol(X), set(X), not unset(X).
+r_new:- not ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), col(X), uncol(X), set(X), not unset(X).
+r_new:- ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), col(X), uncol(X), not set(X), unset(X).
+r_new:- not ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), col(X), uncol(X), not set(X), unset(X).
+r_new:- ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), col(X), uncol(X), not set(X), not unset(X).
+r_new:- not ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), col(X), uncol(X), not set(X), not unset(X).
+r_new:- ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), col(X), not uncol(X), set(X), unset(X).
+r_new:- not ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), col(X), not uncol(X), set(X), unset(X).
+r_new:- ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), col(X), not uncol(X), set(X), not unset(X).
+r_new:- not ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), col(X), not uncol(X), set(X), not unset(X).
+r_new:- ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), col(X), not uncol(X), not set(X), unset(X).
+r_new:- not ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), col(X), not uncol(X), not set(X), unset(X).
+r_new:- ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), col(X), not uncol(X), not set(X), not unset(X).
+r_new:- not ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), col(X), not uncol(X), not set(X), not unset(X).
+r_new:- ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), uncol(X), set(X), unset(X).
+r_new:- not ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), uncol(X), set(X), unset(X).
+r_new:- ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), uncol(X), set(X), not unset(X).
+r_new:- not ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), uncol(X), set(X), not unset(X).
+r_new:- ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), uncol(X), not set(X), unset(X).
+r_new:- not ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), uncol(X), not set(X), unset(X).
+r_new:- ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), uncol(X), not set(X), not unset(X).
+r_new:- not ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), uncol(X), not set(X), not unset(X).
+r_new:- ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not uncol(X), set(X), unset(X).
+r_new:- not ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not uncol(X), set(X), unset(X).
+r_new:- ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not uncol(X), set(X), not unset(X).
+r_new:- not ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not uncol(X), set(X), not unset(X).
+r_new:- ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not uncol(X), not set(X), unset(X).
+r_new:- not ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not uncol(X), not set(X), unset(X).
+r_new:- ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not uncol(X), not set(X), not unset(X).
+r_new:- not ok, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not uncol(X), not set(X), not unset(X).
+:- not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _unset(X), not _col(X), not _uncol(X), not _ok, not _set(X).
+:- not unset(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _col(X), not _uncol(X), not _ok, not _set(X).
+:- not set(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _unset(X), not _col(X), not _uncol(X), not _ok.
+:- not unset(X), not set(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _col(X), not _uncol(X), not _ok.
+:- not ok, not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _unset(X), not _col(X), not _uncol(X), not _set(X).
+:- not unset(X), not ok, not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _col(X), not _uncol(X), not _set(X).
+:- not set(X), not ok, not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _unset(X), not _col(X), not _uncol(X).
+:- not unset(X), not set(X), not ok, not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _col(X), not _uncol(X).
+:- not uncol(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _set(X), not _col(X), not _ok, not _unset(X).
+:- not set(X), not uncol(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _col(X), not _ok, not _unset(X).
+:- not unset(X), not uncol(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _set(X), not _col(X), not _ok.
+:- not set(X), not unset(X), not uncol(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _col(X), not _ok.
+:- not ok, not uncol(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _set(X), not _col(X), not _unset(X).
+:- not set(X), not ok, not uncol(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _col(X), not _unset(X).
+:- not unset(X), not ok, not uncol(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _set(X), not _col(X).
+:- not set(X), not unset(X), not ok, not uncol(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _col(X).
+:- not col(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _set(X), not _ok, not _unset(X), not _uncol(X).
+:- not set(X), not col(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _ok, not _unset(X), not _uncol(X).
+:- not uncol(X), not col(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _set(X), not _ok, not _unset(X).
+:- not set(X), not uncol(X), not col(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _ok, not _unset(X).
+:- not unset(X), not col(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _set(X), not _ok, not _uncol(X).
+:- not set(X), not unset(X), not col(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _ok, not _uncol(X).
+:- not uncol(X), not unset(X), not col(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _set(X), not _ok.
+:- not set(X), not uncol(X), not unset(X), not col(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _ok.
+:- not ok, not col(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _uncol(X), not _unset(X), not _set(X).
+:- not uncol(X), not ok, not col(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _unset(X), not _set(X).
+:- not set(X), not ok, not col(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _uncol(X), not _unset(X).
+:- not uncol(X), not set(X), not ok, not col(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _unset(X).
+:- not unset(X), not ok, not col(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _uncol(X), not _set(X).
+:- not uncol(X), not unset(X), not ok, not col(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _set(X).
+:- not set(X), not unset(X), not ok, not col(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _uncol(X).
+:- not uncol(X), not set(X), not unset(X), not ok, not col(X), not r_new, t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X).
+:- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not r_new, not _unset(X), not _ok, not _set(X), not _uncol(X), not _col(X), not _t_4(MAX_node).
+:- not unset(X), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not r_new, not _ok, not _set(X), not _uncol(X), not _col(X), not _t_4(MAX_node).
+:- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not r_new, not ok, not _unset(X), not _set(X), not _uncol(X), not _col(X), not _t_4(MAX_node).
+:- not unset(X), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not r_new, not ok, not _set(X), not _uncol(X), not _col(X), not _t_4(MAX_node).
+:- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not r_new, not set(X), not _unset(X), not _ok, not _uncol(X), not _col(X), not _t_4(MAX_node).
+:- not unset(X), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not r_new, not set(X), not _ok, not _uncol(X), not _col(X), not _t_4(MAX_node).
+:- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not r_new, not set(X), not ok, not _unset(X), not _uncol(X), not _col(X), not _t_4(MAX_node).
+:- not unset(X), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not r_new, not set(X), not ok, not _uncol(X), not _col(X), not _t_4(MAX_node).
+:- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not r_new, not uncol(X), not _ok, not _unset(X), not _set(X), not _col(X), not _t_4(MAX_node).
+:- not ok, not s_4(NV_6), succ_node(X,NV_6), s_4(X), not r_new, not uncol(X), not _unset(X), not _set(X), not _col(X), not _t_4(MAX_node).
+:- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not r_new, not uncol(X), not unset(X), not _ok, not _set(X), not _col(X), not _t_4(MAX_node).
+:- not ok, not s_4(NV_6), succ_node(X,NV_6), s_4(X), not r_new, not uncol(X), not unset(X), not _set(X), not _col(X), not _t_4(MAX_node).
+:- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not r_new, not uncol(X), not set(X), not _ok, not _unset(X), not _col(X), not _t_4(MAX_node).
+:- not ok, not s_4(NV_6), succ_node(X,NV_6), s_4(X), not r_new, not uncol(X), not set(X), not _unset(X), not _col(X), not _t_4(MAX_node).
+:- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not r_new, not uncol(X), not set(X), not unset(X), not _ok, not _col(X), not _t_4(MAX_node).
+:- not ok, not s_4(NV_6), succ_node(X,NV_6), s_4(X), not r_new, not uncol(X), not set(X), not unset(X), not _col(X), not _t_4(MAX_node).
+:- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not r_new, not _ok, not _unset(X), not _set(X), not _uncol(X), not _t_4(MAX_node).
+:- not ok, not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not r_new, not _unset(X), not _set(X), not _uncol(X), not _t_4(MAX_node).
+:- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not r_new, not unset(X), not _ok, not _set(X), not _uncol(X), not _t_4(MAX_node).
+:- not ok, not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not r_new, not unset(X), not _set(X), not _uncol(X), not _t_4(MAX_node).
+:- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not r_new, not set(X), not _ok, not _unset(X), not _uncol(X), not _t_4(MAX_node).
+:- not ok, not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not r_new, not set(X), not _unset(X), not _uncol(X), not _t_4(MAX_node).
+:- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not r_new, not set(X), not unset(X), not _ok, not _uncol(X), not _t_4(MAX_node).
+:- not ok, not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not r_new, not set(X), not unset(X), not _uncol(X), not _t_4(MAX_node).
+:- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not uncol(X), not r_new, not _ok, not _unset(X), not _set(X), not _t_4(MAX_node).
+:- not ok, not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not uncol(X), not r_new, not _unset(X), not _set(X), not _t_4(MAX_node).
+:- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not uncol(X), not r_new, not unset(X), not _ok, not _set(X), not _t_4(MAX_node).
+:- not ok, not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not uncol(X), not r_new, not unset(X), not _set(X), not _t_4(MAX_node).
+:- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not uncol(X), not set(X), not r_new, not _ok, not _unset(X), not _t_4(MAX_node).
+:- not ok, not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not uncol(X), not set(X), not r_new, not _unset(X), not _t_4(MAX_node).
+:- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not uncol(X), not set(X), not unset(X), not r_new, not _ok, not _t_4(MAX_node).
+:- not ok, not s_4(NV_6), succ_node(X,NV_6), s_4(X), not col(X), not uncol(X), not set(X), not unset(X), not r_new, not _t_4(MAX_node).
+r_new:- ok, t_4(MAX_node), max_node(X), s_4(X), col(X), uncol(X), set(X), unset(X).
+r_new:- not ok, t_4(MAX_node), max_node(X), s_4(X), col(X), uncol(X), set(X), unset(X).
+r_new:- ok, t_4(MAX_node), max_node(X), s_4(X), col(X), uncol(X), set(X), not unset(X).
+r_new:- not ok, t_4(MAX_node), max_node(X), s_4(X), col(X), uncol(X), set(X), not unset(X).
+r_new:- ok, t_4(MAX_node), max_node(X), s_4(X), col(X), uncol(X), not set(X), unset(X).
+r_new:- not ok, t_4(MAX_node), max_node(X), s_4(X), col(X), uncol(X), not set(X), unset(X).
+r_new:- ok, t_4(MAX_node), max_node(X), s_4(X), col(X), uncol(X), not set(X), not unset(X).
+r_new:- not ok, t_4(MAX_node), max_node(X), s_4(X), col(X), uncol(X), not set(X), not unset(X).
+r_new:- ok, t_4(MAX_node), max_node(X), s_4(X), col(X), not uncol(X), set(X), unset(X).
+r_new:- not ok, t_4(MAX_node), max_node(X), s_4(X), col(X), not uncol(X), set(X), unset(X).
+r_new:- ok, t_4(MAX_node), max_node(X), s_4(X), col(X), not uncol(X), set(X), not unset(X).
+r_new:- not ok, t_4(MAX_node), max_node(X), s_4(X), col(X), not uncol(X), set(X), not unset(X).
+r_new:- ok, t_4(MAX_node), max_node(X), s_4(X), col(X), not uncol(X), not set(X), unset(X).
+r_new:- not ok, t_4(MAX_node), max_node(X), s_4(X), col(X), not uncol(X), not set(X), unset(X).
+r_new:- ok, t_4(MAX_node), max_node(X), s_4(X), col(X), not uncol(X), not set(X), not unset(X).
+r_new:- not ok, t_4(MAX_node), max_node(X), s_4(X), col(X), not uncol(X), not set(X), not unset(X).
+r_new:- ok, t_4(MAX_node), max_node(X), s_4(X), not col(X), uncol(X), set(X), unset(X).
+r_new:- not ok, t_4(MAX_node), max_node(X), s_4(X), not col(X), uncol(X), set(X), unset(X).
+r_new:- ok, t_4(MAX_node), max_node(X), s_4(X), not col(X), uncol(X), set(X), not unset(X).
+r_new:- not ok, t_4(MAX_node), max_node(X), s_4(X), not col(X), uncol(X), set(X), not unset(X).
+r_new:- ok, t_4(MAX_node), max_node(X), s_4(X), not col(X), uncol(X), not set(X), unset(X).
+r_new:- not ok, t_4(MAX_node), max_node(X), s_4(X), not col(X), uncol(X), not set(X), unset(X).
+r_new:- ok, t_4(MAX_node), max_node(X), s_4(X), not col(X), uncol(X), not set(X), not unset(X).
+r_new:- not ok, t_4(MAX_node), max_node(X), s_4(X), not col(X), uncol(X), not set(X), not unset(X).
+r_new:- ok, t_4(MAX_node), max_node(X), s_4(X), not col(X), not uncol(X), set(X), unset(X).
+r_new:- not ok, t_4(MAX_node), max_node(X), s_4(X), not col(X), not uncol(X), set(X), unset(X).
+r_new:- ok, t_4(MAX_node), max_node(X), s_4(X), not col(X), not uncol(X), set(X), not unset(X).
+r_new:- not ok, t_4(MAX_node), max_node(X), s_4(X), not col(X), not uncol(X), set(X), not unset(X).
+r_new:- ok, t_4(MAX_node), max_node(X), s_4(X), not col(X), not uncol(X), not set(X), unset(X).
+r_new:- not ok, t_4(MAX_node), max_node(X), s_4(X), not col(X), not uncol(X), not set(X), unset(X).
+r_new:- ok, t_4(MAX_node), max_node(X), s_4(X), not col(X), not uncol(X), not set(X), not unset(X).
+r_new:- not ok, t_4(MAX_node), max_node(X), s_4(X), not col(X), not uncol(X), not set(X), not unset(X).
+:- not r_new, t_4(MAX_node), max_node(X), s_4(X), not _unset(X), not _col(X), not _uncol(X), not _ok, not _set(X).
+:- not unset(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _col(X), not _uncol(X), not _ok, not _set(X).
+:- not set(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _unset(X), not _col(X), not _uncol(X), not _ok.
+:- not unset(X), not set(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _col(X), not _uncol(X), not _ok.
+:- not ok, not r_new, t_4(MAX_node), max_node(X), s_4(X), not _unset(X), not _col(X), not _uncol(X), not _set(X).
+:- not unset(X), not ok, not r_new, t_4(MAX_node), max_node(X), s_4(X), not _col(X), not _uncol(X), not _set(X).
+:- not set(X), not ok, not r_new, t_4(MAX_node), max_node(X), s_4(X), not _unset(X), not _col(X), not _uncol(X).
+:- not unset(X), not set(X), not ok, not r_new, t_4(MAX_node), max_node(X), s_4(X), not _col(X), not _uncol(X).
+:- not uncol(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _set(X), not _col(X), not _ok, not _unset(X).
+:- not set(X), not uncol(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _col(X), not _ok, not _unset(X).
+:- not unset(X), not uncol(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _set(X), not _col(X), not _ok.
+:- not set(X), not unset(X), not uncol(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _col(X), not _ok.
+:- not ok, not uncol(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _set(X), not _col(X), not _unset(X).
+:- not set(X), not ok, not uncol(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _col(X), not _unset(X).
+:- not unset(X), not ok, not uncol(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _set(X), not _col(X).
+:- not set(X), not unset(X), not ok, not uncol(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _col(X).
+:- not col(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _set(X), not _ok, not _unset(X), not _uncol(X).
+:- not set(X), not col(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _ok, not _unset(X), not _uncol(X).
+:- not uncol(X), not col(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _set(X), not _ok, not _unset(X).
+:- not set(X), not uncol(X), not col(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _ok, not _unset(X).
+:- not unset(X), not col(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _set(X), not _ok, not _uncol(X).
+:- not set(X), not unset(X), not col(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _ok, not _uncol(X).
+:- not uncol(X), not unset(X), not col(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _set(X), not _ok.
+:- not set(X), not uncol(X), not unset(X), not col(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _ok.
+:- not ok, not col(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _uncol(X), not _unset(X), not _set(X).
+:- not uncol(X), not ok, not col(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _unset(X), not _set(X).
+:- not set(X), not ok, not col(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _uncol(X), not _unset(X).
+:- not uncol(X), not set(X), not ok, not col(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _unset(X).
+:- not unset(X), not ok, not col(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _uncol(X), not _set(X).
+:- not uncol(X), not unset(X), not ok, not col(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _set(X).
+:- not set(X), not unset(X), not ok, not col(X), not r_new, t_4(MAX_node), max_node(X), s_4(X), not _uncol(X).
+:- not uncol(X), not set(X), not unset(X), not ok, not col(X), not r_new, t_4(MAX_node), max_node(X), s_4(X).
+:- max_node(X), s_4(X), not r_new, not _unset(X), not _ok, not _set(X), not _uncol(X), not _col(X), not _t_4(MAX_node).
+:- not unset(X), max_node(X), s_4(X), not r_new, not _ok, not _set(X), not _uncol(X), not _col(X), not _t_4(MAX_node).
+:- max_node(X), s_4(X), not r_new, not ok, not _unset(X), not _set(X), not _uncol(X), not _col(X), not _t_4(MAX_node).
+:- not unset(X), max_node(X), s_4(X), not r_new, not ok, not _set(X), not _uncol(X), not _col(X), not _t_4(MAX_node).
+:- max_node(X), s_4(X), not r_new, not set(X), not _unset(X), not _ok, not _uncol(X), not _col(X), not _t_4(MAX_node).
+:- not unset(X), max_node(X), s_4(X), not r_new, not set(X), not _ok, not _uncol(X), not _col(X), not _t_4(MAX_node).
+:- max_node(X), s_4(X), not r_new, not set(X), not ok, not _unset(X), not _uncol(X), not _col(X), not _t_4(MAX_node).
+:- not unset(X), max_node(X), s_4(X), not r_new, not set(X), not ok, not _uncol(X), not _col(X), not _t_4(MAX_node).
+:- max_node(X), s_4(X), not r_new, not uncol(X), not _ok, not _unset(X), not _set(X), not _col(X), not _t_4(MAX_node).
+:- not ok, max_node(X), s_4(X), not r_new, not uncol(X), not _unset(X), not _set(X), not _col(X), not _t_4(MAX_node).
+:- max_node(X), s_4(X), not r_new, not uncol(X), not unset(X), not _ok, not _set(X), not _col(X), not _t_4(MAX_node).
+:- not ok, max_node(X), s_4(X), not r_new, not uncol(X), not unset(X), not _set(X), not _col(X), not _t_4(MAX_node).
+:- max_node(X), s_4(X), not r_new, not uncol(X), not set(X), not _ok, not _unset(X), not _col(X), not _t_4(MAX_node).
+:- not ok, max_node(X), s_4(X), not r_new, not uncol(X), not set(X), not _unset(X), not _col(X), not _t_4(MAX_node).
+:- max_node(X), s_4(X), not r_new, not uncol(X), not set(X), not unset(X), not _ok, not _col(X), not _t_4(MAX_node).
+:- not ok, max_node(X), s_4(X), not r_new, not uncol(X), not set(X), not unset(X), not _col(X), not _t_4(MAX_node).
+:- max_node(X), s_4(X), not col(X), not r_new, not _ok, not _unset(X), not _set(X), not _uncol(X), not _t_4(MAX_node).
+:- not ok, max_node(X), s_4(X), not col(X), not r_new, not _unset(X), not _set(X), not _uncol(X), not _t_4(MAX_node).
+:- max_node(X), s_4(X), not col(X), not r_new, not unset(X), not _ok, not _set(X), not _uncol(X), not _t_4(MAX_node).
+:- not ok, max_node(X), s_4(X), not col(X), not r_new, not unset(X), not _set(X), not _uncol(X), not _t_4(MAX_node).
+:- max_node(X), s_4(X), not col(X), not r_new, not set(X), not _ok, not _unset(X), not _uncol(X), not _t_4(MAX_node).
+:- not ok, max_node(X), s_4(X), not col(X), not r_new, not set(X), not _unset(X), not _uncol(X), not _t_4(MAX_node).
+:- max_node(X), s_4(X), not col(X), not r_new, not set(X), not unset(X), not _ok, not _uncol(X), not _t_4(MAX_node).
+:- not ok, max_node(X), s_4(X), not col(X), not r_new, not set(X), not unset(X), not _uncol(X), not _t_4(MAX_node).
+:- max_node(X), s_4(X), not col(X), not uncol(X), not r_new, not _ok, not _unset(X), not _set(X), not _t_4(MAX_node).
+:- not ok, max_node(X), s_4(X), not col(X), not uncol(X), not r_new, not _unset(X), not _set(X), not _t_4(MAX_node).
+:- max_node(X), s_4(X), not col(X), not uncol(X), not r_new, not unset(X), not _ok, not _set(X), not _t_4(MAX_node).
+:- not ok, max_node(X), s_4(X), not col(X), not uncol(X), not r_new, not unset(X), not _set(X), not _t_4(MAX_node).
+:- max_node(X), s_4(X), not col(X), not uncol(X), not set(X), not r_new, not _ok, not _unset(X), not _t_4(MAX_node).
+:- not ok, max_node(X), s_4(X), not col(X), not uncol(X), not set(X), not r_new, not _unset(X), not _t_4(MAX_node).
+:- max_node(X), s_4(X), not col(X), not uncol(X), not set(X), not unset(X), not r_new, not _ok, not _t_4(MAX_node).
+:- not ok, max_node(X), s_4(X), not col(X), not uncol(X), not set(X), not unset(X), not r_new, not _t_4(MAX_node).
+t_4(MAX_node):- not col(X), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _col(X).
+t_4(MAX_node):- not uncol(X), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _uncol(X).
+t_4(MAX_node):- not set(X), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _set(X).
+t_4(MAX_node):- not unset(X), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _unset(X).
+t_4(MAX_node):- not ok, not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _ok.
+t_4(MAX_node):- r_new, not s_4(NV_6), succ_node(X,NV_6), s_4(X).
+col(X) | t_4(MAX_node):- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _col(X), not _r_new.
+uncol(X) | t_4(MAX_node):- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _uncol(X), not _r_new.
+set(X) | t_4(MAX_node):- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _set(X), not _r_new.
+unset(X) | t_4(MAX_node):- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _unset(X), not _r_new.
+ok | t_4(MAX_node):- not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _ok, not _r_new.
+:- not col(X), not t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _col(X).
+:- not uncol(X), not t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _uncol(X).
+:- not set(X), not t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _set(X).
+:- not unset(X), not t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _unset(X).
+:- not ok, not t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _ok.
+:- not t_4(MAX_node), not s_4(NV_6), succ_node(X,NV_6), s_4(X), not _r_new.
+t_4(MAX_node):- not col(X), max_node(X), s_4(X), not _col(X).
+t_4(MAX_node):- not uncol(X), max_node(X), s_4(X), not _uncol(X).
+t_4(MAX_node):- not set(X), max_node(X), s_4(X), not _set(X).
+t_4(MAX_node):- not unset(X), max_node(X), s_4(X), not _unset(X).
+t_4(MAX_node):- not ok, max_node(X), s_4(X), not _ok.
+t_4(MAX_node):- r_new, max_node(X), s_4(X).
+col(X) | t_4(MAX_node):- max_node(X), s_4(X), not _col(X), not _r_new.
+uncol(X) | t_4(MAX_node):- max_node(X), s_4(X), not _uncol(X), not _r_new.
+set(X) | t_4(MAX_node):- max_node(X), s_4(X), not _set(X), not _r_new.
+unset(X) | t_4(MAX_node):- max_node(X), s_4(X), not _unset(X), not _r_new.
+ok | t_4(MAX_node):- max_node(X), s_4(X), not _ok, not _r_new.
+:- not col(X), not t_4(MAX_node), max_node(X), s_4(X), not _col(X).
+:- not uncol(X), not t_4(MAX_node), max_node(X), s_4(X), not _uncol(X).
+:- not set(X), not t_4(MAX_node), max_node(X), s_4(X), not _set(X).
+:- not unset(X), not t_4(MAX_node), max_node(X), s_4(X), not _unset(X).
+:- not ok, not t_4(MAX_node), max_node(X), s_4(X), not _ok.
+:- not t_4(MAX_node), max_node(X), s_4(X), not _r_new.
+r_new | t_4(NV_6):- ok, t_4(X), succ_node(X,NV_6), col(NV_6), uncol(NV_6), set(NV_6), unset(NV_6).
+r_new | t_4(NV_6):- not ok, t_4(X), succ_node(X,NV_6), col(NV_6), uncol(NV_6), set(NV_6), unset(NV_6).
+r_new | t_4(NV_6):- ok, t_4(X), succ_node(X,NV_6), col(NV_6), uncol(NV_6), set(NV_6), not unset(NV_6).
+r_new | t_4(NV_6):- not ok, t_4(X), succ_node(X,NV_6), col(NV_6), uncol(NV_6), set(NV_6), not unset(NV_6).
+r_new | t_4(NV_6):- ok, t_4(X), succ_node(X,NV_6), col(NV_6), uncol(NV_6), not set(NV_6), unset(NV_6).
+r_new | t_4(NV_6):- not ok, t_4(X), succ_node(X,NV_6), col(NV_6), uncol(NV_6), not set(NV_6), unset(NV_6).
+r_new | t_4(NV_6):- ok, t_4(X), succ_node(X,NV_6), col(NV_6), uncol(NV_6), not set(NV_6), not unset(NV_6).
+r_new | t_4(NV_6):- not ok, t_4(X), succ_node(X,NV_6), col(NV_6), uncol(NV_6), not set(NV_6), not unset(NV_6).
+r_new | t_4(NV_6):- ok, t_4(X), succ_node(X,NV_6), col(NV_6), not uncol(NV_6), set(NV_6), unset(NV_6).
+r_new | t_4(NV_6):- not ok, t_4(X), succ_node(X,NV_6), col(NV_6), not uncol(NV_6), set(NV_6), unset(NV_6).
+r_new | t_4(NV_6):- ok, t_4(X), succ_node(X,NV_6), col(NV_6), not uncol(NV_6), set(NV_6), not unset(NV_6).
+r_new | t_4(NV_6):- not ok, t_4(X), succ_node(X,NV_6), col(NV_6), not uncol(NV_6), set(NV_6), not unset(NV_6).
+r_new | t_4(NV_6):- ok, t_4(X), succ_node(X,NV_6), col(NV_6), not uncol(NV_6), not set(NV_6), unset(NV_6).
+r_new | t_4(NV_6):- not ok, t_4(X), succ_node(X,NV_6), col(NV_6), not uncol(NV_6), not set(NV_6), unset(NV_6).
+r_new | t_4(NV_6):- ok, t_4(X), succ_node(X,NV_6), col(NV_6), not uncol(NV_6), not set(NV_6), not unset(NV_6).
+r_new | t_4(NV_6):- not ok, t_4(X), succ_node(X,NV_6), col(NV_6), not uncol(NV_6), not set(NV_6), not unset(NV_6).
+r_new | t_4(NV_6):- ok, t_4(X), succ_node(X,NV_6), not col(NV_6), uncol(NV_6), set(NV_6), unset(NV_6).
+r_new | t_4(NV_6):- not ok, t_4(X), succ_node(X,NV_6), not col(NV_6), uncol(NV_6), set(NV_6), unset(NV_6).
+r_new | t_4(NV_6):- ok, t_4(X), succ_node(X,NV_6), not col(NV_6), uncol(NV_6), set(NV_6), not unset(NV_6).
+r_new | t_4(NV_6):- not ok, t_4(X), succ_node(X,NV_6), not col(NV_6), uncol(NV_6), set(NV_6), not unset(NV_6).
+r_new | t_4(NV_6):- ok, t_4(X), succ_node(X,NV_6), not col(NV_6), uncol(NV_6), not set(NV_6), unset(NV_6).
+r_new | t_4(NV_6):- not ok, t_4(X), succ_node(X,NV_6), not col(NV_6), uncol(NV_6), not set(NV_6), unset(NV_6).
+r_new | t_4(NV_6):- ok, t_4(X), succ_node(X,NV_6), not col(NV_6), uncol(NV_6), not set(NV_6), not unset(NV_6).
+r_new | t_4(NV_6):- not ok, t_4(X), succ_node(X,NV_6), not col(NV_6), uncol(NV_6), not set(NV_6), not unset(NV_6).
+r_new | t_4(NV_6):- ok, t_4(X), succ_node(X,NV_6), not col(NV_6), not uncol(NV_6), set(NV_6), unset(NV_6).
+r_new | t_4(NV_6):- not ok, t_4(X), succ_node(X,NV_6), not col(NV_6), not uncol(NV_6), set(NV_6), unset(NV_6).
+r_new | t_4(NV_6):- ok, t_4(X), succ_node(X,NV_6), not col(NV_6), not uncol(NV_6), set(NV_6), not unset(NV_6).
+r_new | t_4(NV_6):- not ok, t_4(X), succ_node(X,NV_6), not col(NV_6), not uncol(NV_6), set(NV_6), not unset(NV_6).
+r_new | t_4(NV_6):- ok, t_4(X), succ_node(X,NV_6), not col(NV_6), not uncol(NV_6), not set(NV_6), unset(NV_6).
+r_new | t_4(NV_6):- not ok, t_4(X), succ_node(X,NV_6), not col(NV_6), not uncol(NV_6), not set(NV_6), unset(NV_6).
+r_new | t_4(NV_6):- ok, t_4(X), succ_node(X,NV_6), not col(NV_6), not uncol(NV_6), not set(NV_6), not unset(NV_6).
+r_new | t_4(NV_6):- not ok, t_4(X), succ_node(X,NV_6), not col(NV_6), not uncol(NV_6), not set(NV_6), not unset(NV_6).
+t_4(NV_6):- not r_new, t_4(X), succ_node(X,NV_6), not _unset(NV_6), not _col(NV_6), not _uncol(NV_6), not _ok, not _set(NV_6).
+t_4(NV_6):- not unset(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _col(NV_6), not _uncol(NV_6), not _ok, not _set(NV_6).
+t_4(NV_6):- not set(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _unset(NV_6), not _col(NV_6), not _uncol(NV_6), not _ok.
+t_4(NV_6):- not unset(NV_6), not set(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _col(NV_6), not _uncol(NV_6), not _ok.
+t_4(NV_6):- not ok, not r_new, t_4(X), succ_node(X,NV_6), not _unset(NV_6), not _col(NV_6), not _uncol(NV_6), not _set(NV_6).
+t_4(NV_6):- not unset(NV_6), not ok, not r_new, t_4(X), succ_node(X,NV_6), not _col(NV_6), not _uncol(NV_6), not _set(NV_6).
+t_4(NV_6):- not set(NV_6), not ok, not r_new, t_4(X), succ_node(X,NV_6), not _unset(NV_6), not _col(NV_6), not _uncol(NV_6).
+t_4(NV_6):- not unset(NV_6), not set(NV_6), not ok, not r_new, t_4(X), succ_node(X,NV_6), not _col(NV_6), not _uncol(NV_6).
+t_4(NV_6):- not uncol(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _set(NV_6), not _col(NV_6), not _ok, not _unset(NV_6).
+t_4(NV_6):- not set(NV_6), not uncol(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _col(NV_6), not _ok, not _unset(NV_6).
+t_4(NV_6):- not unset(NV_6), not uncol(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _set(NV_6), not _col(NV_6), not _ok.
+t_4(NV_6):- not set(NV_6), not unset(NV_6), not uncol(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _col(NV_6), not _ok.
+t_4(NV_6):- not ok, not uncol(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _set(NV_6), not _col(NV_6), not _unset(NV_6).
+t_4(NV_6):- not set(NV_6), not ok, not uncol(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _col(NV_6), not _unset(NV_6).
+t_4(NV_6):- not unset(NV_6), not ok, not uncol(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _set(NV_6), not _col(NV_6).
+t_4(NV_6):- not set(NV_6), not unset(NV_6), not ok, not uncol(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _col(NV_6).
+t_4(NV_6):- not col(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _set(NV_6), not _ok, not _unset(NV_6), not _uncol(NV_6).
+t_4(NV_6):- not set(NV_6), not col(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _ok, not _unset(NV_6), not _uncol(NV_6).
+t_4(NV_6):- not uncol(NV_6), not col(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _set(NV_6), not _ok, not _unset(NV_6).
+t_4(NV_6):- not set(NV_6), not uncol(NV_6), not col(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _ok, not _unset(NV_6).
+t_4(NV_6):- not unset(NV_6), not col(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _set(NV_6), not _ok, not _uncol(NV_6).
+t_4(NV_6):- not set(NV_6), not unset(NV_6), not col(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _ok, not _uncol(NV_6).
+t_4(NV_6):- not uncol(NV_6), not unset(NV_6), not col(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _set(NV_6), not _ok.
+t_4(NV_6):- not set(NV_6), not uncol(NV_6), not unset(NV_6), not col(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _ok.
+t_4(NV_6):- not ok, not col(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _uncol(NV_6), not _unset(NV_6), not _set(NV_6).
+t_4(NV_6):- not uncol(NV_6), not ok, not col(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _unset(NV_6), not _set(NV_6).
+t_4(NV_6):- not set(NV_6), not ok, not col(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _uncol(NV_6), not _unset(NV_6).
+t_4(NV_6):- not uncol(NV_6), not set(NV_6), not ok, not col(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _unset(NV_6).
+t_4(NV_6):- not unset(NV_6), not ok, not col(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _uncol(NV_6), not _set(NV_6).
+t_4(NV_6):- not uncol(NV_6), not unset(NV_6), not ok, not col(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _set(NV_6).
+t_4(NV_6):- not set(NV_6), not unset(NV_6), not ok, not col(NV_6), not r_new, t_4(X), succ_node(X,NV_6), not _uncol(NV_6).
+t_4(NV_6):- not uncol(NV_6), not set(NV_6), not unset(NV_6), not ok, not col(NV_6), not r_new, t_4(X), succ_node(X,NV_6).
+:- succ_node(X,NV_6), not t_4(NV_6), not r_new, not _ok, not _unset(NV_6), not _set(NV_6), not _uncol(NV_6), not _col(NV_6), not _t_4(X).
+:- not ok, succ_node(X,NV_6), not t_4(NV_6), not r_new, not _unset(NV_6), not _set(NV_6), not _uncol(NV_6), not _col(NV_6), not _t_4(X).
+:- succ_node(X,NV_6), not t_4(NV_6), not r_new, not unset(NV_6), not _ok, not _set(NV_6), not _uncol(NV_6), not _col(NV_6), not _t_4(X).
+:- not ok, succ_node(X,NV_6), not t_4(NV_6), not r_new, not unset(NV_6), not _set(NV_6), not _uncol(NV_6), not _col(NV_6), not _t_4(X).
+:- succ_node(X,NV_6), not t_4(NV_6), not r_new, not set(NV_6), not _ok, not _unset(NV_6), not _uncol(NV_6), not _col(NV_6), not _t_4(X).
+:- not ok, succ_node(X,NV_6), not t_4(NV_6), not r_new, not set(NV_6), not _unset(NV_6), not _uncol(NV_6), not _col(NV_6), not _t_4(X).
+:- succ_node(X,NV_6), not t_4(NV_6), not r_new, not set(NV_6), not unset(NV_6), not _ok, not _uncol(NV_6), not _col(NV_6), not _t_4(X).
+:- not ok, succ_node(X,NV_6), not t_4(NV_6), not r_new, not set(NV_6), not unset(NV_6), not _uncol(NV_6), not _col(NV_6), not _t_4(X).
+:- succ_node(X,NV_6), not t_4(NV_6), not uncol(NV_6), not r_new, not _ok, not _unset(NV_6), not _set(NV_6), not _col(NV_6), not _t_4(X).
+:- not ok, succ_node(X,NV_6), not t_4(NV_6), not uncol(NV_6), not r_new, not _unset(NV_6), not _set(NV_6), not _col(NV_6), not _t_4(X).
+:- succ_node(X,NV_6), not t_4(NV_6), not uncol(NV_6), not r_new, not unset(NV_6), not _ok, not _set(NV_6), not _col(NV_6), not _t_4(X).
+:- not ok, succ_node(X,NV_6), not t_4(NV_6), not uncol(NV_6), not r_new, not unset(NV_6), not _set(NV_6), not _col(NV_6), not _t_4(X).
+:- succ_node(X,NV_6), not t_4(NV_6), not uncol(NV_6), not set(NV_6), not r_new, not _ok, not _unset(NV_6), not _col(NV_6), not _t_4(X).
+:- not ok, succ_node(X,NV_6), not t_4(NV_6), not uncol(NV_6), not set(NV_6), not r_new, not _unset(NV_6), not _col(NV_6), not _t_4(X).
+:- succ_node(X,NV_6), not t_4(NV_6), not uncol(NV_6), not set(NV_6), not unset(NV_6), not r_new, not _ok, not _col(NV_6), not _t_4(X).
+:- not ok, succ_node(X,NV_6), not t_4(NV_6), not uncol(NV_6), not set(NV_6), not unset(NV_6), not r_new, not _col(NV_6), not _t_4(X).
+:- succ_node(X,NV_6), not col(NV_6), not t_4(NV_6), not r_new, not _ok, not _unset(NV_6), not _set(NV_6), not _uncol(NV_6), not _t_4(X).
+:- not ok, succ_node(X,NV_6), not col(NV_6), not t_4(NV_6), not r_new, not _unset(NV_6), not _set(NV_6), not _uncol(NV_6), not _t_4(X).
+:- succ_node(X,NV_6), not col(NV_6), not t_4(NV_6), not r_new, not unset(NV_6), not _ok, not _set(NV_6), not _uncol(NV_6), not _t_4(X).
+:- not ok, succ_node(X,NV_6), not col(NV_6), not t_4(NV_6), not r_new, not unset(NV_6), not _set(NV_6), not _uncol(NV_6), not _t_4(X).
+:- succ_node(X,NV_6), not col(NV_6), not t_4(NV_6), not set(NV_6), not r_new, not _ok, not _unset(NV_6), not _uncol(NV_6), not _t_4(X).
+:- not ok, succ_node(X,NV_6), not col(NV_6), not t_4(NV_6), not set(NV_6), not r_new, not _unset(NV_6), not _uncol(NV_6), not _t_4(X).
+:- succ_node(X,NV_6), not col(NV_6), not t_4(NV_6), not set(NV_6), not unset(NV_6), not r_new, not _ok, not _uncol(NV_6), not _t_4(X).
+:- not ok, succ_node(X,NV_6), not col(NV_6), not t_4(NV_6), not set(NV_6), not unset(NV_6), not r_new, not _uncol(NV_6), not _t_4(X).
+:- succ_node(X,NV_6), not col(NV_6), not uncol(NV_6), not t_4(NV_6), not r_new, not _ok, not _unset(NV_6), not _set(NV_6), not _t_4(X).
+:- not ok, succ_node(X,NV_6), not col(NV_6), not uncol(NV_6), not t_4(NV_6), not r_new, not _unset(NV_6), not _set(NV_6), not _t_4(X).
+:- succ_node(X,NV_6), not col(NV_6), not uncol(NV_6), not t_4(NV_6), not unset(NV_6), not r_new, not _ok, not _set(NV_6), not _t_4(X).
+:- not ok, succ_node(X,NV_6), not col(NV_6), not uncol(NV_6), not t_4(NV_6), not unset(NV_6), not r_new, not _set(NV_6), not _t_4(X).
+:- succ_node(X,NV_6), not col(NV_6), not uncol(NV_6), not set(NV_6), not t_4(NV_6), not r_new, not _ok, not _unset(NV_6), not _t_4(X).
+:- not ok, succ_node(X,NV_6), not col(NV_6), not uncol(NV_6), not set(NV_6), not t_4(NV_6), not r_new, not _unset(NV_6), not _t_4(X).
+:- succ_node(X,NV_6), not col(NV_6), not uncol(NV_6), not set(NV_6), not unset(NV_6), not r_new, not t_4(NV_6), not _ok, not _t_4(X).
+:- not ok, succ_node(X,NV_6), not col(NV_6), not uncol(NV_6), not set(NV_6), not unset(NV_6), not r_new, not t_4(NV_6), not _t_4(X).
+t_4(X):- not col(NV_6), succ_node(X,NV_6), not _col(NV_6).
+t_4(X):- not uncol(NV_6), succ_node(X,NV_6), not _uncol(NV_6).
+t_4(X):- not set(NV_6), succ_node(X,NV_6), not _set(NV_6).
+t_4(X):- not unset(NV_6), succ_node(X,NV_6), not _unset(NV_6).
+t_4(X):- not ok, succ_node(X,NV_6), not _ok.
+t_4(X):- r_new, succ_node(X,NV_6).
+col(NV_6) | t_4(X):- succ_node(X,NV_6), not _col(NV_6), not _r_new.
+uncol(NV_6) | t_4(X):- succ_node(X,NV_6), not _uncol(NV_6), not _r_new.
+set(NV_6) | t_4(X):- succ_node(X,NV_6), not _set(NV_6), not _r_new.
+unset(NV_6) | t_4(X):- succ_node(X,NV_6), not _unset(NV_6), not _r_new.
+ok | t_4(X):- succ_node(X,NV_6), not _ok, not _r_new.
+t_4(X):- t_4(NV_6), succ_node(X,NV_6).
+:- not col(NV_6), not t_4(X), succ_node(X,NV_6), not _col(NV_6).
+:- not uncol(NV_6), not t_4(X), succ_node(X,NV_6), not _uncol(NV_6).
+:- not set(NV_6), not t_4(X), succ_node(X,NV_6), not _set(NV_6).
+:- not unset(NV_6), not t_4(X), succ_node(X,NV_6), not _unset(NV_6).
+:- not ok, not t_4(X), succ_node(X,NV_6), not _ok.
+:- not t_4(X), succ_node(X,NV_6), not _r_new.
+:- not t_4(X), succ_node(X,NV_6), not _t_4(NV_6).

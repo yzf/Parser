@@ -19,18 +19,15 @@ constant			[a-z0-9][a-zA-Z0-9_]*
 %%
 {variable}	   		{
                                     yylval.s=strdup(yytext);
-                                    printf("Vari: %s\n",yytext);
                                     return S_VARI;
                                 }
 
 {constant}	   		{
                                     yylval.s=strdup(yytext);
                                     if (1 == context_flag) { 
-                                        printf("Func: %s\n",yytext);
                                         return S_FUNC;
                                     } 
                                     else {
-                                        printf("Pred: %s\n",yytext);
                                         context_flag = 1;
                                         return S_PRED;
                                     }

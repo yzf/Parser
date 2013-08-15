@@ -23,9 +23,15 @@ bool Formulas::isEmpty() const {
 }
 
 void Formulas::pushBack(const Formula& _tail) {
+    if (NULL == _tail.getFormula()) {
+        return;
+    }
     m_dequeFormulas.push_back(_tail);
 }
 void Formulas::pushFront(const Formula& _front) {
+    if (NULL == _front.getFormula()) {
+        return;
+    }
     m_dequeFormulas.push_front(_front);
 }
 Formula Formulas::popBack() {
@@ -63,6 +69,10 @@ void Formulas::joinFront(const Formulas& _head) {
             it != _head.rend(); ++ it) {
         pushFront(*it);
     }
+}
+Formulas& Formulas::operator = (const Formulas& _rhs) {
+    m_dequeFormulas = _rhs.m_dequeFormulas;
+    return *this;
 }
 /**
  * 公式组相等的条件是所有公式对应相等，包括位置

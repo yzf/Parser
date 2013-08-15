@@ -17,17 +17,20 @@ class Formulas;
  */
 class NNFUtils {
 private:
+    static bool ms_bIsSM;
+private:
     static _formula* negativeNormalForm_1(_formula* _originalFml);
     static _formula* negativeNormalForm_2(_formula* _originalFml);
-    static _formula* negativeNormalForm_3(_formula* _originalFml);
+    static _formula* negativeNormalForm_3_1(_formula* _originalFml);
+    static _formula* negativeNormalForm_3_2(_formula* _originalFml);
     static _formula* negativeNormalForm_4(_formula* _originalFml);
     static _formula* negativeNormalForm_5(_formula* _originalFml);
     static _formula* negativeNormalForm_6(_formula* _originalFml);
 public:
     static _formula* convertToNegativeNormalForm(_formula* _originalFml);
-    static Formula convertToNegativeNormalForm(const Formula& _originalFml);
-    static Formulas* convertToNegativeNormalForms(const Formulas& _originalFmls);
-    static void convertToNegativeNormalForms(Formulas* _originalFmls);
+    static Formula convertToNegativeNormalForm(const Formula& _originalFml, bool _bIsSM = true);
+    static Formulas* convertToNegativeNormalForms(const Formulas& _originalFmls, bool _bIsSM = true);
+    static void convertToNegativeNormalForms(Formulas* _originalFmls, bool _bIsSM = true);
 };
 
 

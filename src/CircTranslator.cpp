@@ -3,6 +3,8 @@
 #include "NNFUtils.h"
 #include "Utils.h"
 
+const string CircTranslator::ms_sRName = "r_new";
+const string CircTranslator::ms_sVaryPostfix = "_vary";
 
 CircTranslator::CircTranslator() {
     
@@ -64,8 +66,7 @@ _formula* CircTranslator::createFormula_3_right() {
  * @return 
  */
 Formula CircTranslator::createFormula_3_1() {
-    int rId = Vocabulary::instance().addSymbol("r_new", PREDICATE, 0);
-    Vocabulary::instance().addIntensionPredicate("r_new");
+    int rId = Vocabulary::instance().getSymbolId(ms_sRName.c_str(), PREDICATE);
     _formula* r = Utils::compositeToAtom(rId, NULL);
     _formula* f = Utils::compositeByConnective(IMPL, r, 
                         createFormula_3_right());
@@ -77,8 +78,7 @@ Formula CircTranslator::createFormula_3_1() {
  * @return 
  */
 Formula CircTranslator::createFormula_3_2() {
-    int rId = Vocabulary::instance().addSymbol("r_new", PREDICATE, 0);
-    Vocabulary::instance().addIntensionPredicate("r_new");
+    int rId = Vocabulary::instance().getSymbolId(ms_sRName.c_str(), PREDICATE);
     _formula* r = Utils::compositeToAtom(rId, NULL);
     _formula* f = Utils::compositeByConnective(IMPL,
                         createFormula_3_right(),
@@ -100,15 +100,12 @@ Formula CircTranslator::createFormula_4(const Formula& _originalFml) {
             _formula* q = Utils::copyFormula(it->getFormula());
             const char* qName = Vocabulary::instance().getNameById(q->predicate_id, PREDICATE);
             char qVaryName[64];
-            sprintf(qVaryName, "%s_vary", qName);
-            int qVaryId = Vocabulary::instance().addSymbol(qVaryName, PREDICATE, 
-                            Vocabulary::instance().getPredicateArity(q->predicate_id));   
-            Vocabulary::instance().addIntensionPredicate(qVaryName);
+            sprintf(qVaryName, "%s%s", qName, ms_sVaryPostfix.c_str());
+            int qVaryId = Vocabulary::instance().getSymbolId(qVaryName, PREDICATE); 
             q->predicate_id = qVaryId;
             _formula* qVary = q;
             //r
-            int rId = Vocabulary::instance().addSymbol("r_new", PREDICATE, 0);
-            Vocabulary::instance().addIntensionPredicate("r_new");
+            int rId = Vocabulary::instance().getSymbolId(ms_sRName.c_str(), PREDICATE);
             _formula* r = Utils::compositeToAtom(rId, NULL);
             _formula* f = Utils::compositeByConnective(IMPL, r, qVary);
             Formula tmp = Formula(f, false);
@@ -119,7 +116,7 @@ Formula CircTranslator::createFormula_4(const Formula& _originalFml) {
             }
             else {
                 final = Utils::compositeByConnective(CONJ, final, 
-                                Utils::copyFormula(tmp.getFormula()));
+                            Utils::copyFormula(tmp.getFormula()));
             }
         }
     }
@@ -131,13 +128,36 @@ Formula CircTranslator::createFormula_4(const Formula& _originalFml) {
  * @return Formulas* 需要手动销毁
  */
 Formulas* CircTranslator::convert(const Formula& _originalFml) {
+    // 生成新谓词
+    //　r
+    int rId = Vocabulary::instance().addSymbol(ms_sRName.c_str(), PREDICATE, 0);
+    _formula* r = Utils::compositeToAtom(rId, NULL);
+    Vocabulary::instance().addAtom(Formula(r, false));
+    // 生成可变谓词的辅助谓词
+    map<int, string> varyPredicates = Vocabulary::instance().getAllVaryPredicates();
+    vector<string> newPredicatesName;
+    for (map<int, string>::const_iterator it = varyPredicates.begin(); 
+            it != varyPredicates.end(); ++ it) {
+        string name = it->second + ms_sVaryPostfix;
+        int id = Vocabulary::instance().addSymbol(name.c_str(), PREDICATE, 
+                    Vocabulary::instance().getPredicateArity(it->first));
+        Formula q = Vocabulary::instance().getAtom(it->first);
+        q.getFormula()->predicate_id = id;
+        Vocabulary::instance().addAtom(q);
+        newPredicatesName.push_back(name);
+    }     
+    
     Formulas* pFmls = new Formulas();
-    Formula nnfFml = NNFUtils::convertToNegativeNormalForm(_originalFml);
+    Formula nnfFml = NNFUtils::convertToNegativeNormalForm(_originalFml, false);
     pFmls->pushBack(createFormula_1(nnfFml));
     pFmls->pushBack(createFormula_2(nnfFml));
     pFmls->pushBack(createFormula_3_1());
     pFmls->pushBack(createFormula_3_2());
     pFmls->pushBack(createFormula_4(nnfFml));
-    
+    // 把新生成的谓词标记为内涵谓词
+    Vocabulary::instance().addIntensionPredicate(ms_sRName.c_str());
+    for (unsigned int i = 0; i < newPredicatesName.size(); ++ i) {
+        Vocabulary::instance().addIntensionPredicate(newPredicatesName[i].c_str());
+    }
     return pFmls;
 }

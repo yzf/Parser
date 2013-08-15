@@ -40,6 +40,7 @@ public:
     Formula back();
     void joinBack(const Formulas& _tail);
     void joinFront(const Formulas& _head);
+    Formulas& operator = (const Formulas& _rhs);
     bool operator == (const Formulas& _rhs) const;
     bool operator != (const Formulas& _rhs) const;
     Formula& operator [] (int _id);

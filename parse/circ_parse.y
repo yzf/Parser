@@ -67,7 +67,6 @@ void yyerror(const char* s) {
 circ            //整个输入文件
 	: formulas predicates domain_section{
             assert($1);
-            printf("root\n");
             gformula = $1;
 	}
 ;
@@ -83,6 +82,8 @@ inten_preds     //内涵谓词：谓词，谓词
         } 
         | intent_pred {
         }
+        | {
+        }
 ;
 intent_pred
         : S_PRED {           
@@ -94,6 +95,8 @@ vary_preds      //可变谓词：谓词，谓词
         : vary_preds COMMA vary_pred {
         }
         | vary_pred {
+        }
+        | {
         }
 ;
 vary_pred
@@ -123,41 +126,34 @@ domain
 
 formulas
 	: formulas formula PERIOD {
-            printf("formulas recursive\n");
             $$ = Utils::compositeByConnective(CONJ, $1, $2);
 	}
 	| formula PERIOD {
-            printf("formulas single\n");
             $$ = $1;
 	}
 ;
 	
 formula
 	: formula S_CONJ formula {
-            printf("formula conj\n");
             assert($1);
             assert($3);
             $$ = Utils::compositeByConnective(CONJ, $1, $3);
 	}
 	| formula S_DISJ formula {
-            printf("formula disj\n");
             assert($1);
             assert($3);
             $$ = Utils::compositeByConnective(DISJ, $1, $3);
 	}
 	| formula S_IMPL formula {
-            printf("formula impl\n");
             assert($1);
             assert($3);
             $$ = Utils::compositeByConnective(IMPL, $1, $3);
 	}
 	| S_NEGA formula {
-            printf("formula nega\n");
             assert($2);
             $$ = Utils::compositeByConnective(NEGA, $2, NULL);
 	}
 	| LBRACKET S_UNIV S_VARI RBRACKET formula {
-            printf("formula univ\n");
             assert($3);
             assert($5);
 
@@ -169,7 +165,6 @@ formula
 	    //free($3);
 	}
 	| LBRACKET S_EXIS S_VARI RBRACKET formula {
-            printf("formula exis\n");
             assert($3);
             assert($5);
             if ((id = Vocabulary::instance().getSymbolId($3, VARIABLE)) < 0) {
@@ -180,18 +175,15 @@ formula
 	    //free($2);
 	}
 	| atom {
-            printf("formula atom\n");
             $$ = $1;
 	}
 	| LPAREN formula RPAREN {
-            printf("formula paren\n");
             $$ = $2;
 	}
 ;
 
 atom
 	: S_PRED LPAREN terms RPAREN  {
-            printf("atom terms\n");
             assert($1);
             assert($3);
 
@@ -206,7 +198,6 @@ atom
                 exit(-1);
             }
 
-            printf("atom terms: id ok\n");
 
             $$->formula_type = ATOM;
             $$->predicate_id = id;
@@ -220,7 +211,6 @@ atom
             context_flag = 0;
 	}
 	| S_PRED {
-            printf("atom no terms\n");
             assert($1);
 
             $$ = (_formula*)malloc(sizeof(_formula));
@@ -255,7 +245,6 @@ atom
 	
 terms
 	: terms COMMA term {
-            printf("terms comma\n");
             assert($1);
             assert($3);
 
@@ -274,7 +263,6 @@ terms
             free($3);
 	}
 	| term {
-            printf("terms single\n");
             $$ = (_terms*)malloc(sizeof(_terms));
 
             assert($1);
@@ -290,8 +278,6 @@ term
 	: S_VARI {
             assert($1);
 
-            printf("term var\n");
-
             $$ = (_term*)malloc(sizeof(_term));
             $$->term_type = VARI;
             id = Vocabulary::instance().addSymbol($1, VARIABLE, 0);
@@ -301,8 +287,6 @@ term
 	}
 	| S_FUNC {
             assert($1);
-
-            printf("term cons %s\n", $1);
 
             $$ = (_term*)malloc(sizeof(_term));
             $$->term_type = FUNC;
@@ -322,7 +306,6 @@ term
             free($1);
 	}
 	| S_FUNC LPAREN terms RPAREN {
-            printf("term func\n");
             assert($1);
             assert($3);
 

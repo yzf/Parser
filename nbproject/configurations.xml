@@ -31,27 +31,36 @@
                    projectFiles="true">
       <logicalFolder name="input" displayName="input" projectFiles="true">
         <logicalFolder name="circ" displayName="circ" projectFiles="true">
-          <itemPath>res/input/circ/sample.in</itemPath>
+          <itemPath>res/input/circ/2clique.fact</itemPath>
+          <itemPath>res/input/circ/2clique.in</itemPath>
+          <itemPath>res/input/circ/setcover.fact</itemPath>
+          <itemPath>res/input/circ/setcover.in</itemPath>
+          <itemPath>res/input/circ/test_1.fact</itemPath>
+          <itemPath>res/input/circ/test_1.in</itemPath>
         </logicalFolder>
         <logicalFolder name="sm" displayName="sm" projectFiles="true">
+          <itemPath>res/input/sm/2clique.fact</itemPath>
           <itemPath>res/input/sm/2clique.in</itemPath>
+          <itemPath>res/input/sm/setcover.fact</itemPath>
           <itemPath>res/input/sm/setcover.in</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="output" displayName="output" projectFiles="true">
         <logicalFolder name="circ" displayName="circ" projectFiles="true">
-          <itemPath>res/output/circ/sample.fact</itemPath>
-          <itemPath>res/output/circ/sample.out</itemPath>
-          <itemPath>res/output/circ/sample.result</itemPath>
+          <itemPath>res/output/circ/2clique.out</itemPath>
+          <itemPath>res/output/circ/2clique.result</itemPath>
+          <itemPath>res/output/circ/setcover.out</itemPath>
+          <itemPath>res/output/circ/setcover.result</itemPath>
+          <itemPath>res/output/circ/test_1.out</itemPath>
+          <itemPath>res/output/circ/test_1.result</itemPath>
         </logicalFolder>
         <logicalFolder name="sm" displayName="sm" projectFiles="true">
-          <itemPath>res/output/sm/2clique.fact</itemPath>
           <itemPath>res/output/sm/2clique.out</itemPath>
           <itemPath>res/output/sm/2clique.result</itemPath>
-          <itemPath>res/output/sm/setcover.fact</itemPath>
           <itemPath>res/output/sm/setcover.out</itemPath>
           <itemPath>res/output/sm/setcover.result</itemPath>
         </logicalFolder>
+        <itemPath>res/output/sample.out</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
@@ -190,25 +199,43 @@
       </item>
       <item path="parse/sm_parse.y" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/input/circ/sample.in" ex="false" tool="3" flavor2="0">
+      <item path="res/input/circ/2clique.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/2clique.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/setcover.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/setcover.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/test_1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/test_1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/2clique.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/sm/2clique.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/sm/setcover.fact" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/input/sm/setcover.in" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/circ/sample.fact" ex="false" tool="3" flavor2="0">
+      <item path="res/output/circ/2clique.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/circ/sample.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/circ/2clique.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/circ/sample.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/circ/setcover.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/sm/2clique.fact" ex="false" tool="3" flavor2="0">
+      <item path="res/output/circ/setcover.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/test_1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/test_1.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sample.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sm/2clique.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sm/2clique.result" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/sm/setcover.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sm/setcover.out" ex="false" tool="3" flavor2="0">
       </item>
@@ -335,25 +362,43 @@
       </item>
       <item path="parse/sm_parse.y" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/input/circ/sample.in" ex="false" tool="3" flavor2="0">
+      <item path="res/input/circ/2clique.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/2clique.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/setcover.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/setcover.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/test_1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/test_1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/2clique.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/sm/2clique.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/sm/setcover.fact" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/input/sm/setcover.in" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/circ/sample.fact" ex="false" tool="3" flavor2="0">
+      <item path="res/output/circ/2clique.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/circ/sample.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/circ/2clique.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/circ/sample.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/circ/setcover.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/sm/2clique.fact" ex="false" tool="3" flavor2="0">
+      <item path="res/output/circ/setcover.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/test_1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/test_1.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sample.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sm/2clique.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sm/2clique.result" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/sm/setcover.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sm/setcover.out" ex="false" tool="3" flavor2="0">
       </item>

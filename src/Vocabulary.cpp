@@ -376,7 +376,21 @@ vector<int> Vocabulary::getAllIntensionPredicates() const {
     for (map<int,string>::const_iterator it = m_mapPredicateName.begin();
             it != m_mapPredicateName.end(); ++ it) {
         if (isIntensionPredicate(it->first)) {
-                vRet.push_back(it->first);
+            vRet.push_back(it->first);
+        }
+    }
+    return vRet;
+}
+/**
+ * 获取所有可变谓词
+ * @return 
+ */
+map<int, string> Vocabulary::getAllVaryPredicates() const {
+    map<int, string> vRet;
+    for (map<int,string>::const_iterator it = m_mapPredicateName.begin();
+            it != m_mapPredicateName.end(); ++ it) {
+        if (isVaryPredicate(it->first)) {
+            vRet.insert(make_pair<int, string>(it->first, it->second));
         }
     }
     return vRet;

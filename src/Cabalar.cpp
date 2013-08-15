@@ -29,7 +29,6 @@ Formulas* Cabalar::convert(const Formulas& _originalFmls) {
         
         Formulas* pBforeTrans = new Formulas();
         pBforeTrans->pushBack(curFml);
-        
         Formulas* pAfterTrans = CabalarUtils::transform(Utils::copyFormula(curFml.getFormula()));
         if (*pBforeTrans == *pAfterTrans) {
             pFinalFormulas->pushBack(curFml);

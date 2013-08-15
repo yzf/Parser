@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <cstdlib>
 
+bool NNFUtils::ms_bIsSM = true;
 /**
  * ~TRUE => FALSE
  * @param _originalFml
@@ -37,7 +38,7 @@ _formula* NNFUtils::negativeNormalForm_2(_formula* _originalFml) {
  * @param _originalFml
  * @return 
  */
-_formula* NNFUtils::negativeNormalForm_3(_formula* _originalFml) {
+_formula* NNFUtils::negativeNormalForm_3_1(_formula* _originalFml) {
     assert(_originalFml);
     assert(_originalFml->formula_type == NEGA);
     assert(_originalFml->subformula_l);
@@ -45,6 +46,22 @@ _formula* NNFUtils::negativeNormalForm_3(_formula* _originalFml) {
     assert(_originalFml->subformula_l->subformula_l);
     assert(_originalFml->subformula_l->subformula_l->formula_type == NEGA);
     assert(_originalFml->subformula_l->subformula_l->subformula_l);
+    _formula* ret = convertToNegativeNormalForm(_originalFml->subformula_l->subformula_l);
+    free(_originalFml->subformula_l);
+    free(_originalFml);
+    return ret;
+}
+/**
+ * ~~fml => fml
+ * @param _originalFml
+ * @return 
+ */
+_formula* NNFUtils::negativeNormalForm_3_2(_formula* _originalFml) {
+    assert(_originalFml);
+    assert(_originalFml->formula_type == NEGA);
+    assert(_originalFml->subformula_l);
+    assert(_originalFml->subformula_l->formula_type == NEGA);
+    assert(_originalFml->subformula_l->subformula_l);
     _formula* ret = convertToNegativeNormalForm(_originalFml->subformula_l->subformula_l);
     free(_originalFml->subformula_l);
     free(_originalFml);
@@ -147,8 +164,11 @@ _formula* NNFUtils::convertToNegativeNormalForm(_formula* _originalFml) {
         
         else if (subformula_l->formula_type == NEGA) {
             //N3
+            if (! ms_bIsSM) {
+                return negativeNormalForm_3_2(_originalFml);
+            }
             if (subformula_l->subformula_l->formula_type == NEGA) {
-                return negativeNormalForm_3(_originalFml);
+                return negativeNormalForm_3_1(_originalFml);
             }
         }
         //N4
@@ -176,7 +196,8 @@ _formula* NNFUtils::convertToNegativeNormalForm(_formula* _originalFml) {
     
     return _originalFml;
 }
-Formula NNFUtils::convertToNegativeNormalForm(const Formula& _originalFml) {
+Formula NNFUtils::convertToNegativeNormalForm(const Formula& _originalFml, bool _bIsSM) {
+    ms_bIsSM = _bIsSM;
     _formula* nnf = convertToNegativeNormalForm(Utils::copyFormula(_originalFml.getFormula()));
     return Formula(nnf, false);
 }
@@ -185,7 +206,8 @@ Formula NNFUtils::convertToNegativeNormalForm(const Formula& _originalFml) {
  * @param _originalFmls
  * @return Formulas*　需要手动delete
  */
-Formulas* NNFUtils::convertToNegativeNormalForms(const Formulas& _originalFmls) {
+Formulas* NNFUtils::convertToNegativeNormalForms(const Formulas& _originalFmls, bool _bIsSM) {
+    ms_bIsSM = _bIsSM;
     Formulas* pRetFormulas = new Formulas();
     for (FORMULAS_CONST_ITERATOR it = _originalFmls.begin();
             it != _originalFmls.end(); ++ it) {
@@ -200,9 +222,11 @@ Formulas* NNFUtils::convertToNegativeNormalForms(const Formulas& _originalFmls) 
  * 把所有公式转化成否定标准式
  * @param _originalFmls Formulas* 直接操作这些公式
  */
-void NNFUtils::convertToNegativeNormalForms(Formulas* _originalFmls) {
+void NNFUtils::convertToNegativeNormalForms(Formulas* _originalFmls, bool _bIsSM) {
+    ms_bIsSM = _bIsSM;
     for (FORMULAS_ITERATOR it = _originalFmls->begin();
             it != _originalFmls->end(); ++ it) {
-        NNFUtils::convertToNegativeNormalForm(it->getFormula());
+        it->setFormula(NNFUtils::convertToNegativeNormalForm(
+                            Utils::copyFormula(it->getFormula())));
     }
 }

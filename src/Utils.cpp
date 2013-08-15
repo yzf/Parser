@@ -1,4 +1,5 @@
 #include "Utils.h"
+#include "CircTranslator.h"
 #include <assert.h>
 #include <cstdlib>
 #include <cstring>
@@ -866,24 +867,21 @@ _formula* Utils::circReplace(_formula* _fml, _formula* _fatherFml) {
                     if (Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
                         // p->r 替换 ~p
                         _fatherFml->formula_type = IMPL;
-                        int rId = Vocabulary::instance().addSymbol("r_new", PREDICATE, 0);
+                        int rId = Vocabulary::instance().getSymbolId(CircTranslator::ms_sRName.c_str(), PREDICATE);
                         _fatherFml->subformula_r = Utils::compositeToAtom(rId, NULL);
                     }
                     else if (Vocabulary::instance().isVaryPredicate(_fml->predicate_id)) {
                         // Q_vary->r 替换 ~Q
                         const char* qName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
                         char qVaryName[64];
-                        sprintf(qVaryName, "%s_vary", qName);
+                        sprintf(qVaryName, "%s%s", qName, CircTranslator::ms_sVaryPostfix.c_str());
                         // ->
                         _fatherFml->formula_type = IMPL;
                         // Q_vary
-                        int qVaryId = Vocabulary::instance().addSymbol(qVaryName, PREDICATE, 
-                                        Vocabulary::instance().getPredicateArity(_fml->predicate_id));
-                        Vocabulary::instance().addIntensionPredicate(qVaryName);
+                        int qVaryId = Vocabulary::instance().getSymbolId(qVaryName, PREDICATE);
                         _fatherFml->subformula_l->predicate_id = qVaryId;
                         // r
-                        int rId = Vocabulary::instance().addSymbol("r_new", PREDICATE, 0);
-                        Vocabulary::instance().addIntensionPredicate("r_new");
+                        int rId = Vocabulary::instance().getSymbolId(CircTranslator::ms_sRName.c_str(), PREDICATE);
                         _fatherFml->subformula_r = Utils::compositeToAtom(rId, NULL); 
                     }
                 }
@@ -891,10 +889,8 @@ _formula* Utils::circReplace(_formula* _fml, _formula* _fatherFml) {
                     if (Vocabulary::instance().isVaryPredicate(_fml->predicate_id)) {
                         const char* qName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
                         char qVaryName[64];
-                        sprintf(qVaryName, "%s_vary", qName);
-                        int qVaryId = Vocabulary::instance().addSymbol(qVaryName, PREDICATE,
-                                Vocabulary::instance().getPredicateArity(_fml->predicate_id));
-                        Vocabulary::instance().addIntensionPredicate(qVaryName);
+                        sprintf(qVaryName, "%s%s", qName, CircTranslator::ms_sVaryPostfix.c_str());
+                        int qVaryId = Vocabulary::instance().getSymbolId(qVaryName, PREDICATE);
                         _fml->predicate_id = qVaryId;
                     }
                 }
