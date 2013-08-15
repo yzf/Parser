@@ -67,7 +67,6 @@ int main(int argc, char** argv) {
     Formula f = Formula(gformula, false);
     CircTranslator circTranslator;
     Formulas* fmls = circTranslator.convert(f);
-    fmls->output(stdout);
     SMTranslator::instance().init(*fmls);
     SMTranslator::instance().convert();
     SMTranslator::instance().outputFinalResult(fout);
