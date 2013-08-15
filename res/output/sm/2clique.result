@@ -21,4 +21,4 @@ Answer: 10
 col(4) uncol(3) uncol(2) col(1) 
 
 Models     : 10    
-Time        : 0.000  (Parsing: 0.000)
+Time        : 0.020  (Parsing: 0.000)

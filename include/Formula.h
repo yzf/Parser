@@ -12,6 +12,8 @@
 #include "structs.h"
 #include "Formulas.h"
 #include <vector>
+#include <map>
+#include <string>
 
 using namespace std;
 
@@ -41,7 +43,7 @@ public:
     void fixUniversalQuantifier();
     void removeUniversalQuantifier();
     void output(FILE* _out) const;
-    void doubleNegationPredicates(const vector<int>& _vPredicates);
+    void doubleNegationPredicates(const map<int, string>& _mapPredicates);
     void replaceTerms(const vector<int>& _originals, 
 				const vector<int>& _replacements);
     Formulas* divideFormula() const;

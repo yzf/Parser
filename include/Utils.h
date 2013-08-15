@@ -46,7 +46,7 @@ public:
     static void getNoQuantifierVariables(map<int, bool>& _flag, vector<int>& _varis, _formula* _fml);
     static void getNoQuantifierVariablesInTerms(map<int, bool>& _flag, vector<int>& _varis, _term* _t);
     static bool inList(int _target, const vector<int>& _vPredicates);
-    static _formula* doubleNegationPredicates(_formula* _fml, const vector<int>& _vPredicates, 
+    static _formula* doubleNegationPredicates(_formula* _fml, const map<int, string>& _mapPredicates, 
                                         FORMULA_TYPE _fatherType = UNIV);
     static void replaceFormulaTerms(_formula* _fml, 
                                 const vector<int>& _originals, 

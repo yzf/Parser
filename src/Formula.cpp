@@ -109,8 +109,8 @@ void Formula::output(FILE* _out) const {
  * 将所有 p(X) => ~~p(X)
  * @param _vPredicates
  */
-void Formula::doubleNegationPredicates(const vector<int>& _vPredicates) {
-    m_pFormula = Utils::doubleNegationPredicates(m_pFormula, _vPredicates);
+void Formula::doubleNegationPredicates(const map<int, string>& _mapPredicates) {
+    m_pFormula = Utils::doubleNegationPredicates(m_pFormula, _mapPredicates);
 }
 /**
  * 替换参数

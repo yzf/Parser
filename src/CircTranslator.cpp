@@ -19,7 +19,7 @@ CircTranslator::~CircTranslator() {
  * @return 
  */
 Formula CircTranslator::createFormula_1(const Formula& _originalFml) {
-    vector<int> vIntensionPredicates = Vocabulary::instance().getAllIntensionPredicates();
+    map<int, string> vIntensionPredicates = Vocabulary::instance().getAllIntensionPredicates();
     Formula copyOriginalFml = _originalFml;
     copyOriginalFml.doubleNegationPredicates(vIntensionPredicates);
     return copyOriginalFml;

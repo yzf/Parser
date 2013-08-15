@@ -175,8 +175,8 @@ Formula HengZhang::createFormula_2(const Formula& _originalFml) {
     _formula* s_x_z = Utils::compositeToAtom(m_nSymbolS, term_x_z);
     //3 theta__(_X,_Y)
     Formula copyOriginalFml = _originalFml;
-    vector<int> vPredicates = Vocabulary::instance().getAllIntensionPredicates();
-    copyOriginalFml.doubleNegationPredicates(vPredicates);
+    map<int, string> mapPredicates = Vocabulary::instance().getAllIntensionPredicates();
+    copyOriginalFml.doubleNegationPredicates(mapPredicates);
     _formula* theta__ = Utils::copyFormula(copyOriginalFml.getFormula());
     //4 s(_X,_Y)
     _term* term_x_y = Utils::combineTerms(m_vTermsX, m_vTermsY);

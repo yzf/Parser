@@ -539,13 +539,13 @@ bool Utils::inList(int _target, const vector<int>& _list) {
  * @param _size 谓词Id数组的大小
  * @return _formula* 处理后的公式
  */
-_formula* Utils::doubleNegationPredicates(_formula* _fml, const vector<int>& _vPredicates, FORMULA_TYPE _fatherType) {
+_formula* Utils::doubleNegationPredicates(_formula* _fml, const map<int, string>& _mapPredicates, FORMULA_TYPE _fatherType) {
     assert(_fml);
 
     switch (_fml->formula_type) {
     case ATOM:
         if (NEGA != _fatherType) {
-            if (inList(_fml->predicate_id, _vPredicates)) {
+            if (_mapPredicates.find(_fml->predicate_id) != _mapPredicates.end()) {
                 _fml = compositeByConnective(NEGA, _fml, NULL);
                 _fml = compositeByConnective(NEGA, _fml, NULL);
             }
@@ -554,11 +554,11 @@ _formula* Utils::doubleNegationPredicates(_formula* _fml, const vector<int>& _vP
     case CONJ:
     case DISJ:
     case IMPL:
-        _fml->subformula_r = doubleNegationPredicates(_fml->subformula_r, _vPredicates, _fml->formula_type);
+        _fml->subformula_r = doubleNegationPredicates(_fml->subformula_r, _mapPredicates, _fml->formula_type);
     case NEGA:
     case UNIV:
     case EXIS:
-        _fml->subformula_l = doubleNegationPredicates(_fml->subformula_l, _vPredicates, _fml->formula_type);
+        _fml->subformula_l = doubleNegationPredicates(_fml->subformula_l, _mapPredicates, _fml->formula_type);
         break;
     default:
         assert(0);

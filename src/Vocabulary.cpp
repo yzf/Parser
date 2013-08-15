@@ -359,24 +359,19 @@ Formulas* Vocabulary::getAtomList() const {
  * 获取所有谓词
  * @return 
  */
-vector<int> Vocabulary::getAllPredicates() const {
-    vector<int> vRet;
-    for (map<int,string>::const_iterator it = m_mapPredicateName.begin();
-            it != m_mapPredicateName.end(); ++ it) {
-        vRet.push_back(it->first);
-    }
-    return vRet;
+map<int, string> Vocabulary::getAllPredicates() const {
+    return m_mapPredicateName;
 }
 /**
  * 获取所有内涵谓词
  * @return 
  */
-vector<int> Vocabulary::getAllIntensionPredicates() const {
-    vector<int> vRet;
-    for (map<int,string>::const_iterator it = m_mapPredicateName.begin();
+map<int, string> Vocabulary::getAllIntensionPredicates() const {
+    map<int, string> vRet;
+    for (map<int, string>::const_iterator it = m_mapPredicateName.begin();
             it != m_mapPredicateName.end(); ++ it) {
         if (isIntensionPredicate(it->first)) {
-            vRet.push_back(it->first);
+            vRet.insert(make_pair<int, string>(it->first, it->second));
         }
     }
     return vRet;
