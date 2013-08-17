@@ -114,19 +114,19 @@ s_1(X,Y):- not unset(X).
 s_1(X,Y):- not unset(Y), not edge(X,Y).
 s_1(X,Y):- not _ok.
 s_1(X,Y):- not unset(X), not _ok.
-s_1(X,Y):- not unset(Y), not _ok, not edge(X,Y).
+s_1(X,Y):- not edge(X,Y), not unset(Y), not _ok.
 t_1(X,MIN_node):- not ok, not _unset(MIN_node), not _unset(X).
-t_1(X,MIN_node):- edge(X,MIN_node), not ok, not _unset(X).
+t_1(X,MIN_node):- not ok, edge(X,MIN_node), not _unset(X).
 t_1(X,MIN_node):- not ok, not _unset(MIN_node), not _unset(X).
 t_1(X,MIN_node):- not ok, edge(X,MIN_node), not _unset(X).
 :- not ok, t_1(X,MAX_node), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not _unset(X), not _unset(Y).
-:- not ok, edge(X,Y), t_1(X,MAX_node), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not _unset(X).
+:- not ok, t_1(X,MAX_node), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not _unset(X), edge(X,Y).
 :- not ok, t_1(X,MAX_node), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not _unset(X), not _unset(Y).
 :- not ok, t_1(X,MAX_node), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not _unset(X), edge(X,Y).
 :- not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not ok, not _unset(Y), not _unset(X), not _t_1(X,MAX_node).
 :- not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not ok, edge(X,Y), not _unset(X), not _t_1(X,MAX_node).
 :- not ok, t_1(X,MAX_node), max_node(Y), s_1(X,Y), not _unset(X), not _unset(Y).
-:- not ok, edge(X,Y), t_1(X,MAX_node), max_node(Y), s_1(X,Y), not _unset(X).
+:- not ok, t_1(X,MAX_node), max_node(Y), s_1(X,Y), not _unset(X), edge(X,Y).
 :- not ok, t_1(X,MAX_node), max_node(Y), s_1(X,Y), not _unset(X), not _unset(Y).
 :- not ok, t_1(X,MAX_node), max_node(Y), s_1(X,Y), not _unset(X), edge(X,Y).
 :- max_node(Y), s_1(X,Y), not ok, not _unset(Y), not _unset(X), not _t_1(X,MAX_node).
@@ -135,7 +135,7 @@ t_1(X,MAX_node):- not unset(X), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y).
 t_1(X,MAX_node):- not unset(Y), not edge(X,Y), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y).
 t_1(X,MAX_node):- not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not _ok.
 t_1(X,MAX_node):- not unset(X), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not _ok.
-t_1(X,MAX_node):- not unset(Y), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not edge(X,Y), not _ok.
+t_1(X,MAX_node):- not edge(X,Y), not unset(Y), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not _ok.
 :- not unset(X), not t_1(X,MAX_node), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y).
 :- not edge(X,Y), not unset(Y), not t_1(X,MAX_node), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y).
 :- not t_1(X,MAX_node), not s_1(X,NV_2), succ_node(Y,NV_2), s_1(X,Y), not _ok.
@@ -143,12 +143,12 @@ t_1(X,MAX_node):- not unset(X), max_node(Y), s_1(X,Y).
 t_1(X,MAX_node):- not unset(Y), not edge(X,Y), max_node(Y), s_1(X,Y).
 t_1(X,MAX_node):- max_node(Y), s_1(X,Y), not _ok.
 t_1(X,MAX_node):- not unset(X), max_node(Y), s_1(X,Y), not _ok.
-t_1(X,MAX_node):- not unset(Y), max_node(Y), s_1(X,Y), not edge(X,Y), not _ok.
+t_1(X,MAX_node):- not edge(X,Y), not unset(Y), max_node(Y), s_1(X,Y), not _ok.
 :- not unset(X), not t_1(X,MAX_node), max_node(Y), s_1(X,Y).
 :- not edge(X,Y), not unset(Y), not t_1(X,MAX_node), max_node(Y), s_1(X,Y).
 :- not t_1(X,MAX_node), max_node(Y), s_1(X,Y), not _ok.
 t_1(X,NV_2):- not ok, t_1(X,Y), succ_node(Y,NV_2), not _unset(X), not _unset(NV_2).
-t_1(X,NV_2):- not ok, edge(X,NV_2), t_1(X,Y), succ_node(Y,NV_2), not _unset(X).
+t_1(X,NV_2):- not ok, t_1(X,Y), succ_node(Y,NV_2), not _unset(X), edge(X,NV_2).
 t_1(X,NV_2):- not ok, t_1(X,Y), succ_node(Y,NV_2), not _unset(X), not _unset(NV_2).
 t_1(X,NV_2):- not ok, t_1(X,Y), succ_node(Y,NV_2), not _unset(X), edge(X,NV_2).
 :- succ_node(Y,NV_2), not t_1(X,NV_2), not ok, not _unset(NV_2), not _unset(X), not _t_1(X,Y).
@@ -157,7 +157,7 @@ t_1(X,Y):- not unset(X), succ_node(Y,NV_2).
 t_1(X,Y):- not unset(NV_2), not edge(X,NV_2), succ_node(Y,NV_2).
 t_1(X,Y):- succ_node(Y,NV_2), not _ok.
 t_1(X,Y):- not unset(X), succ_node(Y,NV_2), not _ok.
-t_1(X,Y):- not unset(NV_2), succ_node(Y,NV_2), not edge(X,NV_2), not _ok.
+t_1(X,Y):- not edge(X,NV_2), not unset(NV_2), succ_node(Y,NV_2), not _ok.
 t_1(X,Y):- t_1(X,NV_2), succ_node(Y,NV_2).
 :- not unset(X), not t_1(X,Y), succ_node(Y,NV_2).
 :- not edge(X,NV_2), not unset(NV_2), not t_1(X,Y), succ_node(Y,NV_2).

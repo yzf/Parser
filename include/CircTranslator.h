@@ -17,16 +17,13 @@ class Formula;
 class Formulas;
 
 class CircTranslator {
-public:
-    static const string ms_sRName;
-    static const string ms_sVaryPostfix;
 private:
     Formula createFormula_1(const Formula& _originalFml);
     Formula createFormula_2(const Formula& _originalFml);
-    _formula* createFormula_3_right();
+    _formula* createP_P();
     Formula createFormula_3_1();
     Formula createFormula_3_2();
-    Formula createFormula_4(const Formula& _originalFml);
+    Formula createFormula_4();
 public:
     CircTranslator();
     virtual ~CircTranslator();

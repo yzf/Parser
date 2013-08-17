@@ -23,7 +23,8 @@ cd ..
 echo
 echo "run makefile"
 echo
-make > /dev/null 2>&1
+make > /dev/null
+echo
 runner="/home/yzf/NetBeansProjects/alpha/build/Debug/GNU-Linux-x86/tests/TestFiles/f2"
 # 开始转化
 input=`ls res/input/$tranType/*.in`
@@ -39,7 +40,7 @@ do
     echo -n > $outFile
     echo -n > $resultFile
     echo "run: $runner $inFile $outFile"
-    $runner $inFile $outFile > /dev/null 2>&1
+    $runner $inFile $outFile > /dev/null
     if [ $? -ne 0 ]
     then
         echo "error!!!!!!!!!!!!!!!!!"
@@ -48,7 +49,8 @@ do
     # 执行ASP
     if [ -f $factFile -a -f $outFile ]
     then
-        echo "using $factFile $outFile to run asp, output is saved to $resultFile"
+        echo "run: gringo $factFile $outFile | claspD 0 > $resultFile"
+        echo
         gringo $factFile $outFile | claspD 0 > $resultFile
     fi
 done

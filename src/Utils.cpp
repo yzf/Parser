@@ -1,5 +1,4 @@
 #include "Utils.h"
-#include "CircTranslator.h"
 #include <assert.h>
 #include <cstdlib>
 #include <cstring>
@@ -858,55 +857,103 @@ vector<string> Utils::convertFormulasToStrings(Formulas* _fmls) {
  * @param _fatherType
  * @return 
  */
-_formula* Utils::circReplace(_formula* _fml, _formula* _fatherFml) {
+_formula* Utils::_thetaReplace(_formula* _fml, _formula* _fatherFml) {
     assert(_fml);
     switch (_fml->formula_type) {
         case ATOM:
-            if (NULL != _fatherFml) {
-                if (NEGA == _fatherFml->formula_type) {
-                    if (Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
-                        // p->r 替换 ~p
-                        _fatherFml->formula_type = IMPL;
-                        int rId = Vocabulary::instance().getSymbolId(CircTranslator::ms_sRName.c_str(), PREDICATE);
-                        _fatherFml->subformula_r = Utils::compositeToAtom(rId, NULL);
-                    }
-                    else if (Vocabulary::instance().isVaryPredicate(_fml->predicate_id)) {
-                        // Q_vary->r 替换 ~Q
-                        const char* qName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
-                        char qVaryName[64];
-                        sprintf(qVaryName, "%s%s", qName, CircTranslator::ms_sVaryPostfix.c_str());
-                        // ->
-                        _fatherFml->formula_type = IMPL;
-                        // Q_vary
-                        int qVaryId = Vocabulary::instance().getSymbolId(qVaryName, PREDICATE);
-                        _fatherFml->subformula_l->predicate_id = qVaryId;
-                        // r
-                        int rId = Vocabulary::instance().getSymbolId(CircTranslator::ms_sRName.c_str(), PREDICATE);
-                        _fatherFml->subformula_r = Utils::compositeToAtom(rId, NULL); 
-                    }
+            if (NULL != _fatherFml && NEGA == _fatherFml->formula_type) {
+                if (Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
+                    // p->r 替换 ~p
+                    _fatherFml->formula_type = IMPL;
+                    int rId = Vocabulary::instance().getSymbolId(R_NAME, PREDICATE);
+                    _fatherFml->subformula_r = Utils::compositeToAtom(rId, NULL);
                 }
-                else { // Q_vary  替换 Q，Q_vary属于内涵谓词
-                    if (Vocabulary::instance().isVaryPredicate(_fml->predicate_id)) {
-                        const char* qName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
-                        char qVaryName[64];
-                        sprintf(qVaryName, "%s%s", qName, CircTranslator::ms_sVaryPostfix.c_str());
-                        int qVaryId = Vocabulary::instance().getSymbolId(qVaryName, PREDICATE);
-                        _fml->predicate_id = qVaryId;
-                    }
+                else if (Vocabulary::instance().isVaryPredicate(_fml->predicate_id)) {
+                    // Q_vary->r 替换 ~Q
+                    const char* qName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
+                    char qVaryName[64];
+                    sprintf(qVaryName, "%s%s", qName, VARY_PREDICATE_POSTFIX);
+                    // ->
+                    _fatherFml->formula_type = IMPL;
+                    // Q_vary
+                    int qVaryId = Vocabulary::instance().getSymbolId(qVaryName, PREDICATE);
+                    _fatherFml->subformula_l->predicate_id = qVaryId;
+                    // r
+                    int rId = Vocabulary::instance().getSymbolId(R_NAME, PREDICATE);
+                    _fatherFml->subformula_r = Utils::compositeToAtom(rId, NULL); 
+                }
+            }
+            else { // Q_vary  替换 Q，Q_vary属于内涵谓词
+                if (Vocabulary::instance().isVaryPredicate(_fml->predicate_id)) {
+                    const char* qName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
+                    char qVaryName[64];
+                    sprintf(qVaryName, "%s%s", qName, VARY_PREDICATE_POSTFIX);
+                    int qVaryId = Vocabulary::instance().getSymbolId(qVaryName, PREDICATE);
+                    _fml->predicate_id = qVaryId;
                 }
             }
             break;
         case CONJ:
         case DISJ:
         case IMPL:
-            circReplace(_fml->subformula_r, _fml);
+            _thetaReplace(_fml->subformula_r, _fml);
         case UNIV:
         case EXIS:
         case NEGA:
-            circReplace(_fml->subformula_l, _fml);
+            _thetaReplace(_fml->subformula_l, _fml);
             break;
         default:
             assert(0);
     }
     return _fml;
+}
+_formula* Utils::thetaT__Replace(_formula* _fml, _formula* _fatherFml) {
+    assert(_fml);
+    switch (_fml->formula_type) {
+        case ATOM:
+            if (NULL != _fatherFml && NEGA == _fatherFml->formula_type) {
+                // true 替换 负文字
+                _fatherFml->formula_type = ATOM;
+                _fatherFml->predicate_id = PRED_TRUE;
+                _fatherFml->parameters = NULL;
+                deleteFormula(_fml);
+            }
+            else {
+                if (Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
+                    // ~~p 替换 p
+                    _formula* p = Utils::copyFormula(_fml);
+                    _formula* _p = Utils::compositeByConnective(NEGA, p);
+                    deleteTerms(_fml->parameters, Vocabulary::instance().getPredicateArity(_fml->predicate_id));
+                    _fml->formula_type = NEGA;
+                    _fml->subformula_l = _p;
+                }
+                else if (Vocabulary::instance().isVaryPredicate(_fml->predicate_id)) {
+                    // q_vary 替换 q
+                    const char* qName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
+                    char qVaryName[64];
+                    sprintf(qVaryName, "%s%s", qName, VARY_PREDICATE_POSTFIX);
+                    int qVaryId = Vocabulary::instance().getSymbolId(qVaryName, PREDICATE);
+                    _fml->predicate_id = qVaryId;
+                }
+            }
+            break;
+        case CONJ:
+        case DISJ:
+        case IMPL:
+            thetaT__Replace(_fml->subformula_r, _fml);
+        case UNIV:
+        case EXIS:
+        case NEGA:
+            thetaT__Replace(_fml->subformula_l, _fml);
+            break;
+        default:
+            assert(0);
+    }
+    return _fml;
+}
+
+string Utils::convertNumToString(int _num) {
+    char num[10];
+    sprintf(num, "%d", _num);
+    return string(num);
 }

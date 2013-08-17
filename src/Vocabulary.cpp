@@ -304,10 +304,10 @@ void Vocabulary::dumpVocabulary(FILE* _out)  {
         }
     }
     
-    fprintf(_out, "\ndomains:\n");    
+    fprintf(_out, "\ndomains:");    
     for (map<int, string>::const_iterator it = m_mapDomainName.begin(); 
             it != m_mapDomainName.end(); ++ it) {
-        fprintf(_out, "variables at domain %s: ", (it->second).c_str());
+        fprintf(_out, "\nvariables at domain %s: ", (it->second).c_str());
         vector<int> variables = m_mapDomainVariables[it->first];
         for (vector<int>::const_iterator it2 = variables.begin();
                 it2 != variables.end(); ++ it2) {
@@ -318,7 +318,7 @@ void Vocabulary::dumpVocabulary(FILE* _out)  {
         }
     }
     
-    fprintf(_out, "\natom\n");
+    fprintf(_out, "\n\natom:\n");
     for (FORMULAS_CONST_ITERATOR it = m_fmlAtomList->begin();
             it != m_fmlAtomList->end(); ++ it) {
         it->output(stdout);

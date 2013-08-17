@@ -70,7 +70,7 @@ Formula HengZhang::recordQuantifier(const Formula& _originalFml) {
         sprintf(sBuf,"NV_%d", m_nNumNV ++);
         int nIdNV = Vocabulary::instance().addSymbol(sBuf, VARIABLE);
         Vocabulary::instance().setVariableDomain(sBuf, 
-                        Vocabulary::instance().getVariableDomain(nIdNV));
+                        Vocabulary::instance().getVariableDomain(fml->variable_id));
         m_vTermsZ.push_back(nIdNV);
 
         fml = fml->subformula_l;

@@ -46,6 +46,7 @@ void SMTranslator::init(const Formulas& _originalFmls) {
         delete tmp;
     }
     NNFUtils::convertToNegativeNormalForms(m_pOriginalFormulas);
+    m_vOriginalFormulas = Utils::convertFormulasToStrings(m_pOriginalFormulas);
     m_pNegaPredicates = new Formulas();
 }
 /**
@@ -72,6 +73,10 @@ void SMTranslator::destroy() {
     m_vHengZhangFormulas.clear();
     m_vDlpFormulas.clear();
 }
+void SMTranslator::outputOriginalFormulas(FILE* _out) const {
+    printf("ori:\n");
+    output(_out, m_vOriginalFormulas);
+}
 /**
  * 进行章衡量词消去转化
  */
@@ -87,6 +92,7 @@ void SMTranslator::hengZhangTransform() {
  * @param _out
  */
 void SMTranslator::outputHengZhangFormulas(FILE* _out) const {
+    printf("hz:\n");
     output(_out, m_vHengZhangFormulas);
 }
 /**
@@ -157,11 +163,8 @@ void SMTranslator::addNegaPredicates(const Formula& _negaPredicate) {
  * 章衡、Cabalar、规则全套服务
  */
 void SMTranslator::convert() {
-    printf("hz\n");
     hengZhangTransform();
-    printf("cabalar\n");
     cabalarTransform();
-    printf("rule\n");
     ruleTransform();
 }
 /**
@@ -223,7 +226,14 @@ void SMTranslator::outputAddition(FILE* _out) const {
         }
     }
     fprintf(_out, "\n%%Succ predicate definition\n");
-    for(unsigned int i = 0; i < HengZhang::ms_vDomainNames.size(); i++) {
+    for(unsigned int i = 0; i < HengZhang::ms_vDomainNames.size(); ++ i) {
+        printf("\nsucc:\n");
+        for (unsigned int j = 0; j < HengZhang::ms_vDomainNames.size(); ++ j) {
+            for (unsigned int k = 0; k < HengZhang::ms_vDomainNames[j].size(); ++ k) {
+                printf("%s ", HengZhang::ms_vDomainNames[j][k].c_str());
+            }
+            printf("\n");
+        }
         outputSucc(_out, HengZhang::ms_vDomainNames.at(i));
     }  
     fprintf(_out, "\n");
@@ -280,10 +290,11 @@ void SMTranslator::outputSucc(FILE* _out, vector<string> domains) const {
                     fprintf(_out, ",");
                 }
             }
-            
+            fflush(_out);
             bool exis = false;
             for (unsigned int j = 0; j < HengZhang::ms_vDomainNames.size(); ++ j) {
-                if(HengZhang::ms_vDomainNames[j].size() == 1 && HengZhang::ms_vDomainNames[j][0] == domains[size - j - 1]) {
+                
+                if(HengZhang::ms_vDomainNames[j].size() == 1 && HengZhang::ms_vDomainNames[j][0] == domains[size - i - 1]) {
                     exis = true;
                 }
             }
@@ -294,7 +305,7 @@ void SMTranslator::outputSucc(FILE* _out, vector<string> domains) const {
             }
             fprintf(_out, ":- succ_%s(%c1,%c2), ", 
                     domains[size - i - 1].c_str(), 'A' + size - i - 1, 'A' + size - i - 1);
-            
+            fflush(_out);
             for (int j = 0; j < size - i; ++ j) {
                 if (j == size - i - 1) {
                     fprintf(_out, "%s(%c1), %s(%c2).", 
@@ -306,6 +317,7 @@ void SMTranslator::outputSucc(FILE* _out, vector<string> domains) const {
             }
             
             fprintf(_out, "\n");
+            fflush(_out);
         }      
     }
 }

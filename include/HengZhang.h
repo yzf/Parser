@@ -22,7 +22,7 @@ class Formulas;
  * 章衡转换类，单例
  */
 class HengZhang{
-public:
+private:
     vector<int> m_vTermsX;
     vector<int> m_vTermsY;
     vector<int> m_vTermsZ;
@@ -38,10 +38,9 @@ public:
     int m_nNumS;
     int m_nNumT;
     int m_nNumMAX;
-    int m_nNumMIN;
     int m_nNumSucc;
     int m_nNumNV;
-    
+public:    
     static vector< vector<string> > ms_vDomainNames;
     
 private:

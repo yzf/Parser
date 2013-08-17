@@ -18,6 +18,9 @@
 
 using namespace std;
 
+#define VARY_PREDICATE_POSTFIX "_vary"
+#define R_NAME "r_new"
+
 class Formulas;
 /**
  * 工具类
@@ -67,7 +70,9 @@ public:
     
     static vector<string> convertFormulasToStrings(Formulas* _fmls);
 
-    static _formula* circReplace(_formula* _fml, _formula* _fatherFml = NULL);
+    static _formula* _thetaReplace(_formula* _fml, _formula* _fatherFml = NULL);
+    static _formula* thetaT__Replace(_formula* _fml, _formula* _fatherFml = NULL);
+    static string convertNumToString(int _num);
 };
 
 

@@ -42,6 +42,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Formulas.o \
 	${OBJECTDIR}/src/HengZhang.o \
 	${OBJECTDIR}/src/NNFUtils.o \
+	${OBJECTDIR}/src/Optimization.o \
 	${OBJECTDIR}/src/PNFUtils.o \
 	${OBJECTDIR}/src/Rule.o \
 	${OBJECTDIR}/src/SMTranslator.o \
@@ -117,6 +118,11 @@ ${OBJECTDIR}/src/NNFUtils.o: src/NNFUtils.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/NNFUtils.o src/NNFUtils.cpp
+
+${OBJECTDIR}/src/Optimization.o: src/Optimization.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Optimization.o src/Optimization.cpp
 
 ${OBJECTDIR}/src/PNFUtils.o: src/PNFUtils.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -262,6 +268,19 @@ ${OBJECTDIR}/src/NNFUtils_nomain.o: ${OBJECTDIR}/src/NNFUtils.o src/NNFUtils.cpp
 	    $(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/NNFUtils_nomain.o src/NNFUtils.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/NNFUtils.o ${OBJECTDIR}/src/NNFUtils_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/Optimization_nomain.o: ${OBJECTDIR}/src/Optimization.o src/Optimization.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/Optimization.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Optimization_nomain.o src/Optimization.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/Optimization.o ${OBJECTDIR}/src/Optimization_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/PNFUtils_nomain.o: ${OBJECTDIR}/src/PNFUtils.o src/PNFUtils.cpp 

@@ -25,6 +25,7 @@ class Rule;
 class SMTranslator {
 private:
     Formulas* m_pOriginalFormulas;      //原公式
+    vector<string> m_vOriginalFormulas;
     Formulas* m_pHengZhangFormulas;     //章衡转化结果
     vector<string> m_vHengZhangFormulas;
     Formulas* m_pDlpFormulas;           //Cabalar转化结果
@@ -50,6 +51,7 @@ public:
     void init(const Formulas& _originalFmls);
     void destroy();
     void convert();
+    void outputOriginalFormulas(FILE* _out) const;
     void outputHengZhangFormulas(FILE* _out) const;
     void outputCabalarFormulas(FILE* _out) const;
     void outputRules(FILE* _out) const;

@@ -17,6 +17,7 @@
 #include <iostream>
 #include <unistd.h>
 #include "CircTranslator.h"
+#include "Optimization.h"
 
 
 using namespace std;
@@ -28,6 +29,7 @@ extern int yyparse();
 
 //#define SM
 #define CIRC
+//#define OP
 
 void io(const char* iPathName, const char* oPathName) {
     yyin = fopen (iPathName, "r");
@@ -46,7 +48,7 @@ void io(const char* iPathName, const char* oPathName) {
 int main(int argc, char** argv) {
     
     if(argc < 3) {
-        io("res/input/circ/2clique.in","res/output/circ/2clique.out");
+        io("res/input/sample.in","res/output/sample.out");
     }
     else {
         io(argv[1], argv[2]);
@@ -55,8 +57,9 @@ int main(int argc, char** argv) {
     yyparse();
     fclose(yyin);
     
-#ifdef SM
     Formula f = Formula(gformula, false);
+    
+#ifdef SM
     SMTranslator::instance().init(f);
     SMTranslator::instance().convert();
     SMTranslator::instance().outputFinalResult(fout);
@@ -64,12 +67,25 @@ int main(int argc, char** argv) {
 #endif
 
 #ifdef CIRC
-    Formula f = Formula(gformula, false);
     CircTranslator circTranslator;
     Formulas* fmls = circTranslator.convert(f);
+    fmls->output(stdout);
     SMTranslator::instance().init(*fmls);
     SMTranslator::instance().convert();
     SMTranslator::instance().outputFinalResult(fout);
+    SMTranslator::instance().destroy();
+    delete fmls;
+#endif
+    
+#ifdef OP
+    Formulas* fmls = Optimization::instance().convert(f);
+    fmls->output(stdout);
+    printf("\n\n");
+    SMTranslator::instance().init(*fmls);
+    SMTranslator::instance().convert();
+    SMTranslator::instance().outputFinalResult(fout);
+//    SMTranslator::instance().outputOriginalFormulas(stdout);
+//    SMTranslator::instance().outputHengZhangFormulas(stdout);
     SMTranslator::instance().destroy();
     delete fmls;
 #endif

@@ -3,9 +3,6 @@
 #include "NNFUtils.h"
 #include "Utils.h"
 
-const string CircTranslator::ms_sRName = "r_new";
-const string CircTranslator::ms_sVaryPostfix = "_vary";
-
 CircTranslator::CircTranslator() {
     
 }
@@ -19,7 +16,7 @@ CircTranslator::~CircTranslator() {
  * @return 
  */
 Formula CircTranslator::createFormula_1(const Formula& _originalFml) {
-    map<int, string> vIntensionPredicates = Vocabulary::instance().getAllIntensionPredicates();
+    map<int, string> vIntensionPredicates = Vocabulary::instance().getAllPredicates();
     Formula copyOriginalFml = _originalFml;
     copyOriginalFml.doubleNegationPredicates(vIntensionPredicates);
     return copyOriginalFml;
@@ -31,14 +28,14 @@ Formula CircTranslator::createFormula_1(const Formula& _originalFml) {
  */
 Formula CircTranslator::createFormula_2(const Formula& _originalFml) {
     _formula* fml = Utils::copyFormula(_originalFml.getFormula());
-    _formula* final = Utils::circReplace(fml);
+    _formula* final = Utils::_thetaReplace(fml);
     return Formula(final, false);
 }
 /**
  * 生成　^[!X](p|~p)
  * @return 
  */
-_formula* CircTranslator::createFormula_3_right() {
+_formula* CircTranslator::createP_P() {
     _formula* final = NULL;
     Formulas* atoms = Vocabulary::instance().getAtomList();
     for (FORMULAS_CONST_ITERATOR it = atoms->begin();
@@ -66,10 +63,10 @@ _formula* CircTranslator::createFormula_3_right() {
  * @return 
  */
 Formula CircTranslator::createFormula_3_1() {
-    int rId = Vocabulary::instance().getSymbolId(ms_sRName.c_str(), PREDICATE);
+    int rId = Vocabulary::instance().getSymbolId(R_NAME, PREDICATE);
     _formula* r = Utils::compositeToAtom(rId, NULL);
     _formula* f = Utils::compositeByConnective(IMPL, r, 
-                        createFormula_3_right());
+                        createP_P());
     return Formula(f, false);
 }
 /**
@@ -78,10 +75,10 @@ Formula CircTranslator::createFormula_3_1() {
  * @return 
  */
 Formula CircTranslator::createFormula_3_2() {
-    int rId = Vocabulary::instance().getSymbolId(ms_sRName.c_str(), PREDICATE);
+    int rId = Vocabulary::instance().getSymbolId(R_NAME, PREDICATE);
     _formula* r = Utils::compositeToAtom(rId, NULL);
     _formula* f = Utils::compositeByConnective(IMPL,
-                        createFormula_3_right(),
+                        createP_P(),
                         r);
     return Formula(f, false);
 }
@@ -90,7 +87,7 @@ Formula CircTranslator::createFormula_3_2() {
  * @param _originalFml
  * @return 
  */
-Formula CircTranslator::createFormula_4(const Formula& _originalFml) {
+Formula CircTranslator::createFormula_4() {
     _formula* final = NULL;
     Formulas* atoms = Vocabulary::instance().getAtomList();
     for (FORMULAS_CONST_ITERATOR it = atoms->begin();
@@ -100,12 +97,12 @@ Formula CircTranslator::createFormula_4(const Formula& _originalFml) {
             _formula* q = Utils::copyFormula(it->getFormula());
             const char* qName = Vocabulary::instance().getNameById(q->predicate_id, PREDICATE);
             char qVaryName[64];
-            sprintf(qVaryName, "%s%s", qName, ms_sVaryPostfix.c_str());
+            sprintf(qVaryName, "%s%s", qName, VARY_PREDICATE_POSTFIX);
             int qVaryId = Vocabulary::instance().getSymbolId(qVaryName, PREDICATE); 
             q->predicate_id = qVaryId;
             _formula* qVary = q;
             //r
-            int rId = Vocabulary::instance().getSymbolId(ms_sRName.c_str(), PREDICATE);
+            int rId = Vocabulary::instance().getSymbolId(R_NAME, PREDICATE);
             _formula* r = Utils::compositeToAtom(rId, NULL);
             _formula* f = Utils::compositeByConnective(IMPL, r, qVary);
             Formula tmp = Formula(f, false);
@@ -130,7 +127,7 @@ Formula CircTranslator::createFormula_4(const Formula& _originalFml) {
 Formulas* CircTranslator::convert(const Formula& _originalFml) {
     // 生成新谓词
     //　r
-    int rId = Vocabulary::instance().addSymbol(ms_sRName.c_str(), PREDICATE, 0);
+    int rId = Vocabulary::instance().addSymbol(R_NAME, PREDICATE);
     _formula* r = Utils::compositeToAtom(rId, NULL);
     Vocabulary::instance().addAtom(Formula(r, false));
     // 生成可变谓词的辅助谓词
@@ -138,7 +135,7 @@ Formulas* CircTranslator::convert(const Formula& _originalFml) {
     vector<string> newPredicatesName;
     for (map<int, string>::const_iterator it = varyPredicates.begin(); 
             it != varyPredicates.end(); ++ it) {
-        string name = it->second + ms_sVaryPostfix;
+        string name = it->second + VARY_PREDICATE_POSTFIX;
         int id = Vocabulary::instance().addSymbol(name.c_str(), PREDICATE, 
                     Vocabulary::instance().getPredicateArity(it->first));
         Formula q = Vocabulary::instance().getAtom(it->first);
@@ -153,9 +150,9 @@ Formulas* CircTranslator::convert(const Formula& _originalFml) {
     pFmls->pushBack(createFormula_2(nnfFml));
     pFmls->pushBack(createFormula_3_1());
     pFmls->pushBack(createFormula_3_2());
-    pFmls->pushBack(createFormula_4(nnfFml));
+    pFmls->pushBack(createFormula_4());
     // 把新生成的谓词标记为内涵谓词
-    Vocabulary::instance().addIntensionPredicate(ms_sRName.c_str());
+    Vocabulary::instance().addIntensionPredicate(R_NAME);
     for (unsigned int i = 0; i < newPredicatesName.size(); ++ i) {
         Vocabulary::instance().addIntensionPredicate(newPredicatesName[i].c_str());
     }
