@@ -219,21 +219,16 @@ void SMTranslator::outputAddition(FILE* _out) const {
             Utils::printAtom(iter->getFormula(), _out);
             fprintf(_out, ".\n");
             //p|_p
-//            Utils::printAtom(iter->getFormula(), _out);
-//            fprintf(_out, " | _");
-//            Utils::printAtom(iter->getFormula(), _out);
-//            fprintf(_out, ".\n");
+//            if (! Vocabulary::instance().isSuccOrMax(iter->getFormula()->predicate_id)) {
+//                Utils::printAtom(iter->getFormula(), _out);
+//                fprintf(_out, " | _");
+//                Utils::printAtom(iter->getFormula(), _out);
+//                fprintf(_out, ".\n");
+//            }
         }
     }
     fprintf(_out, "\n%%Succ predicate definition\n");
     for(unsigned int i = 0; i < HengZhang::ms_vDomainNames.size(); ++ i) {
-        printf("\nsucc:\n");
-        for (unsigned int j = 0; j < HengZhang::ms_vDomainNames.size(); ++ j) {
-            for (unsigned int k = 0; k < HengZhang::ms_vDomainNames[j].size(); ++ k) {
-                printf("%s ", HengZhang::ms_vDomainNames[j][k].c_str());
-            }
-            printf("\n");
-        }
         outputSucc(_out, HengZhang::ms_vDomainNames.at(i));
     }  
     fprintf(_out, "\n");

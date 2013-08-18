@@ -16,7 +16,7 @@ CircTranslator::~CircTranslator() {
  * @return 
  */
 Formula CircTranslator::createFormula_1(const Formula& _originalFml) {
-    map<int, string> vIntensionPredicates = Vocabulary::instance().getAllPredicates();
+    map<int, string> vIntensionPredicates = Vocabulary::instance().getAllIntensionPredicates();
     Formula copyOriginalFml = _originalFml;
     copyOriginalFml.doubleNegationPredicates(vIntensionPredicates);
     return copyOriginalFml;
@@ -143,14 +143,37 @@ Formulas* CircTranslator::convert(const Formula& _originalFml) {
         Vocabulary::instance().addAtom(q);
         newPredicatesName.push_back(name);
     }     
+    // 拆分输入
+    Formulas* inputTmp = _originalFml.divideFormula();
+    // 将输入转化成nnf
+    NNFUtils::convertToNegativeNormalForms(inputTmp, false);
+    Formulas* nnfFmls = new Formulas();
+    for (FORMULAS_CONST_ITERATOR it = inputTmp->begin();
+            it != inputTmp->end(); ++ it) {
+        // 进行 p->q   ==>  ~p|q 转换
+        Formula tmp = Formula(Utils::removeImpl(Utils::copyFormula(it->getFormula())), false);
+        // 转化成pnf
+        tmp.convertToPNF();
+        // 再次删除多余的~
+        Formula nnf = NNFUtils::convertToNegativeNormalForm(tmp, false);
+        nnfFmls->pushBack(nnf);
+    }
+    delete inputTmp;
+    printf("ori:\n");
+    nnfFmls->output(stdout);
     
     Formulas* pFmls = new Formulas();
-    Formula nnfFml = NNFUtils::convertToNegativeNormalForm(_originalFml, false);
-    pFmls->pushBack(createFormula_1(nnfFml));
-    pFmls->pushBack(createFormula_2(nnfFml));
-    pFmls->pushBack(createFormula_3_1());
-    pFmls->pushBack(createFormula_3_2());
-    pFmls->pushBack(createFormula_4());
+    for (FORMULAS_CONST_ITERATOR it = nnfFmls->begin(); 
+            it != nnfFmls->end(); ++ it) {
+        pFmls->pushBack(createFormula_1(*it));
+        pFmls->pushBack(createFormula_2(*it));
+        pFmls->pushBack(createFormula_3_1());
+        pFmls->pushBack(createFormula_3_2());
+        pFmls->pushBack(createFormula_4());
+    }
+    delete nnfFmls;
+    printf("circ:\n");
+    pFmls->output(stdout);
     // 把新生成的谓词标记为内涵谓词
     Vocabulary::instance().addIntensionPredicate(R_NAME);
     for (unsigned int i = 0; i < newPredicatesName.size(); ++ i) {

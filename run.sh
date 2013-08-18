@@ -12,12 +12,20 @@ else
     echo "error!!!"
     exit 1
 fi
-
 echo "begin to run $tranType..."
 echo
+# 生成parser文件
 cd parse
+echo "generate parser file"
 ./generate.sh $tranType
 cd ..
+
+# 生成主函数
+echo
+echo "generate $tranType main function..."
+echo
+cat ${tranType}_main.cpp > src/main.cpp
+
 
 # 编译代码
 echo

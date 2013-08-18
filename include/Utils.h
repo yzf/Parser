@@ -72,6 +72,7 @@ public:
 
     static _formula* _thetaReplace(_formula* _fml, _formula* _fatherFml = NULL);
     static _formula* thetaT__Replace(_formula* _fml, _formula* _fatherFml = NULL);
+    static _formula* removeImpl(_formula* _fml);
     static string convertNumToString(int _num);
 };
 

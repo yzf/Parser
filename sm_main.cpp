@@ -56,16 +56,12 @@ int main(int argc, char** argv) {
     fclose(yyin);
     
     Formula f = Formula(gformula, false);
-    
-    CircTranslator circTranslator;
-    Formulas* fmls = circTranslator.convert(f);
-    SMTranslator::instance().init(*fmls);
+
+    SMTranslator::instance().init(f);
     SMTranslator::instance().convert();
-    SMTranslator::instance().outputHengZhangFormulas(stdout);
     SMTranslator::instance().outputFinalResult(fout);
     SMTranslator::instance().destroy();
-    delete fmls;
-    
+
 #ifdef OP
     Formulas* fmls = Optimization::instance().convert(f);
     fmls->output(stdout);

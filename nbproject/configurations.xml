@@ -34,6 +34,10 @@
         <logicalFolder name="circ" displayName="circ" projectFiles="true">
           <itemPath>res/input/circ/2clique.fact</itemPath>
           <itemPath>res/input/circ/2clique.in</itemPath>
+          <itemPath>res/input/circ/blockworld.fact</itemPath>
+          <itemPath>res/input/circ/blockworld.in</itemPath>
+          <itemPath>res/input/circ/blockworld_2.fact</itemPath>
+          <itemPath>res/input/circ/blockworld_2.in</itemPath>
           <itemPath>res/input/circ/setcover.fact</itemPath>
           <itemPath>res/input/circ/setcover.in</itemPath>
           <itemPath>res/input/circ/test_1.fact</itemPath>
@@ -52,6 +56,10 @@
         <logicalFolder name="circ" displayName="circ" projectFiles="true">
           <itemPath>res/output/circ/2clique.out</itemPath>
           <itemPath>res/output/circ/2clique.result</itemPath>
+          <itemPath>res/output/circ/blockworld.out</itemPath>
+          <itemPath>res/output/circ/blockworld.result</itemPath>
+          <itemPath>res/output/circ/blockworld_2.out</itemPath>
+          <itemPath>res/output/circ/blockworld_2.result</itemPath>
           <itemPath>res/output/circ/setcover.out</itemPath>
           <itemPath>res/output/circ/setcover.result</itemPath>
           <itemPath>res/output/circ/test_1.out</itemPath>
@@ -104,7 +112,9 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
       <itemPath>README.md</itemPath>
+      <itemPath>circ_main</itemPath>
       <itemPath>run.sh</itemPath>
+      <itemPath>sm_main</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -209,6 +219,14 @@
       </item>
       <item path="res/input/circ/2clique.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/circ/blockworld.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_2.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/input/circ/setcover.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/circ/setcover.in" ex="false" tool="3" flavor2="0">
@@ -232,6 +250,17 @@
       <item path="res/output/circ/2clique.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/circ/2clique.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_2.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="res/output/circ/setcover.out" ex="false" tool="3" flavor2="0">
       </item>
@@ -380,6 +409,14 @@
       </item>
       <item path="res/input/circ/2clique.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/circ/blockworld.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_2.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/input/circ/setcover.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/circ/setcover.in" ex="false" tool="3" flavor2="0">
@@ -403,6 +440,17 @@
       <item path="res/output/circ/2clique.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/circ/2clique.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_2.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="res/output/circ/setcover.out" ex="false" tool="3" flavor2="0">
       </item>

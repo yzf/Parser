@@ -893,9 +893,9 @@ _formula* Utils::_thetaReplace(_formula* _fml, _formula* _fatherFml) {
                 }
             }
             break;
+        case IMPL:
         case CONJ:
         case DISJ:
-        case IMPL:
             _thetaReplace(_fml->subformula_r, _fml);
         case UNIV:
         case EXIS:
@@ -945,6 +945,28 @@ _formula* Utils::thetaT__Replace(_formula* _fml, _formula* _fatherFml) {
         case EXIS:
         case NEGA:
             thetaT__Replace(_fml->subformula_l, _fml);
+            break;
+        default:
+            assert(0);
+    }
+    return _fml;
+}
+
+_formula* Utils::removeImpl(_formula* _fml) {
+    assert(_fml);
+    switch (_fml->formula_type) {
+        case ATOM:
+            break;
+        case IMPL:
+            _fml->formula_type = DISJ;
+            _fml->subformula_l = compositeByConnective(NEGA, _fml->subformula_l);
+        case CONJ:
+        case DISJ:
+            removeImpl(_fml->subformula_r);
+        case UNIV:
+        case EXIS:
+        case NEGA:
+            removeImpl(_fml->subformula_l);
             break;
         default:
             assert(0);

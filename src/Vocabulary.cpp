@@ -224,6 +224,14 @@ bool Vocabulary::isVaryPredicate(int _nPredicateId) const {
     map<int, bool>::const_iterator it = m_mapIsVaryPredicate.find(_nPredicateId);
     return it != m_mapIsVaryPredicate.end() ? true : false;
 }
+bool Vocabulary::isSuccOrMax(int _nPredicateId) const {
+    const char* name = getNameById(_nPredicateId, PREDICATE);
+    assert(name);
+    if (strncmp(name, "succ", 4) == 0 || strncmp(name, "max", 3) == 0) {
+        return true;
+    }
+    return false;
+}
 /**
  * 获取id对应的名字
  * @param _id 
