@@ -40,8 +40,6 @@ private:
     int m_nNumMAX;
     int m_nNumSucc;
     int m_nNumNV;
-public:    
-    static vector< vector<string> > ms_vDomainNames;
     
 private:
     Formulas transform(const Formula& _originalFml);

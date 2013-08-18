@@ -38,6 +38,8 @@ private:
      
     
     Formulas* m_fmlAtomList;
+public:    
+    vector< vector<string> > ms_vDomainNames;
 
 private:
     Vocabulary();

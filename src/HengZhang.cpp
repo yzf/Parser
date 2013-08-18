@@ -2,7 +2,6 @@
 #include "cstdlib"
 #include "Utils.h"
 
-vector< vector<string> > HengZhang::ms_vDomainNames;
 
 HengZhang::HengZhang() {
 }
@@ -120,7 +119,7 @@ Formulas HengZhang::transform(const Formula& _originalFml) {
         domainNames.push_back(string(sDomainName));
     }
     if (Vocabulary::instance().getSymbolId(succName.c_str(), PREDICATE) == -1) {
-        ms_vDomainNames.push_back(domainNames);
+        Vocabulary::instance().ms_vDomainNames.push_back(domainNames);
     }
     m_nSymbolSucc = Vocabulary::instance().addSymbol(succName.c_str(), 
                         PREDICATE, m_vTermsY.size() + m_vTermsZ.size());

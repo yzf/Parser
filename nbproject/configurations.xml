@@ -112,9 +112,9 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
       <itemPath>README.md</itemPath>
-      <itemPath>circ_main</itemPath>
+      <itemPath>circ_main.cpp</itemPath>
       <itemPath>run.sh</itemPath>
-      <itemPath>sm_main</itemPath>
+      <itemPath>sm_main.cpp</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>

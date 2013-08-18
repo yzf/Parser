@@ -101,7 +101,7 @@ Formula Optimization::preProcessing(const Formula& _originalFml) {
                 PREDICATE, m_vTermsY.size() + m_vTermsY.size());
         term = Utils::combineTerms(m_vTermsY, m_vTermsZ);
         Vocabulary::instance().addAtom(Formula(Utils::compositeToAtom(id, term), false));
-        HengZhang::ms_vDomainNames.push_back(domainNames);
+        Vocabulary::instance().ms_vDomainNames.push_back(domainNames);
     }
     // 生成w(X_,Y_)
     id = Vocabulary::instance().addSymbol(ms_sPredicateNameW.c_str(),

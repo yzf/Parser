@@ -228,8 +228,8 @@ void SMTranslator::outputAddition(FILE* _out) const {
         }
     }
     fprintf(_out, "\n%%Succ predicate definition\n");
-    for(unsigned int i = 0; i < HengZhang::ms_vDomainNames.size(); ++ i) {
-        outputSucc(_out, HengZhang::ms_vDomainNames.at(i));
+    for(unsigned int i = 0; i < Vocabulary::instance().ms_vDomainNames.size(); ++ i) {
+        outputSucc(_out, Vocabulary::instance().ms_vDomainNames.at(i));
     }  
     fprintf(_out, "\n");
     fflush(_out);
@@ -285,22 +285,22 @@ void SMTranslator::outputSucc(FILE* _out, vector<string> domains) const {
                     fprintf(_out, ",");
                 }
             }
-            fflush(_out);
+
             bool exis = false;
-            for (unsigned int j = 0; j < HengZhang::ms_vDomainNames.size(); ++ j) {
+            for (unsigned int j = 0; j < Vocabulary::instance().ms_vDomainNames.size(); ++ j) {
                 
-                if(HengZhang::ms_vDomainNames[j].size() == 1 && HengZhang::ms_vDomainNames[j][0] == domains[size - i - 1]) {
+                if(Vocabulary::instance().ms_vDomainNames[j].size() == 1 && Vocabulary::instance().ms_vDomainNames[j][0] == domains[size - i - 1]) {
                     exis = true;
                 }
             }
             if (! exis) {
                 vector<string> d;
                 d.push_back(domains[size - i - 1]);
-                HengZhang::ms_vDomainNames.push_back(d);
+                Vocabulary::instance().ms_vDomainNames.push_back(d);
             }
             fprintf(_out, ":- succ_%s(%c1,%c2), ", 
                     domains[size - i - 1].c_str(), 'A' + size - i - 1, 'A' + size - i - 1);
-            fflush(_out);
+
             for (int j = 0; j < size - i; ++ j) {
                 if (j == size - i - 1) {
                     fprintf(_out, "%s(%c1), %s(%c2).", 
@@ -312,7 +312,6 @@ void SMTranslator::outputSucc(FILE* _out, vector<string> domains) const {
             }
             
             fprintf(_out, "\n");
-            fflush(_out);
         }      
     }
 }
