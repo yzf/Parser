@@ -196,37 +196,37 @@ _formula* NNFUtils::convertToNegativeNormalForm(_formula* _originalFml) {
     
     return _originalFml;
 }
-Formula NNFUtils::convertToNegativeNormalForm(const Formula& _originalFml, bool _bIsSM) {
-    ms_bIsSM = _bIsSM;
-    _formula* nnf = convertToNegativeNormalForm(Utils::copyFormula(_originalFml.getFormula()));
-    return Formula(nnf, false);
-}
-/**
- * 把所有公式转化成否定标准式
- * @param _originalFmls
- * @return Formulas*　需要手动delete
- */
-Formulas* NNFUtils::convertToNegativeNormalForms(const Formulas& _originalFmls, bool _bIsSM) {
-    ms_bIsSM = _bIsSM;
-    Formulas* pRetFormulas = new Formulas();
-    for (FORMULAS_CONST_ITERATOR it = _originalFmls.begin();
-            it != _originalFmls.end(); ++ it) {
-        Formula newFml = Formula(
-                        NNFUtils::convertToNegativeNormalForm(
-                                Utils::copyFormula(it->getFormula())), false);
-        pRetFormulas->pushBack(newFml);
-    }
-    return pRetFormulas;
-}
-/**
- * 把所有公式转化成否定标准式
- * @param _originalFmls Formulas* 直接操作这些公式
- */
-void NNFUtils::convertToNegativeNormalForms(Formulas* _originalFmls, bool _bIsSM) {
-    ms_bIsSM = _bIsSM;
-    for (FORMULAS_ITERATOR it = _originalFmls->begin();
-            it != _originalFmls->end(); ++ it) {
-        it->setFormula(NNFUtils::convertToNegativeNormalForm(
-                            Utils::copyFormula(it->getFormula())));
-    }
-}
+//Formula NNFUtils::convertToNegativeNormalForm(const Formula& _originalFml, bool _bIsSM) {
+//    ms_bIsSM = _bIsSM;
+//    _formula* nnf = convertToNegativeNormalForm(Utils::copyFormula(_originalFml.getFormula()));
+//    return Formula(nnf, false);
+//}
+///**
+// * 把所有公式转化成否定标准式
+// * @param _originalFmls
+// * @return Formulas*　需要手动delete
+// */
+//Formulas* NNFUtils::convertToNegativeNormalForms(const Formulas& _originalFmls, bool _bIsSM) {
+//    ms_bIsSM = _bIsSM;
+//    Formulas* pRetFormulas = new Formulas();
+//    for (FORMULAS_CONST_ITERATOR it = _originalFmls.begin();
+//            it != _originalFmls.end(); ++ it) {
+//        Formula newFml = Formula(
+//                        NNFUtils::convertToNegativeNormalForm(
+//                                Utils::copyFormula(it->getFormula())), false);
+//        pRetFormulas->pushBack(newFml);
+//    }
+//    return pRetFormulas;
+//}
+///**
+// * 把所有公式转化成否定标准式
+// * @param _originalFmls Formulas* 直接操作这些公式
+// */
+//void NNFUtils::convertToNegativeNormalForms(Formulas* _originalFmls, bool _bIsSM) {
+//    ms_bIsSM = _bIsSM;
+//    for (FORMULAS_ITERATOR it = _originalFmls->begin();
+//            it != _originalFmls->end(); ++ it) {
+//        it->setFormula(NNFUtils::convertToNegativeNormalForm(
+//                            Utils::copyFormula(it->getFormula())));
+//    }
+//}

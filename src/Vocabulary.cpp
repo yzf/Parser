@@ -6,18 +6,14 @@
 #include <cstdlib>
 #include <assert.h>
 
-int Vocabulary::ms_nVariableId = 0;
-int Vocabulary::ms_nDomainId = 0;
-int Vocabulary::ms_nFunctionId = 0;
-int Vocabulary::ms_nPredicateId = 0;
-int Vocabulary::ms_nRenameVariablePostfix = 0;
-
 Vocabulary& Vocabulary::instance() {
     static Vocabulary vocabulary;
     return vocabulary;
 }
 
-Vocabulary::Vocabulary() {
+Vocabulary::Vocabulary() : m_nVariableId(0), m_nDomainId(0), m_nFunctionId(0),
+        m_nPredicateId(0), m_nRenameVariablePostfix(0), m_nSPostfix(0), m_nWPostfix(0), 
+        m_nTPostfix(0), m_nRPostfix(0), m_nPrenexRenamePostfix(0), m_nRenameVariPostfix(0) {
     m_mapVariableName.clear();
     m_mapDomainName.clear();
     m_mapFunctionName.clear();
@@ -56,6 +52,11 @@ void Vocabulary::addIntensionPredicate(const char* _name) {
     int id = getSymbolId(_name, PREDICATE);
     m_mapIsIntensionPredicate.insert(make_pair<int, bool>(id, true));
 }
+void Vocabulary::addIntensionPredicate(int _predicateId) {
+    map<int, string>::const_iterator it = m_mapPredicateName.find(_predicateId);
+    assert(it != m_mapPredicateName.end());
+    m_mapIsIntensionPredicate.insert(make_pair<int, bool>(_predicateId, true));
+}
 /**
  * 保存可变谓词
  * @param _name
@@ -83,7 +84,7 @@ void Vocabulary::setVariableDomain(const char* _variable, const char* _domain) {
     int variableId;
     
     if(domainId == -1) {
-        domainId = Vocabulary::ms_nDomainId ++;
+        domainId = m_nDomainId ++;
         m_mapDomainName[domainId] = string(_domain);
     }
     if((variableId = getSymbolId(_variable, VARIABLE)) != -1) {
@@ -151,16 +152,16 @@ int Vocabulary::addSymbol(const char* _name, SYMBOL_TYPE _type, int _arity )
 
         switch (_type) {
         case VARIABLE:
-            id = Vocabulary::ms_nVariableId ++;
+            id = m_nVariableId ++;
             m_mapVariableName[id] = name;
             break;
         case FUNCTION:
-            id = Vocabulary::ms_nFunctionId ++;
+            id = m_nFunctionId ++;
             m_mapFunctionName[id] = name;
             m_mapFunctionArity[id] = _arity;
             break;
         case PREDICATE:
-            id = Vocabulary::ms_nPredicateId ++;
+            id = m_nPredicateId ++;
             m_mapPredicateName[id] = name;
             m_mapPredicateArity[id] = _arity;
             break;
@@ -203,7 +204,7 @@ int Vocabulary::getFunctionArity(int _id) {
  */
 int Vocabulary::addRenameVariable() {
     char nameBuf[10];
-    sprintf(nameBuf, "PN_%i", Vocabulary::ms_nRenameVariablePostfix);
+    sprintf(nameBuf, "%s%d", PRENEX_RENAME_PREFIX, m_nRenameVariablePostfix ++);
     return addSymbol(nameBuf, VARIABLE);
 }
 /**
@@ -397,4 +398,93 @@ map<int, string> Vocabulary::getAllVaryPredicates() const {
         }
     }
     return vRet;
+}
+
+int Vocabulary::generatePredicateS(vector<int> _termsX, vector<int> _termsY) {
+    char name[32];
+    sprintf(name, "%s%d", S_PREFIX, m_nSPostfix ++);
+    int id = addSymbol(name, PREDICATE, _termsX.size() + _termsY.size());
+    _term* t = Utils::combineTerms(_termsX, _termsY);
+    addAtom(Formula(Utils::compositeToAtom(id, t), false));
+    return id;
+}
+
+int Vocabulary::generatePredicateW(vector<int> _termsX, vector<int> _termsY) {
+    char name[32];
+    sprintf(name, "%s%d", W_PREFIX, m_nWPostfix ++);
+    int id = addSymbol(name, PREDICATE, _termsX.size() + _termsY.size());
+    _term* t = Utils::combineTerms(_termsX, _termsY);
+    addAtom(Formula(Utils::compositeToAtom(id, t), false));
+    return id;
+}
+
+int Vocabulary::generatePredicateT(vector<int> _termsX, vector<int> _termsY) {
+    char name[32];
+    sprintf(name, "%s%d", T_PREFIX, m_nTPostfix ++);
+    int id = addSymbol(name, PREDICATE, _termsX.size() + _termsY.size());
+    _term* t = Utils::combineTerms(_termsX, _termsY);
+    addAtom(Formula(Utils::compositeToAtom(id, t), false));
+    return id;
+}
+
+int Vocabulary::generatePredicateR(vector<int> _termsX, vector<int> _termsY) {
+    char name[32];
+    sprintf(name, "%s%d", R_PREFIX, m_nRPostfix ++);
+    int id = addSymbol(name, PREDICATE, _termsX.size() + _termsY.size());
+    _term* t = Utils::combineTerms(_termsX, _termsY);
+    addAtom(Formula(Utils::compositeToAtom(id, t), false));
+    return id;
+}
+
+int Vocabulary::generatePredicateSucc(vector<int> _termsY, vector<int> _termsZ) {
+    string succName = SUCC_PREFIX;
+    vector<string> domainNames;
+    for (unsigned int i = 0; i < _termsY.size(); ++ i) {
+        const char* sDomainName = Vocabulary::instance().getVariableDomain(_termsY[i]);
+        succName += string("_") + sDomainName;
+        domainNames.push_back(string(sDomainName));
+    }
+    int id = Vocabulary::instance().getSymbolId(succName.c_str(), PREDICATE);
+    if (id != -1) {
+        return id;
+    }
+    id = Vocabulary::instance().addSymbol(succName.c_str(), 
+                        PREDICATE, _termsY.size() + _termsZ.size());
+    Vocabulary::instance().ms_vDomainNames.push_back(domainNames);
+    //保存谓词原型
+    _term* term_y_z   = Utils::combineTerms(_termsY, _termsZ);
+    _formula* succ_y_z = Utils::compositeToAtom(id, term_y_z);
+    Vocabulary::instance().addAtom(Formula(succ_y_z, false));
+    return id;
+}
+
+int Vocabulary::generateDomainMIN(const char* _domain) {
+    char sBuf[32];
+    sprintf(sBuf, "%s%s", MIN_PREFIX, _domain);
+    int id = Vocabulary::instance().getSymbolId(sBuf, VARIABLE);
+    if (-1 != id) {
+        return id;
+    }
+    id = Vocabulary::instance().addSymbol(sBuf, VARIABLE);
+    return id;
+}
+
+int Vocabulary::generateDomainMAX(const char* _domain) {
+    char sBuf[32];
+    sprintf(sBuf, "%s%s", MAX_PREFIX, _domain);
+    int id = Vocabulary::instance().getSymbolId(sBuf, VARIABLE);
+    if (-1 != id) {
+        return id;
+    }
+    id = Vocabulary::instance().addSymbol(sBuf, VARIABLE);
+    return id;
+}
+
+int Vocabulary::generateNewVariable(int _oriVariId) {
+    char sBuf[32];
+    sprintf(sBuf,"%s%d", RENAME_VARI_PREFIX, m_nRPostfix ++);
+    int id = Vocabulary::instance().addSymbol(sBuf, VARIABLE);
+    Vocabulary::instance().setVariableDomain(sBuf, 
+                    Vocabulary::instance().getVariableDomain(_oriVariId));
+    return id;
 }

@@ -22,7 +22,6 @@ Formulas* HengZhang::convert(const Formulas& _originalFmls) {
     Formulas* pFinalFmls = new Formulas();
     while (! tempFmls.isEmpty()) {
         Formula curFml = tempFmls.popFront();
-        curFml.fixUniversalQuantifier();
         curFml.convertToPNF();
         if (curFml.isUniversal()) {
             pFinalFmls->pushBack(curFml);
@@ -40,7 +39,6 @@ Formulas* HengZhang::convert(const Formulas& _originalFmls) {
  * @return 
  */
 Formula HengZhang::recordQuantifier(const Formula& _originalFml) {
-    char sBuf[32];
 
     m_vTermsX.clear();
     m_vTermsY.clear();
@@ -57,25 +55,19 @@ Formula HengZhang::recordQuantifier(const Formula& _originalFml) {
         m_vTermsY.push_back(fml->variable_id);
         
         const char* sDomainName = Vocabulary::instance().getVariableDomain(fml->variable_id);
-        
-        sprintf(sBuf, "MIN_%s", sDomainName);
-        int nIdMin = Vocabulary::instance().addSymbol(sBuf, VARIABLE);
-        m_vTermsMIN.push_back(nIdMin);
-
-        sprintf(sBuf, "MAX_%s", sDomainName);
-        int nIdMax = Vocabulary::instance().addSymbol(sBuf, VARIABLE);
-        m_vTermsMAX.push_back(nIdMax);
-
-        sprintf(sBuf,"NV_%d", m_nNumNV ++);
-        int nIdNV = Vocabulary::instance().addSymbol(sBuf, VARIABLE);
-        Vocabulary::instance().setVariableDomain(sBuf, 
-                        Vocabulary::instance().getVariableDomain(fml->variable_id));
-        m_vTermsZ.push_back(nIdNV);
+        // MIN
+        int id = Vocabulary::instance().generateDomainMIN(sDomainName);
+        m_vTermsMIN.push_back(id);
+        // MAX
+        id = Vocabulary::instance().generateDomainMAX(sDomainName);
+        m_vTermsMAX.push_back(id);
+        // Z
+        id = Vocabulary::instance().generateNewVariable(fml->variable_id);
+        m_vTermsZ.push_back(id);
 
         fml = fml->subformula_l;
     }
     Formula ret = Formula(fml, true);
-    ret.m_nFormulaId = _originalFml.m_nFormulaId;
     return ret;
 }
 /**
@@ -91,42 +83,14 @@ Formulas HengZhang::transform(const Formula& _originalFml) {
         fmls.pushBack(_originalFml);
         return fmls;
     }
-    //生成谓词s
-    char sBuf[32];
-    sprintf(sBuf, "s_%d", m_nNumS ++);
-    m_nSymbolS = Vocabulary::instance().addSymbol(sBuf, 
-                        PREDICATE, m_vTermsX.size() + m_vTermsY.size());
-    Vocabulary::instance().addIntensionPredicate(sBuf);
-    //保存谓词原型
-    _term* term_x_y   = Utils::combineTerms(m_vTermsX, m_vTermsY);
-    _formula* s_x_y = Utils::compositeToAtom(m_nSymbolS, term_x_y);
-    Vocabulary::instance().addAtom(Formula(s_x_y, false));
-    //生成谓词t
-    sprintf(sBuf, "t_%d", m_nNumT ++);
-    m_nSymbolT = Vocabulary::instance().addSymbol(sBuf, 
-                        PREDICATE, m_vTermsX.size() + m_vTermsY.size());
-    Vocabulary::instance().addIntensionPredicate(sBuf);
-    //保存谓词原型
-    term_x_y   = Utils::combineTerms(m_vTermsX, m_vTermsY);
-    _formula* t_x_y = Utils::compositeToAtom(m_nSymbolT, term_x_y);
-    Vocabulary::instance().addAtom(Formula(t_x_y, false));
+    // 生成谓词s
+    m_nSymbolS = Vocabulary::instance().generatePredicateS(m_vTermsX, m_vTermsY);
+    Vocabulary::instance().addIntensionPredicate(m_nSymbolS);
+    // 生成谓词t
+    m_nSymbolT = Vocabulary::instance().generatePredicateT(m_vTermsX, m_vTermsY);
+    Vocabulary::instance().addIntensionPredicate(m_nSymbolT);
     //生成谓词succ
-    string succName = "succ";
-    vector<string> domainNames;
-    for (unsigned int i = 0; i < m_vTermsY.size(); ++ i) {
-        const char* sDomainName = Vocabulary::instance().getVariableDomain(m_vTermsY[i]);
-        succName += string("_") + sDomainName;
-        domainNames.push_back(string(sDomainName));
-    }
-    if (Vocabulary::instance().getSymbolId(succName.c_str(), PREDICATE) == -1) {
-        Vocabulary::instance().ms_vDomainNames.push_back(domainNames);
-    }
-    m_nSymbolSucc = Vocabulary::instance().addSymbol(succName.c_str(), 
-                        PREDICATE, m_vTermsY.size() + m_vTermsZ.size());
-    //保存谓词原型
-    _term* term_y_z   = Utils::combineTerms(m_vTermsY, m_vTermsZ);
-    _formula* succ_y_z = Utils::compositeToAtom(m_nSymbolSucc, term_y_z);
-    Vocabulary::instance().addAtom(Formula(succ_y_z, false));
+    m_nSymbolSucc = Vocabulary::instance().generatePredicateSucc(m_vTermsY, m_vTermsZ);
     
     Formulas fmls;
     fmls.pushBack(createFormula_1(originalFml));
@@ -156,7 +120,6 @@ Formula HengZhang::createFormula_1(const Formula& _originalFml) {
     F  = Utils::compositeByConnective(NEGA, F,  NULL);
     
     Formula fml = Formula(F, false);
-    fml.m_nFormulaId = Formula::ms_nNewFormulaId ++;
     return fml;
 }
 /**
@@ -188,7 +151,6 @@ Formula HengZhang::createFormula_2(const Formula& _originalFml) {
     _formula* F = Utils::compositeByConnective(IMPL, l, r);
     
     Formula fml = Formula(F, false);
-    fml.m_nFormulaId = Formula::ms_nNewFormulaId ++;
     return fml;
 }
 /**
@@ -209,7 +171,6 @@ Formula HengZhang::createFormula_3(const Formula& _originalFml) {
     _formula* F   = Utils::compositeByConnective(DISJ, t_x_min, theta_x_min);
     
     Formula fml = Formula(F, false);
-    fml.m_nFormulaId = Formula::ms_nNewFormulaId ++;
     return fml;
 }
 // (s(_X,_Y) & ((~s(_X,_Z) & succ(_Y,_Z)) | _max(Y)))
@@ -265,7 +226,6 @@ Formula HengZhang::createFormula_4_1(const Formula& _originalFml) {
     _formula* F = Utils::compositeByConnective(IMPL, left, right);
     
     Formula fml = Formula(F, false);
-    fml.m_nFormulaId = Formula::ms_nNewFormulaId ++;
     return fml;
 }
 /**
@@ -287,7 +247,6 @@ Formula HengZhang::createFormula_4_2(const Formula& _originalFml) {
     _formula* F = Utils::compositeByConnective(IMPL, left, right);
     
     Formula fml = Formula(F, false);
-    fml.m_nFormulaId = Formula::ms_nNewFormulaId ++;
     return fml;
 }
 /**
@@ -320,7 +279,6 @@ Formula HengZhang::createFormula_5_1(const Formula& _originalFml) {
     _formula* F = Utils::compositeByConnective(IMPL, left, right);
     
     Formula fml = Formula(F, false);
-    fml.m_nFormulaId = Formula::ms_nNewFormulaId ++;
     return fml;
 }
 /**
@@ -353,6 +311,5 @@ Formula HengZhang::createFormula_5_2(const Formula& _originalFml) {
     _formula* F = Utils::compositeByConnective(IMPL, left, right);
     
     Formula fml = Formula(F, false);
-    fml.m_nFormulaId = Formula::ms_nNewFormulaId ++;
     return fml;
 }

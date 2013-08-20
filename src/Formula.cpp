@@ -4,23 +4,21 @@
 #include <algorithm>
 #include "Vocabulary.h"
 #include "PNFUtils.h"
+#include "NNFUtils.h"
 
-int Formula::ms_nNewFormulaId = 0;
 
-Formula::Formula() : m_pFormula(NULL), m_nFormulaId(ms_nNewFormulaId) {
-    ++ ms_nNewFormulaId;
+Formula::Formula() : m_pFormula(NULL) {
 }
-Formula::Formula(const Formula& _rhs) : m_nFormulaId(_rhs.m_nFormulaId) {
+Formula::Formula(const Formula& _rhs) {
     m_pFormula = Utils::copyFormula(_rhs.getFormula());
 }
-Formula::Formula(_formula* _fml, bool _bIsCopy) : m_nFormulaId(ms_nNewFormulaId) {
+Formula::Formula(_formula* _fml, bool _bIsCopy) {
     if (_bIsCopy) {
         m_pFormula = Utils::copyFormula(_fml);
     }
     else {
         m_pFormula = _fml;
     }
-    ++ ms_nNewFormulaId;
 }
 Formula::~Formula() {
     if (m_pFormula != NULL) {
@@ -30,7 +28,6 @@ Formula::~Formula() {
 }
 Formula& Formula::operator = (const Formula& _rhs) {
     m_pFormula = Utils::copyFormula(_rhs.getFormula());
-    m_nFormulaId = _rhs.m_nFormulaId;
     return *this;
 }
 bool Formula::operator == (const Formula& _rhs) const {
@@ -64,7 +61,16 @@ bool Formula::isUniversal() const {
  * 把公式转化成前束范式
  */
 void Formula::convertToPNF() {
+    fixUniversalQuantifier();
     PNFUtils::convertToPNF(m_pFormula);
+}
+/**
+ * 把公式转化为否定范式
+ * @param _bIsSM
+ */
+void Formula::convertToNNF(bool _bIsSM) {
+    NNFUtils::ms_bIsSM = _bIsSM;
+    m_pFormula = NNFUtils::convertToNegativeNormalForm(m_pFormula);
 }
 /**
  * 为公式中没有量词限定的参数补上全称量词限定

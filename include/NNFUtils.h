@@ -16,7 +16,7 @@ class Formulas;
  * 否定标准式的工具类
  */
 class NNFUtils {
-private:
+public:
     static bool ms_bIsSM;
 private:
     static _formula* negativeNormalForm_1(_formula* _originalFml);
@@ -28,9 +28,9 @@ private:
     static _formula* negativeNormalForm_6(_formula* _originalFml);
 public:
     static _formula* convertToNegativeNormalForm(_formula* _originalFml);
-    static Formula convertToNegativeNormalForm(const Formula& _originalFml, bool _bIsSM = true);
-    static Formulas* convertToNegativeNormalForms(const Formulas& _originalFmls, bool _bIsSM = true);
-    static void convertToNegativeNormalForms(Formulas* _originalFmls, bool _bIsSM = true);
+//    static Formula convertToNegativeNormalForm(const Formula& _originalFml, bool _bIsSM = true);
+//    static Formulas* convertToNegativeNormalForms(const Formulas& _originalFmls, bool _bIsSM = true);
+//    static void convertToNegativeNormalForms(Formulas* _originalFmls, bool _bIsSM = true);
 };
 
 

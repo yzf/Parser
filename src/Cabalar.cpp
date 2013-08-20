@@ -22,7 +22,8 @@ Cabalar& Cabalar::instance() {
  */
 Formulas* Cabalar::convert(const Formulas& _originalFmls) {
     Formulas* pFinalFormulas = new Formulas();
-    Formulas* pTmpFormulas = NNFUtils::convertToNegativeNormalForms(_originalFmls);
+    Formulas* pTmpFormulas = new Formulas(_originalFmls);
+    pTmpFormulas->convertToNNF();
     while (! pTmpFormulas->isEmpty()) {
         Formula curFml = pTmpFormulas->popFront();
         curFml.removeUniversalQuantifier();

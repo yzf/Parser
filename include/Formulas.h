@@ -52,6 +52,7 @@ public:
     FORMULAS_CONST_REV_ITERATOR rbegin() const;
     FORMULAS_CONST_REV_ITERATOR rend() const;
     FORMULAS_ITERATOR erase(FORMULAS_ITERATOR _it);
+    void convertToNNF(bool _bIsSM = true);
 };
 
 

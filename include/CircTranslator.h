@@ -18,12 +18,15 @@ class Formulas;
 
 class CircTranslator {
 private:
+    int m_nRid;
+private:
     Formula createFormula_1(const Formula& _originalFml);
     Formula createFormula_2(const Formula& _originalFml);
     _formula* createP_P();
     Formula createFormula_3_1();
     Formula createFormula_3_2();
-    Formula createFormula_4();
+    Formulas createFormula_4();
+    Formulas transform(const Formula& _originalFml);
 public:
     CircTranslator();
     virtual ~CircTranslator();

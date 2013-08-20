@@ -18,8 +18,7 @@
 
 using namespace std;
 
-#define VARY_PREDICATE_POSTFIX "_vary"
-#define R_NAME "r_new"
+
 
 class Formulas;
 /**
@@ -70,7 +69,7 @@ public:
     
     static vector<string> convertFormulasToStrings(Formulas* _fmls);
 
-    static _formula* _thetaReplace(_formula* _fml, _formula* _fatherFml = NULL);
+    static _formula* _thetaReplace(const int& _rId, _formula* _fml, _formula* _fatherFml = NULL);
     static _formula* thetaT__Replace(_formula* _fml, _formula* _fatherFml = NULL);
     static _formula* removeImpl(_formula* _fml);
     static string convertNumToString(int _num);

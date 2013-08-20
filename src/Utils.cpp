@@ -857,7 +857,7 @@ vector<string> Utils::convertFormulasToStrings(Formulas* _fmls) {
  * @param _fatherType
  * @return 
  */
-_formula* Utils::_thetaReplace(_formula* _fml, _formula* _fatherFml) {
+_formula* Utils::_thetaReplace(const int& _rId, _formula* _fml, _formula* _fatherFml) {
     assert(_fml);
     switch (_fml->formula_type) {
         case ATOM:
@@ -865,8 +865,7 @@ _formula* Utils::_thetaReplace(_formula* _fml, _formula* _fatherFml) {
                 if (Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
                     // p->r 替换 ~p
                     _fatherFml->formula_type = IMPL;
-                    int rId = Vocabulary::instance().getSymbolId(R_NAME, PREDICATE);
-                    _fatherFml->subformula_r = Utils::compositeToAtom(rId, NULL);
+                    _fatherFml->subformula_r = Utils::compositeToAtom(_rId, NULL);
                 }
                 else if (Vocabulary::instance().isVaryPredicate(_fml->predicate_id)) {
                     // Q_vary->r 替换 ~Q
@@ -879,8 +878,7 @@ _formula* Utils::_thetaReplace(_formula* _fml, _formula* _fatherFml) {
                     int qVaryId = Vocabulary::instance().getSymbolId(qVaryName, PREDICATE);
                     _fatherFml->subformula_l->predicate_id = qVaryId;
                     // r
-                    int rId = Vocabulary::instance().getSymbolId(R_NAME, PREDICATE);
-                    _fatherFml->subformula_r = Utils::compositeToAtom(rId, NULL); 
+                    _fatherFml->subformula_r = Utils::compositeToAtom(_rId, NULL); 
                 }
             }
             else { // Q_vary  替换 Q，Q_vary属于内涵谓词
@@ -896,11 +894,11 @@ _formula* Utils::_thetaReplace(_formula* _fml, _formula* _fatherFml) {
         case IMPL:
         case CONJ:
         case DISJ:
-            _thetaReplace(_fml->subformula_r, _fml);
+            _thetaReplace(_rId, _fml->subformula_r, _fml);
         case UNIV:
         case EXIS:
         case NEGA:
-            _thetaReplace(_fml->subformula_l, _fml);
+            _thetaReplace(_rId, _fml->subformula_l, _fml);
             break;
         default:
             assert(0);

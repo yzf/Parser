@@ -31,8 +31,6 @@ private:
 
     int m_nSymbolS;
     int m_nSymbolT;
-    int m_nSymbolMAX;
-    int m_nSymbolMIN;
     int m_nSymbolSucc;
 
     int m_nNumS;

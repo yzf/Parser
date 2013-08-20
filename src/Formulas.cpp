@@ -145,3 +145,10 @@ FORMULAS_CONST_REV_ITERATOR Formulas::rend() const {
 FORMULAS_ITERATOR Formulas::erase(FORMULAS_ITERATOR _it) {
     return m_dequeFormulas.erase(_it);
 }
+
+void Formulas::convertToNNF(bool _bIsSM) {
+    for (FORMULAS_ITERATOR it = m_dequeFormulas.begin(); 
+            it != m_dequeFormulas.end(); ++ it) {
+        it->convertToNNF(_bIsSM);
+    }
+}
