@@ -11,11 +11,13 @@
 #include "Formula.h"
 #include "Formulas.h"
 #include "Rule.h"
+#include "HengZhang.h"
 #include <list>
 #include <string>
 #include <vector>
 #include <cstdio>
 
+class HengZhang;
 class Formula;
 class Formulas;
 class Rule;
@@ -24,6 +26,7 @@ class Rule;
  */
 class SMTranslator {
 private:
+    HengZhang* m_pHz;
     Formulas* m_pOriginalFormulas;      //原公式
     vector<string> m_vOriginalFormulas;
     Formulas* m_pHengZhangFormulas;     //章衡转化结果

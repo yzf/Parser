@@ -7,20 +7,28 @@
         <activeConfTypeElem>1</activeConfTypeElem>
         <activeConfIndexElem>0</activeConfIndexElem>
     </data>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
-        <file>
-            <url>include/Vocabulary.h</url>
-            <bookmark id="2">
-                <name/>
-                <line>41</line>
-                <key/>
-            </bookmark>
-        </file>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="3">
         <file>
             <url>res/input/sample.in</url>
             <bookmark id="1">
                 <name/>
                 <line>0</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>include/CircTranslator.h</url>
+            <bookmark id="3">
+                <name/>
+                <line>27</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>include/Vocabulary.h</url>
+            <bookmark id="2">
+                <name/>
+                <line>43</line>
                 <key/>
             </bookmark>
         </file>

@@ -1,6 +1,7 @@
 #include "HengZhang.h"
 #include "cstdlib"
 #include "Utils.h"
+#include <assert.h>
 
 
 HengZhang::HengZhang() {
@@ -8,30 +9,46 @@ HengZhang::HengZhang() {
 HengZhang::~HengZhang() {
 }
 
-HengZhang& HengZhang::instance() {
-    static HengZhang theSingleton;
-    return theSingleton;
+/**
+ *  ~~s(_X,_MIN)
+ * @return 
+ */
+Formula HengZhang::create__S() {
+    _term* term_x_min   = Utils::combineTerms(m_vTermsX, m_vTermsMIN);
+    _formula* s_x_min = Utils::compositeToAtom(m_nSymbolS, term_x_min);
+    _formula* f  = Utils::compositeByConnective(NEGA, s_x_min, NULL);
+    f  = Utils::compositeByConnective(NEGA, f,  NULL);
+    Formula fml = Formula(f, false);
+    return fml;
 }
 /**
- * 对每条公式进行章衡公式转换
- * @param _originalFmls Formulas 需要进行转换的公式
- * @return 返回Formulas*，需要手动销毁
+ * ((succ(_Y,_Z) & s(_X,_Z)) | theta__(_X,_Y)) -> s(_X,_Y)
+ * @return 
  */
-Formulas* HengZhang::convert(const Formulas& _originalFmls) {
-    Formulas tempFmls = _originalFmls;
-    Formulas* pFinalFmls = new Formulas();
-    while (! tempFmls.isEmpty()) {
-        Formula curFml = tempFmls.popFront();
-        curFml.convertToPNF();
-        if (curFml.isUniversal()) {
-            pFinalFmls->pushBack(curFml);
-            continue;
-        }
-        Formulas hzFmls = transform(curFml);
-        tempFmls.joinFront(hzFmls);
-    }
+Formula HengZhang::createSuccAndSOrTheta__ImplS(const Formula& _originalFml) {
+    //1 (succ(_Y,_Z)
+    _term* term_y_z = Utils::combineTerms(m_vTermsY, m_vTermsZ);
+    _formula* succ_y_z = Utils::compositeToAtom(m_nSymbolSucc, term_y_z);
+    //2 s(_X,_Z)
+    _term* term_x_z = Utils::combineTerms(m_vTermsX, m_vTermsZ);
+    _formula* s_x_z = Utils::compositeToAtom(m_nSymbolS, term_x_z);
+    //3 theta__(_X,_Y)
+    Formula copyOriginalFml = _originalFml;
+    map<int, string> mapPredicates = Vocabulary::instance().getAllIntensionPredicates();
+    copyOriginalFml.doubleNegationPredicates(mapPredicates);
+    _formula* theta__ = Utils::copyFormula(copyOriginalFml.getFormula());
+    //4 s(_X,_Y)
+    _term* term_x_y = Utils::combineTerms(m_vTermsX, m_vTermsY);
+    _formula* s_x_y   = Utils::compositeToAtom(m_nSymbolS, term_x_y);
+
+    //create structure
+    _formula* ll = Utils::compositeByConnective(CONJ, succ_y_z, s_x_z);
+    _formula* l = Utils::compositeByConnective(DISJ, ll, theta__);
+    _formula* r = s_x_y;
+    _formula* f = Utils::compositeByConnective(IMPL, l, r);
     
-    return pFinalFmls;
+    Formula fml = Formula(f, false);
+    return fml;
 }
 /**
  * 把量词保存到对应的vector
@@ -70,57 +87,68 @@ Formula HengZhang::recordQuantifier(const Formula& _originalFml) {
     Formula ret = Formula(fml, true);
     return ret;
 }
+Formula HengZhang::preProcessing(const Formula& _originalFml) {
+    Formula fml = recordQuantifier(_originalFml);
+    //无存在量词
+    assert(m_vTermsY.size() != 0);
+    // 生成谓词s
+    m_nSymbolS = Vocabulary::instance().generatePredicateS(m_vTermsX, m_vTermsY);
+    // 生成谓词t
+    m_nSymbolT = Vocabulary::instance().generatePredicateT(m_vTermsX, m_vTermsY);
+    //生成谓词succ
+    m_nSymbolSucc = Vocabulary::instance().generatePredicateSucc(m_vTermsY, m_vTermsZ);
+    return fml;
+}
+void HengZhang::postProcessing() {
+    Vocabulary::instance().addIntensionPredicate(m_nSymbolS);
+    Vocabulary::instance().addIntensionPredicate(m_nSymbolT);
+}
 /**
  * 新产生的谓词 s、t为内涵谓词，succ、max为外延谓词
  * @param _originalFml
  * @return 
  */
 Formulas HengZhang::transform(const Formula& _originalFml) {
-    Formula originalFml = recordQuantifier(_originalFml);
-    //无存在量词
-    if(m_vTermsY.size() == 0) {
-        Formulas fmls;
-        fmls.pushBack(_originalFml);
-        return fmls;
-    }
-    // 生成谓词s
-    m_nSymbolS = Vocabulary::instance().generatePredicateS(m_vTermsX, m_vTermsY);
-    Vocabulary::instance().addIntensionPredicate(m_nSymbolS);
-    // 生成谓词t
-    m_nSymbolT = Vocabulary::instance().generatePredicateT(m_vTermsX, m_vTermsY);
-    Vocabulary::instance().addIntensionPredicate(m_nSymbolT);
-    //生成谓词succ
-    m_nSymbolSucc = Vocabulary::instance().generatePredicateSucc(m_vTermsY, m_vTermsZ);
-    
+    Formula fml = preProcessing(_originalFml);
     Formulas fmls;
-    fmls.pushBack(createFormula_1(originalFml));
-    fmls.pushBack(createFormula_2(originalFml));
-    fmls.pushBack(createFormula_3(originalFml));
-    fmls.pushBack(createFormula_4_1(originalFml));
-    fmls.pushBack(createFormula_4_2(originalFml));
-    fmls.pushBack(createFormula_5_1(originalFml));
-    fmls.pushBack(createFormula_5_2(originalFml));
+    fmls.pushBack(createFormula_1());
+    fmls.pushBack(createFormula_2(fml));
+    fmls.pushBack(createFormula_3(fml));
+    fmls.pushBack(createFormula_4_1(fml));
+    fmls.pushBack(createFormula_4_2(fml));
+    fmls.pushBack(createFormula_5_1(fml));
+    fmls.pushBack(createFormula_5_2(fml));
+    postProcessing();
     return fmls;
+}
+/**
+ * 对每条公式进行章衡公式转换
+ * @param _originalFmls Formulas 需要进行转换的公式
+ * @return 返回Formulas*，需要手动销毁
+ */
+Formulas* HengZhang::convert(const Formulas& _originalFmls) {
+    Formulas tempFmls = _originalFmls;
+    Formulas* pFinalFmls = new Formulas();
+    while (! tempFmls.isEmpty()) {
+        Formula curFml = tempFmls.popFront();
+        curFml.convertToPNF();
+        if (curFml.isUniversal()) {
+            pFinalFmls->pushBack(curFml);
+            continue;
+        }
+        Formulas hzFmls = transform(curFml);
+        tempFmls.joinFront(hzFmls);
+    }
+    
+    return pFinalFmls;
 }
 /**
  * 章衡量词消去公式一    ~~s(_X,_MIN)
  * @param originalFml 一阶语句
  * @return 
  */
-Formula HengZhang::createFormula_1(const Formula& _originalFml) {
-    // Add S(_X, _MIN)
-    _term* term_x_min   = Utils::combineTerms(m_vTermsX, m_vTermsMIN);
-    _formula* s_x_min = Utils::compositeToAtom(m_nSymbolS, term_x_min);
-    _formula* s_x_y = Utils::copyFormula(s_x_min);
-    Utils::replaceTerm(s_x_y->parameters, 
-            m_vTermsMIN.size(), m_vTermsMIN, m_vTermsY);
-
-    // create structure
-    _formula* F  = Utils::compositeByConnective(NEGA, s_x_min, NULL);
-    F  = Utils::compositeByConnective(NEGA, F,  NULL);
-    
-    Formula fml = Formula(F, false);
-    return fml;
+Formula HengZhang::createFormula_1() {
+    return create__S();
 }
 /**
  * 章衡量词消去公式二    ((succ(_Y,_Z) & s(_X,_Z)) | theta__(_X,_Y)) -> s(_X,_Y)
@@ -128,30 +156,7 @@ Formula HengZhang::createFormula_1(const Formula& _originalFml) {
  * @return 
  */
 Formula HengZhang::createFormula_2(const Formula& _originalFml) {
-    //create atom formulas
-    //1 (succ(_Y,_Z)
-    _term* term_y_z = Utils::combineTerms(m_vTermsY, m_vTermsZ);
-    _formula* succ_y_z = Utils::compositeToAtom(m_nSymbolSucc, term_y_z);
-    //2 s(_X,_Z)
-    _term* term_x_z = Utils::combineTerms(m_vTermsX, m_vTermsZ);
-    _formula* s_x_z = Utils::compositeToAtom(m_nSymbolS, term_x_z);
-    //3 theta__(_X,_Y)
-    Formula copyOriginalFml = _originalFml;
-    map<int, string> mapPredicates = Vocabulary::instance().getAllIntensionPredicates();
-    copyOriginalFml.doubleNegationPredicates(mapPredicates);
-    _formula* theta__ = Utils::copyFormula(copyOriginalFml.getFormula());
-    //4 s(_X,_Y)
-    _term* term_x_y = Utils::combineTerms(m_vTermsX, m_vTermsY);
-    _formula* s_x_y   = Utils::compositeToAtom(m_nSymbolS, term_x_y);
-
-    //create structure
-    _formula* ll = Utils::compositeByConnective(CONJ, succ_y_z, s_x_z);
-    _formula* l = Utils::compositeByConnective(DISJ, ll, theta__);
-    _formula* r = s_x_y;
-    _formula* F = Utils::compositeByConnective(IMPL, l, r);
-    
-    Formula fml = Formula(F, false);
-    return fml;
+    return createSuccAndSOrTheta__ImplS(_originalFml);
 }
 /**
  * 章衡量词消去公式三    t(_X,_MIN) | theta(_X,_MIN)

@@ -8,6 +8,7 @@
 #include <cstring>
 
 SMTranslator::SMTranslator() :
+        m_pHz(new HengZhang()),
         m_pOriginalFormulas(NULL),
         m_pHengZhangFormulas(NULL),
         m_pDlpFormulas(NULL),
@@ -15,6 +16,10 @@ SMTranslator::SMTranslator() :
 }
 
 SMTranslator::~SMTranslator() {
+    if (m_pHz != NULL) {
+        delete m_pHz;
+        m_pHz = NULL;
+    }
     destroy();
 }
 
@@ -82,7 +87,7 @@ void SMTranslator::outputOriginalFormulas(FILE* _out) const {
  */
 void SMTranslator::hengZhangTransform() {
     assert(m_pOriginalFormulas);
-    m_pHengZhangFormulas = HengZhang::instance().convert(*m_pOriginalFormulas);
+    m_pHengZhangFormulas = m_pHz->convert(*m_pOriginalFormulas);
     m_vHengZhangFormulas = Utils::convertFormulasToStrings(m_pHengZhangFormulas);
     delete m_pOriginalFormulas;
     m_pOriginalFormulas = NULL;

@@ -17,20 +17,25 @@ class Formula;
 class Formulas;
 
 class CircTranslator {
+protected:
+    int m_nSymbolR;
+    vector<int> m_vNewPredicates;
 private:
-    int m_nRid;
-private:
+    _formula* createP_P();
     Formula createFormula_1(const Formula& _originalFml);
     Formula createFormula_2(const Formula& _originalFml);
-    _formula* createP_P();
-    Formula createFormula_3_1();
-    Formula createFormula_3_2();
+    Formulas createFormula_3();
     Formulas createFormula_4();
+protected:
+    Formulas* preProcessing(const Formula& _originalFml);
+    void postProcessing(Formulas* _pFmls);
     Formulas transform(const Formula& _originalFml);
+    Formulas createREqualP_P();
+    Formulas createRImplQVary();
 public:
     CircTranslator();
     virtual ~CircTranslator();
-    virtual Formulas* convert(const Formula& _originalFml);
+    Formulas* convert(const Formula& _originalFml);
 };
 
 

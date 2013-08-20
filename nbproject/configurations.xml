@@ -43,6 +43,18 @@
           <itemPath>res/input/circ/test_1.fact</itemPath>
           <itemPath>res/input/circ/test_1.in</itemPath>
         </logicalFolder>
+        <logicalFolder name="op" displayName="op" projectFiles="true">
+          <itemPath>res/input/op/2clique.fact</itemPath>
+          <itemPath>res/input/op/2clique.in</itemPath>
+          <itemPath>res/input/op/blockworld.fact</itemPath>
+          <itemPath>res/input/op/blockworld.in</itemPath>
+          <itemPath>res/input/op/blockworld_2.fact</itemPath>
+          <itemPath>res/input/op/blockworld_2.in</itemPath>
+          <itemPath>res/input/op/setcover.fact</itemPath>
+          <itemPath>res/input/op/setcover.in</itemPath>
+          <itemPath>res/input/op/test_1.fact</itemPath>
+          <itemPath>res/input/op/test_1.in</itemPath>
+        </logicalFolder>
         <logicalFolder name="sm" displayName="sm" projectFiles="true">
           <itemPath>res/input/sm/2clique.fact</itemPath>
           <itemPath>res/input/sm/2clique.in</itemPath>
@@ -64,6 +76,18 @@
           <itemPath>res/output/circ/setcover.result</itemPath>
           <itemPath>res/output/circ/test_1.out</itemPath>
           <itemPath>res/output/circ/test_1.result</itemPath>
+        </logicalFolder>
+        <logicalFolder name="op" displayName="op" projectFiles="true">
+          <itemPath>res/output/op/2clique.out</itemPath>
+          <itemPath>res/output/op/2clique.result</itemPath>
+          <itemPath>res/output/op/blockworld.out</itemPath>
+          <itemPath>res/output/op/blockworld.result</itemPath>
+          <itemPath>res/output/op/blockworld_2.out</itemPath>
+          <itemPath>res/output/op/blockworld_2.result</itemPath>
+          <itemPath>res/output/op/setcover.out</itemPath>
+          <itemPath>res/output/op/setcover.result</itemPath>
+          <itemPath>res/output/op/test_1.out</itemPath>
+          <itemPath>res/output/op/test_1.result</itemPath>
         </logicalFolder>
         <logicalFolder name="sm" displayName="sm" projectFiles="true">
           <itemPath>res/output/sm/2clique.out</itemPath>
@@ -113,6 +137,7 @@
       <itemPath>Makefile</itemPath>
       <itemPath>README.md</itemPath>
       <itemPath>circ_main.cpp</itemPath>
+      <itemPath>op_main.cpp</itemPath>
       <itemPath>run.sh</itemPath>
       <itemPath>sm_main.cpp</itemPath>
     </logicalFolder>
@@ -235,6 +260,26 @@
       </item>
       <item path="res/input/circ/test_1.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/op/2clique.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/2clique.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/blockworld.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/blockworld.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/blockworld_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/blockworld_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/test_1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/test_1.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/input/sample.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/sample.in" ex="false" tool="3" flavor2="0">
@@ -269,6 +314,26 @@
       <item path="res/output/circ/test_1.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/circ/test_1.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/2clique.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/2clique.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/blockworld.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/blockworld.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/blockworld_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/blockworld_2.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/setcover.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/setcover.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/test_1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/test_1.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sample.out" ex="false" tool="3" flavor2="0">
       </item>
@@ -425,6 +490,26 @@
       </item>
       <item path="res/input/circ/test_1.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/op/2clique.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/2clique.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/blockworld.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/blockworld.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/blockworld_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/blockworld_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/test_1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/test_1.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/input/sample.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/sample.in" ex="false" tool="3" flavor2="0">
@@ -459,6 +544,26 @@
       <item path="res/output/circ/test_1.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/circ/test_1.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/2clique.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/2clique.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/blockworld.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/blockworld.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/blockworld_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/blockworld_2.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/setcover.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/setcover.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/test_1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/test_1.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sample.out" ex="false" tool="3" flavor2="0">
       </item>

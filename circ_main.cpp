@@ -27,8 +27,6 @@ extern FILE* yyin;
 extern _formula* gformula;
 extern int yyparse();
 
-//#define OP
-
 void io(const char* iPathName, const char* oPathName) {
     yyin = fopen (iPathName, "r");
     fout = fopen (oPathName, "w+");
@@ -66,16 +64,6 @@ int main(int argc, char** argv) {
     SMTranslator::instance().destroy();
     delete fmls;
     
-#ifdef OP
-    Formulas* fmls = Optimization::instance().convert(f);
-    fmls->output(stdout);
-    printf("\n\n");
-    SMTranslator::instance().init(*fmls);
-    SMTranslator::instance().convert();
-    SMTranslator::instance().outputFinalResult(fout);
-    SMTranslator::instance().destroy();
-    delete fmls;
-#endif
     fclose(fout);
     Vocabulary::instance().dumpVocabulary(stdout);
     

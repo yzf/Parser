@@ -482,7 +482,7 @@ int Vocabulary::generateDomainMAX(const char* _domain) {
 
 int Vocabulary::generateNewVariable(int _oriVariId) {
     char sBuf[32];
-    sprintf(sBuf,"%s%d", RENAME_VARI_PREFIX, m_nRPostfix ++);
+    sprintf(sBuf,"%s%d", RENAME_VARI_PREFIX, m_nRenameVariPostfix ++);
     int id = Vocabulary::instance().addSymbol(sBuf, VARIABLE);
     Vocabulary::instance().setVariableDomain(sBuf, 
                     Vocabulary::instance().getVariableDomain(_oriVariId));

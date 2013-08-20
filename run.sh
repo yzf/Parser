@@ -8,6 +8,9 @@ then
 elif [ "$1" = "circ" ]
 then
     tranType="circ"
+elif [ "$1" = "op" ]
+then 
+    tranType="op"
 else
     echo "error!!!"
     exit 1

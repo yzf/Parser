@@ -152,3 +152,15 @@ void Formulas::convertToNNF(bool _bIsSM) {
         it->convertToNNF(_bIsSM);
     }
 }
+void Formulas::convertToPNF() {
+    for (FORMULAS_ITERATOR it = m_dequeFormulas.begin(); 
+            it != m_dequeFormulas.end(); ++ it) {
+        it->convertToPNF();
+    }
+}
+void Formulas::removeImpl() {
+    for (FORMULAS_ITERATOR it = m_dequeFormulas.begin(); 
+            it != m_dequeFormulas.end(); ++ it) {
+        it->removeImpl();
+    }
+}

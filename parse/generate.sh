@@ -7,7 +7,7 @@ elif [ "$1" = "sm" ]
 then
     lexFile="sm_lex.l"
     parseFile="sm_parse.y"
-elif [ "$1" = "circ" ]
+elif [ "$1" = "circ" -o "$1" = "op" ]
 then
     lexFile="circ_lex.l"
     parseFile="circ_parse.y"

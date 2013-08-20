@@ -44,6 +44,7 @@ public:
     void doubleNegationPredicates(const map<int, string>& _mapPredicates);
     void replaceTerms(const vector<int>& _originals, 
 				const vector<int>& _replacements);
+    void removeImpl();
     Formulas* divideFormula() const;
 };
 
