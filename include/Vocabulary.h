@@ -18,8 +18,10 @@ using namespace std;
 #define PRENEX_RENAME_PREFIX "PN_"
 #define RENAME_VARI_PREFIX "NV_"
 #define VARY_PREDICATE_POSTFIX "_vary"
-#define MIN_PREFIX "MIN_"
-#define MAX_PREFIX "MAX_"
+#define MIN_VARI_PREFIX "MIN_"
+#define MAX_VARI_PREFIX "MAX_"
+#define MIN_DOMAIN_PREFIX "min_"
+#define MAX_DOMAIN_PREFIX "max_"
 
 class Formual;
 class Formulas;

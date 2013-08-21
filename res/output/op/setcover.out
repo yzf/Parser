@@ -34,23 +34,23 @@ s_0(X,Y,Z):- succ_i(Z,NV_0), s_0(X,Y,NV_0).
 s_0(X,Y,Z):- not i(X).
 s_0(X,Y,Z):- not set(X,Y).
 s_0(X,Y,Z):- set(Z,Y), not _cvr(Z).
-w_0(X,Y,Z):- s_0(Z,NV_0,X), w_0(X,Y,NV_0).
+w_0(X,Y,Z):- succ_i(Z,NV_0), w_0(X,Y,NV_0).
 w_0(X,Y,Z).
 w_0(X,Y,Z).
 w_0(X,Y,Z):- set(Z,Y), not _cvr(Z).
 cvr(MIN_i) | t_0(X,Y,MIN_i):- i(X), set(X,Y).
 t_0(X,Y,MIN_i):- not set(MIN_i,Y), i(X), set(X,Y).
-cvr(Z) | t_0(X,Y,NV_0):- t_0(X,Y,Z), succ_i(Z,NV_0), i(X), set(X,Y).
-t_0(X,Y,NV_0):- t_0(X,Y,Z), succ_i(Z,NV_0), i(X), set(X,Y), not set(Z,Y).
-:- not cvr(Z), succ_i(Z,NV_0), not t_0(X,Y,NV_0), set(X,Y), i(X), not _t_0(X,Y,Z).
-:- not set(Z,Y), succ_i(Z,NV_0), not t_0(X,Y,NV_0), set(X,Y), i(X), not _t_0(X,Y,Z).
+cvr(NV_0) | t_0(X,Y,NV_0):- t_0(X,Y,Z), succ_i(Z,NV_0), i(X), set(X,Y).
+t_0(X,Y,NV_0):- t_0(X,Y,Z), succ_i(Z,NV_0), i(X), set(X,Y), not set(NV_0,Y).
+:- not cvr(NV_0), succ_i(Z,NV_0), not t_0(X,Y,NV_0), set(X,Y), i(X), not _t_0(X,Y,Z).
+:- not set(NV_0,Y), succ_i(Z,NV_0), not t_0(X,Y,NV_0), set(X,Y), i(X), not _t_0(X,Y,Z).
 t_0(X,Y,Z):- not i(X), succ_i(Z,NV_0).
 t_0(X,Y,Z):- not set(X,Y), succ_i(Z,NV_0).
-t_0(X,Y,Z):- cvr(Z), set(Z,Y), succ_i(Z,NV_0).
+t_0(X,Y,Z):- cvr(NV_0), set(NV_0,Y), succ_i(Z,NV_0).
 t_0(X,Y,Z):- t_0(X,Y,NV_0), succ_i(Z,NV_0).
 :- not i(X), not t_0(X,Y,Z), succ_i(Z,NV_0).
 :- not set(X,Y), not t_0(X,Y,Z), succ_i(Z,NV_0).
-:- not t_0(X,Y,Z), succ_i(Z,NV_0), not _cvr(Z), set(Z,Y).
+:- not t_0(X,Y,Z), succ_i(Z,NV_0), not _cvr(NV_0), set(NV_0,Y).
 :- not t_0(X,Y,Z), succ_i(Z,NV_0), not _t_0(X,Y,NV_0).
 cvr(Z):- t_0(X,Y,MAX_i), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z), i(X), set(X,Y).
 :- t_0(X,Y,MAX_i), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z), i(X), set(X,Y), not set(Z,Y).

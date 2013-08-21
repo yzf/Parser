@@ -1,0 +1,36 @@
+%dnf: \forall x_1 x_2 \exist y_1 y_2 y_3 [(x_1 \wedge y_1) \vee (x_2 \vee  (\neg y_1) \wedge y_2) \vee (y_3 \wedge y_1)]
+%     [!x1!x2][?y1?y2?y3][(x1&y1)|(x2&~y1&y2)|(y3&y1)]
+%solutions: {y1,y2,y3}, {y1,~y2,y3}
+
+%x1:1 x2:2 y1:3 y2:4 y3:5
+atom(1..5).
+un(1..2).
+disj(1..3).
+
+min_atom(1).
+max_atom(5).
+min_un(1).
+max_un(2).
+min_disj(1).
+max_disj(3).
+
+%(x1&y1)
+posd(1,1).
+posd(1,3).
+
+%(x2&~y1&y2)
+posd(2,2).
+negd(2,3).
+posd(2,4).
+
+%(y3&y1)
+posd(3,5).
+posd(3,3).
+
+#hide.
+#show true/1.
+
+%qbf_cnf: \forall \bar{X} \exits \bar{Y} (c_1 \wedge c_2...\wedge c_n)
+%posc(I,J): the J-th atom in the I-th conjunction is positive, I=1,...,n
+%negc(I,J): the J-th atom in the I-th conjunction is negative
+%un(X): \forall \bar{X}

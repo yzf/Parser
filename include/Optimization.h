@@ -17,7 +17,7 @@
 
 using namespace std;
 
-class Optimization : protected HengZhang, public CircTranslator {
+class Optimization : protected HengZhang, protected CircTranslator {
 protected:
     int m_nSymbolW;
 private:
@@ -33,6 +33,7 @@ private:
     Formula createFormula_6_2(const Formula& _originalFml);
 protected:
     Formula preProcessing(const Formula& _originalFml);
+    void postProcessing();
 public:
     Optimization();
     ~Optimization();

@@ -460,7 +460,7 @@ int Vocabulary::generatePredicateSucc(vector<int> _termsY, vector<int> _termsZ) 
 
 int Vocabulary::generateDomainMIN(const char* _domain) {
     char sBuf[32];
-    sprintf(sBuf, "%s%s", MIN_PREFIX, _domain);
+    sprintf(sBuf, "%s%s", MIN_VARI_PREFIX, _domain);
     int id = Vocabulary::instance().getSymbolId(sBuf, VARIABLE);
     if (-1 != id) {
         return id;
@@ -471,7 +471,7 @@ int Vocabulary::generateDomainMIN(const char* _domain) {
 
 int Vocabulary::generateDomainMAX(const char* _domain) {
     char sBuf[32];
-    sprintf(sBuf, "%s%s", MAX_PREFIX, _domain);
+    sprintf(sBuf, "%s%s", MAX_VARI_PREFIX, _domain);
     int id = Vocabulary::instance().getSymbolId(sBuf, VARIABLE);
     if (-1 != id) {
         return id;

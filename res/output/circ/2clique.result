@@ -33,4 +33,4 @@ Answer: 16
 col(1) col(2) col(3) col(4) 
 
 Models     : 16    
-Time        : 0.020  (Parsing: 0.000)
+Time        : 0.000  (Parsing: 0.000)

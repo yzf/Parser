@@ -19,9 +19,7 @@ Formulas Optimization::transform(const Formula& _originalFml) {
     fmls.pushBack(createFormula_5_2(fml));
     fmls.pushBack(createFormula_6_1(fml));
     fmls.pushBack(createFormula_6_2(fml));
-    m_vNewPredicates.push_back(m_nSymbolS);
-    m_vNewPredicates.push_back(m_nSymbolW);
-    m_vNewPredicates.push_back(m_nSymbolT);
+    postProcessing();
     return fmls;
 }
 Formula Optimization::createFormula_1() {
@@ -33,7 +31,7 @@ Formula Optimization::createFormula_2(const Formula& _originalFml) {
 Formula Optimization::createFormula_3(const Formula& _originalFml) {
     // succ(Y_,Z_)
     _term* t_y_z = Utils::combineTerms(m_vTermsY, m_vTermsZ);
-    _formula* succ_y_z = Utils::compositeToAtom(m_nSymbolS, t_y_z);
+    _formula* succ_y_z = Utils::compositeToAtom(m_nSymbolSucc, t_y_z);
     // w(X_,Z_)
     _term* t_x_z = Utils::combineTerms(m_vTermsX, m_vTermsZ);
     _formula* w_x_z = Utils::compositeToAtom(m_nSymbolW, t_x_z);
@@ -84,7 +82,9 @@ Formula Optimization::createFormula_5_1(const Formula& _originalFml) {
     _term* term_x_y = Utils::combineTerms(m_vTermsX, m_vTermsY);
     _formula* t_x_y = Utils::compositeToAtom(m_nSymbolT, term_x_y);
     // _theta(X_,Z_)
-    _formula* theta = Utils::copyFormula(_originalFml.getFormula());
+    Formula tmp = _originalFml;
+    tmp.replaceTerms(m_vTermsY, m_vTermsZ);
+    _formula* theta = Utils::copyFormula(tmp.getFormula());
     _formula* _theta = Utils::_thetaReplace(m_nSymbolR, theta);
     // t(X_,Z_)
     _term* term_x_z = Utils::combineTerms(m_vTermsX, m_vTermsZ);
@@ -110,7 +110,9 @@ Formula Optimization::createFormula_5_2(const Formula& _originalFml) {
     _term* term_x_y = Utils::combineTerms(m_vTermsX, m_vTermsY);
     _formula* t_x_y = Utils::compositeToAtom(m_nSymbolT, term_x_y);
     // _theta(X_,Z_)
-    _formula* theta = Utils::copyFormula(_originalFml.getFormula());
+    Formula tmp = _originalFml;
+    tmp.replaceTerms(m_vTermsY, m_vTermsZ);
+    _formula* theta = Utils::copyFormula(tmp.getFormula());
     _formula* _theta = Utils::_thetaReplace(m_nSymbolR, theta);
     // t(X_,Z_)
     _term* term_x_z = Utils::combineTerms(m_vTermsX, m_vTermsZ);
@@ -211,6 +213,11 @@ Formula Optimization::preProcessing(const Formula& _originalFml) {
     Formula fml = HengZhang::preProcessing(_originalFml);
     m_nSymbolW = Vocabulary::instance().generatePredicateW(m_vTermsX, m_vTermsY);
     return fml;
+}
+void Optimization::postProcessing() {
+    m_vNewPredicates.push_back(m_nSymbolS);
+    m_vNewPredicates.push_back(m_nSymbolW);
+    m_vNewPredicates.push_back(m_nSymbolT);
 }
 Formulas* Optimization::convert(const Formula& _originalFml) {
     Formulas* nnfFmls = CircTranslator::preProcessing(_originalFml);

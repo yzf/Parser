@@ -58,6 +58,10 @@
         <logicalFolder name="sm" displayName="sm" projectFiles="true">
           <itemPath>res/input/sm/2clique.fact</itemPath>
           <itemPath>res/input/sm/2clique.in</itemPath>
+          <itemPath>res/input/sm/cnf.fact</itemPath>
+          <itemPath>res/input/sm/cnf.in</itemPath>
+          <itemPath>res/input/sm/dnf.fact</itemPath>
+          <itemPath>res/input/sm/dnf.in</itemPath>
           <itemPath>res/input/sm/setcover.fact</itemPath>
           <itemPath>res/input/sm/setcover.in</itemPath>
         </logicalFolder>
@@ -92,6 +96,10 @@
         <logicalFolder name="sm" displayName="sm" projectFiles="true">
           <itemPath>res/output/sm/2clique.out</itemPath>
           <itemPath>res/output/sm/2clique.result</itemPath>
+          <itemPath>res/output/sm/cnf.out</itemPath>
+          <itemPath>res/output/sm/cnf.result</itemPath>
+          <itemPath>res/output/sm/dnf.out</itemPath>
+          <itemPath>res/output/sm/dnf.result</itemPath>
           <itemPath>res/output/sm/setcover.out</itemPath>
           <itemPath>res/output/sm/setcover.result</itemPath>
         </logicalFolder>
@@ -288,6 +296,14 @@
       </item>
       <item path="res/input/sm/2clique.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/sm/cnf.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/cnf.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/dnf.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/dnf.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/input/sm/setcover.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/sm/setcover.in" ex="false" tool="3" flavor2="0">
@@ -340,6 +356,14 @@
       <item path="res/output/sm/2clique.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sm/2clique.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/cnf.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/cnf.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/dnf.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/dnf.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sm/setcover.out" ex="false" tool="3" flavor2="0">
       </item>
@@ -518,6 +542,14 @@
       </item>
       <item path="res/input/sm/2clique.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/sm/cnf.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/cnf.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/dnf.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/dnf.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/input/sm/setcover.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/sm/setcover.in" ex="false" tool="3" flavor2="0">
@@ -570,6 +602,14 @@
       <item path="res/output/sm/2clique.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sm/2clique.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/cnf.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/cnf.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/dnf.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/dnf.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sm/setcover.out" ex="false" tool="3" flavor2="0">
       </item>

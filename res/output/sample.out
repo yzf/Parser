@@ -1,116 +1,119 @@
 %MIN and MAX domain
 #domain min_i(MIN_i).
 #domain max_i(MAX_i).
+#domain min_e(MIN_e).
+#domain max_e(MAX_e).
 
 %Variable domain
+#domain i(X).
+#domain e(Y).
 #domain i(Z).
-#domain i(Y).
 #domain i(NV_0).
 #domain i(NV_1).
-#domain i(NV_2).
 
 %Nega nega predicate define
-_p(Z,Y):- not p(Z,Y).
-_q_vary(Z):- not q_vary(Z).
-_t_0(Y,Z):- not t_0(Y,Z).
+_cvr(X):- not cvr(X).
+_t_0(X,Y,Z):- not t_0(X,Y,Z).
 _r_0:- not r_0.
-_t_1(Z,Y):- not t_1(Z,Y).
+_t_1(X):- not t_1(X).
 
 %Extension predicate define
-_q(Z):- not q(Z).
+_i(X):- not i(X).
+_set(X,Y):- not set(X,Y).
 _succ_i(Z,NV_0):- not succ_i(Z,NV_0).
 _max_i(Z):- not max_i(Z).
-_succ_i_i(Z,Y,NV_1,NV_2):- not succ_i_i(Z,Y,NV_1,NV_2).
 
 %Succ predicate definition
 succ_i(A1,A2):- A1==A2-1, i(A1), i(A2).
-succ_i_i(A,B1,A,B2):- succ_i(B1,B2), i(A), i(B1), i(B2).
-succ_i_i(A1,MAX_i,A2,MIN_i):- succ_i(A1,A2), i(A1), i(A2).
 
-:- not s_0(Y,MIN_i).
-s_0(Y,Z):- succ_i(Z,NV_0), s_0(Y,NV_0).
-s_0(Y,Z):- not q(Z).
-s_0(Y,Z):- not _p(Z,Y).
-w_0(Y,Z):- s_0(Z,NV_0), w_0(Y,NV_0).
-w_0(Y,Z).
-w_0(Y,Z):- not _p(Z,Y).
-r_0 | t_0(Y,MIN_i) | p(MIN_i,Y):- q_vary(MIN_i).
-t_0(Y,MIN_i) | p(MIN_i,Y):- not r_0, not _q_vary(MIN_i).
-r_0 | p(Z,Y) | t_0(Y,NV_0):- q_vary(Z), t_0(Y,Z), succ_i(Z,NV_0).
-p(Z,Y) | t_0(Y,NV_0):- not r_0, t_0(Y,Z), succ_i(Z,NV_0), not _q_vary(Z).
-:- succ_i(Z,NV_0), not r_0, not p(Z,Y), not t_0(Y,NV_0), not _q_vary(Z), not _t_0(Y,Z).
-t_0(Y,Z):- not q_vary(Z), succ_i(Z,NV_0).
-t_0(Y,Z):- r_0, succ_i(Z,NV_0).
-q_vary(Z) | t_0(Y,Z):- succ_i(Z,NV_0), not _r_0.
-t_0(Y,Z):- p(Z,Y), succ_i(Z,NV_0).
-t_0(Y,Z):- t_0(Y,NV_0), succ_i(Z,NV_0).
-:- not q_vary(Z), not t_0(Y,Z), succ_i(Z,NV_0).
-:- not t_0(Y,Z), succ_i(Z,NV_0), not _r_0.
-:- not t_0(Y,Z), succ_i(Z,NV_0), not _p(Z,Y).
-:- not t_0(Y,Z), succ_i(Z,NV_0), not _t_0(Y,NV_0).
-r_0 | p(Z,Y):- q_vary(Z), t_0(Y,MAX_i), not w_0(Y,NV_0), succ_i(Z,NV_0), w_0(Y,Z).
-p(Z,Y):- not r_0, t_0(Y,MAX_i), not w_0(Y,NV_0), succ_i(Z,NV_0), w_0(Y,Z), not _q_vary(Z).
-:- not w_0(Y,NV_0), succ_i(Z,NV_0), w_0(Y,Z), not r_0, not p(Z,Y), not _q_vary(Z), not _t_0(Y,MAX_i).
-r_0 | p(Z,Y):- q_vary(Z), t_0(Y,MAX_i), max_i(Z), w_0(Y,Z).
-p(Z,Y):- not r_0, t_0(Y,MAX_i), max_i(Z), w_0(Y,Z), not _q_vary(Z).
-:- max_i(Z), w_0(Y,Z), not r_0, not p(Z,Y), not _q_vary(Z), not _t_0(Y,MAX_i).
-t_0(Y,MAX_i):- not q_vary(Z), not w_0(Y,NV_0), succ_i(Z,NV_0), w_0(Y,Z).
-t_0(Y,MAX_i):- r_0, not w_0(Y,NV_0), succ_i(Z,NV_0), w_0(Y,Z).
-q_vary(Z) | t_0(Y,MAX_i):- not w_0(Y,NV_0), succ_i(Z,NV_0), w_0(Y,Z), not _r_0.
-t_0(Y,MAX_i):- p(Z,Y), not w_0(Y,NV_0), succ_i(Z,NV_0), w_0(Y,Z).
-:- not q_vary(Z), not t_0(Y,MAX_i), not w_0(Y,NV_0), succ_i(Z,NV_0), w_0(Y,Z).
-:- not t_0(Y,MAX_i), not w_0(Y,NV_0), succ_i(Z,NV_0), w_0(Y,Z), not _r_0.
-:- not t_0(Y,MAX_i), not w_0(Y,NV_0), succ_i(Z,NV_0), w_0(Y,Z), not _p(Z,Y).
-t_0(Y,MAX_i):- not q_vary(Z), max_i(Z), w_0(Y,Z).
-t_0(Y,MAX_i):- r_0, max_i(Z), w_0(Y,Z).
-q_vary(Z) | t_0(Y,MAX_i):- max_i(Z), w_0(Y,Z), not _r_0.
-t_0(Y,MAX_i):- p(Z,Y), max_i(Z), w_0(Y,Z).
-:- not q_vary(Z), not t_0(Y,MAX_i), max_i(Z), w_0(Y,Z).
-:- not t_0(Y,MAX_i), max_i(Z), w_0(Y,Z), not _r_0.
-:- not t_0(Y,MAX_i), max_i(Z), w_0(Y,Z), not _p(Z,Y).
-p(Z,Y):- r_0, not _p(Z,Y).
-:- not s_1(MIN_i,MIN_i).
-s_1(Z,Y):- succ_i_i(Z,Y,NV_1,NV_2), s_1(NV_1,NV_2).
-s_1(Z,Y):- not p(Z,Y), not _p(Z,Y).
-s_1(Z,Y):- not _r_0.
-s_1(Z,Y):- not p(Z,Y), not _p(Z,Y), not _r_0.
-r_0 | t_1(MIN_i,MIN_i):- p(MIN_i,MIN_i).
-r_0 | t_1(MIN_i,MIN_i):- not p(MIN_i,MIN_i).
-t_1(MIN_i,MIN_i):- not r_0, not _p(MIN_i,MIN_i).
-t_1(MIN_i,MIN_i):- not p(MIN_i,MIN_i), not r_0.
-r_0:- p(Z,Y), t_1(MAX_i,MAX_i), not s_1(NV_1,NV_2), succ_i_i(Z,Y,NV_1,NV_2), s_1(Z,Y).
-r_0:- not p(Z,Y), t_1(MAX_i,MAX_i), not s_1(NV_1,NV_2), succ_i_i(Z,Y,NV_1,NV_2), s_1(Z,Y).
-:- not r_0, t_1(MAX_i,MAX_i), not s_1(NV_1,NV_2), succ_i_i(Z,Y,NV_1,NV_2), s_1(Z,Y), not _p(Z,Y).
-:- not p(Z,Y), not r_0, t_1(MAX_i,MAX_i), not s_1(NV_1,NV_2), succ_i_i(Z,Y,NV_1,NV_2), s_1(Z,Y).
-:- not s_1(NV_1,NV_2), succ_i_i(Z,Y,NV_1,NV_2), s_1(Z,Y), not r_0, not _p(Z,Y), not _t_1(MAX_i,MAX_i).
-:- not p(Z,Y), not s_1(NV_1,NV_2), succ_i_i(Z,Y,NV_1,NV_2), s_1(Z,Y), not r_0, not _t_1(MAX_i,MAX_i).
-r_0:- p(Z,Y), t_1(MAX_i,MAX_i), max_i(Z), max_i(Y), s_1(Z,Y).
-r_0:- not p(Z,Y), t_1(MAX_i,MAX_i), max_i(Z), max_i(Y), s_1(Z,Y).
-:- not r_0, t_1(MAX_i,MAX_i), max_i(Z), max_i(Y), s_1(Z,Y), not _p(Z,Y).
-:- not p(Z,Y), not r_0, t_1(MAX_i,MAX_i), max_i(Z), max_i(Y), s_1(Z,Y).
-:- max_i(Z), max_i(Y), s_1(Z,Y), not r_0, not _p(Z,Y), not _t_1(MAX_i,MAX_i).
-:- not p(Z,Y), max_i(Z), max_i(Y), s_1(Z,Y), not r_0, not _t_1(MAX_i,MAX_i).
-t_1(MAX_i,MAX_i):- not p(Z,Y), not s_1(NV_1,NV_2), succ_i_i(Z,Y,NV_1,NV_2), s_1(Z,Y), not _p(Z,Y).
-t_1(MAX_i,MAX_i):- r_0, not s_1(NV_1,NV_2), succ_i_i(Z,Y,NV_1,NV_2), s_1(Z,Y).
-p(Z,Y) | t_1(MAX_i,MAX_i):- not s_1(NV_1,NV_2), succ_i_i(Z,Y,NV_1,NV_2), s_1(Z,Y), not _p(Z,Y), not _r_0.
-:- not p(Z,Y), not t_1(MAX_i,MAX_i), not s_1(NV_1,NV_2), succ_i_i(Z,Y,NV_1,NV_2), s_1(Z,Y), not _p(Z,Y).
-:- not t_1(MAX_i,MAX_i), not s_1(NV_1,NV_2), succ_i_i(Z,Y,NV_1,NV_2), s_1(Z,Y), not _r_0.
-t_1(MAX_i,MAX_i):- not p(Z,Y), max_i(Z), max_i(Y), s_1(Z,Y), not _p(Z,Y).
-t_1(MAX_i,MAX_i):- r_0, max_i(Z), max_i(Y), s_1(Z,Y).
-p(Z,Y) | t_1(MAX_i,MAX_i):- max_i(Z), max_i(Y), s_1(Z,Y), not _p(Z,Y), not _r_0.
-:- not p(Z,Y), not t_1(MAX_i,MAX_i), max_i(Z), max_i(Y), s_1(Z,Y), not _p(Z,Y).
-:- not t_1(MAX_i,MAX_i), max_i(Z), max_i(Y), s_1(Z,Y), not _r_0.
-r_0 | t_1(NV_1,NV_2):- p(NV_1,NV_2), t_1(Z,Y), succ_i_i(Z,Y,NV_1,NV_2).
-r_0 | t_1(NV_1,NV_2):- not p(NV_1,NV_2), t_1(Z,Y), succ_i_i(Z,Y,NV_1,NV_2).
-t_1(NV_1,NV_2):- not r_0, t_1(Z,Y), succ_i_i(Z,Y,NV_1,NV_2), not _p(NV_1,NV_2).
-t_1(NV_1,NV_2):- not p(NV_1,NV_2), not r_0, t_1(Z,Y), succ_i_i(Z,Y,NV_1,NV_2).
-:- succ_i_i(Z,Y,NV_1,NV_2), not r_0, not t_1(NV_1,NV_2), not _p(NV_1,NV_2), not _t_1(Z,Y).
-:- not p(NV_1,NV_2), succ_i_i(Z,Y,NV_1,NV_2), not r_0, not t_1(NV_1,NV_2), not _t_1(Z,Y).
-t_1(Z,Y):- not p(NV_1,NV_2), succ_i_i(Z,Y,NV_1,NV_2), not _p(NV_1,NV_2).
-t_1(Z,Y):- r_0, succ_i_i(Z,Y,NV_1,NV_2).
-p(NV_1,NV_2) | t_1(Z,Y):- succ_i_i(Z,Y,NV_1,NV_2), not _p(NV_1,NV_2), not _r_0.
-t_1(Z,Y):- t_1(NV_1,NV_2), succ_i_i(Z,Y,NV_1,NV_2).
-:- not p(NV_1,NV_2), not t_1(Z,Y), succ_i_i(Z,Y,NV_1,NV_2), not _p(NV_1,NV_2).
-:- not t_1(Z,Y), succ_i_i(Z,Y,NV_1,NV_2), not _r_0.
-:- not t_1(Z,Y), succ_i_i(Z,Y,NV_1,NV_2), not _t_1(NV_1,NV_2).
-q_vary(Z):- r_0.
+:- not _cvr(X), not i(X).
+r_0:- cvr(X), not i(X).
+:- not r_0, not _cvr(X), not i(X).
+:- not s_0(X,Y,MIN_i).
+s_0(X,Y,Z):- succ_i(Z,NV_0), s_0(X,Y,NV_0).
+s_0(X,Y,Z):- not i(X).
+s_0(X,Y,Z):- not set(X,Y).
+s_0(X,Y,Z):- set(Z,Y), not _cvr(Z).
+w_0(X,Y,Z):- succ_i(Z,NV_0), w_0(X,Y,NV_0).
+w_0(X,Y,Z).
+w_0(X,Y,Z).
+w_0(X,Y,Z):- set(Z,Y), not _cvr(Z).
+cvr(MIN_i) | t_0(X,Y,MIN_i):- i(X), set(X,Y).
+t_0(X,Y,MIN_i):- not set(MIN_i,Y), i(X), set(X,Y).
+cvr(NV_0) | t_0(X,Y,NV_0):- t_0(X,Y,Z), succ_i(Z,NV_0), i(X), set(X,Y).
+t_0(X,Y,NV_0):- t_0(X,Y,Z), succ_i(Z,NV_0), i(X), set(X,Y), not set(NV_0,Y).
+:- not cvr(NV_0), succ_i(Z,NV_0), not t_0(X,Y,NV_0), set(X,Y), i(X), not _t_0(X,Y,Z).
+:- not set(NV_0,Y), succ_i(Z,NV_0), not t_0(X,Y,NV_0), set(X,Y), i(X), not _t_0(X,Y,Z).
+t_0(X,Y,Z):- not i(X), succ_i(Z,NV_0).
+t_0(X,Y,Z):- not set(X,Y), succ_i(Z,NV_0).
+t_0(X,Y,Z):- cvr(NV_0), set(NV_0,Y), succ_i(Z,NV_0).
+t_0(X,Y,Z):- t_0(X,Y,NV_0), succ_i(Z,NV_0).
+:- not i(X), not t_0(X,Y,Z), succ_i(Z,NV_0).
+:- not set(X,Y), not t_0(X,Y,Z), succ_i(Z,NV_0).
+:- not t_0(X,Y,Z), succ_i(Z,NV_0), not _cvr(NV_0), set(NV_0,Y).
+:- not t_0(X,Y,Z), succ_i(Z,NV_0), not _t_0(X,Y,NV_0).
+cvr(Z):- t_0(X,Y,MAX_i), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z), i(X), set(X,Y).
+:- t_0(X,Y,MAX_i), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z), i(X), set(X,Y), not set(Z,Y).
+:- not cvr(Z), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z), set(X,Y), i(X), not _t_0(X,Y,MAX_i).
+:- not set(Z,Y), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z), set(X,Y), i(X), not _t_0(X,Y,MAX_i).
+cvr(Z):- t_0(X,Y,MAX_i), max_i(Z), w_0(X,Y,Z), i(X), set(X,Y).
+:- t_0(X,Y,MAX_i), max_i(Z), w_0(X,Y,Z), i(X), set(X,Y), not set(Z,Y).
+:- not cvr(Z), max_i(Z), w_0(X,Y,Z), set(X,Y), i(X), not _t_0(X,Y,MAX_i).
+:- not set(Z,Y), max_i(Z), w_0(X,Y,Z), set(X,Y), i(X), not _t_0(X,Y,MAX_i).
+t_0(X,Y,MAX_i):- not i(X), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z).
+t_0(X,Y,MAX_i):- not set(X,Y), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z).
+t_0(X,Y,MAX_i):- cvr(Z), set(Z,Y), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z).
+:- not i(X), not t_0(X,Y,MAX_i), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z).
+:- not set(X,Y), not t_0(X,Y,MAX_i), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z).
+:- not t_0(X,Y,MAX_i), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z), not _cvr(Z), set(Z,Y).
+t_0(X,Y,MAX_i):- not i(X), max_i(Z), w_0(X,Y,Z).
+t_0(X,Y,MAX_i):- not set(X,Y), max_i(Z), w_0(X,Y,Z).
+t_0(X,Y,MAX_i):- cvr(Z), set(Z,Y), max_i(Z), w_0(X,Y,Z).
+:- not i(X), not t_0(X,Y,MAX_i), max_i(Z), w_0(X,Y,Z).
+:- not set(X,Y), not t_0(X,Y,MAX_i), max_i(Z), w_0(X,Y,Z).
+:- not t_0(X,Y,MAX_i), max_i(Z), w_0(X,Y,Z), not _cvr(Z), set(Z,Y).
+cvr(X):- r_0, not _cvr(X).
+:- not s_1(MIN_i).
+s_1(X):- succ_i(X,NV_1), s_1(NV_1).
+s_1(X):- not cvr(X), not _cvr(X).
+s_1(X):- not _r_0.
+s_1(X):- not cvr(X), not _cvr(X), not _r_0.
+r_0 | t_1(MIN_i):- cvr(MIN_i).
+r_0 | t_1(MIN_i):- not cvr(MIN_i).
+t_1(MIN_i):- not r_0, not _cvr(MIN_i).
+t_1(MIN_i):- not cvr(MIN_i), not r_0.
+r_0:- cvr(X), t_1(MAX_i), not s_1(NV_1), succ_i(X,NV_1), s_1(X).
+r_0:- not cvr(X), t_1(MAX_i), not s_1(NV_1), succ_i(X,NV_1), s_1(X).
+:- not r_0, t_1(MAX_i), not s_1(NV_1), succ_i(X,NV_1), s_1(X), not _cvr(X).
+:- not cvr(X), not r_0, t_1(MAX_i), not s_1(NV_1), succ_i(X,NV_1), s_1(X).
+:- not s_1(NV_1), succ_i(X,NV_1), s_1(X), not r_0, not _cvr(X), not _t_1(MAX_i).
+:- not cvr(X), not s_1(NV_1), succ_i(X,NV_1), s_1(X), not r_0, not _t_1(MAX_i).
+r_0:- cvr(X), t_1(MAX_i), max_i(X), s_1(X).
+r_0:- not cvr(X), t_1(MAX_i), max_i(X), s_1(X).
+:- not r_0, t_1(MAX_i), max_i(X), s_1(X), not _cvr(X).
+:- not cvr(X), not r_0, t_1(MAX_i), max_i(X), s_1(X).
+:- max_i(X), s_1(X), not r_0, not _cvr(X), not _t_1(MAX_i).
+:- not cvr(X), max_i(X), s_1(X), not r_0, not _t_1(MAX_i).
+t_1(MAX_i):- not cvr(X), not s_1(NV_1), succ_i(X,NV_1), s_1(X), not _cvr(X).
+t_1(MAX_i):- r_0, not s_1(NV_1), succ_i(X,NV_1), s_1(X).
+cvr(X) | t_1(MAX_i):- not s_1(NV_1), succ_i(X,NV_1), s_1(X), not _cvr(X), not _r_0.
+:- not cvr(X), not t_1(MAX_i), not s_1(NV_1), succ_i(X,NV_1), s_1(X), not _cvr(X).
+:- not t_1(MAX_i), not s_1(NV_1), succ_i(X,NV_1), s_1(X), not _r_0.
+t_1(MAX_i):- not cvr(X), max_i(X), s_1(X), not _cvr(X).
+t_1(MAX_i):- r_0, max_i(X), s_1(X).
+cvr(X) | t_1(MAX_i):- max_i(X), s_1(X), not _cvr(X), not _r_0.
+:- not cvr(X), not t_1(MAX_i), max_i(X), s_1(X), not _cvr(X).
+:- not t_1(MAX_i), max_i(X), s_1(X), not _r_0.
+r_0 | t_1(NV_1):- cvr(NV_1), t_1(X), succ_i(X,NV_1).
+r_0 | t_1(NV_1):- not cvr(NV_1), t_1(X), succ_i(X,NV_1).
+t_1(NV_1):- not r_0, t_1(X), succ_i(X,NV_1), not _cvr(NV_1).
+t_1(NV_1):- not cvr(NV_1), not r_0, t_1(X), succ_i(X,NV_1).
+:- succ_i(X,NV_1), not r_0, not t_1(NV_1), not _cvr(NV_1), not _t_1(X).
+:- not cvr(NV_1), succ_i(X,NV_1), not r_0, not t_1(NV_1), not _t_1(X).
+t_1(X):- not cvr(NV_1), succ_i(X,NV_1), not _cvr(NV_1).
+t_1(X):- r_0, succ_i(X,NV_1).
+cvr(NV_1) | t_1(X):- succ_i(X,NV_1), not _cvr(NV_1), not _r_0.
+t_1(X):- t_1(NV_1), succ_i(X,NV_1).
+:- not cvr(NV_1), not t_1(X), succ_i(X,NV_1), not _cvr(NV_1).
+:- not t_1(X), succ_i(X,NV_1), not _r_0.
+:- not t_1(X), succ_i(X,NV_1), not _t_1(NV_1).

@@ -1,5 +1,6 @@
-[!Y][?Z](q(Z)->p(Z,Y)).
+[!X](cvr(X)->i(X)).
+[!X][!Y][?Z]((i(X)&set(X,Y)) -> (cvr(Z)&set(Z,Y))).
 
-{p;q}
+{cvr;}
 
-<Y@i;Z@i>
+<X@i;Y@e;Z@i>
