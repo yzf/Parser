@@ -1,6 +1,5 @@
 [!X](~ab(X)->ontable(X)).
 [!Y]~ontable(Y).
 
-{ab;ontable}
-
+{ab;}
 <X@block;Y@a>

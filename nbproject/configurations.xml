@@ -54,6 +54,12 @@
           <itemPath>res/input/op/test_1.fact</itemPath>
           <itemPath>res/input/op/test_1.in</itemPath>
         </logicalFolder>
+        <logicalFolder name="pri" displayName="pri" projectFiles="true">
+          <itemPath>res/input/pri/blockworld.fact</itemPath>
+          <itemPath>res/input/pri/blockworld.in</itemPath>
+          <itemPath>res/input/pri/blockworld_2.fact</itemPath>
+          <itemPath>res/input/pri/blockworld_2.in</itemPath>
+        </logicalFolder>
         <logicalFolder name="sm" displayName="sm" projectFiles="true">
           <itemPath>res/input/sm/2clique.fact</itemPath>
           <itemPath>res/input/sm/2clique.in</itemPath>
@@ -87,6 +93,14 @@
           <itemPath>res/output/op/setcover.result</itemPath>
           <itemPath>res/output/op/test_1.out</itemPath>
           <itemPath>res/output/op/test_1.result</itemPath>
+        </logicalFolder>
+        <logicalFolder name="pri" displayName="pri" projectFiles="true">
+          <itemPath>res/output/pri/blockworld.out</itemPath>
+          <itemPath>res/output/pri/blockworld.result</itemPath>
+          <itemPath>res/output/pri/blockworld_2.out</itemPath>
+          <itemPath>res/output/pri/blockworld_2.result</itemPath>
+          <itemPath>res/output/pri/setcover.out</itemPath>
+          <itemPath>res/output/pri/setcover.result</itemPath>
         </logicalFolder>
         <logicalFolder name="sm" displayName="sm" projectFiles="true">
           <itemPath>res/output/sm/2clique.out</itemPath>
@@ -142,6 +156,7 @@
       <itemPath>README.md</itemPath>
       <itemPath>circ_main.cpp</itemPath>
       <itemPath>op_main.cpp</itemPath>
+      <itemPath>pri_main.cpp</itemPath>
       <itemPath>run.sh</itemPath>
       <itemPath>sm_main.cpp</itemPath>
     </logicalFolder>
@@ -282,6 +297,14 @@
       </item>
       <item path="res/input/op/test_1.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/pri/blockworld.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/pri/blockworld.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/pri/blockworld_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/pri/blockworld_2.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/input/sample.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/sample.in" ex="false" tool="3" flavor2="0">
@@ -336,6 +359,18 @@
       <item path="res/output/op/test_1.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/op/test_1.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/pri/blockworld.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/pri/blockworld.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/pri/blockworld_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/pri/blockworld_2.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/pri/setcover.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/pri/setcover.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sample.out" ex="false" tool="3" flavor2="0">
       </item>
@@ -520,6 +555,14 @@
       </item>
       <item path="res/input/op/test_1.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/pri/blockworld.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/pri/blockworld.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/pri/blockworld_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/pri/blockworld_2.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/input/sample.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/sample.in" ex="false" tool="3" flavor2="0">
@@ -574,6 +617,18 @@
       <item path="res/output/op/test_1.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/op/test_1.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/pri/blockworld.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/pri/blockworld.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/pri/blockworld_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/pri/blockworld_2.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/pri/setcover.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/pri/setcover.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sample.out" ex="false" tool="3" flavor2="0">
       </item>

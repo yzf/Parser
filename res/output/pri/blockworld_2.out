@@ -24,8 +24,8 @@ succ_block(A1,A2):- A1==A2-1, block(A1), block(A2).
 
 :- not ab(X), not ontable(X).
 :- ontable(Y).
-ab(X) | ontable_0_vary(X).
-r_0:- ontable_0_vary(Y).
+ab(X):- not ontable(X).
+:- ontable(Y).
 ab(X):- r_0, not _ab(X).
 :- not s_0(MIN_block).
 s_0(X):- succ_block(X,NV_0), s_0(NV_0).
@@ -71,4 +71,3 @@ t_0(X):- t_0(NV_0), succ_block(X,NV_0).
 :- not ab(NV_0), not t_0(X), succ_block(X,NV_0), not _ab(NV_0).
 :- not t_0(X), succ_block(X,NV_0), not _r_0.
 :- not t_0(X), succ_block(X,NV_0), not _t_0(NV_0).
-ontable_0_vary(X):- r_0.

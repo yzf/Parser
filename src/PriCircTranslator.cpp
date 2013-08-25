@@ -95,7 +95,12 @@ Formulas PriCircTranslator::createFormula_4() {
         _formula* f = NULL;
         for (unsigned int j = 0; j < otherPredicates.size(); ++ j) {
             Formula atom = Vocabulary::instance().getAtom(otherPredicates[j]);
+            const char* oriName = Vocabulary::instance().getNameById(otherPredicates[j], PREDICATE);
+            char name[64];
+            sprintf(name, "%s_%d%s", oriName, i, VARY_PREDICATE_POSTFIX);
+            int id = Vocabulary::instance().getSymbolId(name, PREDICATE);
             _formula* q = Utils::copyFormula(atom.getFormula());
+            q->predicate_id = id;
             f = (NULL == f) ? q : Utils::compositeByConnective(CONJ, f, q);
         }
         _formula* r = Utils::compositeToAtom(rId, NULL);
