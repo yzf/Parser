@@ -115,6 +115,7 @@ void SMTranslator::cabalarTransform() {
  * @param _out
  */
 void SMTranslator::outputCabalarFormulas(FILE* _out) const {
+    fprintf(_out, "cabalar:\n");
     output(_out, m_vDlpFormulas);
 }
 void SMTranslator::output(FILE* _out, vector<string> _vStr) const {

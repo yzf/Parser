@@ -44,6 +44,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/NNFUtils.o \
 	${OBJECTDIR}/src/Optimization.o \
 	${OBJECTDIR}/src/PNFUtils.o \
+	${OBJECTDIR}/src/PriCircTranslator.o \
 	${OBJECTDIR}/src/Rule.o \
 	${OBJECTDIR}/src/SMTranslator.o \
 	${OBJECTDIR}/src/Utils.o \
@@ -128,6 +129,11 @@ ${OBJECTDIR}/src/PNFUtils.o: src/PNFUtils.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/PNFUtils.o src/PNFUtils.cpp
+
+${OBJECTDIR}/src/PriCircTranslator.o: src/PriCircTranslator.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/PriCircTranslator.o src/PriCircTranslator.cpp
 
 ${OBJECTDIR}/src/Rule.o: src/Rule.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -294,6 +300,19 @@ ${OBJECTDIR}/src/PNFUtils_nomain.o: ${OBJECTDIR}/src/PNFUtils.o src/PNFUtils.cpp
 	    $(COMPILE.cc) -O2 `cppunit-config --cflags` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/PNFUtils_nomain.o src/PNFUtils.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/PNFUtils.o ${OBJECTDIR}/src/PNFUtils_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/PriCircTranslator_nomain.o: ${OBJECTDIR}/src/PriCircTranslator.o src/PriCircTranslator.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/PriCircTranslator.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -O2 `cppunit-config --cflags` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/PriCircTranslator_nomain.o src/PriCircTranslator.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/PriCircTranslator.o ${OBJECTDIR}/src/PriCircTranslator_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/Rule_nomain.o: ${OBJECTDIR}/src/Rule.o src/Rule.cpp 

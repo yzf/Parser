@@ -60,6 +60,7 @@ int main(int argc, char** argv) {
     SMTranslator::instance().init(*fmls);
     SMTranslator::instance().convert();
     SMTranslator::instance().outputHengZhangFormulas(stdout);
+    SMTranslator::instance().outputCabalarFormulas(stdout);
     SMTranslator::instance().outputFinalResult(fout);
     SMTranslator::instance().destroy();
     delete fmls;

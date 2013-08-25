@@ -13,7 +13,8 @@ Vocabulary& Vocabulary::instance() {
 
 Vocabulary::Vocabulary() : m_nVariableId(0), m_nDomainId(0), m_nFunctionId(0),
         m_nPredicateId(0), m_nRenameVariablePostfix(0), m_nSPostfix(0), m_nWPostfix(0), 
-        m_nTPostfix(0), m_nRPostfix(0), m_nPrenexRenamePostfix(0), m_nRenameVariPostfix(0) {
+        m_nTPostfix(0), m_nRPostfix(0), m_nPrenexRenamePostfix(0), m_nRenameVariPostfix(0),
+        m_nPriIndex(0) {
     m_mapVariableName.clear();
     m_mapDomainName.clear();
     m_mapFunctionName.clear();
@@ -25,6 +26,7 @@ Vocabulary::Vocabulary() : m_nVariableId(0), m_nDomainId(0), m_nFunctionId(0),
     m_mapIsIntensionPredicate.clear();
     m_mapIsVaryPredicate.clear();
     m_mapDomainVariables.clear();
+    m_vvMininalPredicates.clear();
     m_fmlAtomList = new Formulas();
 }
 
@@ -43,6 +45,7 @@ Vocabulary::~Vocabulary() {
     m_mapIsIntensionPredicate.clear();
     m_mapIsVaryPredicate.clear();
     m_mapDomainVariables.clear();
+    m_vvMininalPredicates.clear();
 }
 /**
  * 保存内涵谓词
@@ -91,6 +94,20 @@ void Vocabulary::setVariableDomain(const char* _variable, const char* _domain) {
         m_mapVariableDomain[variableId] = domainId;
         m_mapDomainVariables[domainId].push_back(variableId);
     }
+}
+/**
+ * 设置极少化谓词的优先级
+ * @param _sName
+ * @param _bIsNewLevel
+ */
+void Vocabulary::setMininalPredicatePriority(const char* _sName) {
+    int predicateId = getSymbolId(_sName, PREDICATE);
+    assert(predicateId != -1);
+    while (m_nPriIndex >= m_vvMininalPredicates.size()) {
+        m_vvMininalPredicates.push_back(vector<int>());
+    }
+    
+    m_vvMininalPredicates[m_nPriIndex].push_back(predicateId);
 }
 /**
  * 查询符号的id
@@ -298,6 +315,13 @@ void Vocabulary::dumpVocabulary(FILE* _out)  {
         fprintf(_out, "%s:%d\t", (it->second).c_str(), it->first);
     }
     
+    fprintf(_out, "\nmininal predicates' priority:\n");
+    for (unsigned int i = 0; i < m_vvMininalPredicates.size(); ++ i) {
+        for (unsigned int j = 0; j < m_vvMininalPredicates[i].size(); ++ j) {
+            fprintf(_out, "%s:%d\t", getNameById(m_vvMininalPredicates[i][j], PREDICATE), i);
+        }
+    }
+    
     fprintf(_out, "\nintension predicate:\n");
     for (map<int, string>::const_iterator it = m_mapPredicateName.begin(); 
             it != m_mapPredicateName.end(); ++ it) {
@@ -400,6 +424,21 @@ map<int, string> Vocabulary::getAllVaryPredicates() const {
     return vRet;
 }
 
+vector<int> Vocabulary::getAllVaryPredicatesId() const {
+    vector<int> ret;
+    for (map<int,string>::const_iterator it = m_mapPredicateName.begin();
+            it != m_mapPredicateName.end(); ++ it) {
+        if (isVaryPredicate(it->first)) {
+            ret.push_back(it->first);
+        }
+    }
+    return ret;
+}
+
+vector< vector<int> > Vocabulary::getAllMininalPredicates() const {
+    return m_vvMininalPredicates;
+}
+
 int Vocabulary::generatePredicateS(vector<int> _termsX, vector<int> _termsY) {
     char name[32];
     sprintf(name, "%s%d", S_PREFIX, m_nSPostfix ++);
@@ -487,4 +526,7 @@ int Vocabulary::generateNewVariable(int _oriVariId) {
     Vocabulary::instance().setVariableDomain(sBuf, 
                     Vocabulary::instance().getVariableDomain(_oriVariId));
     return id;
+}
+void Vocabulary::increaseMininalPredicatePriority() {
+    ++ m_nPriIndex;
 }

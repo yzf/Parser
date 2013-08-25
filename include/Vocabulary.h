@@ -46,6 +46,7 @@ private:
     int m_nRPostfix;
     int m_nPrenexRenamePostfix;
     int m_nRenameVariPostfix;
+    unsigned int m_nPriIndex;
 
     map<int, string> m_mapVariableName;         // map[变量id] = 对应的变量名
     map<int, string> m_mapDomainName;           // map[论域id] = 对应的论域名
@@ -60,7 +61,7 @@ private:
     
     map<int, bool> m_mapIsIntensionPredicate;   // 记录是否为内涵谓词
     map<int, bool> m_mapIsVaryPredicate;        // 记录是否为可变谓词
-     
+    vector< vector<int> > m_vvMininalPredicates;
     
     Formulas* m_fmlAtomList;
 public:    
@@ -77,6 +78,7 @@ public:
     void dumpVocabulary(FILE* _out) ;
     //setter adder
     void setVariableDomain(const char* _sVariable, const char* _sDomain);
+    void setMininalPredicatePriority(const char* _sName);
     int addSymbol(const char* _sName, SYMBOL_TYPE _type, int _nArity = 0);
     int addRenameVariable();
     void addIntensionPredicate(const char*_sName);
@@ -99,6 +101,8 @@ public:
     map<int, string> getAllPredicates() const;
     map<int, string> getAllIntensionPredicates() const;
     map<int, string> getAllVaryPredicates() const;
+    vector<int> getAllVaryPredicatesId() const;
+    vector< vector<int> > getAllMininalPredicates() const;
     
     //生成新的s,w,t
     int generatePredicateS(vector<int> _termsX, vector<int> _termsY);
@@ -109,6 +113,8 @@ public:
     int generateDomainMIN(const char* _domain);
     int generateDomainMAX(const char* _domain);
     int generateNewVariable(int _oriVariId);
+    
+    void increaseMininalPredicatePriority();
 };
 
 #endif

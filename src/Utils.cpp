@@ -522,7 +522,7 @@ void Utils::getNoQuantifierVariablesInTerms(map<int, bool>& _flag, vector<int>& 
  * @param size　数组大小
  * @return bool
  */
-bool Utils::inList(int _target, const vector<int>& _list) {
+bool Utils::isInList(int _target, const vector<int>& _list) {
     unsigned int size = _list.size();
     for (unsigned int i = 0; i < size; ++ i) {
         if (_list[i] == _target) {
@@ -545,8 +545,8 @@ _formula* Utils::doubleNegationPredicates(_formula* _fml, const map<int, string>
     case ATOM:
         if (NEGA != _fatherType) {
             if (_mapPredicates.find(_fml->predicate_id) != _mapPredicates.end()) {
-                _fml = compositeByConnective(NEGA, _fml, NULL);
-                _fml = compositeByConnective(NEGA, _fml, NULL);
+                _fml = compositeByConnective(NEGA, _fml);
+                _fml = compositeByConnective(NEGA, _fml);
             }
         }
         break;
@@ -899,6 +899,67 @@ _formula* Utils::_thetaReplace(const int& _rId, _formula* _fml, _formula* _fathe
         case EXIS:
         case NEGA:
             _thetaReplace(_rId, _fml->subformula_l, _fml);
+            break;
+        default:
+            assert(0);
+    }
+    return _fml;
+}
+_formula* Utils::_thetaReplace(const vector<int>& _preMiniPredicates, 
+                const vector<int>& _curMiniPredicates, const vector<int>& _otherPredicates,
+                const int& _rId, const int& _index, _formula* _fml, _formula* _fatherFml) {
+    assert(_fml);
+    switch (_fml->formula_type) {
+        case ATOM:
+            if (NULL != _fatherFml && NEGA == _fatherFml->formula_type) {
+                if (isInList(_fml->predicate_id, _curMiniPredicates)) {
+                    // p->r 替换 ~p
+                    _fatherFml->formula_type = IMPL;
+                    _fatherFml->subformula_r = compositeToAtom(_rId, NULL);
+                }
+                else if (isInList(_fml->predicate_id, _otherPredicates)) {
+                    // Q_j_vary->r 替换 ~Q
+                    const char* qName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
+                    char qVaryName[64];
+                    sprintf(qVaryName, "%s_%d%s", qName, _index, VARY_PREDICATE_POSTFIX);
+                    // ->
+                    _fatherFml->formula_type = IMPL;
+                    // Q_j_vary
+                    int qVaryId = Vocabulary::instance().getSymbolId(qVaryName, PREDICATE);
+                    assert(qVaryId != -1);
+                    _fatherFml->subformula_l->predicate_id = qVaryId;
+                    // r
+                    _fatherFml->subformula_r = compositeToAtom(_rId, NULL); 
+                }
+            }
+            else { // Q_j_vary  替换 Q，Q_j_vary属于内涵谓词
+                if (isInList(_fml->predicate_id, _otherPredicates)) {
+                    const char* qName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
+                    char qVaryName[64];
+                    sprintf(qVaryName, "%s_%d%s", qName, _index,  VARY_PREDICATE_POSTFIX);
+                    int qVaryId = Vocabulary::instance().getSymbolId(qVaryName, PREDICATE);
+                    assert(qVaryId != -1);
+                    _fml->predicate_id = qVaryId;
+                }
+                else if (isInList(_fml->predicate_id, _preMiniPredicates)) {
+                    int preId = _fml->predicate_id;
+                    _fml->subformula_l = copyFormula(_fml);
+                    _fml->formula_type = NEGA;
+                    deleteTerms(_fml->parameters, Vocabulary::instance().getPredicateArity(preId));
+                    _fml->subformula_l = compositeByConnective(NEGA, _fml->subformula_l);
+                }
+            }
+            break;
+        case IMPL:
+        case CONJ:
+        case DISJ:
+            _thetaReplace(_preMiniPredicates, _curMiniPredicates, _otherPredicates, 
+                    _rId, _index, _fml->subformula_r, _fml);
+        case UNIV:
+        case EXIS:
+        case NEGA:
+            _thetaReplace(_preMiniPredicates, _curMiniPredicates, _otherPredicates, 
+                    _rId, _index, _fml->subformula_l, _fml);
             break;
         default:
             assert(0);

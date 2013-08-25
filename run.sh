@@ -2,15 +2,23 @@
 if [ $# -eq 0 ]
 then
     tranType="sm"
+
 elif [ "$1" = "sm" ]
 then
     tranType="sm"
+
 elif [ "$1" = "circ" ]
 then
     tranType="circ"
+
 elif [ "$1" = "op" ]
 then 
     tranType="op"
+
+elif [ "$1" = "pri" ]
+then
+    tranType="pri"
+
 else
     echo "error!!!"
     exit 1

@@ -13,6 +13,7 @@
       <itemPath>include/NNFUtils.h</itemPath>
       <itemPath>include/Optimization.h</itemPath>
       <itemPath>include/PNFUtils.h</itemPath>
+      <itemPath>include/PriCircTranslator.h</itemPath>
       <itemPath>include/Rule.h</itemPath>
       <itemPath>include/SMTranslator.h</itemPath>
       <itemPath>include/Utils.h</itemPath>
@@ -24,6 +25,8 @@
       <itemPath>parse/circ_parse.y</itemPath>
       <itemPath>parse/clean.sh</itemPath>
       <itemPath>parse/generate.sh</itemPath>
+      <itemPath>parse/pri_lex.l</itemPath>
+      <itemPath>parse/pri_parse.y</itemPath>
       <itemPath>parse/sm_lex.l</itemPath>
       <itemPath>parse/sm_parse.y</itemPath>
     </logicalFolder>
@@ -32,8 +35,6 @@
                    projectFiles="true">
       <logicalFolder name="input" displayName="input" projectFiles="true">
         <logicalFolder name="circ" displayName="circ" projectFiles="true">
-          <itemPath>res/input/circ/2clique.fact</itemPath>
-          <itemPath>res/input/circ/2clique.in</itemPath>
           <itemPath>res/input/circ/blockworld.fact</itemPath>
           <itemPath>res/input/circ/blockworld.in</itemPath>
           <itemPath>res/input/circ/blockworld_2.fact</itemPath>
@@ -44,8 +45,6 @@
           <itemPath>res/input/circ/test_1.in</itemPath>
         </logicalFolder>
         <logicalFolder name="op" displayName="op" projectFiles="true">
-          <itemPath>res/input/op/2clique.fact</itemPath>
-          <itemPath>res/input/op/2clique.in</itemPath>
           <itemPath>res/input/op/blockworld.fact</itemPath>
           <itemPath>res/input/op/blockworld.in</itemPath>
           <itemPath>res/input/op/blockworld_2.fact</itemPath>
@@ -70,8 +69,6 @@
       </logicalFolder>
       <logicalFolder name="output" displayName="output" projectFiles="true">
         <logicalFolder name="circ" displayName="circ" projectFiles="true">
-          <itemPath>res/output/circ/2clique.out</itemPath>
-          <itemPath>res/output/circ/2clique.result</itemPath>
           <itemPath>res/output/circ/blockworld.out</itemPath>
           <itemPath>res/output/circ/blockworld.result</itemPath>
           <itemPath>res/output/circ/blockworld_2.out</itemPath>
@@ -82,8 +79,6 @@
           <itemPath>res/output/circ/test_1.result</itemPath>
         </logicalFolder>
         <logicalFolder name="op" displayName="op" projectFiles="true">
-          <itemPath>res/output/op/2clique.out</itemPath>
-          <itemPath>res/output/op/2clique.result</itemPath>
           <itemPath>res/output/op/blockworld.out</itemPath>
           <itemPath>res/output/op/blockworld.result</itemPath>
           <itemPath>res/output/op/blockworld_2.out</itemPath>
@@ -118,6 +113,7 @@
       <itemPath>src/NNFUtils.cpp</itemPath>
       <itemPath>src/Optimization.cpp</itemPath>
       <itemPath>src/PNFUtils.cpp</itemPath>
+      <itemPath>src/PriCircTranslator.cpp</itemPath>
       <itemPath>src/Rule.cpp</itemPath>
       <itemPath>src/SMTranslator.cpp</itemPath>
       <itemPath>src/Utils.cpp</itemPath>
@@ -226,6 +222,8 @@
       </item>
       <item path="include/PNFUtils.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/PriCircTranslator.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Rule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/SMTranslator.h" ex="false" tool="3" flavor2="0">
@@ -244,13 +242,13 @@
       </item>
       <item path="parse/generate.sh" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="parse/pri_lex.l" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="parse/pri_parse.y" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="parse/sm_lex.l" ex="false" tool="3" flavor2="0">
       </item>
       <item path="parse/sm_parse.y" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/2clique.fact" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/2clique.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/circ/blockworld.fact" ex="false" tool="3" flavor2="0">
       </item>
@@ -267,10 +265,6 @@
       <item path="res/input/circ/test_1.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/circ/test_1.in" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/op/2clique.fact" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/op/2clique.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/op/blockworld.fact" ex="false" tool="3" flavor2="0">
       </item>
@@ -308,10 +302,6 @@
       </item>
       <item path="res/input/sm/setcover.in" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/circ/2clique.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/2clique.result" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="res/output/circ/blockworld.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/circ/blockworld.result" ex="false" tool="3" flavor2="0">
@@ -330,10 +320,6 @@
       <item path="res/output/circ/test_1.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/circ/test_1.result" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/op/2clique.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/op/2clique.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/op/blockworld.out" ex="false" tool="3" flavor2="0">
       </item>
@@ -386,6 +372,8 @@
       <item path="src/Optimization.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/PNFUtils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/PriCircTranslator.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Rule.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -472,6 +460,8 @@
       </item>
       <item path="include/PNFUtils.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="include/PriCircTranslator.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="include/Rule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="include/SMTranslator.h" ex="false" tool="3" flavor2="0">
@@ -490,13 +480,13 @@
       </item>
       <item path="parse/generate.sh" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="parse/pri_lex.l" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="parse/pri_parse.y" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="parse/sm_lex.l" ex="false" tool="3" flavor2="0">
       </item>
       <item path="parse/sm_parse.y" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/2clique.fact" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/2clique.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/circ/blockworld.fact" ex="false" tool="3" flavor2="0">
       </item>
@@ -513,10 +503,6 @@
       <item path="res/input/circ/test_1.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/circ/test_1.in" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/op/2clique.fact" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/op/2clique.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/op/blockworld.fact" ex="false" tool="3" flavor2="0">
       </item>
@@ -554,10 +540,6 @@
       </item>
       <item path="res/input/sm/setcover.in" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/circ/2clique.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/2clique.result" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="res/output/circ/blockworld.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/circ/blockworld.result" ex="false" tool="3" flavor2="0">
@@ -576,10 +558,6 @@
       <item path="res/output/circ/test_1.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/circ/test_1.result" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/op/2clique.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/op/2clique.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/op/blockworld.out" ex="false" tool="3" flavor2="0">
       </item>
@@ -632,6 +610,8 @@
       <item path="src/Optimization.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/PNFUtils.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/PriCircTranslator.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Rule.cpp" ex="false" tool="1" flavor2="0">
       </item>
