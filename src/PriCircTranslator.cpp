@@ -112,7 +112,7 @@ Formulas PriCircTranslator::createFormula_4() {
     return ret;
 }
 
-Formula PriCircTranslator::preProcessing(const Formula& _originalFml) {
+Formulas* PriCircTranslator::preProcessing(const Formula& _originalFml) {
     m_vNewPredicates.clear();
     m_vSysbolR.clear();
     
@@ -145,19 +145,21 @@ Formula PriCircTranslator::preProcessing(const Formula& _originalFml) {
         }
     }
     
-    Formula fml = _originalFml;
-    fml.convertToNNF(false);
-    fml.removeImpl();
-    fml.convertToPNF();
-    fml.convertToNNF(false);
+    Formulas* fmls = _originalFml.divideFormula();
+    fmls->convertToNNF(false);
+    fmls->removeImpl();
+    fmls->convertToPNF();
+    fmls->convertToNNF(false);
     
     printf("ori:\n");
-    fml.output(stdout);
+    fmls->output(stdout);
     
-    return fml;
+    return fmls;
 }
 
-void PriCircTranslator::postProcessing() {
+void PriCircTranslator::postProcessing(Formulas* _pFmls) {
+    _pFmls->joinBack(createFormula_3());
+    _pFmls->joinBack(createFormula_4());
     // 把新生成的谓词标记为内涵谓词
     for (unsigned int i = 0; i < m_vSysbolR.size(); ++ i) {
         Vocabulary::instance().addIntensionPredicate(m_vSysbolR[i]);
@@ -167,20 +169,25 @@ void PriCircTranslator::postProcessing() {
     }
 }
 
-Formulas* PriCircTranslator::transform(const Formula& _originalFml) {
-    Formulas* ret = new Formulas();
-    ret->pushBack(createFormula_1(_originalFml));
-    ret->joinBack(createFormula_2(_originalFml));
-    ret->joinBack(createFormula_3());
-    ret->joinBack(createFormula_4());
+Formulas PriCircTranslator::transform(const Formula& _originalFml) {
+    Formulas ret;
+    ret.pushBack(createFormula_1(_originalFml));
+    ret.joinBack(createFormula_2(_originalFml));
     return ret;
 }
 
 Formulas* PriCircTranslator::convert(const Formula& _originalFml) {
-    Formula nnfFml = preProcessing(_originalFml);
     
-    Formulas* pFmls = transform(nnfFml);
-    postProcessing();
+    Formulas* nnfFmls = preProcessing(_originalFml);
+    assert(nnfFmls);
+    
+    Formulas* pFmls = new Formulas();
+    for (FORMULAS_CONST_ITERATOR it = nnfFmls->begin();
+            it != nnfFmls->end(); ++ it) {
+        pFmls->joinBack(transform(*it));
+    }
+    delete nnfFmls;
+    postProcessing(pFmls);
     
     printf("pri circ:\n");
     pFmls->output(stdout);

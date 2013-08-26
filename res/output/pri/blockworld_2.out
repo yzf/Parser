@@ -23,8 +23,8 @@ _max_block(X):- not max_block(X).
 succ_block(A1,A2):- A1==A2-1, block(A1), block(A2).
 
 :- not ab(X), not ontable(X).
-:- ontable(Y).
 ab(X):- not ontable(X).
+:- ontable(Y).
 :- ontable(Y).
 ab(X):- r_0, not _ab(X).
 :- not s_0(MIN_block).

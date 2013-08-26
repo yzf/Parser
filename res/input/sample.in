@@ -1,6 +1,7 @@
-[!X](~ab(X)->ontable(X)).
-[!Y]~ontable(Y).
+a(X)|b(X)|d(X).
+[?X]c(X).
+a(1).
 
-{ab;ontable}
+{a>b>c;d}
 
-<X@block;Y@a>
+<X@i>

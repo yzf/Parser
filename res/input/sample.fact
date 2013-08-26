@@ -1,13 +1,17 @@
-block(1..2).
-min_block(1).
-max_block(2).
 
-a(1).
-min_a(1).
-max_a(1).
 
-ontable(X) | _ontable(X) :- block(X).
+i(1..2).
+
+
+min_i(1).
+max_i(2).
+
+d(X) | _d(X) :- i(X).
 
 #hide.
-#show ab/1.
-#show ontable/1.
+#show a/1.
+#show b/1.
+#show c/1.
+#show d/1.
+
+

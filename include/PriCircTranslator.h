@@ -24,9 +24,9 @@ private:
     Formulas createFormula_3();
     Formulas createFormula_4();
 protected:
-    Formula preProcessing(const Formula& _originalFml);
-    void postProcessing();
-    Formulas* transform(const Formula& _originalFml);
+    Formulas* preProcessing(const Formula& _originalFml);
+    void postProcessing(Formulas* _pFmls);
+    Formulas transform(const Formula& _originalFml);
 public:
     PriCircTranslator();
     ~PriCircTranslator();

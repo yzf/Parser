@@ -467,8 +467,6 @@ void Utils::renameFormulaVariables(_formula* _fml, int _oldVariableId, int _newV
 void Utils::getNoQuantifierVariables(map<int, bool>& _flag, vector<int>& _varis, _formula* _fml) {
     assert(_fml);
     switch (_fml->formula_type) {
-    case NEGA:
-        break;
     case UNIV:
     case EXIS:
         _flag[_fml->variable_id] = true;
@@ -477,8 +475,9 @@ void Utils::getNoQuantifierVariables(map<int, bool>& _flag, vector<int>& _varis,
     case IMPL:
     case CONJ:
     case DISJ:
-        getNoQuantifierVariables(_flag, _varis, _fml->subformula_l);
         getNoQuantifierVariables(_flag, _varis, _fml->subformula_r);
+    case NEGA:
+        getNoQuantifierVariables(_flag, _varis, _fml->subformula_l);
         break;
     case ATOM:
         for(int i = 0; i < Vocabulary::instance().getPredicateArity(_fml->predicate_id); ++ i) {
@@ -894,11 +893,11 @@ _formula* Utils::_thetaReplace(const int& _rId, _formula* _fml, _formula* _fathe
         case IMPL:
         case CONJ:
         case DISJ:
-            _thetaReplace(_rId, _fml->subformula_r, _fml);
+            _fml->subformula_r= _thetaReplace(_rId, _fml->subformula_r, _fml);
         case UNIV:
         case EXIS:
         case NEGA:
-            _thetaReplace(_rId, _fml->subformula_l, _fml);
+            _fml->subformula_l = _thetaReplace(_rId, _fml->subformula_l, _fml);
             break;
         default:
             assert(0);
@@ -941,24 +940,22 @@ _formula* Utils::_thetaReplace(const vector<int>& _preMiniPredicates,
                     assert(qVaryId != -1);
                     _fml->predicate_id = qVaryId;
                 }
+                // ~~p 替换 p
                 else if (isInList(_fml->predicate_id, _preMiniPredicates)) {
-                    int preId = _fml->predicate_id;
-                    _fml->subformula_l = copyFormula(_fml);
-                    _fml->formula_type = NEGA;
-                    deleteTerms(_fml->parameters, Vocabulary::instance().getPredicateArity(preId));
-                    _fml->subformula_l = compositeByConnective(NEGA, _fml->subformula_l);
+                    _fml = compositeByConnective(NEGA, _fml);
+                    _fml = compositeByConnective(NEGA, _fml);
                 }
             }
             break;
         case IMPL:
         case CONJ:
         case DISJ:
-            _thetaReplace(_preMiniPredicates, _curMiniPredicates, _otherPredicates, 
+            _fml->subformula_r = _thetaReplace(_preMiniPredicates, _curMiniPredicates, _otherPredicates, 
                     _rId, _index, _fml->subformula_r, _fml);
         case UNIV:
         case EXIS:
         case NEGA:
-            _thetaReplace(_preMiniPredicates, _curMiniPredicates, _otherPredicates, 
+            _fml->subformula_l = _thetaReplace(_preMiniPredicates, _curMiniPredicates, _otherPredicates, 
                     _rId, _index, _fml->subformula_l, _fml);
             break;
         default:
@@ -968,6 +965,7 @@ _formula* Utils::_thetaReplace(const vector<int>& _preMiniPredicates,
 }
 _formula* Utils::thetaT__Replace(_formula* _fml, _formula* _fatherFml) {
     assert(_fml);
+    _formula* tmp;
     switch (_fml->formula_type) {
         case ATOM:
             if (NULL != _fatherFml && NEGA == _fatherFml->formula_type) {
@@ -976,15 +974,13 @@ _formula* Utils::thetaT__Replace(_formula* _fml, _formula* _fatherFml) {
                 _fatherFml->predicate_id = PRED_TRUE;
                 _fatherFml->parameters = NULL;
                 deleteFormula(_fml);
+                _fml = NULL;
             }
             else {
                 if (Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
                     // ~~p 替换 p
-                    _formula* p = Utils::copyFormula(_fml);
-                    _formula* _p = Utils::compositeByConnective(NEGA, p);
-                    deleteTerms(_fml->parameters, Vocabulary::instance().getPredicateArity(_fml->predicate_id));
-                    _fml->formula_type = NEGA;
-                    _fml->subformula_l = _p;
+                    _fml = compositeByConnective(NEGA, _fml);
+                    _fml = compositeByConnective(NEGA, _fml);
                 }
                 else if (Vocabulary::instance().isVaryPredicate(_fml->predicate_id)) {
                     // q_vary 替换 q
@@ -999,11 +995,13 @@ _formula* Utils::thetaT__Replace(_formula* _fml, _formula* _fatherFml) {
         case CONJ:
         case DISJ:
         case IMPL:
-            thetaT__Replace(_fml->subformula_r, _fml);
+            tmp = thetaT__Replace(_fml->subformula_r, _fml);
+            _fml->subformula_r = (NULL == tmp) ? _fml->subformula_r : tmp;
         case UNIV:
         case EXIS:
         case NEGA:
-            thetaT__Replace(_fml->subformula_l, _fml);
+            tmp = thetaT__Replace(_fml->subformula_l, _fml);
+            _fml->subformula_l = (NULL == tmp) ? _fml->subformula_l : tmp;
             break;
         default:
             assert(0);
@@ -1021,11 +1019,11 @@ _formula* Utils::removeImpl(_formula* _fml) {
             _fml->subformula_l = compositeByConnective(NEGA, _fml->subformula_l);
         case CONJ:
         case DISJ:
-            removeImpl(_fml->subformula_r);
+            _fml->subformula_r = removeImpl(_fml->subformula_r);
         case UNIV:
         case EXIS:
         case NEGA:
-            removeImpl(_fml->subformula_l);
+            _fml->subformula_l = removeImpl(_fml->subformula_l);
             break;
         default:
             assert(0);
