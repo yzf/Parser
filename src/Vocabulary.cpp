@@ -27,6 +27,7 @@ Vocabulary::Vocabulary() : m_nVariableId(0), m_nDomainId(0), m_nFunctionId(0),
     m_mapIsVaryPredicate.clear();
     m_mapDomainVariables.clear();
     m_vvMininalPredicates.clear();
+    m_mapConstVariables.clear();
     m_fmlAtomList = new Formulas();
 }
 
@@ -46,6 +47,7 @@ Vocabulary::~Vocabulary() {
     m_mapIsVaryPredicate.clear();
     m_mapDomainVariables.clear();
     m_vvMininalPredicates.clear();
+    m_mapConstVariables.clear();
 }
 /**
  * 保存内涵谓词
@@ -53,12 +55,12 @@ Vocabulary::~Vocabulary() {
  */
 void Vocabulary::addIntensionPredicate(const char* _name) {
     int id = getSymbolId(_name, PREDICATE);
-    m_mapIsIntensionPredicate.insert(make_pair<int, bool>(id, true));
+    m_mapIsIntensionPredicate[id] = true;
 }
 void Vocabulary::addIntensionPredicate(int _predicateId) {
     map<int, string>::const_iterator it = m_mapPredicateName.find(_predicateId);
     assert(it != m_mapPredicateName.end());
-    m_mapIsIntensionPredicate.insert(make_pair<int, bool>(_predicateId, true));
+    m_mapIsIntensionPredicate[_predicateId] = true;
 }
 /**
  * 保存可变谓词
@@ -66,7 +68,7 @@ void Vocabulary::addIntensionPredicate(int _predicateId) {
  */
 void Vocabulary::addVaryPredicate(const char* _name) {
     int id = getSymbolId(_name, PREDICATE);
-    m_mapIsVaryPredicate.insert(make_pair<int, bool>(id, true));
+    m_mapIsVaryPredicate[id] = true;
 }
 /**
  * 获取变量所在论域
@@ -88,7 +90,7 @@ void Vocabulary::setVariableDomain(const char* _variable, const char* _domain) {
     
     if(domainId == -1) {
         domainId = m_nDomainId ++;
-        m_mapDomainName[domainId] = string(_domain);
+        m_mapDomainName[domainId] = _domain;
     }
     if((variableId = getSymbolId(_variable, VARIABLE)) != -1) {
         m_mapVariableDomain[variableId] = domainId;
@@ -529,4 +531,19 @@ int Vocabulary::generateNewVariable(int _oriVariId) {
 }
 void Vocabulary::increaseMininalPredicatePriority() {
     ++ m_nPriIndex;
+}
+/**
+ * 添加常量
+ * @param _nNum
+ */
+int Vocabulary::addConstant(int _nNum) {
+    char variName[64];
+    sprintf(variName, "%s%d", CONST_VARI_PREFIX, _nNum);
+    int variId = addSymbol(variName, VARIABLE);
+    assert(variId >= 0);
+    char domainName[64];
+    sprintf(domainName, "%s%d", CONST_DOMAIN_PREFIX, _nNum);
+    setVariableDomain(variName, domainName);
+    m_mapConstVariables[variName] = domainName;
+    return variId;
 }

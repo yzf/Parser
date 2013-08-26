@@ -25,12 +25,14 @@ void yyerror(const char* s) {
 %}
 
 %union {
+    int num;
     char* s;
     struct __formula* f;
     struct __term* t;
     struct __terms* ts;
 }
 
+%token <num> INTEGER
 %token <s> S_VARI
 %token <s> S_PRED
 %token <s> S_FUNC
@@ -281,7 +283,13 @@ terms
 ;
 
 term
-	: S_VARI {
+	: INTEGER {
+            int id = Vocabulary::instance().addConstant($1);
+            $$ = (_term*)malloc(sizeof(_term));
+            $$->term_type = VARI;
+            $$->variable_id = id;
+        }
+        | S_VARI {
             assert($1);
 
             $$ = (_term*)malloc(sizeof(_term));

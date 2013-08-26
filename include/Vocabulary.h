@@ -22,6 +22,8 @@ using namespace std;
 #define MAX_VARI_PREFIX "MAX_"
 #define MIN_DOMAIN_PREFIX "min_"
 #define MAX_DOMAIN_PREFIX "max_"
+#define CONST_VARI_PREFIX "CONST_"
+#define CONST_DOMAIN_PREFIX "const_"
 
 class Formual;
 class Formulas;
@@ -33,20 +35,21 @@ using namespace std;
 class Vocabulary {
 private:
     // 变量、论域、函词、谓词 id
-    int m_nVariableId;
-    int m_nDomainId;
-    int m_nFunctionId;
-    int m_nPredicateId;
+    unsigned int m_nVariableId;
+    unsigned int m_nDomainId;
+    unsigned int m_nFunctionId;
+    unsigned int m_nPredicateId;
     // 重名变量后缀
-    int m_nRenameVariablePostfix;
+    unsigned int m_nRenameVariablePostfix;
     // s,w,t谓词后缀
-    int m_nSPostfix;
-    int m_nWPostfix;
-    int m_nTPostfix;
-    int m_nRPostfix;
-    int m_nPrenexRenamePostfix;
-    int m_nRenameVariPostfix;
+    unsigned int m_nSPostfix;
+    unsigned int m_nWPostfix;
+    unsigned int m_nTPostfix;
+    unsigned int m_nRPostfix;
+    unsigned int m_nPrenexRenamePostfix;
+    unsigned int m_nRenameVariPostfix;
     unsigned int m_nPriIndex;
+    
 
     map<int, string> m_mapVariableName;         // map[变量id] = 对应的变量名
     map<int, string> m_mapDomainName;           // map[论域id] = 对应的论域名
@@ -62,6 +65,7 @@ private:
     map<int, bool> m_mapIsIntensionPredicate;   // 记录是否为内涵谓词
     map<int, bool> m_mapIsVaryPredicate;        // 记录是否为可变谓词
     vector< vector<int> > m_vvMininalPredicates;
+    map<string, string> m_mapConstVariables;
     
     Formulas* m_fmlAtomList;
 public:    
@@ -113,8 +117,9 @@ public:
     int generateDomainMIN(const char* _domain);
     int generateDomainMAX(const char* _domain);
     int generateNewVariable(int _oriVariId);
-    
+ 
     void increaseMininalPredicatePriority();
+    int addConstant(int _nNum);
 };
 
 #endif

@@ -59,6 +59,8 @@
           <itemPath>res/input/pri/blockworld.in</itemPath>
           <itemPath>res/input/pri/blockworld_2.fact</itemPath>
           <itemPath>res/input/pri/blockworld_2.in</itemPath>
+          <itemPath>res/input/pri/setcover.fact</itemPath>
+          <itemPath>res/input/pri/setcover.in</itemPath>
         </logicalFolder>
         <logicalFolder name="sm" displayName="sm" projectFiles="true">
           <itemPath>res/input/sm/2clique.fact</itemPath>
@@ -304,6 +306,10 @@
       <item path="res/input/pri/blockworld_2.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/pri/blockworld_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/pri/setcover.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/pri/setcover.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/sample.fact" ex="false" tool="3" flavor2="0">
       </item>
@@ -562,6 +568,10 @@
       <item path="res/input/pri/blockworld_2.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/pri/blockworld_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/pri/setcover.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/pri/setcover.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/sample.fact" ex="false" tool="3" flavor2="0">
       </item>

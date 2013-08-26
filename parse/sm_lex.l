@@ -14,7 +14,8 @@ extern int context_flag;/* 0 - not in any atom, 1 - in an atom*/
 
 blank	  			[ \n\t\r]*
 variable			[A-Z][a-zA-Z0-9_]*
-constant			[a-z0-9][a-zA-Z0-9_]*
+predicate_function              [a-z][a-zA-Z0-9_]*
+integer                         [1-9][0-9]*
 
 %%
 {variable}	   		{
@@ -23,7 +24,7 @@ constant			[a-z0-9][a-zA-Z0-9_]*
                                     return S_VARI;
                                 }
 
-{constant}	   		{
+{predicate_function}	   	{
                                     yylval.s=strdup(yytext);
                                     if (1 == context_flag) { 
                                         printf("Func: %s\n",yytext);
@@ -34,6 +35,10 @@ constant			[a-z0-9][a-zA-Z0-9_]*
                                         context_flag = 1;
                                         return S_PRED;
                                     }
+                                }
+{integer}                       {
+                                    yylval.num=atoi(yytext);
+                                    return INTEGER;
                                 }
 "~"				{return S_NEGA;			}
 "&"				{return S_CONJ;			}

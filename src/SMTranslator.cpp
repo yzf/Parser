@@ -182,8 +182,10 @@ void SMTranslator::outputAddition(FILE* _out) const {
     map<int, string> domainNames = Vocabulary::instance().getDomainNames();
     for (map<int, string>::const_iterator it = domainNames.begin();
             it != domainNames.end(); ++ it) {
-        fprintf(_out, "#domain min_%s(MIN_%s).\n", it->second.c_str(), it->second.c_str());
-        fprintf(_out, "#domain max_%s(MAX_%s).\n", it->second.c_str(), it->second.c_str());
+        if (strncmp("const", it->second.c_str(), 5) != 0) {
+            fprintf(_out, "#domain min_%s(MIN_%s).\n", it->second.c_str(), it->second.c_str());
+            fprintf(_out, "#domain max_%s(MAX_%s).\n", it->second.c_str(), it->second.c_str());
+        }
     }
     
     fprintf(_out, "\n%%Variable domain\n");
@@ -197,6 +199,9 @@ void SMTranslator::outputAddition(FILE* _out) const {
             continue;
         }
         fprintf(_out, "#domain %s(%s).\n", domainName, variName);
+        if (strncmp("const", domainName, 5) == 0) {
+            fprintf(_out, "%s(%s).\n", domainName, domainName + 6);
+        }
     }
     fprintf(_out, "\n%%Nega nega predicate define\n");
     for (FORMULAS_CONST_ITERATOR iter = m_pNegaPredicates->begin(); 

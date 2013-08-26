@@ -4,6 +4,8 @@
 
 %Variable domain
 #domain i(X).
+#domain const_1(CONST_1).
+const_1(1).
 #domain i(NV_0).
 #domain i(NV_1).
 #domain i(NV_2).
@@ -113,6 +115,10 @@ t_3(X):- c(NV_3), succ_i(X,NV_3).
 t_3(X):- t_3(NV_3), succ_i(X,NV_3).
 :- not t_3(X), succ_i(X,NV_3), not _c(NV_3).
 :- not t_3(X), succ_i(X,NV_3), not _t_3(NV_3).
+:- not a(CONST_1).
+a(CONST_1).
+:- not a(CONST_1).
+:- not a(CONST_1).
 a(X):- r_0, not _a(X).
 :- not s_4(MIN_i).
 s_4(X):- succ_i(X,NV_4), s_4(NV_4).
