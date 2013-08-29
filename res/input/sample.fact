@@ -32,4 +32,3 @@ or(I,5).
 #show ina/2.
 #show inb/2.
 #show out/2.
-
