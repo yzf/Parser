@@ -11,7 +11,7 @@ priCircInputFile="pri_input/benchmark_$1.in"
 priCircFactFile="pri_fact/benchmark_$1.fact"
 circ2dlpInputFile="circ2dlp_input/benchmark_$1.lp"
 tmpFile=".tmp"
-result="result"
+result="result_$1"
 
 if [ ! -f $priCircInputFile -o ! -f $circ2dlpInputFile ]
 then
