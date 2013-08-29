@@ -36,3 +36,4 @@ posc(3,3).
 
 #hide.
 #show true/1.
+#show false/1.

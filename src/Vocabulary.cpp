@@ -94,7 +94,9 @@ void Vocabulary::setVariableDomain(const char* _variable, const char* _domain) {
     }
     if((variableId = getSymbolId(_variable, VARIABLE)) != -1) {
         m_mapVariableDomain[variableId] = domainId;
-        m_mapDomainVariables[domainId].push_back(variableId);
+        if (! Utils::isInList(variableId, m_mapDomainVariables[domainId])) {
+            m_mapDomainVariables[domainId].push_back(variableId);
+        }
     }
 }
 /**

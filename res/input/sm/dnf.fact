@@ -23,12 +23,13 @@ posd(2,2).
 negd(2,3).
 posd(2,4).
 
-%(y3&y1)
+%(y3&x1)
 posd(3,5).
-posd(3,3).
+posd(3,1).
 
 #hide.
 #show true/1.
+#show false/1.
 
 %qbf_cnf: \forall \bar{X} \exits \bar{Y} (c_1 \wedge c_2...\wedge c_n)
 %posc(I,J): the J-th atom in the I-th conjunction is positive, I=1,...,n
