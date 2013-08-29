@@ -301,42 +301,26 @@ r_1 | inb_1_vary(J,CONST_4):- out_1_vary(I,CONST_5), succ_adder(I,J).
 inb_1_vary(J,CONST_4):- not r_1, not _out_1_vary(I,CONST_5), succ_adder(I,J).
 r_2 | inb_2_vary(J,CONST_4):- out_2_vary(I,CONST_5), succ_adder(I,J).
 inb_2_vary(J,CONST_4):- not r_2, not _out_2_vary(I,CONST_5), succ_adder(I,J).
-:- not ina(CONST_1,CONST_1).
-ina_0_vary(CONST_1,CONST_1).
-ina_1_vary(CONST_1,CONST_1).
-ina_2_vary(CONST_1,CONST_1).
-:- not inb(CONST_1,CONST_1).
-inb_0_vary(CONST_1,CONST_1).
-inb_1_vary(CONST_1,CONST_1).
-inb_2_vary(CONST_1,CONST_1).
-:- inb(CONST_1,CONST_4).
-r_0:- inb_0_vary(CONST_1,CONST_4).
-r_1:- inb_1_vary(CONST_1,CONST_4).
-r_2:- inb_2_vary(CONST_1,CONST_4).
-:- not out(CONST_1,CONST_2).
-out_0_vary(CONST_1,CONST_2).
-out_1_vary(CONST_1,CONST_2).
-out_2_vary(CONST_1,CONST_2).
-:- not out(CONST_1,CONST_5).
-out_0_vary(CONST_1,CONST_5).
-out_1_vary(CONST_1,CONST_5).
-out_2_vary(CONST_1,CONST_5).
-:- not ina(CONST_2,CONST_1).
-ina_0_vary(CONST_2,CONST_1).
-ina_1_vary(CONST_2,CONST_1).
-ina_2_vary(CONST_2,CONST_1).
-:- not inb(CONST_2,CONST_1).
-inb_0_vary(CONST_2,CONST_1).
-inb_1_vary(CONST_2,CONST_1).
-inb_2_vary(CONST_2,CONST_1).
-:- out(CONST_2,CONST_2).
-r_0:- out_0_vary(CONST_2,CONST_2).
-r_1:- out_1_vary(CONST_2,CONST_2).
-r_2:- out_2_vary(CONST_2,CONST_2).
-:- not out(CONST_2,CONST_5).
-out_0_vary(CONST_2,CONST_5).
-out_1_vary(CONST_2,CONST_5).
-out_2_vary(CONST_2,CONST_5).
+:- not ina(I,CONST_1).
+ina_0_vary(I,CONST_1).
+ina_1_vary(I,CONST_1).
+ina_2_vary(I,CONST_1).
+:- not inb(I,CONST_1).
+inb_0_vary(I,CONST_1).
+inb_1_vary(I,CONST_1).
+inb_2_vary(I,CONST_1).
+:- not inb(I,CONST_4).
+inb_0_vary(I,CONST_4).
+inb_1_vary(I,CONST_4).
+inb_2_vary(I,CONST_4).
+:- out(I,CONST_2).
+r_0:- out_0_vary(I,CONST_2).
+r_1:- out_1_vary(I,CONST_2).
+r_2:- out_2_vary(I,CONST_2).
+:- not out(I,CONST_5).
+out_0_vary(I,CONST_5).
+out_1_vary(I,CONST_5).
+out_2_vary(I,CONST_5).
 abo(I,X):- r_0, not _abo(I,X).
 :- not s_0(MIN_adder,MIN_gate).
 s_0(I,X):- succ_adder_gate(I,X,NV_0,NV_1), s_0(NV_0,NV_1).

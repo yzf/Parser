@@ -47,26 +47,22 @@ succ_adder(I,J) -> (out(I,5) -> inb(J,4)).
 
 ~inb(1,4).
 
-~ina(1,1).
-inb(1,1).
-out(1,2).
+ina(1,1).
+~inb(1,1).
+~out(1,2).
 out(1,5).
-ina(2,1).
-inb(2,1).
-out(2,2).
-out(2,5).
-~ina(3,1).
-~inb(3,1).
-out(3,2).
-~out(3,5).
-ina(4,1).
-inb(4,1).
+~ina(2,1).
+~inb(2,1).
+~out(2,2).
+~out(2,5).
+ina(3,1).
+inb(3,1).
+~out(3,2).
+out(3,5).
+~ina(4,1).
+~inb(4,1).
 ~out(4,2).
 out(4,5).
-ina(5,1).
-inb(5,1).
-out(5,2).
-out(5,5).
 
 {abo>abx>aba;ina,inb,out}
 
