@@ -9,25 +9,42 @@ fi
 priBenchmarkInputFilePrefix="pri_input/benchmark_"
 priBenchmarkFactFilePrefix="pri_fact/benchmark_"
 circ2dlpBenchmarkInputFilePrefix="circ2dlp_input/benchmark_"
-priFactTail="pri_fact_tail"
-priInHead="pri_in_head"
-priInTail="pri_in_tail"
-circ2dlpBody="circ2dlp_body"
+priFactTail="resource/pri_fact_tail"
+priInHead="resource/pri_in_head"
+priInTail="resource/pri_in_tail"
+circ2dlpBody="resource/circ2dlp_body"
+tmpFile=".tmp"
 priTmpFile=".pri"
 circ2dlpTmpFile=".circ"
 
 touch $priTmpFile
 touch $circ2dlpTmpFile
+touch $tmpFile
 
-for i in $(seq $1)
+# 生成正确的输入
+for i in `seq $1`
+do
+    echo "ina($i,1)." >> $tmpFile
+    echo "inb($i,1)." >> $tmpFile
+    echo "out($i,2)." >> $tmpFile
+    echo "out($i,5)." >> $tmpFile
+done
+
+for i in `seq $1`
 do
     echo "generating benchmark_$i......"
-
     # 生成优先级circ的输入和事实文件
     inputFile="${priBenchmarkInputFilePrefix}${i}.in"
     factFile="${priBenchmarkFactFilePrefix}${i}.fact"
     circInputFile="${circ2dlpBenchmarkInputFilePrefix}${i}.lp"
-    # 生成circ2dlp的输入
+    # 出错的加法器的个数
+    errorCount=`expr $RANDOM % $i / 2 + 1`
+    if [ $errorCount -gt 20 ]
+    then
+        errorCount=20
+    fi
+
+    #  生成circ2dlp的输入
     echo "#const adder_size = $i." > $circInputFile
     cat $circ2dlpBody >> $circInputFile
 
@@ -37,56 +54,31 @@ do
     # 生成一阶逻辑文件
     cat $priInHead > $inputFile
 
-    # A: ina(I,1). 输入
-    random=`expr ${RANDOM} % 2`
-    if [ $random -eq 0 ]
-    then
-        echo -n "~" >> $priTmpFile
-        echo -n ":- " >> $circ2dlpTmpFile
-    fi
-    echo "ina($i,1)." >> $priTmpFile
-    echo "ina($i,1)." >> $circ2dlpTmpFile
-    # B: inb(I,1). 输入
-    random=`expr ${RANDOM} % 2`
-    if [ $random -eq 0 ]
-    then
-        echo -n "~" >> $priTmpFile
-        echo -n ":- " >> $circ2dlpTmpFile
-    fi
-    echo "inb($i,1)." >> $priTmpFile
-    echo "inb($i,1)." >> $circ2dlpTmpFile
-#    out(I,2). 结果
-    random=`expr ${RANDOM} % 2`
-    if [ $random -eq 0 ]
-    then
-        echo -n "~" >> $priTmpFile
-        echo -n ":- " >> $circ2dlpTmpFile
-    fi
-    echo "out($i,2)." >> $priTmpFile
-    echo "out($i,2)." >> $circ2dlpTmpFile
-# C: out(I,5). 进位
-    random=`expr ${RANDOM} % 2`
-    if [ $random -eq 0 ]
-    then
-        echo -n "~" >> $priTmpFile
-        echo -n ":- " >> $circ2dlpTmpFile
-    fi
-    echo "out($i,5)." >> $priTmpFile
-    echo "out($i,5)." >> $circ2dlpTmpFile
+    line=`expr $i \* 4`
+    head -n $line $tmpFile > $priTmpFile
+    head -n $line $tmpFile > $circ2dlpTmpFile
+
+    # 生成错误
+    for j in `seq $errorCount`
+    do
+        index=`expr $RANDOM % $i + 1`
+        random=`expr $RANDOM % 2`
+        if [ $random -eq 0 ]
+        then
+            sed -i "s/^out($index,2)/~&/" $priTmpFile
+            sed -i "s/^out($index,2)/:- &/" $circ2dlpTmpFile
+        else
+            sed -i "s/^out($index,5)/~&/" $priTmpFile
+            sed -i "s/^out($index,5)/:- &/" $circ2dlpTmpFile
+        fi
+    done
 
     cat $priTmpFile >> $inputFile
     cat $priInTail >> $inputFile
     cat $circ2dlpTmpFile >> $circInputFile
 
 done
-# 删除临时文件
-if [ -f $priTmpFile ]
-then
-    rm $priTmpFile
-fi
-if [ -f $circ2dlpTmpFile ]
-then
-    rm $circ2dlpTmpFile
-fi
+
+rm $tmpFile $priTmpFile $circ2dlpTmpFile
 
 exit 0

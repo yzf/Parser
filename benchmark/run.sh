@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [ $# -ne 2 ]
+if [ $# -ne 1 ]
 then
-    echo "usage: $0 data_size flag   (flag != 0 to output the answer set)"
-    echo "example: $0 5 0"
+    echo "usage: $0 data_size"
+    echo "example: $0 5"
     exit 1
 fi
 
@@ -11,7 +11,7 @@ priCircInputFile="pri_input/benchmark_$1.in"
 priCircFactFile="pri_fact/benchmark_$1.fact"
 circ2dlpInputFile="circ2dlp_input/benchmark_$1.lp"
 tmpFile=".tmp"
-result="result_$1"
+result="result/result_$1"
 
 if [ ! -f $priCircInputFile -o ! -f $circ2dlpInputFile ]
 then
@@ -21,29 +21,22 @@ fi
 
 touch $tmpFile
 # 运行pricirc
-echo -n "running priCirc ......" > $result
+echo "running priCirc ......"
 priCirc $priCircInputFile $tmpFile > /dev/null
-if [ $2 -eq 1 ]
-then
-    { time gringo $priCircFactFile $tmpFile | claspD 0; } >> $result 2>> $result
-else
-    { time gringo $priCircFactFile $tmpFile | claspD 0; } > /dev/null 2>> $result
-fi
+gringo $priCircFactFile $tmpFile | claspD 0 > $result
+grep -m 1 "Models" $result
+grep -m 1 "Time" $result
 
-echo
 # 运行circ2dlp
-echo -n "running circ2dlp ......" >> $result
+echo "running circ2dlp ......"
 gringo $circ2dlpInputFile > $tmpFile
-if [ $2 -eq 1 ]
-then
-    { time circ2dlp $tmpFile -m "abx* : abo* : aba*" -v "ina* inb* out*" | claspD 0; } >> $result 2>> $result
-else
-    { time circ2dlp $tmpFile -m "abx* : abo* : aba*" -v "ina* inb* out*" | claspD 0; } > /dev/null 2>> $result
-fi
+circ2dlp $tmpFile -m "abx* : abo* : aba*" -v "ina* inb* out*" | claspD 0 >> $result
+grep "Models" $result | tail -n 1
+grep "Time" $result | tail -n 1
 
-if [ -f $tmpFile ]
-then
-    rm $tmpFile
-fi
+echo "To see more Models' detail, please look the files in folder 'result' !!!!!!"
+echo
+
+rm $tmpFile
 
 exit 0

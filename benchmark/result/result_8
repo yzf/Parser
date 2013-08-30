@@ -1,8 +1,8 @@
 running priCirc ......
-real	0m0.106s
-user	0m0.100s
+real	0m2.800s
+user	0m2.792s
 sys	0m0.008s
 running circ2dlp ......
-real	0m0.017s
-user	0m0.008s
+real	0m2.390s
+user	0m2.372s
 sys	0m0.008s
