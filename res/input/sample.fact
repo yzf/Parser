@@ -1,4 +1,4 @@
-#const adder_size = 5.
+#const adder_size = 1.
 #const gate_size = 5.
 #domain adder(I).
 #domain gate(X).
@@ -26,9 +26,4 @@ or(I,5).
 #show abo/2.
 #show abx/2.
 #show aba/2.
-#show or/2.
-#show and/2.
-#show xor/2.
-#show ina/2.
-#show inb/2.
-#show out/2.
+

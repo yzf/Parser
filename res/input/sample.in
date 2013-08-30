@@ -45,11 +45,12 @@ succ_adder(I,J) -> (out(I,5) -> inb(J,4)).
 
 % 组件OBS观察值
 
+inb(1,4).
+
 ina(I,1).
 inb(I,1).
-inb(1,4).
-~out(I,2).
-out(I,5).
+out(I,2).
+~out(I,5).
 
 {abo>abx>aba;ina,inb,out}
 

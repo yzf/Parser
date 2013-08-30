@@ -1,15 +1,15 @@
 #!/bin/bash
 
-if [ $# -ne 2 ]
+if [ $# -ne 3 ]
 then
-    echo "usage: $0 begin end"
+    echo "usage: $0 begin end type"
     exit 1
 fi
 
 for i in `seq $1 $2`
 do
     echo "running test of data_size $i ......"
-    ./run.sh $i
+    ./run.sh $i $3
 done
 
 exit 0

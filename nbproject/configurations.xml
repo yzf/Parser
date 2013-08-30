@@ -342,12 +342,27 @@
           <itemPath>benchmark/pri_input/benchmark_98.in</itemPath>
           <itemPath>benchmark/pri_input/benchmark_99.in</itemPath>
         </logicalFolder>
-        <itemPath>benchmark/circ2dlp_body</itemPath>
+        <logicalFolder name="resource" displayName="resource" projectFiles="true">
+          <itemPath>benchmark/resource/circ2dlp_body</itemPath>
+          <itemPath>benchmark/resource/pri_fact_tail</itemPath>
+          <itemPath>benchmark/resource/pri_in_head</itemPath>
+          <itemPath>benchmark/resource/pri_in_tail</itemPath>
+        </logicalFolder>
+        <logicalFolder name="result" displayName="result" projectFiles="true">
+          <itemPath>benchmark/result/result_1</itemPath>
+          <itemPath>benchmark/result/result_10</itemPath>
+          <itemPath>benchmark/result/result_2</itemPath>
+          <itemPath>benchmark/result/result_3</itemPath>
+          <itemPath>benchmark/result/result_4</itemPath>
+          <itemPath>benchmark/result/result_5</itemPath>
+          <itemPath>benchmark/result/result_6</itemPath>
+          <itemPath>benchmark/result/result_7</itemPath>
+          <itemPath>benchmark/result/result_8</itemPath>
+        </logicalFolder>
+        <itemPath>benchmark/batch_result</itemPath>
+        <itemPath>benchmark/batch_run.sh</itemPath>
         <itemPath>benchmark/clean.sh</itemPath>
         <itemPath>benchmark/generate.sh</itemPath>
-        <itemPath>benchmark/pri_fact_tail</itemPath>
-        <itemPath>benchmark/pri_in_head</itemPath>
-        <itemPath>benchmark/pri_in_tail</itemPath>
         <itemPath>benchmark/run.sh</itemPath>
       </logicalFolder>
       <logicalFolder name="input" displayName="input" projectFiles="true">
@@ -529,7 +544,9 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="benchmark/circ2dlp_body" ex="false" tool="3" flavor2="0">
+      <item path="benchmark/batch_result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/batch_run.sh" ex="false" tool="3" flavor2="0">
       </item>
       <item path="benchmark/circ2dlp_input/benchmark_1.lp"
             ex="false"
@@ -1535,12 +1552,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="benchmark/pri_fact_tail" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="benchmark/pri_in_head" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="benchmark/pri_in_tail" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="benchmark/pri_input/benchmark_1.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="benchmark/pri_input/benchmark_10.in"
@@ -2013,6 +2024,32 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="benchmark/resource/circ2dlp_body" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/resource/pri_fact_tail" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/resource/pri_in_head" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/resource/pri_in_tail" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_1" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_10" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_2" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_3" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_4" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_5" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_6" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_7" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_8" ex="false" tool="3" flavor2="0">
       </item>
       <item path="benchmark/run.sh" ex="false" tool="3" flavor2="0">
       </item>
@@ -2289,7 +2326,9 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="benchmark/circ2dlp_body" ex="false" tool="3" flavor2="0">
+      <item path="benchmark/batch_result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/batch_run.sh" ex="false" tool="3" flavor2="0">
       </item>
       <item path="benchmark/circ2dlp_input/benchmark_1.lp"
             ex="false"
@@ -3295,12 +3334,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="benchmark/pri_fact_tail" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="benchmark/pri_in_head" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="benchmark/pri_in_tail" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="benchmark/pri_input/benchmark_1.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="benchmark/pri_input/benchmark_10.in"
@@ -3773,6 +3806,32 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="benchmark/resource/circ2dlp_body" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/resource/pri_fact_tail" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/resource/pri_in_head" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/resource/pri_in_tail" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_1" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_10" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_2" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_3" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_4" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_5" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_6" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_7" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="benchmark/result/result_8" ex="false" tool="3" flavor2="0">
       </item>
       <item path="benchmark/run.sh" ex="false" tool="3" flavor2="0">
       </item>

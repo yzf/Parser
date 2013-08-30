@@ -38,7 +38,7 @@ do
     factFile="${priBenchmarkFactFilePrefix}${i}.fact"
     circInputFile="${circ2dlpBenchmarkInputFilePrefix}${i}.lp"
     # 出错的加法器的个数
-    errorCount=`expr $RANDOM % $i + 1`
+    errorCount=`expr $RANDOM % $i / 2 + 1`
     if [ $errorCount -gt 20 ]
     then
         errorCount=20
@@ -62,22 +62,14 @@ do
     for j in `seq $errorCount`
     do
         index=`expr $RANDOM % $i + 1`
-        random=`expr $RANDOM % 4`
+        random=`expr $RANDOM % 2`
         if [ $random -eq 0 ]
         then
             sed -i "s/^out($index,2)/~&/" $priTmpFile
             sed -i "s/^out($index,2)/:- &/" $circ2dlpTmpFile
-        elif [ $random -eq 1 ]
-        then
+        else
             sed -i "s/^out($index,5)/~&/" $priTmpFile
             sed -i "s/^out($index,5)/:- &/" $circ2dlpTmpFile
-        elif [ $random -eq 2 ]
-        then
-            sed -i "s/^ina($index,1)/~&/" $priTmpFile
-            sed -i "s/^ina($index,1)/:- &/" $circ2dlpTmpFile
-        else
-            sed -i "s/^inb($index,1)/~&/" $priTmpFile
-            sed -i "s/^inb($index,1)/:- &/" $circ2dlpTmpFile
         fi
     done
 

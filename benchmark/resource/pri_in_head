@@ -45,5 +45,5 @@ succ_adder(I,J) -> (out(I,5) -> inb(J,4)).
 
 % 组件OBS观察值
 
-~inb(1,4).
+inb(1,4).
 
