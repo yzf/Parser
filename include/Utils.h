@@ -18,11 +18,16 @@
 
 using namespace std;
 
+
+
 class Formulas;
 /**
  * 工具类
  */
 class Utils {
+private:
+    static void generateFormulaString(const _formula* _fml, string& _sRet);
+    static void generateTermString(const _term* _t, string& _sRet);
 public: 
     //对term的操作
     static void outputTerm(FILE* _out, const _term* _t);
@@ -41,11 +46,10 @@ public:
     static bool isUniversal(_formula* _fml);
     static void renameFormulaVariables(_formula* _fml, int _nOldVariableId, int _nNewVariableId);
     static void getNoQuantifierVariables(map<int, bool>& _flag, vector<int>& _varis, _formula* _fml);
-    static bool isNegativeFormula(_formula* _fml, bool _negative, 
-                                        int* _pPredicateIds = NULL, int _nSize = 0);
-    static bool inList(int _target, int *_p, int size);
-    static _formula* doubleNegationPredicates(_formula* _fml, 
-                                        int* _pPredicateIds = NULL, int _nSize = 0);
+    static void getNoQuantifierVariablesInTerms(map<int, bool>& _flag, vector<int>& _varis, _term* _t);
+    static bool isInList(int _target, const vector<int>& _vPredicates);
+    static _formula* doubleNegationPredicates(_formula* _fml, const map<int, string>& _mapPredicates, 
+                                        FORMULA_TYPE _fatherType = UNIV);
     static void replaceFormulaTerms(_formula* _fml, 
                                 const vector<int>& _originals, 
 				const vector<int>& _replacements);
@@ -54,13 +58,26 @@ public:
     //对于rule
     static void printAtom(const _formula* _atom, FILE* _out);
     static string convertAtomToString(const _formula* _atom);
+    static string convertFormulaToString(const _formula* _fml);
+    
     
     static _formula* compositeByConnective(FORMULA_TYPE _formulaType, 
-                         _formula* _subformulaL, _formula* _subformulaR);
+                         _formula* _subformulaL, _formula* _subformulaR = NULL);
     static _formula* compositeByQuantifier(FORMULA_TYPE _formulaType, 
                          _formula* _subformulaL, int _variableId);
     static _formula* compositeToAtom(int _predicateId, _term* _parameters);
+    
+    static vector<string> convertFormulasToStrings(Formulas* _fmls);
 
+    static _formula* _thetaReplace(const int& _rId, _formula* _fml, _formula* _fatherFml = NULL);
+    static _formula* _thetaReplace(const vector<int>& _preMiniPredicates, 
+                const vector<int>& _curMiniPredicates, const vector<int>& _otherPredicates,
+                const int& _rId, const int& _index, _formula* _fml, _formula* _fatherFml = NULL);
+    static _formula* thetaT__Replace(_formula* _fml, _formula* _fatherFml = NULL);
+    static _formula* removeImpl(_formula* _fml);
+    static string convertNumToString(int _num);
+    
+   
 };
 
 

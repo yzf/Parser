@@ -12,7 +12,6 @@ void Utils::outputTerm(FILE* _out, const _term* _t) {
 
     if (VARI==_t->term_type) {
         fprintf(_out, "%s", Vocabulary::instance().getNameById(_t->variable_id, VARIABLE));
-        fflush(_out);
     }
     else {
         fprintf(_out, "%s", Vocabulary::instance().getNameById(_t->function_id, FUNCTION));
@@ -31,10 +30,10 @@ void Utils::outputTerm(FILE* _out, const _term* _t) {
 }
 /**
  * 替换参数
- * @param _t
- * @param _arity
- * @param _originals
- * @param _replacements
+ * @param _t 参数
+ * @param _arity　参数个数
+ * @param _originals　带替换的参数
+ * @param _replacements　替换值
  */
 void Utils::replaceTerm(_term* _ts, int _arity, const vector<int>& _originals, 
                         const vector<int>& _replacements) {
@@ -56,10 +55,10 @@ void Utils::replaceTerm(_term* _ts, int _arity, const vector<int>& _originals,
     }
 }
 /**
- * 连接参数
+ * 连接参数 {X,Y} {Z,R}=>{X,Y,Z,R}
  * @param _head
  * @param _tail
- * @return 
+ * @return _term* 结果:{X,Y,Z,R}
  */
 _term* Utils::combineTerms(const vector<int>& _head, const vector<int>& _tail) {
     _term* terms = (_term*)malloc(sizeof(_term) * (_head.size() + _tail.size()));
@@ -81,7 +80,7 @@ _term* Utils::combineTerms(const vector<int>& _head, const vector<int>& _tail) {
  * 比较两个term是否相同
  * @param _lhs
  * @param _rhs
- * @return 
+ * @return bool
  */
 bool Utils::compareTerm(const _term* _lhs, const _term* _rhs) {
     assert(_lhs);
@@ -280,7 +279,7 @@ void Utils::outputFormula(FILE* _out, const _formula* _fml) {
  * 比较两条公式是否相同
  * @param _lhs
  * @param _rhs
- * @return 
+ * @return bool
  */
 bool Utils::compareFormula(const _formula* _lhs, const _formula* _rhs) {
     assert(_lhs);
@@ -330,7 +329,7 @@ bool Utils::compareFormula(const _formula* _lhs, const _formula* _rhs) {
 /**
  * 拷贝公式
  * @param _fml
- * @return 
+ * @return _formula* 公式的拷贝
  */
 _formula* Utils::copyFormula(const _formula* _fml) {
     if (_fml == NULL) {
@@ -399,7 +398,7 @@ void Utils::deleteFormula(_formula* _fml) {
 /**
  * 判断公式是否含有存在量词
  * @param _fml
- * @return 
+ * @return bool
  */
 bool Utils::isUniversal(_formula* _fml) {
     if(_fml != NULL) {
@@ -440,7 +439,7 @@ void Utils::renameFormulaVariables(_formula* _fml, int _oldVariableId, int _newV
     case ATOM:
         assert(_fml->parameters);
         for (int i = 0; i < Vocabulary::instance().getPredicateArity(_fml->predicate_id); ++ i) {
-            renameTermVariables(_fml->parameters+i, _oldVariableId, _newVariableId);
+            renameTermVariables(_fml->parameters + i, _oldVariableId, _newVariableId);
         }
         break;
     case UNIV:
@@ -468,8 +467,6 @@ void Utils::renameFormulaVariables(_formula* _fml, int _oldVariableId, int _newV
 void Utils::getNoQuantifierVariables(map<int, bool>& _flag, vector<int>& _varis, _formula* _fml) {
     assert(_fml);
     switch (_fml->formula_type) {
-    case NEGA:
-        break;
     case UNIV:
     case EXIS:
         _flag[_fml->variable_id] = true;
@@ -478,107 +475,88 @@ void Utils::getNoQuantifierVariables(map<int, bool>& _flag, vector<int>& _varis,
     case IMPL:
     case CONJ:
     case DISJ:
-        getNoQuantifierVariables(_flag, _varis, _fml->subformula_l);
         getNoQuantifierVariables(_flag, _varis, _fml->subformula_r);
+    case NEGA:
+        getNoQuantifierVariables(_flag, _varis, _fml->subformula_l);
         break;
     case ATOM:
         for(int i = 0; i < Vocabulary::instance().getPredicateArity(_fml->predicate_id); ++ i) {
             _term* term = _fml->parameters + i;
-            if (! _flag[term->variable_id]) {
-                _flag[term->variable_id] = true;
-                _varis.push_back(-(term->variable_id));
-            }
+            getNoQuantifierVariablesInTerms(_flag, _varis, term);
         }
         break;
     default:
         assert(0);
     }
 }
-bool Utils::isNegativeFormula(_formula* _fml, bool _negative, int* _p, int _size) {
-    assert(_fml);
-
-    switch (_fml->formula_type)
-    {
-    case ATOM:
-        if (_p == NULL || _size == 0) {
-            if(_negative || ! Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
-                return true;
-            }
-        }
-        else {
-            if (_negative || ! inList(_fml->predicate_id, _p, _size)) {
-                return true;
-            }
+/**
+ * 获取参数中，没有量词限定的变量
+ * @param _flag 标记
+ * @param _varis 存放结果
+ * @param _t 参数
+ */
+void Utils::getNoQuantifierVariablesInTerms(map<int, bool>& _flag, vector<int>& _varis, _term* _t) {
+    assert(_t);
+    switch (_t->term_type) {
+    case VARI:
+        if (! _flag[_t->variable_id]) {
+            _flag[_t->variable_id] = true;
+            _varis.push_back(-(_t->variable_id));
         }
         break;
-    case NEGA:
-        assert(_fml->subformula_l);
-        return isNegativeFormula(_fml->subformula_l, !_negative, _p, _size);
-    case CONJ:
-    case DISJ:
-        assert(_fml->subformula_l);
-        assert(_fml->subformula_r);
-        return (isNegativeFormula(_fml->subformula_l, _negative, _p, _size) &&
-               isNegativeFormula(_fml->subformula_r, _negative, _p, _size));
-    case IMPL:
-        assert(_fml->subformula_l);
-        assert(_fml->subformula_r);
-        return (isNegativeFormula(_fml->subformula_l, !_negative, _p, _size) &&
-               isNegativeFormula(_fml->subformula_r, _negative, _p, _size));
-    case UNIV:
-    case EXIS:
-        assert(_fml->subformula_l);
-        return isNegativeFormula(_fml->subformula_l, _negative, _p, _size);
+    case FUNC:
+        for(int i = 0; i < Vocabulary::instance().getFunctionArity(_t->function_id); ++ i) {
+            _term* term = _t->parameters + i;
+            getNoQuantifierVariablesInTerms(_flag, _varis, term);
+        }
+        break;
     default:
         assert(0);
     }
-
-    return false;
 }
-bool Utils::inList(int _target, int *_p, int size) {
-    for (int i = 0; i < size; ++ i) {
-        if (_p[i] == _target) {
+/**
+ * 判断_target是否在数组_p中
+ * @param _target　查找值
+ * @param _p　数组
+ * @param size　数组大小
+ * @return bool
+ */
+bool Utils::isInList(int _target, const vector<int>& _list) {
+    unsigned int size = _list.size();
+    for (unsigned int i = 0; i < size; ++ i) {
+        if (_list[i] == _target) {
             return true;
         }
     }
     return false;
 }
 /**
- * 在公式所有不带非的内涵谓词前添加非非
+ * 在指定的不带非的谓词前添加非非，_p == NULL或_size = 0时，则对内涵谓词操作
  * @param _fml
- * @return 
+ * @param _p 谓词Id数组
+ * @param _size 谓词Id数组的大小
+ * @return _formula* 处理后的公式
  */
-_formula* Utils::doubleNegationPredicates(_formula* _fml, int *_p, int _size) {
+_formula* Utils::doubleNegationPredicates(_formula* _fml, const map<int, string>& _mapPredicates, FORMULA_TYPE _fatherType) {
     assert(_fml);
 
-    if (isNegativeFormula(_fml, false, _p, _size)) {
-        return _fml;
-    }
-
-    switch (_fml->formula_type)
-    {
+    switch (_fml->formula_type) {
     case ATOM:
-        if (_p == NULL || _size == 0) {
-            if(Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
-                _fml = compositeByConnective(NEGA, _fml, NULL);
-                _fml = compositeByConnective(NEGA, _fml, NULL);
-            }
-        }
-        else {
-            if (inList(_fml->predicate_id, _p, _size)) {
-                _fml = compositeByConnective(NEGA, _fml, NULL);
-                _fml = compositeByConnective(NEGA, _fml, NULL);
+        if (NEGA != _fatherType) {
+            if (_mapPredicates.find(_fml->predicate_id) != _mapPredicates.end()) {
+                _fml = compositeByConnective(NEGA, _fml);
+                _fml = compositeByConnective(NEGA, _fml);
             }
         }
         break;
     case CONJ:
     case DISJ:
     case IMPL:
-        _fml->subformula_r = doubleNegationPredicates(_fml->subformula_r, _p, _size);
+        _fml->subformula_r = doubleNegationPredicates(_fml->subformula_r, _mapPredicates, _fml->formula_type);
     case NEGA:
     case UNIV:
     case EXIS:
-        _fml->subformula_l = doubleNegationPredicates(_fml->subformula_l, _p, _size);
+        _fml->subformula_l = doubleNegationPredicates(_fml->subformula_l, _mapPredicates, _fml->formula_type);
         break;
     default:
         assert(0);
@@ -619,7 +597,7 @@ void Utils::replaceFormulaTerms(_formula* _fml,
     }
 }
 /**
- * 拆分公式
+ * 拆分公式，把用&连接的公式拆分成多条公式
  * @param _fml
  * @param _parent
  * @param _result
@@ -744,4 +722,317 @@ string Utils::convertAtomToString(const _formula* _atom) {
         }        
     }    
     return sRet;
+}
+/**
+ * 把公式转化成字符串
+ * @param _fml
+ * @return 
+ */
+string Utils::convertFormulaToString(const _formula* _fml) {
+    assert(_fml);
+    string sRet;
+    generateFormulaString(_fml, sRet);
+    return sRet;
+}
+/**
+ * 递归用
+ * @param _fml
+ * @param _sRet
+ */
+void Utils::generateFormulaString(const _formula* _fml, string& _sRet) {
+    assert(_fml);
+    
+    char* s_conn = NULL;
+    switch (_fml->formula_type) {
+    case ATOM:
+        if (_fml->predicate_id >= 0 && Vocabulary::instance().getPredicateArity(_fml->predicate_id) == 0) {
+            _sRet += Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
+        }
+        else{
+            if (_fml->predicate_id >= 0) {
+                _sRet += Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE) + string("(");
+                for(int i = 0; i < Vocabulary::instance().getPredicateArity(_fml->predicate_id); ++ i) {
+                    if (i > 0) {
+                        _sRet += ",";
+                    }
+                    generateTermString(_fml->parameters + i, _sRet);
+                }
+            }
+            else {
+                switch (_fml->predicate_id) {
+                case PRED_TRUE:
+                    _sRet += "(TRUE";
+                    break;
+                case PRED_FALSE:
+                    _sRet += "(FALSE";
+                    break;
+                default:
+                    assert ( 0 );
+                }
+            }
+            _sRet += ")";
+        }
+        break;
+    case NEGA:
+        _sRet += "~";
+        assert(_fml->subformula_l);
+        generateFormulaString(_fml->subformula_l, _sRet);
+        break;
+    case CONJ:
+        s_conn = (char*)"&";
+    case DISJ:
+        if ( NULL==s_conn ) {
+            s_conn = (char*)"|";
+        }
+    case IMPL:
+        if ( NULL==s_conn ) {
+            s_conn = (char*)"->";
+        }
+        _sRet += "(";
+        assert(_fml->subformula_l);
+        generateFormulaString(_fml->subformula_l, _sRet);
+        _sRet += s_conn;
+        assert(_fml->subformula_r);
+        generateFormulaString(_fml->subformula_r, _sRet);
+        _sRet += ")";
+        break;
+    case UNIV:
+        s_conn = (char*)"!";
+    case EXIS:
+        if ( NULL==s_conn ) {
+            s_conn = (char*)"?";
+        }
+        _sRet += "[" + string(s_conn) + string(Vocabulary::instance().getNameById(_fml->variable_id, VARIABLE)) + string("](");
+        assert(_fml->subformula_l);
+        generateFormulaString(_fml->subformula_l, _sRet);
+        _sRet += ")";
+        break;
+    default:
+        assert ( 0 );
+    }
+}
+/**
+ * 递归用
+ * @param _t
+ * @param _sRet
+ */
+void Utils::generateTermString(const _term* _t, string& _sRet) {
+    assert (_t);
+
+    if (VARI ==_t->term_type) {
+        _sRet += Vocabulary::instance().getNameById(_t->variable_id, VARIABLE);
+    }
+    else {
+        _sRet += Vocabulary::instance().getNameById(_t->function_id, FUNCTION);
+        int k = Vocabulary::instance().getFunctionArity(_t->function_id);
+        if (k > 0) {
+            _sRet += "(";
+            for (int i = 0; i < k; ++ i) {
+                if (0 < i) {
+                    _sRet += ", ";
+                }
+                generateTermString(_t->parameters + i, _sRet);
+            }
+            _sRet += ")";
+        }
+    }
+}
+/**
+ * 把公式组转化成字符串
+ * @param _fmls Formulas*
+ * @return vector<string>
+ */
+vector<string> Utils::convertFormulasToStrings(Formulas* _fmls) {
+    vector<string> vRet;
+    for (FORMULAS_CONST_ITERATOR it = _fmls->begin(); 
+            it != _fmls->end(); ++ it) {
+        vRet.push_back(convertFormulaToString(it->getFormula()));
+    }
+    return vRet;
+}
+/**
+ * 
+ * @param _fml
+ * @param _fatherType
+ * @return 
+ */
+_formula* Utils::_thetaReplace(const int& _rId, _formula* _fml, _formula* _fatherFml) {
+    assert(_fml);
+    switch (_fml->formula_type) {
+        case ATOM:
+            if (NULL != _fatherFml && NEGA == _fatherFml->formula_type) {
+                if (Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
+                    // p->r 替换 ~p
+                    _fatherFml->formula_type = IMPL;
+                    _fatherFml->subformula_r = Utils::compositeToAtom(_rId, NULL);
+                }
+                else if (Vocabulary::instance().isVaryPredicate(_fml->predicate_id)) {
+                    // Q_vary->r 替换 ~Q
+                    const char* qName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
+                    char qVaryName[64];
+                    sprintf(qVaryName, "%s%s", qName, VARY_PREDICATE_POSTFIX);
+                    // ->
+                    _fatherFml->formula_type = IMPL;
+                    // Q_vary
+                    int qVaryId = Vocabulary::instance().getSymbolId(qVaryName, PREDICATE);
+                    _fatherFml->subformula_l->predicate_id = qVaryId;
+                    // r
+                    _fatherFml->subformula_r = Utils::compositeToAtom(_rId, NULL); 
+                }
+            }
+            else { // Q_vary  替换 Q，Q_vary属于内涵谓词
+                if (Vocabulary::instance().isVaryPredicate(_fml->predicate_id)) {
+                    const char* qName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
+                    char qVaryName[64];
+                    sprintf(qVaryName, "%s%s", qName, VARY_PREDICATE_POSTFIX);
+                    int qVaryId = Vocabulary::instance().getSymbolId(qVaryName, PREDICATE);
+                    _fml->predicate_id = qVaryId;
+                }
+            }
+            break;
+        case IMPL:
+        case CONJ:
+        case DISJ:
+            _fml->subformula_r= _thetaReplace(_rId, _fml->subformula_r, _fml);
+        case UNIV:
+        case EXIS:
+        case NEGA:
+            _fml->subformula_l = _thetaReplace(_rId, _fml->subformula_l, _fml);
+            break;
+        default:
+            assert(0);
+    }
+    return _fml;
+}
+_formula* Utils::_thetaReplace(const vector<int>& _preMiniPredicates, 
+                const vector<int>& _curMiniPredicates, const vector<int>& _otherPredicates,
+                const int& _rId, const int& _index, _formula* _fml, _formula* _fatherFml) {
+    assert(_fml);
+    switch (_fml->formula_type) {
+        case ATOM:
+            if (NULL != _fatherFml && NEGA == _fatherFml->formula_type) {
+                if (isInList(_fml->predicate_id, _curMiniPredicates)) {
+                    // p->r 替换 ~p
+                    _fatherFml->formula_type = IMPL;
+                    _fatherFml->subformula_r = compositeToAtom(_rId, NULL);
+                }
+                else if (isInList(_fml->predicate_id, _otherPredicates)) {
+                    // Q_j_vary->r 替换 ~Q
+                    const char* qName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
+                    char qVaryName[64];
+                    sprintf(qVaryName, "%s_%d%s", qName, _index, VARY_PREDICATE_POSTFIX);
+                    // ->
+                    _fatherFml->formula_type = IMPL;
+                    // Q_j_vary
+                    int qVaryId = Vocabulary::instance().getSymbolId(qVaryName, PREDICATE);
+                    assert(qVaryId != -1);
+                    _fatherFml->subformula_l->predicate_id = qVaryId;
+                    // r
+                    _fatherFml->subformula_r = compositeToAtom(_rId, NULL); 
+                }
+            }
+            else { // Q_j_vary  替换 Q，Q_j_vary属于内涵谓词
+                if (isInList(_fml->predicate_id, _otherPredicates)) {
+                    const char* qName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
+                    char qVaryName[64];
+                    sprintf(qVaryName, "%s_%d%s", qName, _index,  VARY_PREDICATE_POSTFIX);
+                    int qVaryId = Vocabulary::instance().getSymbolId(qVaryName, PREDICATE);
+                    assert(qVaryId != -1);
+                    _fml->predicate_id = qVaryId;
+                }
+                // ~~p 替换 p
+                else if (isInList(_fml->predicate_id, _preMiniPredicates)) {
+                    _fml = compositeByConnective(NEGA, _fml);
+                    _fml = compositeByConnective(NEGA, _fml);
+                }
+            }
+            break;
+        case IMPL:
+        case CONJ:
+        case DISJ:
+            _fml->subformula_r = _thetaReplace(_preMiniPredicates, _curMiniPredicates, _otherPredicates, 
+                    _rId, _index, _fml->subformula_r, _fml);
+        case UNIV:
+        case EXIS:
+        case NEGA:
+            _fml->subformula_l = _thetaReplace(_preMiniPredicates, _curMiniPredicates, _otherPredicates, 
+                    _rId, _index, _fml->subformula_l, _fml);
+            break;
+        default:
+            assert(0);
+    }
+    return _fml;
+}
+_formula* Utils::thetaT__Replace(_formula* _fml, _formula* _fatherFml) {
+    assert(_fml);
+    _formula* tmp;
+    switch (_fml->formula_type) {
+        case ATOM:
+            if (NULL != _fatherFml && NEGA == _fatherFml->formula_type) {
+                // true 替换 负文字
+                _fatherFml->formula_type = ATOM;
+                _fatherFml->predicate_id = PRED_TRUE;
+                _fatherFml->parameters = NULL;
+                deleteFormula(_fml);
+                _fml = NULL;
+            }
+            else {
+                if (Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
+                    // ~~p 替换 p
+                    _fml = compositeByConnective(NEGA, _fml);
+                    _fml = compositeByConnective(NEGA, _fml);
+                }
+                else if (Vocabulary::instance().isVaryPredicate(_fml->predicate_id)) {
+                    // q_vary 替换 q
+                    const char* qName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
+                    char qVaryName[64];
+                    sprintf(qVaryName, "%s%s", qName, VARY_PREDICATE_POSTFIX);
+                    int qVaryId = Vocabulary::instance().getSymbolId(qVaryName, PREDICATE);
+                    _fml->predicate_id = qVaryId;
+                }
+            }
+            break;
+        case CONJ:
+        case DISJ:
+        case IMPL:
+            tmp = thetaT__Replace(_fml->subformula_r, _fml);
+            _fml->subformula_r = (NULL == tmp) ? _fml->subformula_r : tmp;
+        case UNIV:
+        case EXIS:
+        case NEGA:
+            tmp = thetaT__Replace(_fml->subformula_l, _fml);
+            _fml->subformula_l = (NULL == tmp) ? _fml->subformula_l : tmp;
+            break;
+        default:
+            assert(0);
+    }
+    return _fml;
+}
+
+_formula* Utils::removeImpl(_formula* _fml) {
+    assert(_fml);
+    switch (_fml->formula_type) {
+        case ATOM:
+            break;
+        case IMPL:
+            _fml->formula_type = DISJ;
+            _fml->subformula_l = compositeByConnective(NEGA, _fml->subformula_l);
+        case CONJ:
+        case DISJ:
+            _fml->subformula_r = removeImpl(_fml->subformula_r);
+        case UNIV:
+        case EXIS:
+        case NEGA:
+            _fml->subformula_l = removeImpl(_fml->subformula_l);
+            break;
+        default:
+            assert(0);
+    }
+    return _fml;
+}
+
+string Utils::convertNumToString(int _num) {
+    char num[10];
+    sprintf(num, "%d", _num);
+    return string(num);
 }

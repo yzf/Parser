@@ -1,0 +1,29 @@
+%2cliqn4
+%graph:
+% 1---2
+% |  /|
+% | / |
+% 3---4
+%maximal set:{1,2,3}, {2,3,4}
+%solutions: a)2,3 have same color:{~1,2,3,~4}, {1,~2,~3,4};   2种
+%           b)2,3 have distinct color:{*,2,~3,*}(*为可着色可不着色) 则 1*2*2 = 4种
+%                                     {*,~2,3,*} 则 1*2*2 = 4种
+%the number of solutions = 2+4+4 = 10
+
+node(1..4).
+edge(1,2;3).
+edge(2,1;3;4).
+edge(3,1;2;4).
+edge(4,2;3).
+
+eq(1,1).
+eq(2,2).
+eq(3,3).
+eq(4,4).
+
+min_node(1).
+max_node(4).
+
+#hide.
+#show col/1.
+#show uncol/1.

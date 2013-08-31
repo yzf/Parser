@@ -1,0 +1,13 @@
+%qbf_cnf: \univ \bar{X} \exits \bar{Y} (d_1 \vee d_2...\vee d_n)
+%posd(I,J): the J-th atom in the I-th disjunction is positive, I=1,...,n
+%negd(I,J): the J-th atom in the I-th disjunction is negative
+%un(X): %un(X): \forall \bar{X}
+
+[!Y](true(Y) | false(Y)).
+([?X][!Y](posd(X,Y) -> true(Y)) & (negd(X,Y) -> false(Y)) ) -> ok.
+[!Y](ok & un(Y) -> true(Y) & false(Y)).
+~~ok.
+
+{true,false,ok}
+
+<X@disj;Y@atom>

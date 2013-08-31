@@ -1,22 +1,20 @@
 #include "Vocabulary.h"
-#include "S2DLP.h"
+#include "SMTranslator.h"
+#include "Utils.h"
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
 #include <assert.h>
-
-int Vocabulary::ms_nVariableId = 0;
-int Vocabulary::ms_nDomainId = 0;
-int Vocabulary::ms_nFunctionId = 0;
-int Vocabulary::ms_nPredicateId = 0;
-int Vocabulary::ms_nRenameVariablePostfix = 0;
 
 Vocabulary& Vocabulary::instance() {
     static Vocabulary vocabulary;
     return vocabulary;
 }
 
-Vocabulary::Vocabulary() {
+Vocabulary::Vocabulary() : m_nVariableId(0), m_nDomainId(0), m_nFunctionId(0),
+        m_nPredicateId(0), m_nRenameVariablePostfix(0), m_nSPostfix(0), m_nWPostfix(0), 
+        m_nTPostfix(0), m_nRPostfix(0), m_nPrenexRenamePostfix(0), m_nRenameVariPostfix(0),
+        m_nPriIndex(0) {
     m_mapVariableName.clear();
     m_mapDomainName.clear();
     m_mapFunctionName.clear();
@@ -26,7 +24,10 @@ Vocabulary::Vocabulary() {
     m_mapFunctionArity.clear();
     m_mapPredicateArity.clear();
     m_mapIsIntensionPredicate.clear();
+    m_mapIsVaryPredicate.clear();
     m_mapDomainVariables.clear();
+    m_vvMininalPredicates.clear();
+    m_mapConstVariables.clear();
     m_fmlAtomList = new Formulas();
 }
 
@@ -43,16 +44,31 @@ Vocabulary::~Vocabulary() {
     m_mapFunctionArity.clear();
     m_mapPredicateArity.clear();
     m_mapIsIntensionPredicate.clear();
+    m_mapIsVaryPredicate.clear();
     m_mapDomainVariables.clear();
+    m_vvMininalPredicates.clear();
+    m_mapConstVariables.clear();
 }
 /**
  * 保存内涵谓词
  * @param _name 内涵谓词名
- * @return 内涵谓词的id
  */
 void Vocabulary::addIntensionPredicate(const char* _name) {
     int id = getSymbolId(_name, PREDICATE);
     m_mapIsIntensionPredicate[id] = true;
+}
+void Vocabulary::addIntensionPredicate(int _predicateId) {
+    map<int, string>::const_iterator it = m_mapPredicateName.find(_predicateId);
+    assert(it != m_mapPredicateName.end());
+    m_mapIsIntensionPredicate[_predicateId] = true;
+}
+/**
+ * 保存可变谓词
+ * @param _name
+ */
+void Vocabulary::addVaryPredicate(const char* _name) {
+    int id = getSymbolId(_name, PREDICATE);
+    m_mapIsVaryPredicate[id] = true;
 }
 /**
  * 获取变量所在论域
@@ -73,13 +89,29 @@ void Vocabulary::setVariableDomain(const char* _variable, const char* _domain) {
     int variableId;
     
     if(domainId == -1) {
-        domainId = Vocabulary::ms_nDomainId ++;
-        m_mapDomainName[domainId] = string(_domain);
+        domainId = m_nDomainId ++;
+        m_mapDomainName[domainId] = _domain;
     }
     if((variableId = getSymbolId(_variable, VARIABLE)) != -1) {
         m_mapVariableDomain[variableId] = domainId;
-        m_mapDomainVariables[domainId].push_back(variableId);
+        if (! Utils::isInList(variableId, m_mapDomainVariables[domainId])) {
+            m_mapDomainVariables[domainId].push_back(variableId);
+        }
     }
+}
+/**
+ * 设置极少化谓词的优先级
+ * @param _sName
+ * @param _bIsNewLevel
+ */
+void Vocabulary::setMininalPredicatePriority(const char* _sName) {
+    int predicateId = getSymbolId(_sName, PREDICATE);
+    assert(predicateId != -1);
+    while (m_nPriIndex >= m_vvMininalPredicates.size()) {
+        m_vvMininalPredicates.push_back(vector<int>());
+    }
+    
+    m_vvMininalPredicates[m_nPriIndex].push_back(predicateId);
 }
 /**
  * 查询符号的id
@@ -141,16 +173,16 @@ int Vocabulary::addSymbol(const char* _name, SYMBOL_TYPE _type, int _arity )
 
         switch (_type) {
         case VARIABLE:
-            id = Vocabulary::ms_nVariableId ++;
+            id = m_nVariableId ++;
             m_mapVariableName[id] = name;
             break;
         case FUNCTION:
-            id = Vocabulary::ms_nFunctionId ++;
+            id = m_nFunctionId ++;
             m_mapFunctionName[id] = name;
             m_mapFunctionArity[id] = _arity;
             break;
         case PREDICATE:
-            id = Vocabulary::ms_nPredicateId ++;
+            id = m_nPredicateId ++;
             m_mapPredicateName[id] = name;
             m_mapPredicateArity[id] = _arity;
             break;
@@ -193,7 +225,7 @@ int Vocabulary::getFunctionArity(int _id) {
  */
 int Vocabulary::addRenameVariable() {
     char nameBuf[10];
-    sprintf(nameBuf, "PN_%i", Vocabulary::ms_nRenameVariablePostfix);
+    sprintf(nameBuf, "%s%d", PRENEX_RENAME_PREFIX, m_nRenameVariablePostfix ++);
     return addSymbol(nameBuf, VARIABLE);
 }
 /**
@@ -201,9 +233,26 @@ int Vocabulary::addRenameVariable() {
  * @param _variableId
  * @return 
  */
-bool Vocabulary::isIntensionPredicate(int _predicateId) const {
-    map<int, bool>::const_iterator it = m_mapIsIntensionPredicate.find(_predicateId);
+bool Vocabulary::isIntensionPredicate(int _nPredicateId) const {
+    map<int, bool>::const_iterator it = m_mapIsIntensionPredicate.find(_nPredicateId);
     return it != m_mapIsIntensionPredicate.end() ? true : false;
+}
+/**
+ * 查询谓词是否为可变谓词
+ * @param _nPredicateId
+ * @return 
+ */
+bool Vocabulary::isVaryPredicate(int _nPredicateId) const {
+    map<int, bool>::const_iterator it = m_mapIsVaryPredicate.find(_nPredicateId);
+    return it != m_mapIsVaryPredicate.end() ? true : false;
+}
+bool Vocabulary::isSuccOrMax(int _nPredicateId) const {
+    const char* name = getNameById(_nPredicateId, PREDICATE);
+    assert(name);
+    if (strncmp(name, "succ", 4) == 0 || strncmp(name, "max", 3) == 0) {
+        return true;
+    }
+    return false;
 }
 /**
  * 获取id对应的名字
@@ -270,6 +319,13 @@ void Vocabulary::dumpVocabulary(FILE* _out)  {
         fprintf(_out, "%s:%d\t", (it->second).c_str(), it->first);
     }
     
+    fprintf(_out, "\nmininal predicates' priority:\n");
+    for (unsigned int i = 0; i < m_vvMininalPredicates.size(); ++ i) {
+        for (unsigned int j = 0; j < m_vvMininalPredicates[i].size(); ++ j) {
+            fprintf(_out, "%s:%d\t", getNameById(m_vvMininalPredicates[i][j], PREDICATE), i);
+        }
+    }
+    
     fprintf(_out, "\nintension predicate:\n");
     for (map<int, string>::const_iterator it = m_mapPredicateName.begin(); 
             it != m_mapPredicateName.end(); ++ it) {
@@ -277,11 +333,18 @@ void Vocabulary::dumpVocabulary(FILE* _out)  {
             fprintf(_out, "%s ", (it->second).c_str());
         }
     }
+    fprintf(_out, "\nvary predicate:\n");
+    for (map<int, string>::const_iterator it = m_mapPredicateName.begin(); 
+            it != m_mapPredicateName.end(); ++ it) {
+        if (isVaryPredicate(it->first)) {
+            fprintf(_out, "%s ", (it->second).c_str());
+        }
+    }
     
-    fprintf(_out, "\ndomains:\n");    
+    fprintf(_out, "\ndomains:");    
     for (map<int, string>::const_iterator it = m_mapDomainName.begin(); 
             it != m_mapDomainName.end(); ++ it) {
-        fprintf(_out, "variables at domain %s: ", (it->second).c_str());
+        fprintf(_out, "\nvariables at domain %s: ", (it->second).c_str());
         vector<int> variables = m_mapDomainVariables[it->first];
         for (vector<int>::const_iterator it2 = variables.begin();
                 it2 != variables.end(); ++ it2) {
@@ -292,11 +355,10 @@ void Vocabulary::dumpVocabulary(FILE* _out)  {
         }
     }
     
-    fprintf(_out, "\natom\n");
+    fprintf(_out, "\n\natom:\n");
     for (FORMULAS_CONST_ITERATOR it = m_fmlAtomList->begin();
             it != m_fmlAtomList->end(); ++ it) {
-        fprintf(_out, "%s:%d ", getNameById(it->getFormula()->predicate_id, PREDICATE),
-                it->getFormula()->predicate_id);
+        it->output(stdout);
     }
 }
 
@@ -319,14 +381,6 @@ void Vocabulary::addAtom(const Formula& _newAtom) {
     m_fmlAtomList->pushBack(_newAtom);
 }
 
-bool Vocabulary::isSuccOrMax(int _predicateId) const {
-    const char* predicateName = getNameById(_predicateId, PREDICATE);
-    if (strncmp("max", predicateName, 3) == 0 ||
-            strncmp("succ", predicateName, 4) == 0) {
-        return true;
-    }
-    return false;
-}
 map<int, string> Vocabulary::getDomainNames() const {
     return m_mapDomainName;
 }
@@ -337,4 +391,161 @@ map<int, int> Vocabulary::getVariablesDomains() const {
 
 Formulas* Vocabulary::getAtomList() const {
     return m_fmlAtomList;
+}
+/**
+ * 获取所有谓词
+ * @return 
+ */
+map<int, string> Vocabulary::getAllPredicates() const {
+    return m_mapPredicateName;
+}
+/**
+ * 获取所有内涵谓词
+ * @return 
+ */
+map<int, string> Vocabulary::getAllIntensionPredicates() const {
+    map<int, string> vRet;
+    for (map<int, string>::const_iterator it = m_mapPredicateName.begin();
+            it != m_mapPredicateName.end(); ++ it) {
+        if (isIntensionPredicate(it->first)) {
+            vRet.insert(make_pair<int, string>(it->first, it->second));
+        }
+    }
+    return vRet;
+}
+/**
+ * 获取所有可变谓词
+ * @return 
+ */
+map<int, string> Vocabulary::getAllVaryPredicates() const {
+    map<int, string> vRet;
+    for (map<int,string>::const_iterator it = m_mapPredicateName.begin();
+            it != m_mapPredicateName.end(); ++ it) {
+        if (isVaryPredicate(it->first)) {
+            vRet.insert(make_pair<int, string>(it->first, it->second));
+        }
+    }
+    return vRet;
+}
+
+vector<int> Vocabulary::getAllVaryPredicatesId() const {
+    vector<int> ret;
+    for (map<int,string>::const_iterator it = m_mapPredicateName.begin();
+            it != m_mapPredicateName.end(); ++ it) {
+        if (isVaryPredicate(it->first)) {
+            ret.push_back(it->first);
+        }
+    }
+    return ret;
+}
+
+vector< vector<int> > Vocabulary::getAllMininalPredicates() const {
+    return m_vvMininalPredicates;
+}
+
+int Vocabulary::generatePredicateS(vector<int> _termsX, vector<int> _termsY) {
+    char name[32];
+    sprintf(name, "%s%d", S_PREFIX, m_nSPostfix ++);
+    int id = addSymbol(name, PREDICATE, _termsX.size() + _termsY.size());
+    _term* t = Utils::combineTerms(_termsX, _termsY);
+    addAtom(Formula(Utils::compositeToAtom(id, t), false));
+    return id;
+}
+
+int Vocabulary::generatePredicateW(vector<int> _termsX, vector<int> _termsY) {
+    char name[32];
+    sprintf(name, "%s%d", W_PREFIX, m_nWPostfix ++);
+    int id = addSymbol(name, PREDICATE, _termsX.size() + _termsY.size());
+    _term* t = Utils::combineTerms(_termsX, _termsY);
+    addAtom(Formula(Utils::compositeToAtom(id, t), false));
+    return id;
+}
+
+int Vocabulary::generatePredicateT(vector<int> _termsX, vector<int> _termsY) {
+    char name[32];
+    sprintf(name, "%s%d", T_PREFIX, m_nTPostfix ++);
+    int id = addSymbol(name, PREDICATE, _termsX.size() + _termsY.size());
+    _term* t = Utils::combineTerms(_termsX, _termsY);
+    addAtom(Formula(Utils::compositeToAtom(id, t), false));
+    return id;
+}
+
+int Vocabulary::generatePredicateR(vector<int> _termsX, vector<int> _termsY) {
+    char name[32];
+    sprintf(name, "%s%d", R_PREFIX, m_nRPostfix ++);
+    int id = addSymbol(name, PREDICATE, _termsX.size() + _termsY.size());
+    _term* t = Utils::combineTerms(_termsX, _termsY);
+    addAtom(Formula(Utils::compositeToAtom(id, t), false));
+    return id;
+}
+
+int Vocabulary::generatePredicateSucc(vector<int> _termsY, vector<int> _termsZ) {
+    string succName = SUCC_PREFIX;
+    vector<string> domainNames;
+    for (unsigned int i = 0; i < _termsY.size(); ++ i) {
+        const char* sDomainName = Vocabulary::instance().getVariableDomain(_termsY[i]);
+        succName += string("_") + sDomainName;
+        domainNames.push_back(string(sDomainName));
+    }
+    int id = Vocabulary::instance().getSymbolId(succName.c_str(), PREDICATE);
+    if (id != -1) {
+        return id;
+    }
+    id = Vocabulary::instance().addSymbol(succName.c_str(), 
+                        PREDICATE, _termsY.size() + _termsZ.size());
+    Vocabulary::instance().ms_vDomainNames.push_back(domainNames);
+    //保存谓词原型
+    _term* term_y_z   = Utils::combineTerms(_termsY, _termsZ);
+    _formula* succ_y_z = Utils::compositeToAtom(id, term_y_z);
+    Vocabulary::instance().addAtom(Formula(succ_y_z, false));
+    return id;
+}
+
+int Vocabulary::generateDomainMIN(const char* _domain) {
+    char sBuf[32];
+    sprintf(sBuf, "%s%s", MIN_VARI_PREFIX, _domain);
+    int id = Vocabulary::instance().getSymbolId(sBuf, VARIABLE);
+    if (-1 != id) {
+        return id;
+    }
+    id = Vocabulary::instance().addSymbol(sBuf, VARIABLE);
+    return id;
+}
+
+int Vocabulary::generateDomainMAX(const char* _domain) {
+    char sBuf[32];
+    sprintf(sBuf, "%s%s", MAX_VARI_PREFIX, _domain);
+    int id = Vocabulary::instance().getSymbolId(sBuf, VARIABLE);
+    if (-1 != id) {
+        return id;
+    }
+    id = Vocabulary::instance().addSymbol(sBuf, VARIABLE);
+    return id;
+}
+
+int Vocabulary::generateNewVariable(int _oriVariId) {
+    char sBuf[32];
+    sprintf(sBuf,"%s%d", RENAME_VARI_PREFIX, m_nRenameVariPostfix ++);
+    int id = Vocabulary::instance().addSymbol(sBuf, VARIABLE);
+    Vocabulary::instance().setVariableDomain(sBuf, 
+                    Vocabulary::instance().getVariableDomain(_oriVariId));
+    return id;
+}
+void Vocabulary::increaseMininalPredicatePriority() {
+    ++ m_nPriIndex;
+}
+/**
+ * 添加常量
+ * @param _nNum
+ */
+int Vocabulary::addConstant(int _nNum) {
+    char variName[64];
+    sprintf(variName, "%s%d", CONST_VARI_PREFIX, _nNum);
+    int variId = addSymbol(variName, VARIABLE);
+    assert(variId >= 0);
+    char domainName[64];
+    sprintf(domainName, "%s%d", CONST_DOMAIN_PREFIX, _nNum);
+    setVariableDomain(variName, domainName);
+    m_mapConstVariables[variName] = domainName;
+    return variId;
 }
