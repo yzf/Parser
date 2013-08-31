@@ -1,8 +1,6 @@
 claspD version 1.1.4. Reading...done
 Answer: 1
-gate(1) gate(2) gate(3) gate(4) gate(5) adder(1) ina(1,3) ina(1,1) inb(1,5) inb(1,4) inb(1,3) inb(1,2) inb(1,1) out(1,5) out(1,3) xor(1,1) xor(1,2) and(1,3) and(1,4) or(1,5) abx(1,2) 
-Answer: 2
-gate(1) gate(2) gate(3) gate(4) gate(5) adder(1) ina(1,5) ina(1,4) ina(1,3) ina(1,2) ina(1,1) inb(1,5) inb(1,4) inb(1,3) inb(1,2) inb(1,1) out(1,5) out(1,4) out(1,3) out(1,1) xor(1,1) xor(1,2) and(1,3) and(1,4) or(1,5) abx(1,1) 
+gate(1) gate(2) gate(3) gate(4) gate(5) adder(1) ina(1,3) ina(1,1) inb(1,4) inb(1,3) inb(1,2) inb(1,1) out(1,2) xor(1,1) xor(1,2) and(1,3) and(1,4) or(1,5) aba(1,3) 
 
-Models     : 2     
+Models     : 1     
 Time        : 0.000  (Parsing: 0.000)

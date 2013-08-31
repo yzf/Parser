@@ -24,10 +24,9 @@ then
     gringo $priCircFactFile $tmpFile | claspD 0 > $result
     if [ $? -eq 0 ]
     then
-        grep -m 1 "Models" $result
-        grep -m 1 "Time" $result
+        tail -n 2 $result
     else
-        echo "Being forced to stop !!!!!!"
+        echo -e "\nBeing forced to stop !!!!!!"
     fi
 else
     result=${result}_circ2dlp
@@ -37,10 +36,9 @@ else
     circ2dlp $tmpFile -m "abx* : abo* : aba*" -v "ina* inb* out*" | claspD 0 > $result
     if [ $? -eq 0 ]
     then
-        grep "Models" $result | tail -n 1
-        grep "Time" $result | tail -n 1
+        tail -n 2 $result
     else
-        echo "Being forced to stop !!!!!!"
+        echo -e "\nBeing forced to stop !!!!!!"
     fi
 fi
 
