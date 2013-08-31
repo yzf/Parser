@@ -12,6 +12,8 @@
 #include "structs.h"
 #include "Formulas.h"
 #include <vector>
+#include <map>
+#include <string>
 
 using namespace std;
 
@@ -23,12 +25,9 @@ class Formula {
 private:
     _formula* m_pFormula;//公式
 public:
-    int m_nFormulaId;//公式id
-    static int ms_nNewFormulaId;//下一个新公式的id
-public:
     Formula();
     Formula(const Formula& _rhs);
-    Formula(_formula* _fml, bool _bIsCopy);
+    Formula(_formula* _fml, bool _bIsCopy = true);
     ~Formula();
     Formula& operator = (const Formula& _rhs);
     bool operator == (const Formula& _rhs) const;
@@ -38,13 +37,14 @@ public:
     void setFormula(_formula* _newFormula);
     bool isUniversal() const;
     void convertToPNF();
+    void convertToNNF(bool _bIsSM = true);
     void fixUniversalQuantifier();
     void removeUniversalQuantifier();
     void output(FILE* _out) const;
-    void doubleNegationIntensionPredicates();
-    void doubleNegationPredicates(int* _pPredicateIds, int _nSize);
+    void doubleNegationPredicates(const map<int, string>& _mapPredicates);
     void replaceTerms(const vector<int>& _originals, 
 				const vector<int>& _replacements);
+    void removeImpl();
     Formulas* divideFormula() const;
 };
 

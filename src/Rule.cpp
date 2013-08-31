@@ -1,6 +1,6 @@
 #include "Rule.h"
 #include "Utils.h"
-#include "S2DLP.h"
+#include "SMTranslator.h"
 #include <assert.h>
 #include <cstdlib>
 
@@ -134,18 +134,18 @@ void Rule::aspModify() {
         while (cur->formula_type != ATOM) {
             cur = cur->subformula_l;
         }
-        //外延谓词除了succ和max： ～～fml => fml 
-        if (! Vocabulary::instance().isIntensionPredicate(cur->predicate_id)
-                && cur->predicate_id >=0 &&
-                ! Vocabulary::instance().isSuccOrMax(cur->predicate_id)) {
-            while (bodyPart->formula_type == NEGA && bodyPart->subformula_l->formula_type == NEGA) {
+        //Cabalar转换后，谓词最多只带一个～（除了章衡中引入的s），由于头部不能出现～，所以
+        //头部的～p被移到体部后，就变成~~p，即除s外的谓词，最多只带两个～
+        //外延谓词： ~~fml => fml
+        if (! Vocabulary::instance().isIntensionPredicate(cur->predicate_id)) {
+            if (bodyPart->formula_type == NEGA && bodyPart->subformula_l->formula_type == NEGA) {
                 bodyPart = bodyPart->subformula_l->subformula_l;
             }
             iter->setFormula(Utils::copyFormula(bodyPart));
         }
-        //内涵谓词和succ,max： ~~~fml => ~fml
+        //内涵谓词： ～～~fml => ~fml 其实只有章衡中添加的内涵谓词s才会出现３个～，因为Cabalar中转会导致死循环,所以没有处理
         else {
-            while(bodyPart->formula_type == NEGA && bodyPart->subformula_l->formula_type == NEGA 
+            if (bodyPart->formula_type == NEGA && bodyPart->subformula_l->formula_type == NEGA 
                         && bodyPart->subformula_l->subformula_l->formula_type == NEGA) {
                 bodyPart = bodyPart->subformula_l->subformula_l;
             }
@@ -168,7 +168,7 @@ void Rule::generateRuleString() {
             if (it != m_pHeadFormulas->end() - 1 && 
                     (it+1)->getFormula()->predicate_id != PRED_FALSE &&
                         (it+1)->getFormula()->predicate_id != PRED_TRUE) {
-                m_sRuleString += "|";
+                m_sRuleString += " | ";
             }
         }        
     }
@@ -186,7 +186,7 @@ void Rule::generateRuleString() {
         
         if (cur->predicate_id != PRED_TRUE && cur->predicate_id != PRED_FALSE) {            
             if (bodyBegin) {
-                m_sRuleString += ":-";
+                m_sRuleString += ":- ";
                 bodyBegin = false;
             }
             
@@ -195,8 +195,8 @@ void Rule::generateRuleString() {
                 bodyPart = bodyPart->subformula_l;
                 if (bodyPart->formula_type == NEGA) {
                     bool exis = false;
-                    for (FORMULAS_CONST_ITERATOR it_2 = S2DLP::instance().getNegaPredicates()->begin();
-                            it_2 != S2DLP::instance().getNegaPredicates()->end(); ++ it_2) {
+                    for (FORMULAS_CONST_ITERATOR it_2 = SMTranslator::instance().getNegaPredicates()->begin();
+                            it_2 != SMTranslator::instance().getNegaPredicates()->end(); ++ it_2) {
                         if (it_2->getFormula()->predicate_id == bodyPart->subformula_l->predicate_id) {
                             exis = true;
                         }
@@ -205,7 +205,7 @@ void Rule::generateRuleString() {
                         Formula newNegaPredicate = Vocabulary::instance()
                                         .getAtom(bodyPart->subformula_l->predicate_id); 
                         assert(newNegaPredicate.getFormula());
-                        S2DLP::instance().addNegaPredicates(newNegaPredicate);
+                        SMTranslator::instance().addNegaPredicates(newNegaPredicate);
                     }
                     m_sRuleString += "_";
                 }
@@ -213,7 +213,7 @@ void Rule::generateRuleString() {
             m_sRuleString += Utils::convertAtomToString(cur);
             if(it != m_pBodyFormulas->end() - 1 && (it+1)->getFormula()->predicate_id != PRED_FALSE &&
                 (it+1)->getFormula()->predicate_id != PRED_TRUE) {
-                m_sRuleString += ",";
+                m_sRuleString += ", ";
             }
         }
     }  

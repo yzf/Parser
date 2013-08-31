@@ -37,13 +37,16 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/src/Cabalar.o \
 	${OBJECTDIR}/src/CabalarUtils.o \
+	${OBJECTDIR}/src/CircTranslator.o \
 	${OBJECTDIR}/src/Formula.o \
 	${OBJECTDIR}/src/Formulas.o \
 	${OBJECTDIR}/src/HengZhang.o \
 	${OBJECTDIR}/src/NNFUtils.o \
+	${OBJECTDIR}/src/Optimization.o \
 	${OBJECTDIR}/src/PNFUtils.o \
+	${OBJECTDIR}/src/PriCircTranslator.o \
 	${OBJECTDIR}/src/Rule.o \
-	${OBJECTDIR}/src/S2DLP.o \
+	${OBJECTDIR}/src/SMTranslator.o \
 	${OBJECTDIR}/src/Utils.o \
 	${OBJECTDIR}/src/Vocabulary.o \
 	${OBJECTDIR}/src/global.o \
@@ -92,6 +95,11 @@ ${OBJECTDIR}/src/CabalarUtils.o: src/CabalarUtils.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/CabalarUtils.o src/CabalarUtils.cpp
 
+${OBJECTDIR}/src/CircTranslator.o: src/CircTranslator.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/CircTranslator.o src/CircTranslator.cpp
+
 ${OBJECTDIR}/src/Formula.o: src/Formula.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
@@ -112,20 +120,30 @@ ${OBJECTDIR}/src/NNFUtils.o: src/NNFUtils.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/NNFUtils.o src/NNFUtils.cpp
 
+${OBJECTDIR}/src/Optimization.o: src/Optimization.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Optimization.o src/Optimization.cpp
+
 ${OBJECTDIR}/src/PNFUtils.o: src/PNFUtils.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/PNFUtils.o src/PNFUtils.cpp
+
+${OBJECTDIR}/src/PriCircTranslator.o: src/PriCircTranslator.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/PriCircTranslator.o src/PriCircTranslator.cpp
 
 ${OBJECTDIR}/src/Rule.o: src/Rule.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
 	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Rule.o src/Rule.cpp
 
-${OBJECTDIR}/src/S2DLP.o: src/S2DLP.cpp 
+${OBJECTDIR}/src/SMTranslator.o: src/SMTranslator.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/S2DLP.o src/S2DLP.cpp
+	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/SMTranslator.o src/SMTranslator.cpp
 
 ${OBJECTDIR}/src/Utils.o: src/Utils.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -162,21 +180,9 @@ ${OBJECTDIR}/src/parse.o: src/parse.cpp
 
 # Build Test Targets
 .build-tests-conf: .build-conf ${TESTFILES}
-${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/newtestclass.o ${TESTDIR}/tests/newtestrunner.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f1: ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} `cppunit-config --libs`   
-
-
-${TESTDIR}/tests/newtestclass.o: tests/newtestclass.cpp 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags`   `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/newtestclass.o tests/newtestclass.cpp
-
-
-${TESTDIR}/tests/newtestrunner.o: tests/newtestrunner.cpp 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags`   `cppunit-config --cflags` -MMD -MP -MF $@.d -o ${TESTDIR}/tests/newtestrunner.o tests/newtestrunner.cpp
 
 
 ${OBJECTDIR}/src/Cabalar_nomain.o: ${OBJECTDIR}/src/Cabalar.o src/Cabalar.cpp 
@@ -203,6 +209,19 @@ ${OBJECTDIR}/src/CabalarUtils_nomain.o: ${OBJECTDIR}/src/CabalarUtils.o src/Caba
 	    $(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/CabalarUtils_nomain.o src/CabalarUtils.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/CabalarUtils.o ${OBJECTDIR}/src/CabalarUtils_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/CircTranslator_nomain.o: ${OBJECTDIR}/src/CircTranslator.o src/CircTranslator.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/CircTranslator.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/CircTranslator_nomain.o src/CircTranslator.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/CircTranslator.o ${OBJECTDIR}/src/CircTranslator_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/Formula_nomain.o: ${OBJECTDIR}/src/Formula.o src/Formula.cpp 
@@ -257,6 +276,19 @@ ${OBJECTDIR}/src/NNFUtils_nomain.o: ${OBJECTDIR}/src/NNFUtils.o src/NNFUtils.cpp
 	    ${CP} ${OBJECTDIR}/src/NNFUtils.o ${OBJECTDIR}/src/NNFUtils_nomain.o;\
 	fi
 
+${OBJECTDIR}/src/Optimization_nomain.o: ${OBJECTDIR}/src/Optimization.o src/Optimization.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/Optimization.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Optimization_nomain.o src/Optimization.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/Optimization.o ${OBJECTDIR}/src/Optimization_nomain.o;\
+	fi
+
 ${OBJECTDIR}/src/PNFUtils_nomain.o: ${OBJECTDIR}/src/PNFUtils.o src/PNFUtils.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/PNFUtils.o`; \
@@ -268,6 +300,19 @@ ${OBJECTDIR}/src/PNFUtils_nomain.o: ${OBJECTDIR}/src/PNFUtils.o src/PNFUtils.cpp
 	    $(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/PNFUtils_nomain.o src/PNFUtils.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/PNFUtils.o ${OBJECTDIR}/src/PNFUtils_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/PriCircTranslator_nomain.o: ${OBJECTDIR}/src/PriCircTranslator.o src/PriCircTranslator.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/PriCircTranslator.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/PriCircTranslator_nomain.o src/PriCircTranslator.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/PriCircTranslator.o ${OBJECTDIR}/src/PriCircTranslator_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/Rule_nomain.o: ${OBJECTDIR}/src/Rule.o src/Rule.cpp 
@@ -283,17 +328,17 @@ ${OBJECTDIR}/src/Rule_nomain.o: ${OBJECTDIR}/src/Rule.o src/Rule.cpp
 	    ${CP} ${OBJECTDIR}/src/Rule.o ${OBJECTDIR}/src/Rule_nomain.o;\
 	fi
 
-${OBJECTDIR}/src/S2DLP_nomain.o: ${OBJECTDIR}/src/S2DLP.o src/S2DLP.cpp 
+${OBJECTDIR}/src/SMTranslator_nomain.o: ${OBJECTDIR}/src/SMTranslator.o src/SMTranslator.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/S2DLP.o`; \
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/SMTranslator.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} $@.d;\
-	    $(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/S2DLP_nomain.o src/S2DLP.cpp;\
+	    $(COMPILE.cc) -g -Wall -Iinclude -I. `cppunit-config --cflags` -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/SMTranslator_nomain.o src/SMTranslator.cpp;\
 	else  \
-	    ${CP} ${OBJECTDIR}/src/S2DLP.o ${OBJECTDIR}/src/S2DLP_nomain.o;\
+	    ${CP} ${OBJECTDIR}/src/SMTranslator.o ${OBJECTDIR}/src/SMTranslator_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/Utils_nomain.o: ${OBJECTDIR}/src/Utils.o src/Utils.cpp 

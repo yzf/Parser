@@ -1,0 +1,16 @@
+claspD version 1.1.4. Reading...done
+Answer: 1
+true(3) true(2) true(1) false(5) false(4) false(2) false(1) 
+Answer: 2
+true(4) true(3) true(2) true(1) false(5) false(2) false(1) 
+Answer: 3
+true(5) true(2) true(1) false(4) false(3) false(2) false(1) 
+Answer: 4
+true(5) true(4) true(2) true(1) false(3) false(2) false(1) 
+Answer: 5
+true(5) true(3) true(2) true(1) false(4) false(2) false(1) 
+Answer: 6
+true(5) true(4) true(3) true(2) true(1) false(2) false(1) 
+
+Models     : 6     
+Time        : 0.000  (Parsing: 0.000)

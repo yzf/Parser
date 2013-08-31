@@ -4,23 +4,21 @@
 #include <algorithm>
 #include "Vocabulary.h"
 #include "PNFUtils.h"
+#include "NNFUtils.h"
 
-int Formula::ms_nNewFormulaId = 0;
 
-Formula::Formula() : m_pFormula(NULL), m_nFormulaId(ms_nNewFormulaId) {
-    ++ ms_nNewFormulaId;
+Formula::Formula() : m_pFormula(NULL) {
 }
-Formula::Formula(const Formula& _rhs) : m_nFormulaId(_rhs.m_nFormulaId) {
+Formula::Formula(const Formula& _rhs) {
     m_pFormula = Utils::copyFormula(_rhs.getFormula());
 }
-Formula::Formula(_formula* _fml, bool _bIsCopy) : m_nFormulaId(ms_nNewFormulaId) {
+Formula::Formula(_formula* _fml, bool _bIsCopy) {
     if (_bIsCopy) {
         m_pFormula = Utils::copyFormula(_fml);
     }
     else {
         m_pFormula = _fml;
     }
-    ++ ms_nNewFormulaId;
 }
 Formula::~Formula() {
     if (m_pFormula != NULL) {
@@ -30,7 +28,6 @@ Formula::~Formula() {
 }
 Formula& Formula::operator = (const Formula& _rhs) {
     m_pFormula = Utils::copyFormula(_rhs.getFormula());
-    m_nFormulaId = _rhs.m_nFormulaId;
     return *this;
 }
 bool Formula::operator == (const Formula& _rhs) const {
@@ -48,7 +45,9 @@ void Formula::setFormula(_formula* _newFormula) {
     if (m_pFormula == _newFormula) {
         return;
     }
-    Utils::deleteFormula(m_pFormula);
+    if (m_pFormula !=  NULL) {
+        Utils::deleteFormula(m_pFormula);
+    }
     m_pFormula = _newFormula;
 }
 /**
@@ -62,7 +61,16 @@ bool Formula::isUniversal() const {
  * 把公式转化成前束范式
  */
 void Formula::convertToPNF() {
+    fixUniversalQuantifier();
     PNFUtils::convertToPNF(m_pFormula);
+}
+/**
+ * 把公式转化为否定范式
+ * @param _bIsSM
+ */
+void Formula::convertToNNF(bool _bIsSM) {
+    NNFUtils::ms_bIsSM = _bIsSM;
+    m_pFormula = NNFUtils::convertToNegativeNormalForm(m_pFormula);
 }
 /**
  * 为公式中没有量词限定的参数补上全称量词限定
@@ -104,14 +112,11 @@ void Formula::output(FILE* _out) const {
     fprintf(_out, "\n");
 }
 /**
- * 将公式中的没有带非的内涵谓词加上 "非非(~~)"
- * @param _intensionPredicates 内涵谓词名单
+ * 将所有 p(X) => ~~p(X)
+ * @param _vPredicates
  */
-void Formula::doubleNegationIntensionPredicates() {
-    m_pFormula = Utils::doubleNegationPredicates(m_pFormula);
-}
-void Formula::doubleNegationPredicates(int* _pPredicateIds, int _nSize) {
-    m_pFormula = Utils::doubleNegationPredicates(m_pFormula, _pPredicateIds, _nSize);
+void Formula::doubleNegationPredicates(const map<int, string>& _mapPredicates) {
+    m_pFormula = Utils::doubleNegationPredicates(m_pFormula, _mapPredicates);
 }
 /**
  * 替换参数
@@ -121,6 +126,9 @@ void Formula::doubleNegationPredicates(int* _pPredicateIds, int _nSize) {
 void Formula::replaceTerms(const vector<int>& _originals, 
 				const vector<int>& _replacements) {
     Utils::replaceFormulaTerms(m_pFormula, _originals, _replacements);
+}
+void Formula::removeImpl() {
+    m_pFormula = Utils::removeImpl(m_pFormula);
 }
 /**
  * 对公式进行拆分，结果是对公式的每段进行拷贝，原公式不影响

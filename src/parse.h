@@ -37,55 +37,57 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     S_VARI = 258,
-     S_PRED = 259,
-     S_FUNC = 260,
-     S_NEGA = 261,
-     S_CONJ = 262,
-     S_DISJ = 263,
-     S_IMPL = 264,
-     S_UNIV = 265,
-     S_EXIS = 266,
-     PERIOD = 267,
-     LPAREN = 268,
-     RPAREN = 269,
-     LBRACKET = 270,
-     RBRACKET = 271,
-     COMMA = 272,
-     EQUAL = 273,
-     MARCO = 274,
-     LBRACE = 275,
-     RBRACE = 276,
-     SEMICO = 277,
-     AT = 278,
-     LL = 279,
-     RR = 280
+     INTEGER = 258,
+     S_VARI = 259,
+     S_PRED = 260,
+     S_FUNC = 261,
+     S_NEGA = 262,
+     S_CONJ = 263,
+     S_DISJ = 264,
+     S_IMPL = 265,
+     S_UNIV = 266,
+     S_EXIS = 267,
+     PERIOD = 268,
+     LPAREN = 269,
+     RPAREN = 270,
+     LBRACKET = 271,
+     RBRACKET = 272,
+     COMMA = 273,
+     EQUAL = 274,
+     MARCO = 275,
+     LBRACE = 276,
+     RBRACE = 277,
+     SEMICO = 278,
+     AT = 279,
+     LL = 280,
+     RR = 281
    };
 #endif
 /* Tokens.  */
-#define S_VARI 258
-#define S_PRED 259
-#define S_FUNC 260
-#define S_NEGA 261
-#define S_CONJ 262
-#define S_DISJ 263
-#define S_IMPL 264
-#define S_UNIV 265
-#define S_EXIS 266
-#define PERIOD 267
-#define LPAREN 268
-#define RPAREN 269
-#define LBRACKET 270
-#define RBRACKET 271
-#define COMMA 272
-#define EQUAL 273
-#define MARCO 274
-#define LBRACE 275
-#define RBRACE 276
-#define SEMICO 277
-#define AT 278
-#define LL 279
-#define RR 280
+#define INTEGER 258
+#define S_VARI 259
+#define S_PRED 260
+#define S_FUNC 261
+#define S_NEGA 262
+#define S_CONJ 263
+#define S_DISJ 264
+#define S_IMPL 265
+#define S_UNIV 266
+#define S_EXIS 267
+#define PERIOD 268
+#define LPAREN 269
+#define RPAREN 270
+#define LBRACKET 271
+#define RBRACKET 272
+#define COMMA 273
+#define EQUAL 274
+#define MARCO 275
+#define LBRACE 276
+#define RBRACE 277
+#define SEMICO 278
+#define AT 279
+#define LL 280
+#define RR 281
 
 
 
@@ -95,8 +97,9 @@ typedef union YYSTYPE
 {
 
 /* Line 2068 of yacc.c  */
-#line 27 "parse.y"
+#line 27 "pri_parse.y"
 
+    int num;
     char* s;
     struct __formula* f;
     struct __term* t;
@@ -105,7 +108,7 @@ typedef union YYSTYPE
 
 
 /* Line 2068 of yacc.c  */
-#line 109 "../src/parse.h"
+#line 112 "../src/parse.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

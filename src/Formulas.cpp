@@ -23,9 +23,39 @@ bool Formulas::isEmpty() const {
 }
 
 void Formulas::pushBack(const Formula& _tail) {
+    if (NULL == _tail.getFormula()) {
+        return;
+    }
+    m_dequeFormulas.push_back(_tail);
+}
+void Formulas::pushBackUnique(const Formula& _tail) {
+    if (NULL == _tail.getFormula()) {
+        return;
+    }
+    for (FORMULAS_CONST_ITERATOR it = m_dequeFormulas.begin();
+            it != m_dequeFormulas.end(); ++ it) {
+        if (*it == _tail) {
+            return ;
+        }
+    }
     m_dequeFormulas.push_back(_tail);
 }
 void Formulas::pushFront(const Formula& _front) {
+    if (NULL == _front.getFormula()) {
+        return;
+    }
+    m_dequeFormulas.push_front(_front);
+}
+void Formulas::pushFrontUnique(const Formula& _front) {
+    if (NULL == _front.getFormula()) {
+        return;
+    }
+    for (FORMULAS_CONST_ITERATOR it = m_dequeFormulas.begin();
+            it != m_dequeFormulas.end(); ++ it) {
+        if (*it == _front) {
+            return ;
+        }
+    }
     m_dequeFormulas.push_front(_front);
 }
 Formula Formulas::popBack() {
@@ -54,6 +84,12 @@ void Formulas::joinBack(const Formulas& _tail) {
         pushBack(*it);
     }
 }
+void Formulas::joinBackUnique(const Formulas& _tail) {
+    for (FORMULAS_CONST_ITERATOR it = _tail.begin(); 
+            it != _tail.end(); ++ it) {
+        pushBackUnique(*it);
+    }
+}
 /**
  * 连接公式数组 如 {a,b,c}{d,e} -> {d,e,a,b,c}
  * @param _tail
@@ -63,6 +99,16 @@ void Formulas::joinFront(const Formulas& _head) {
             it != _head.rend(); ++ it) {
         pushFront(*it);
     }
+}
+void Formulas::joinFrontUnique(const Formulas& _head) {
+    for (FORMULAS_CONST_REV_ITERATOR it = _head.rbegin();
+            it != _head.rend(); ++ it) {
+        pushFrontUnique(*it);
+    }
+}
+Formulas& Formulas::operator = (const Formulas& _rhs) {
+    m_dequeFormulas = _rhs.m_dequeFormulas;
+    return *this;
 }
 /**
  * 公式组相等的条件是所有公式对应相等，包括位置
@@ -134,4 +180,23 @@ FORMULAS_CONST_REV_ITERATOR Formulas::rend() const {
  */
 FORMULAS_ITERATOR Formulas::erase(FORMULAS_ITERATOR _it) {
     return m_dequeFormulas.erase(_it);
+}
+
+void Formulas::convertToNNF(bool _bIsSM) {
+    for (FORMULAS_ITERATOR it = m_dequeFormulas.begin(); 
+            it != m_dequeFormulas.end(); ++ it) {
+        it->convertToNNF(_bIsSM);
+    }
+}
+void Formulas::convertToPNF() {
+    for (FORMULAS_ITERATOR it = m_dequeFormulas.begin(); 
+            it != m_dequeFormulas.end(); ++ it) {
+        it->convertToPNF();
+    }
+}
+void Formulas::removeImpl() {
+    for (FORMULAS_ITERATOR it = m_dequeFormulas.begin(); 
+            it != m_dequeFormulas.end(); ++ it) {
+        it->removeImpl();
+    }
 }
