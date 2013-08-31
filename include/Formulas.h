@@ -33,13 +33,17 @@ public:
     unsigned int size() const;
     bool isEmpty() const;
     void pushBack(const Formula& _tail);
+    void pushBackUnique(const Formula& _tail);
     void pushFront(const Formula& _front);
+    void pushFrontUnique(const Formula& _front);
     Formula popBack();
     Formula popFront();
     Formula front();
     Formula back();
     void joinBack(const Formulas& _tail);
+    void joinBackUnique(const Formulas& _tail);
     void joinFront(const Formulas& _head);
+    void joinFrontUnique(const Formulas& _head);
     Formulas& operator = (const Formulas& _rhs);
     bool operator == (const Formulas& _rhs) const;
     bool operator != (const Formulas& _rhs) const;

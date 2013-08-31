@@ -1,4 +1,4 @@
-#const adder_size = 10.   % 改size后要改对应的观察值
+#const adder_size = 1.   % 改size后要改对应的观察值
 #const gate_size = 5.
 #domain adder(I).
 #domain gate(X).

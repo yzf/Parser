@@ -14,6 +14,7 @@ fi
 
 touch $tmpFile
 
+date
 if [ $2 -ne 0 ]
 then
     result=${result}_priCirc
@@ -21,16 +22,26 @@ then
     echo "running priCirc ......"
     priCirc $priCircInputFile $tmpFile > /dev/null
     gringo $priCircFactFile $tmpFile | claspD 0 > $result
-    grep -m 1 "Models" $result
-    grep -m 1 "Time" $result
+    if [ $? -eq 0 ]
+    then
+        grep -m 1 "Models" $result
+        grep -m 1 "Time" $result
+    else
+        echo "Being forced to stop !!!!!!"
+    fi
 else
     result=${result}_circ2dlp
     # 运行circ2dlp
     echo "running circ2dlp ......"
     gringo $circ2dlpInputFile > $tmpFile
-    circ2dlp $tmpFile -m "abx* : abo* : aba*" -v "ina* inb* out*" | claspD 0 >> $result
-    grep "Models" $result | tail -n 1
-    grep "Time" $result | tail -n 1
+    circ2dlp $tmpFile -m "abx* : abo* : aba*" -v "ina* inb* out*" | claspD 0 > $result
+    if [ $? -eq 0 ]
+    then
+        grep "Models" $result | tail -n 1
+        grep "Time" $result | tail -n 1
+    else
+        echo "Being forced to stop !!!!!!"
+    fi
 fi
 
 echo "To see more Models' detail, please look the files in folder 'result' !!!!!!"

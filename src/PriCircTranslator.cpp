@@ -158,8 +158,8 @@ Formulas* PriCircTranslator::preProcessing(const Formula& _originalFml) {
 }
 
 void PriCircTranslator::postProcessing(Formulas* _pFmls) {
-    _pFmls->joinBack(createFormula_3());
-    _pFmls->joinBack(createFormula_4());
+    _pFmls->joinBackUnique(createFormula_3());
+    _pFmls->joinBackUnique(createFormula_4());
     // 把新生成的谓词标记为内涵谓词
     for (unsigned int i = 0; i < m_vSysbolR.size(); ++ i) {
         Vocabulary::instance().addIntensionPredicate(m_vSysbolR[i]);
@@ -184,7 +184,7 @@ Formulas* PriCircTranslator::convert(const Formula& _originalFml) {
     Formulas* pFmls = new Formulas();
     for (FORMULAS_CONST_ITERATOR it = nnfFmls->begin();
             it != nnfFmls->end(); ++ it) {
-        pFmls->joinBack(transform(*it));
+        pFmls->joinBackUnique(transform(*it));
     }
     delete nnfFmls;
     postProcessing(pFmls);

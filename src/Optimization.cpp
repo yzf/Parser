@@ -227,10 +227,10 @@ Formulas* Optimization::convert(const Formula& _originalFml) {
     for (FORMULAS_CONST_ITERATOR it = nnfFmls->begin(); 
             it != nnfFmls->end(); ++ it) {
         if (it->isUniversal()) {
-            pFmls->joinBack(CircTranslator::transform(*it));
+            pFmls->joinBackUnique(CircTranslator::transform(*it));
         }
         else {
-            pFmls->joinBack(transform(*it));
+            pFmls->joinBackUnique(transform(*it));
         }
     }
     delete nnfFmls;

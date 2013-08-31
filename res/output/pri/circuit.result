@@ -1,68 +1,8 @@
 claspD version 1.1.4. Reading...done
 Answer: 1
-abx(1,2) abx(2,1) abx(3,1) abx(4,1) abx(5,1) 
+abx(1,2) 
 Answer: 2
-abx(1,1) abx(2,1) abx(3,1) abx(4,1) abx(5,1) 
-Answer: 3
-abx(3,2) abx(1,1) abx(2,1) abx(4,1) abx(5,1) 
-Answer: 4
-abx(1,2) abx(3,2) abx(2,1) abx(4,1) abx(5,1) 
-Answer: 5
-abx(5,2) abx(1,1) abx(2,1) abx(3,1) abx(4,1) 
-Answer: 6
-abx(1,2) abx(5,2) abx(2,1) abx(3,1) abx(4,1) 
-Answer: 7
-abx(1,2) abx(3,2) abx(5,2) abx(2,1) abx(4,1) 
-Answer: 8
-abx(3,2) abx(5,2) abx(1,1) abx(2,1) abx(4,1) 
-Answer: 9
-abx(4,2) abx(1,1) abx(2,1) abx(3,1) abx(5,1) 
-Answer: 10
-abx(1,2) abx(4,2) abx(2,1) abx(3,1) abx(5,1) 
-Answer: 11
-abx(3,2) abx(4,2) abx(1,1) abx(2,1) abx(5,1) 
-Answer: 12
-abx(1,2) abx(3,2) abx(4,2) abx(2,1) abx(5,1) 
-Answer: 13
-abx(4,2) abx(5,2) abx(1,1) abx(2,1) abx(3,1) 
-Answer: 14
-abx(1,2) abx(4,2) abx(5,2) abx(2,1) abx(3,1) 
-Answer: 15
-abx(3,2) abx(4,2) abx(5,2) abx(1,1) abx(2,1) 
-Answer: 16
-abx(1,2) abx(3,2) abx(4,2) abx(5,2) abx(2,1) 
-Answer: 17
-abx(2,2) abx(1,1) abx(3,1) abx(4,1) abx(5,1) 
-Answer: 18
-abx(2,2) abx(3,2) abx(1,1) abx(4,1) abx(5,1) 
-Answer: 19
-abx(2,2) abx(4,2) abx(1,1) abx(3,1) abx(5,1) 
-Answer: 20
-abx(2,2) abx(3,2) abx(4,2) abx(1,1) abx(5,1) 
-Answer: 21
-abx(1,2) abx(2,2) abx(3,1) abx(4,1) abx(5,1) 
-Answer: 22
-abx(1,2) abx(2,2) abx(3,2) abx(4,1) abx(5,1) 
-Answer: 23
-abx(1,2) abx(2,2) abx(4,2) abx(3,1) abx(5,1) 
-Answer: 24
-abx(1,2) abx(2,2) abx(3,2) abx(4,2) abx(5,1) 
-Answer: 25
-abx(2,2) abx(5,2) abx(1,1) abx(3,1) abx(4,1) 
-Answer: 26
-abx(2,2) abx(3,2) abx(5,2) abx(1,1) abx(4,1) 
-Answer: 27
-abx(2,2) abx(4,2) abx(5,2) abx(1,1) abx(3,1) 
-Answer: 28
-abx(2,2) abx(3,2) abx(4,2) abx(5,2) abx(1,1) 
-Answer: 29
-abx(1,2) abx(2,2) abx(5,2) abx(3,1) abx(4,1) 
-Answer: 30
-abx(1,2) abx(2,2) abx(3,2) abx(5,2) abx(4,1) 
-Answer: 31
-abx(1,2) abx(2,2) abx(4,2) abx(5,2) abx(3,1) 
-Answer: 32
-abx(1,2) abx(2,2) abx(3,2) abx(4,2) abx(5,2) 
+abx(1,1) 
 
-Models     : 32    
-Time        : 1.020  (Parsing: 0.020)
+Models     : 2     
+Time        : 0.000  (Parsing: 0.000)
