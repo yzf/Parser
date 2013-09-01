@@ -10,7 +10,7 @@ maxTime=3600
 
 if [ ! -f $priCircInputFile -o ! -f $circ2dlpInputFile ]
 then
-    echo "nosuch test case !!!!!!"
+    echo "No such test case !!!!!!"
     exit 1
 fi
 
