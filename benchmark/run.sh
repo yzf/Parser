@@ -26,6 +26,7 @@ then
     then
         tail -n 2 $result
     else
+        rm $result
         echo -e "\nBeing forced to stop !!!!!!"
     fi
 else
@@ -38,12 +39,12 @@ else
     then
         tail -n 2 $result
     else
+        rm $result
         echo -e "\nBeing forced to stop !!!!!!"
     fi
 fi
 
-echo "To see more Models' detail, please look the files in folder 'result' !!!!!!"
-echo
+echo -e "To see more Models' detail, please look the files in folder 'result' !!!!!!\n"
 
 rm $tmpFile
 
