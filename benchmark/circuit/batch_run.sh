@@ -8,7 +8,7 @@ fi
 
 for i in `seq $1 $2`
 do
-    echo "running test of data_size $i ......"
+    echo "Running test of data_size $i ......"
     ./run.sh $i $3
 done
 

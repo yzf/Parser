@@ -9,6 +9,14 @@
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="3">
         <file>
+            <url>include/Vocabulary.h</url>
+            <bookmark id="2">
+                <name/>
+                <line>47</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
             <url>res/input/sample.in</url>
             <bookmark id="1">
                 <name/>
@@ -21,14 +29,6 @@
             <bookmark id="3">
                 <name/>
                 <line>27</line>
-                <key/>
-            </bookmark>
-        </file>
-        <file>
-            <url>include/Vocabulary.h</url>
-            <bookmark id="2">
-                <name/>
-                <line>47</line>
                 <key/>
             </bookmark>
         </file>
