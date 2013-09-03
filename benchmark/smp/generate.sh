@@ -1,6 +1,18 @@
 #!/bin/bash
 # 生成benchmark文件
 
+function randomize() {
+    l=${#like[@]}
+    for count in `seq $(($l / 2))`
+    do
+        first=$(($RANDOM % $l))
+        second=$(($RANDOM % $l))
+        tmp=${like[$first]}
+        like[$first]=${like[$second]}
+        like[$second]=$tmp
+    done
+}
+
 function generateFact() {
     subjects=$1
     objects=$2
@@ -23,6 +35,7 @@ function generateFact() {
             fi
         done
         like=($tmpLike)
+        randomize
         rank=($tmpRank)
         len=$((${#like[@]} - 1))
         for j in `seq 0 $len`

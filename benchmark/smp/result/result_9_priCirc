@@ -1,4 +1,8 @@
 claspD version 1.1.4. Reading...done
+Answer: 1
+pair(18,2) pair(17,7) pair(16,1) pair(15,9) pair(14,3) pair(13,4) pair(12,8) pair(11,5) pair(10,6) pair(9,15) pair(8,12) pair(7,17) pair(6,10) pair(5,11) pair(4,13) pair(3,14) pair(2,18) pair(1,16) 
+Answer: 2
+pair(18,2) pair(17,3) pair(16,1) pair(15,9) pair(14,7) pair(13,4) pair(12,8) pair(11,5) pair(10,6) pair(9,15) pair(8,12) pair(7,14) pair(6,10) pair(5,11) pair(4,13) pair(3,17) pair(2,18) pair(1,16) 
 
-Models     : 0     
-Time        : 5.620  (Parsing: 5.520)
+Models     : 2     
+Time        : 14.560 (Parsing: 5.520)

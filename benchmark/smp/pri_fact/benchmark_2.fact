@@ -24,7 +24,11 @@ gt_2((size_2_3 + 1)..size).
 
 
 like(1,1,4).
+like(1,1,3).
+like(2,1,3).
+like(2,1,4).
 like(4,1,2).
+like(4,1,1).
 
 
 #hide.
