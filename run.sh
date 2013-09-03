@@ -23,12 +23,13 @@ else
     echo "error!!!"
     exit 1
 fi
-echo "begin to run $tranType..."
-echo
+echo -e "begin to run $tranType ......\n"
 # 生成parser文件
+echo "Enter folder 'parse' ......"
 cd parse
 echo "generate parser file"
 ./generate.sh $tranType
+echo "Exit folder 'parse' ......"
 cd ..
 
 # 生成主函数

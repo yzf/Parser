@@ -66,7 +66,7 @@
 /* Copy the first part of user declarations.  */
 
 /* Line 268 of yacc.c  */
-#line 1 "pri_parse.y"
+#line 1 "circ_parse.y"
 
 #include <cstdio>
 #include <cstring>
@@ -181,7 +181,7 @@ typedef union YYSTYPE
 {
 
 /* Line 293 of yacc.c  */
-#line 27 "pri_parse.y"
+#line 27 "circ_parse.y"
 
     int num;
     char* s;
@@ -1478,7 +1478,7 @@ yyreduce:
         case 2:
 
 /* Line 1806 of yacc.c  */
-#line 70 "pri_parse.y"
+#line 70 "circ_parse.y"
     {
             assert((yyvsp[(1) - (3)].f));
             gformula = (yyvsp[(1) - (3)].f);
@@ -1488,7 +1488,7 @@ yyreduce:
   case 3:
 
 /* Line 1806 of yacc.c  */
-#line 77 "pri_parse.y"
+#line 77 "circ_parse.y"
     {
         }
     break;
@@ -1496,7 +1496,7 @@ yyreduce:
   case 4:
 
 /* Line 1806 of yacc.c  */
-#line 81 "pri_parse.y"
+#line 81 "circ_parse.y"
     {
             Vocabulary::instance().increaseMininalPredicatePriority();
         }
@@ -1505,7 +1505,7 @@ yyreduce:
   case 5:
 
 /* Line 1806 of yacc.c  */
-#line 84 "pri_parse.y"
+#line 84 "circ_parse.y"
     {
             Vocabulary::instance().increaseMininalPredicatePriority();
         }
@@ -1514,7 +1514,7 @@ yyreduce:
   case 6:
 
 /* Line 1806 of yacc.c  */
-#line 89 "pri_parse.y"
+#line 89 "circ_parse.y"
     {
         }
     break;
@@ -1522,7 +1522,7 @@ yyreduce:
   case 7:
 
 /* Line 1806 of yacc.c  */
-#line 91 "pri_parse.y"
+#line 91 "circ_parse.y"
     {
         }
     break;
@@ -1530,7 +1530,7 @@ yyreduce:
   case 8:
 
 /* Line 1806 of yacc.c  */
-#line 95 "pri_parse.y"
+#line 95 "circ_parse.y"
     {
             Vocabulary::instance().addIntensionPredicate((yyvsp[(1) - (1)].s));
             Vocabulary::instance().setMininalPredicatePriority((yyvsp[(1) - (1)].s));
@@ -1541,7 +1541,7 @@ yyreduce:
   case 9:
 
 /* Line 1806 of yacc.c  */
-#line 103 "pri_parse.y"
+#line 103 "circ_parse.y"
     {
         }
     break;
@@ -1549,7 +1549,7 @@ yyreduce:
   case 10:
 
 /* Line 1806 of yacc.c  */
-#line 105 "pri_parse.y"
+#line 105 "circ_parse.y"
     {
         }
     break;
@@ -1557,7 +1557,7 @@ yyreduce:
   case 11:
 
 /* Line 1806 of yacc.c  */
-#line 107 "pri_parse.y"
+#line 107 "circ_parse.y"
     {
         }
     break;
@@ -1565,7 +1565,7 @@ yyreduce:
   case 12:
 
 /* Line 1806 of yacc.c  */
-#line 111 "pri_parse.y"
+#line 111 "circ_parse.y"
     {
             Vocabulary::instance().addVaryPredicate((yyvsp[(1) - (1)].s));
             context_flag = 0;
@@ -1575,7 +1575,7 @@ yyreduce:
   case 13:
 
 /* Line 1806 of yacc.c  */
-#line 117 "pri_parse.y"
+#line 117 "circ_parse.y"
     {
         }
     break;
@@ -1583,7 +1583,7 @@ yyreduce:
   case 14:
 
 /* Line 1806 of yacc.c  */
-#line 121 "pri_parse.y"
+#line 121 "circ_parse.y"
     {
         
         }
@@ -1592,7 +1592,7 @@ yyreduce:
   case 15:
 
 /* Line 1806 of yacc.c  */
-#line 124 "pri_parse.y"
+#line 124 "circ_parse.y"
     {
             
         }
@@ -1601,7 +1601,7 @@ yyreduce:
   case 16:
 
 /* Line 1806 of yacc.c  */
-#line 129 "pri_parse.y"
+#line 129 "circ_parse.y"
     {
             Vocabulary::instance().setVariableDomain((yyvsp[(1) - (3)].s), (yyvsp[(3) - (3)].s));
             context_flag = 0;
@@ -1611,7 +1611,7 @@ yyreduce:
   case 17:
 
 /* Line 1806 of yacc.c  */
-#line 136 "pri_parse.y"
+#line 136 "circ_parse.y"
     {
             (yyval.f) = Utils::compositeByConnective(CONJ, (yyvsp[(1) - (3)].f), (yyvsp[(2) - (3)].f));
 	}
@@ -1620,7 +1620,7 @@ yyreduce:
   case 18:
 
 /* Line 1806 of yacc.c  */
-#line 139 "pri_parse.y"
+#line 139 "circ_parse.y"
     {
             (yyval.f) = (yyvsp[(1) - (2)].f);
 	}
@@ -1629,7 +1629,7 @@ yyreduce:
   case 19:
 
 /* Line 1806 of yacc.c  */
-#line 145 "pri_parse.y"
+#line 145 "circ_parse.y"
     {
             assert((yyvsp[(1) - (3)].f));
             assert((yyvsp[(3) - (3)].f));
@@ -1640,7 +1640,7 @@ yyreduce:
   case 20:
 
 /* Line 1806 of yacc.c  */
-#line 150 "pri_parse.y"
+#line 150 "circ_parse.y"
     {
             assert((yyvsp[(1) - (3)].f));
             assert((yyvsp[(3) - (3)].f));
@@ -1651,7 +1651,7 @@ yyreduce:
   case 21:
 
 /* Line 1806 of yacc.c  */
-#line 155 "pri_parse.y"
+#line 155 "circ_parse.y"
     {
             assert((yyvsp[(1) - (3)].f));
             assert((yyvsp[(3) - (3)].f));
@@ -1662,7 +1662,7 @@ yyreduce:
   case 22:
 
 /* Line 1806 of yacc.c  */
-#line 160 "pri_parse.y"
+#line 160 "circ_parse.y"
     {
             assert((yyvsp[(2) - (2)].f));
             (yyval.f) = Utils::compositeByConnective(NEGA, (yyvsp[(2) - (2)].f), NULL);
@@ -1672,7 +1672,7 @@ yyreduce:
   case 23:
 
 /* Line 1806 of yacc.c  */
-#line 164 "pri_parse.y"
+#line 164 "circ_parse.y"
     {
             assert((yyvsp[(3) - (5)].s));
             assert((yyvsp[(5) - (5)].f));
@@ -1689,7 +1689,7 @@ yyreduce:
   case 24:
 
 /* Line 1806 of yacc.c  */
-#line 175 "pri_parse.y"
+#line 175 "circ_parse.y"
     {
             assert((yyvsp[(3) - (5)].s));
             assert((yyvsp[(5) - (5)].f));
@@ -1705,7 +1705,7 @@ yyreduce:
   case 25:
 
 /* Line 1806 of yacc.c  */
-#line 185 "pri_parse.y"
+#line 185 "circ_parse.y"
     {
             (yyval.f) = (yyvsp[(1) - (1)].f);
 	}
@@ -1714,7 +1714,7 @@ yyreduce:
   case 26:
 
 /* Line 1806 of yacc.c  */
-#line 188 "pri_parse.y"
+#line 188 "circ_parse.y"
     {
             (yyval.f) = (yyvsp[(2) - (3)].f);
 	}
@@ -1723,7 +1723,7 @@ yyreduce:
   case 27:
 
 /* Line 1806 of yacc.c  */
-#line 194 "pri_parse.y"
+#line 194 "circ_parse.y"
     {
             assert((yyvsp[(1) - (4)].s));
             assert((yyvsp[(3) - (4)].ts));
@@ -1756,7 +1756,7 @@ yyreduce:
   case 28:
 
 /* Line 1806 of yacc.c  */
-#line 221 "pri_parse.y"
+#line 221 "circ_parse.y"
     {
             assert((yyvsp[(1) - (1)].s));
 
@@ -1793,7 +1793,7 @@ yyreduce:
   case 29:
 
 /* Line 1806 of yacc.c  */
-#line 255 "pri_parse.y"
+#line 255 "circ_parse.y"
     {
             assert((yyvsp[(1) - (3)].ts));
             assert((yyvsp[(3) - (3)].t));
@@ -1817,7 +1817,7 @@ yyreduce:
   case 30:
 
 /* Line 1806 of yacc.c  */
-#line 273 "pri_parse.y"
+#line 273 "circ_parse.y"
     {
             (yyval.ts) = (_terms*)malloc(sizeof(_terms));
 
@@ -1833,7 +1833,7 @@ yyreduce:
   case 31:
 
 /* Line 1806 of yacc.c  */
-#line 286 "pri_parse.y"
+#line 286 "circ_parse.y"
     {
             int id = Vocabulary::instance().addConstant((yyvsp[(1) - (1)].num));
             (yyval.t) = (_term*)malloc(sizeof(_term));
@@ -1845,7 +1845,7 @@ yyreduce:
   case 32:
 
 /* Line 1806 of yacc.c  */
-#line 292 "pri_parse.y"
+#line 292 "circ_parse.y"
     {
             assert((yyvsp[(1) - (1)].s));
 
@@ -1861,7 +1861,7 @@ yyreduce:
   case 33:
 
 /* Line 1806 of yacc.c  */
-#line 302 "pri_parse.y"
+#line 302 "circ_parse.y"
     {
             assert((yyvsp[(1) - (1)].s));
 
@@ -1887,7 +1887,7 @@ yyreduce:
   case 34:
 
 /* Line 1806 of yacc.c  */
-#line 322 "pri_parse.y"
+#line 322 "circ_parse.y"
     {
             assert((yyvsp[(1) - (4)].s));
             assert((yyvsp[(3) - (4)].ts));
@@ -2147,6 +2147,6 @@ yyreturn:
 
 
 /* Line 2067 of yacc.c  */
-#line 346 "pri_parse.y"
+#line 346 "circ_parse.y"
 
 
