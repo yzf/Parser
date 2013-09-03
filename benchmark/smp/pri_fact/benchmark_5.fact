@@ -1,0 +1,124 @@
+#const size = 10.
+#const size_1_3 = size / 3.
+#const size_2_3 = size * 2 / 3.
+#domain person(X).
+#domain person(Y).
+
+person(1..size).
+rank(1..size).
+
+min_person(1).
+max_person(size).
+min_rank(1).
+max_rank(size).
+
+block(X,Y) | _block(X,Y).
+pair(X,Y) | _pair(X,Y).
+
+ssex(1..(size / 2),1..(size / 2)).
+ssex((size / 2 + 1).. size, (size / 2 + 1).. size).
+
+eq(X,X).
+bt_1_2((size_1_3 + 1)..size_2_3).
+gt_2((size_2_3 + 1)..size).
+
+
+like(1,1,7).
+like(1,2,9).
+like(1,3,10).
+prefer(1,7,9).
+prefer(1,7,10).
+prefer(1,9,10).
+like(2,1,6).
+like(2,2,7).
+like(2,3,8).
+like(2,4,9).
+like(2,5,10).
+prefer(2,6,7).
+prefer(2,6,8).
+prefer(2,6,9).
+prefer(2,6,10).
+prefer(2,7,8).
+prefer(2,7,9).
+prefer(2,7,10).
+prefer(2,8,9).
+prefer(2,8,10).
+prefer(2,9,10).
+like(3,1,8).
+like(3,2,9).
+like(3,3,10).
+prefer(3,8,9).
+prefer(3,8,10).
+prefer(3,9,10).
+like(4,1,6).
+like(4,2,7).
+like(4,3,8).
+like(4,4,9).
+like(4,4,10).
+prefer(4,6,7).
+prefer(4,6,8).
+prefer(4,6,9).
+prefer(4,6,10).
+prefer(4,7,8).
+prefer(4,7,9).
+prefer(4,7,10).
+prefer(4,8,9).
+prefer(4,8,10).
+like(5,1,6).
+like(5,2,7).
+like(5,3,8).
+like(5,4,9).
+prefer(5,6,7).
+prefer(5,6,8).
+prefer(5,6,9).
+prefer(5,7,8).
+prefer(5,7,9).
+prefer(5,8,9).
+like(6,1,1).
+like(6,1,4).
+like(6,2,5).
+prefer(6,1,5).
+prefer(6,4,5).
+like(7,1,1).
+like(7,2,2).
+like(7,3,3).
+like(7,4,4).
+like(7,5,5).
+prefer(7,1,2).
+prefer(7,1,3).
+prefer(7,1,4).
+prefer(7,1,5).
+prefer(7,2,3).
+prefer(7,2,4).
+prefer(7,2,5).
+prefer(7,3,4).
+prefer(7,3,5).
+prefer(7,4,5).
+like(8,1,2).
+like(8,1,3).
+like(8,2,4).
+like(8,3,5).
+prefer(8,2,4).
+prefer(8,2,5).
+prefer(8,3,4).
+prefer(8,3,5).
+prefer(8,4,5).
+like(9,1,1).
+like(9,2,2).
+like(9,3,3).
+like(9,4,4).
+prefer(9,1,2).
+prefer(9,1,3).
+prefer(9,1,4).
+prefer(9,2,3).
+prefer(9,2,4).
+prefer(9,3,4).
+like(10,1,2).
+like(10,2,4).
+like(10,2,5).
+prefer(10,2,4).
+prefer(10,2,5).
+
+
+#hide.
+#show pair/2.

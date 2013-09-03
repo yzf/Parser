@@ -1,16 +1,16 @@
 #!/bin/bash
 
-priCircInputFile="pri_input/benchmark_$1.in"
+priCircInputFile="pri_input/benchmark.in"
 priCircFactFile="pri_fact/benchmark_$1.fact"
-circ2dlpInputFile="circ2dlp_input/benchmark_$1.lp"
+
 tmpFile=".tmp"
 result="result/result_$1"
 sleepDelay=1
 maxTime=3600
 
-if [ ! -f $priCircInputFile -o ! -f $circ2dlpInputFile ]
+if [ ! -f $priCircInputFile -o ! -f $priCircFactFile ]
 then
-    echo "No such test case !!!!!!"
+    echo "No such test cast !!!!!!"
     exit 1
 fi
 
@@ -21,12 +21,12 @@ then
     title="priCirc"
     result=${result}_priCirc
     priCirc $priCircInputFile $tmpFile > /dev/null
-    { gringo $priCircFactFile $tmpFile | claspD 0 > $result; } &
+    { gringo $priCircFactFile $tmpFile | claspD 0 > $result;  } &
 else
     title="circ2dlp"
     result=${result}_circ2dlp
     gringo $circ2dlpInputFile > $tmpFile
-    { circ2dlp $tmpFile -m "abx* : abo* : aba*" -v "ina* inb* out*" | claspD 0 > $result; } &
+    { circ2dlp $tmpFile -m "abx* : abo* : aba*" -v "ina* inb* out*" | claspD 0 > $result;  } &
 fi
 
 echo "Running $title ......"
@@ -59,5 +59,3 @@ done
 rm $tmpFile > /dev/null 2>&1
 
 exit 0
-
-
