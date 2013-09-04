@@ -167,6 +167,7 @@
       <itemPath>pri_main.cpp</itemPath>
       <itemPath>run.sh</itemPath>
       <itemPath>sm_main.cpp</itemPath>
+      <itemPath>smp_main.cpp</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>

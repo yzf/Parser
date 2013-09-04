@@ -46,6 +46,7 @@ public:
 				const vector<int>& _replacements);
     void removeImpl();
     Formulas* divideFormula() const;
+    void convertToCNF();
 };
 
 

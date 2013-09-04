@@ -23,15 +23,11 @@ function generateFact() {
         tmpRank=""
         for j in $objects
         do
-            # 2/3机会喜欢
-            if [ $(($RANDOM % 3)) -gt 0 ]
-            then
                 tmpLike="$tmpLike$j "
                 tmpRank="$tmpRank$r "
-                if [ $(($RANDOM % 4)) -gt 0 ]
+            if [ $(($RANDOM % 4)) -gt 0 ]
                 then
                     r=$(($r + 1))
-                fi
             fi
         done
         like=($tmpLike)
@@ -87,9 +83,21 @@ do
     generateFact "$men" "$women" >> $factFile
     # 女生的喜好
     generateFact "$women" "$men" >> $factFile
+    # unaccept n*n*5% 概率
+    unacceptCount=$(($i*$i*5/100))
+    for ((j=1;j<=$unacceptCount;))
+    do
+        x=$(($RANDOM % $i + 1))
+        y=$(($RANDOM % $i + 1 + $i))
+        if [ $x -eq $y ]
+        then
+            continue
+        fi
+        echo "unaccept($x,$y)." >> $factFile
+        j=$(($j + 1))
+    done
     cat $priFactTail >> $factFile
 done
-
 
 rm $tmpFile $priTmpFile
 

@@ -77,7 +77,7 @@ public:
     static _formula* removeImpl(_formula* _fml);
     static string convertNumToString(int _num);
     
-   
+    static _formula* convertDNFtoCNF(_formula* _fml);
 };
 
 

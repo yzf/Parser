@@ -42,6 +42,7 @@ _eq(Y,Y_1):- not eq(Y,Y_1).
 _prefer(X,Y,Z_1):- not prefer(X,Y,Z_1).
 _gt_2(R):- not gt_2(R).
 _bt_1_2(R):- not bt_1_2(R).
+_unaccept(X,Y):- not unaccept(X,Y).
 _succ_person_rank(Y,R,NV_0,NV_1):- not succ_person_rank(Y,R,NV_0,NV_1).
 _max_person(Y):- not max_person(Y).
 _max_rank(R):- not max_rank(R).
@@ -172,6 +173,11 @@ r_0 | hate_2_0_vary(X):- pair_0_vary(X,Y), like(X,R,Y), bt_1_2(R).
 hate_2_0_vary(X):- not r_0, not _pair_0_vary(X,Y), like(X,R,Y), bt_1_2(R).
 r_1 | hate_2(X):- pair_1_vary(X,Y), like(X,R,Y), bt_1_2(R).
 hate_2(X):- not r_1, not _pair_1_vary(X,Y), like(X,R,Y), bt_1_2(R).
+:- unaccept(X,Y), pair(X,Y), not block(X,Y).
+r_0:- pair_0_vary(X,Y), unaccept(X,Y), not block(X,Y).
+:- not r_0, not _pair_0_vary(X,Y), unaccept(X,Y), not block(X,Y).
+r_1:- pair_1_vary(X,Y), unaccept(X,Y), not block(X,Y).
+:- not r_1, not _pair_1_vary(X,Y), unaccept(X,Y), not block(X,Y).
 hate_1(X):- r_0, not _hate_1(X).
 :- not s_3(MIN_person).
 s_3(X):- succ_person(X,NV_6), s_3(NV_6).

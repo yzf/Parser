@@ -1036,3 +1036,46 @@ string Utils::convertNumToString(int _num) {
     sprintf(num, "%d", _num);
     return string(num);
 }
+
+_formula* Utils::convertDNFtoCNF(_formula* _fml) {
+    assert(_fml);
+    assert(_fml->formula_type == CONJ || _fml->formula_type == DISJ
+            || _fml->formula_type == ATOM);
+    switch (_fml->formula_type) {
+        case DISJ:
+            if (_fml->subformula_r->formula_type == CONJ) {
+                _formula* l = _fml->subformula_l;
+                _formula* rl = _fml->subformula_r->subformula_l;
+                _formula* rr = _fml->subformula_r->subformula_r;
+                free(_fml->subformula_r);
+                _fml->subformula_l = compositeByConnective(DISJ, l, rl);
+                _fml->subformula_r = compositeByConnective(DISJ, copyFormula(l), rr);
+                _fml->formula_type = CONJ;
+            }
+            if (_fml->subformula_l->formula_type == CONJ) {
+                _formula* ll = _fml->subformula_l->subformula_l;
+                _formula* lr = _fml->subformula_l->subformula_r;
+                _formula* r = _fml->subformula_r;
+                free(_fml->subformula_l);
+                _fml->subformula_l = compositeByConnective(DISJ, ll, r);
+                _fml->subformula_r = compositeByConnective(DISJ, lr, copyFormula(r));
+                _fml->formula_type = CONJ;
+            }
+            _fml->subformula_l = convertDNFtoCNF(_fml->subformula_l);
+            _fml->subformula_r = convertDNFtoCNF(_fml->subformula_r);
+            break;
+        case CONJ:
+            _fml->subformula_l = convertDNFtoCNF(_fml->subformula_l);
+            _fml->subformula_r = convertDNFtoCNF(_fml->subformula_r);
+            break;
+        case ATOM:
+            break;
+        default:
+            assert(0);
+    }
+    if (_fml->formula_type == DISJ && 
+            (_fml->subformula_l->formula_type == CONJ || _fml->subformula_r->formula_type == CONJ)) {
+        _fml = convertDNFtoCNF(_fml);
+    }
+    return _fml;
+}
