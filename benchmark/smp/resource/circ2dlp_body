@@ -1,59 +1,24 @@
-#const gate_size = 5.
-#domain adder(I).
-#domain adder(J).
-#domain gate(X).
+#const size_1_3 = size / 2 / 3.
+#const size_2_3 = size / 3.
+#domain person(X).
+#domain person(Y).
+#domain person(Y_1).
+#domain person(Z_1).
+#domain person(Z_2).
+#domain rank(R).
 
-adder(1..adder_size).
-gate(1..gate_size).
+person(1..size).
+rank(1..size).
 
-xor(I,1).
-xor(I,2).
-and(I,3).
-and(I,4).
-or(I,5).
+ssex(1..(size / 2),1..(size / 2)).
+ssex((size / 2 + 1).. size, (size / 2 + 1).. size).
 
-% 与门逻辑
-out(I,X) | aba(I,X) :- and(I,X), ina(I,X), inb(I,X).
-inb(I,X) | aba(I,X) :- and(I,X), ina(I,X), out(I,X).
-ina(I,X) | aba(I,X) :- and(I,X), inb(I,X), out(I,X).
-ina(I,X) | inb(I,X) | aba(I,X) :- and(I,X), out(I,X).
-% 或门逻辑
-out(I,X) | abo(I,X) :- or(I,X), ina(I,X), inb(I,X).
-out(I,X) | inb(I,X) | abo(I,X) :- or(I,X), ina(I,X).
-out(I,X) | ina(I,X) | abo(I,X) :- or(I,X), inb(I,X).
-ina(I,X) | inb(I,X) | abo(I,X) :- or(I,X), out(I,X).
-% 异或门逻辑
-abx(I,X) :- xor(I,X), ina(I,X), inb(I,X), out(I,X).
-out(I,X) | abx(I,X) | inb(I,X) :- xor(I,X), ina(I,X).
-out(I,X) | abx(I,X) | ina(I,X) :- xor(I,X), inb(I,X).
-abx(I,X) | ina(I,X) | inb(I,X) :- xor(I,X), out(I,X).
+:- block(X,Y).
+pair(X,Y) :- pair(Y,X).
+:- ssex(X,Y), pair(X,Y).
 
-% 单个全加法器电路结构逻辑
-out(I,1) :- ina(I,2).
-ina(I,2) :- out(I,1).
-
-out(I,1) :- ina(I,4).
-ina(I,4) :- out(I,1).
-
-out(I,4) :- ina(I,5).
-ina(I,5) :- out(I,4).
-
-inb(I,4) :- inb(I,2).
-inb(I,2) :- inb(I,4).
-
-ina(I,1) :- ina(I,3).
-ina(I,3) :- ina(I,1).
-
-inb(I,1) :- inb(I,3).
-inb(I,3) :- inb(I,1).
-
-out(I,3) :- inb(I,5).
-inb(I,5) :- out(I,3).
-
-% 串行进位加法器逻辑
-out(I,5) :- inb(J,4), I==J-1.
-inb(J,4) :- out(I,5), I==J-1.
-
-% 加法器
-inb(1,4).
-
+:- pair(X,Y), pair(X,Y_1), Y != Y_1.
+block(X,Y) | pair(X,Y) :- pair(X,Z_1), pair(Y,Z_2), prefer(X,Y,Z_1), prefer(Y,X,Z_2).
+hate_1(X) :- pair(X,Y), like(X,R,Y), R > size_2_3.
+hate_2(X) :- pair(X,Y), like(X,R,Y), R > size_1_3, R <= size_2_3.
+block(X,Y) :- unaccept(X,Y), pair(X,Y).

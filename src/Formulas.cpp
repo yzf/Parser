@@ -145,6 +145,7 @@ void Formulas::output(FILE* _out) const {
     for (FORMULAS_CONST_ITERATOR it = m_dequeFormulas.begin();
             it != m_dequeFormulas.end(); ++ it) {
         it->output(_out);
+        fflush(_out);
     }
 }
 /**

@@ -60,13 +60,14 @@ fi
 
 priInputFile="pri_input/benchmark.in"
 priBenchmarkFactFilePrefix="pri_fact/benchmark_"
+circ2dlpBenchmarkFilePrefix="circ2dlp_input/benchmark_"
 priIn="resource/pri_in"
 priFactBody="resource/pri_fact_body"
 priFactTail="resource/pri_fact_tail"
+circ2dlpBody="resource/circ2dlp_body"
 tmpFile=".tmp"
-priTmpFile=".pri"
 
-touch $tmpFile $priTmpFile
+touch $tmpFile
 
 cat $priIn > $priInputFile
 
@@ -74,15 +75,30 @@ for i in `seq $1`
 do
     echo "Generating benchmark_$i......."
     factFile="${priBenchmarkFactFilePrefix}${i}.fact"
+    circ2dlpIn="${circ2dlpBenchmarkFilePrefix}${i}.lp"
 
     echo "#const size = $(($i * 2))." > $factFile
+    echo "#const size = $(($i * 2))." > $circ2dlpIn
     cat $priFactBody >> $factFile
+    cat $circ2dlpBody >> $circ2dlpIn
+    # circ2dlp 的存在量词
+    for y in `seq $(($i * 2))`
+    do
+        for p in `seq $i`
+        do
+            echo
+        done
+    done
     # 男生的喜好
     men=`seq $i`
     women=`seq $(($i + 1)) $(($i * 2))`
-    generateFact "$men" "$women" >> $factFile
+    generateFact "$men" "$women" > $tmpFile
+    cat $tmpFile >> $factFile
+    cat $tmpFile >> $circ2dlpIn
     # 女生的喜好
-    generateFact "$women" "$men" >> $factFile
+    generateFact "$women" "$men" > $tmpFile
+    cat $tmpFile >> $factFile
+    cat $tmpFile >> $circ2dlpIn
     # unaccept n*n*5% 概率
     unacceptCount=$(($i*$i*5/100))
     for ((j=1;j<=$unacceptCount;))
@@ -94,12 +110,13 @@ do
             continue
         fi
         echo "unaccept($x,$y)." >> $factFile
+        echo "unaccept($x,$y)." >> $circ2dlpIn
         j=$(($j + 1))
     done
     cat $priFactTail >> $factFile
 done
 
-rm $tmpFile $priTmpFile
+rm $tmpFile
 
 exit 0
 

@@ -1,0 +1,16 @@
+claspD version 1.1.4. Reading...done
+Answer: 1
+pair(20,10) pair(19,4) pair(18,1) pair(17,8) pair(16,6) pair(15,2) pair(14,9) pair(13,5) pair(12,7) pair(11,3) pair(10,20) pair(9,14) pair(8,17) pair(7,12) pair(6,16) pair(5,13) pair(4,19) pair(3,11) pair(2,15) pair(1,18) 
+Answer: 2
+pair(20,10) pair(19,8) pair(18,1) pair(17,4) pair(16,6) pair(15,2) pair(14,9) pair(13,5) pair(12,7) pair(11,3) pair(10,20) pair(9,14) pair(8,19) pair(7,12) pair(6,16) pair(5,13) pair(4,17) pair(3,11) pair(2,15) pair(1,18) 
+Answer: 3
+pair(20,10) pair(19,9) pair(18,1) pair(17,8) pair(16,6) pair(15,2) pair(14,4) pair(13,5) pair(12,7) pair(11,3) pair(10,20) pair(9,19) pair(8,17) pair(7,12) pair(6,16) pair(5,13) pair(4,14) pair(3,11) pair(2,15) pair(1,18) 
+Answer: 4
+pair(20,2) pair(19,9) pair(18,1) pair(17,8) pair(16,6) pair(15,10) pair(14,4) pair(13,5) pair(12,7) pair(11,3) pair(10,15) pair(9,19) pair(8,17) pair(7,12) pair(6,16) pair(5,13) pair(4,14) pair(3,11) pair(2,20) pair(1,18) 
+Answer: 5
+pair(20,2) pair(19,8) pair(18,1) pair(17,4) pair(16,6) pair(15,10) pair(14,9) pair(13,5) pair(12,7) pair(11,3) pair(10,15) pair(9,14) pair(8,19) pair(7,12) pair(6,16) pair(5,13) pair(4,17) pair(3,11) pair(2,20) pair(1,18) 
+Answer: 6
+pair(20,2) pair(19,4) pair(18,1) pair(17,8) pair(16,6) pair(15,10) pair(14,9) pair(13,5) pair(12,7) pair(11,3) pair(10,15) pair(9,14) pair(8,17) pair(7,12) pair(6,16) pair(5,13) pair(4,19) pair(3,11) pair(2,20) pair(1,18) 
+
+Models     : 6     
+Time        : 40.840 (Parsing: 10.580)

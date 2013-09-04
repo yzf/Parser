@@ -1,5 +1,5 @@
-[?X][?Y](p(X,Y)).
+(pair(X,Y_1)&like(X,R_1,Y_1))|(pair(X,Y_1)&like(X,R_2,Y_1))|(pair(X,Y_1)&like(X,R_3,Y_1))|(pair(X,Y_2)&like(X,R_1,Y_2))|(pair(X,Y_2)&like(X,R_2,Y_2))|(pair(X,Y_2)&like(X,R_3,Y_2))|(pair(X,Y_3)&like(X,R_1,Y_3))|(pair(X,Y_3)&like(X,R_2,Y_3))|(pair(X,Y_3)&like(X,R_3,Y_3))|(pair(X,Y_4)&like(X,R_1,Y_4))|(pair(X,Y_4)&like(X,R_2,Y_4))|(pair(X,Y_4)&like(X,R_3,Y_4))|(pair(X,Y_5)&like(X,R_1,Y_5))|(pair(X,Y_5)&like(X,R_2,Y_5))|(pair(X,Y_5)&like(X,R_3,Y_5))|(pair(X,Y_6)&like(X,R_1,Y_6))|(pair(X,Y_6)&like(X,R_2,Y_6))|(pair(X,Y_6)&like(X,R_3,Y_6)).
 
-{p;}
+{pair;}
 
 <X@i;Y@i>
