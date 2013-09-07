@@ -18,11 +18,6 @@ ssex((size / 2 + 1).. size, (size / 2 + 1).. size).
 pair(X,Y) :- pair(Y,X).
 :- ssex(X,Y), pair(X,Y).
 
-pair(X,1)|pair(X,2).
-like(X,1,1)|pair(X,2).
-pair(X,1)|like(X,1,2).
-like(X,1,1)|like(X,1,2).
-
 :- pair(X,Y), pair(X,Y_1), Y != Y_1.
 block(X,Y) | pair(X,Y) :- pair(X,Z_1), pair(Y,Z_2), prefer(X,Y,Z_1), prefer(Y,X,Z_2).
 hate_1(X) :- pair(X,Y), like(X,R,Y), R > size_2_3.

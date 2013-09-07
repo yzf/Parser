@@ -1,18 +1,6 @@
 #!/bin/bash
 # 生成benchmark文件
 
-function randomize() {
-    l=${#like[@]}
-    for count in `seq $(($l / 2))`
-    do
-        first=$(($RANDOM % $l))
-        second=$(($RANDOM % $l))
-        tmp=${like[$first]}
-        like[$first]=${like[$second]}
-        like[$second]=$tmp
-    done
-}
-
 function generateFact() {
     subjects=$1
     objects=$2
@@ -23,15 +11,17 @@ function generateFact() {
         tmpRank=""
         for j in $objects
         do
-                tmpLike="$tmpLike$j "
+                tmpLike="$tmpLike$j\n"
                 tmpRank="$tmpRank$r "
             if [ $(($RANDOM % 4)) -gt 0 ]
                 then
                     r=$(($r + 1))
             fi
         done
+        # 打乱循序
+        tmpLike=`echo -e "$tmpLike" | sort -R | sed "/^$/d"`
+
         like=($tmpLike)
-        randomize
         rank=($tmpRank)
         len=$((${#like[@]} - 1))
         for j in `seq 0 $len`
@@ -50,7 +40,6 @@ function generateFact() {
         done
     done
 }
-
 # 主程序
 if [ $# != 1  ]
 then
@@ -81,17 +70,10 @@ do
     echo "#const size = $(($i * 2))." > $circ2dlpIn
     cat $priFactBody >> $factFile
     cat $circ2dlpBody >> $circ2dlpIn
-    # circ2dlp 的存在量词
-    for y in `seq $(($i * 2))`
-    do
-        for p in `seq $i`
-        do
-            echo
-        done
-    done
-    # 男生的喜好
+
     men=`seq $i`
     women=`seq $(($i + 1)) $(($i * 2))`
+    # 男生的喜好
     generateFact "$men" "$women" > $tmpFile
     cat $tmpFile >> $factFile
     cat $tmpFile >> $circ2dlpIn
