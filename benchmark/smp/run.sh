@@ -48,7 +48,7 @@ do
         break
     fi
     # 运行完
-    if [ "`ps -ef | awk '{print $2}' | grep $!`" != "$!" ]
+    if [ "`ps | awk '{print $1}' | grep $!`" != "$!" ]
     then
         tail -n 2 $result
         echo -e "To see more Models' detail, please look the files in folder 'result' !!!!!!\n"
