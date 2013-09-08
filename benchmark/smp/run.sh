@@ -40,7 +40,7 @@ do
     if [ $execTime -gt $maxTime ]
     then
         echo "It has taken more than $maxTime seconds !!!!!!"
-        kill -9 $!
+        kill $!
         sleep 1
         rm $result
         echo "It has taken more than $maxTime seconds !!!!!!" > $result
