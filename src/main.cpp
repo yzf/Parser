@@ -44,8 +44,29 @@ void io(const char* iPathName, const char* oPathName) {
 
 int main(int argc, char** argv) {
     
+    const char* inputFileName = "res/input/sample.in";
+    const char* outputFileName = "res/output/sample.out";
+    
+    int n = 2;
+    FILE* in = fopen(inputFileName, "w+");
+    for (int y = 1; y <= 2*n; ++ y) {
+        for (int r = 1; r <= n; ++ r) {
+            fprintf(in, "(pair(X,%d)&like(X,%d,%d))", y, r, y);
+            if (r != n) {
+                fprintf(in, "|");
+            }
+        }
+        if (y != 2*n) {
+            fprintf(in, "|");
+        }
+    }
+    fprintf(in, ".\n\n");
+    fprintf(in, "{pair;like}\n\n");
+    fprintf(in, "<X@i;Y@i>\n");
+    fclose(in);
+    
     if(argc < 3) {
-        io("res/input/sample.in","res/output/sample.out");
+        io(inputFileName, outputFileName);
     }
     else {
         io(argv[1], argv[2]);
@@ -55,17 +76,10 @@ int main(int argc, char** argv) {
     fclose(yyin);
     
     Formula f = Formula(gformula, true);
-    PriCircTranslator* pct = new PriCircTranslator();
-    Formulas* fmls = pct->convert(f);
-    SMTranslator::instance().init(*fmls);
-    SMTranslator::instance().convert();
-    SMTranslator::instance().outputHengZhangFormulas(stdout);
-    SMTranslator::instance().outputCabalarFormulas(stdout);
-    SMTranslator::instance().outputFinalResult(fout);
-    SMTranslator::instance().destroy();
+    f.convertToCNF();
+    Formulas* fmls = f.divideFormula();
+    fmls->output(fout);
     delete fmls;
-    delete pct;
-
     fclose(fout);
     Vocabulary::instance().dumpVocabulary(stdout);
     

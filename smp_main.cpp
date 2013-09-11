@@ -47,21 +47,21 @@ int main(int argc, char** argv) {
     const char* inputFileName = "res/input/sample.in";
     const char* outputFileName = "res/output/sample.out";
     
-    int n = 2;
+    int n = 1;
     FILE* in = fopen(inputFileName, "w+");
-    for (int x = 1; x <= n; ++ x) {
-        for (int y = 1; y <= n; ++ y) {
-            fprintf(in, "(p(X_%d,Y_%d)&q(Y_%d))", x, y, y);
-            if (y != n) {
+    for (int y = 1; y <= 2*n; ++ y) {
+        for (int r = 1; r <= n; ++ r) {
+            fprintf(in, "(pair(X,%d)&like(X,%d,%d))", y, r, y);
+            if (r != n) {
                 fprintf(in, "|");
             }
         }
-        if (x != n) {
+        if (y != 2*n) {
             fprintf(in, "|");
         }
     }
     fprintf(in, ".\n\n");
-    fprintf(in, "{p;q}\n\n");
+    fprintf(in, "{pair;like}\n\n");
     fprintf(in, "<X@i;Y@i>\n");
     fclose(in);
     

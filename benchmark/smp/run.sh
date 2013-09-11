@@ -2,7 +2,7 @@
 
 priCircInputFile="pri_input/benchmark.in"
 priCircFactFile="pri_fact/benchmark_$1.fact"
-
+circ2dlpInputFile="circ2dlp_input/benchmark_$1.lp"
 tmpFile=".tmp"
 result="result/result_$1"
 sleepDelay=1
@@ -26,7 +26,7 @@ else
     title="circ2dlp"
     result=${result}_circ2dlp
     gringo $circ2dlpInputFile > $tmpFile
-    { circ2dlp $tmpFile -m "abx* : abo* : aba*" -v "ina* inb* out*" | claspD 0 > $result;  } &
+    { circ2dlp $tmpFile -m "hate_1* : hate_2*" -v "pair*" | claspD 0 > $result;  } &
 fi
 
 echo "Running $title ......"
