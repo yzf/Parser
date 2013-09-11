@@ -7,15 +7,14 @@ function generateFact() {
     for person in $subjects
     do
         r=1
-        tmpLike=""
-        tmpRank=""
+        tmpLike="" tmpRank=""
         for j in $objects
         do
                 tmpLike="$tmpLike$j\n"
                 tmpRank="$tmpRank$r "
-            if [ $(($RANDOM % 4)) -gt 0 ]
-                then
-                    r=$(($r + 1))
+            if [ $((RANDOM % 4)) -gt 0 ]
+            then
+                r=$((r + 1))
             fi
         done
         # 打乱循序
@@ -57,7 +56,6 @@ circ2dlpBody="resource/circ2dlp_body"
 tmpFile=".tmp"
 
 touch $tmpFile
-
 cat $priIn > $priInputFile
 
 for i in `seq $1`
@@ -66,13 +64,37 @@ do
     factFile="${priBenchmarkFactFilePrefix}${i}.fact"
     circ2dlpIn="${circ2dlpBenchmarkFilePrefix}${i}.lp"
 
-    echo "#const size = $(($i * 2))." > $factFile
-    echo "#const size = $(($i * 2))." > $circ2dlpIn
+    echo "#const size = $((i * 2))." > $factFile
+    echo "#const size = $((i * 2))." > $circ2dlpIn
     cat $priFactBody >> $factFile
     cat $circ2dlpBody >> $circ2dlpIn
 
+    echo > $tmpFile
+    for x in `seq $((i * 2))`
+    do
+        r_cnt=0
+        for y in `seq $((i * 2))`
+        do
+            for r in `seq $i`
+            do
+                r_cnt=$((r_cnt + 1))
+                echo "pair($x,$y) :- r_${x}_$r_cnt." >> $tmpFile
+                echo "like($x,$r,$y) :- r_${x}_$r_cnt." >> $tmpFile
+                echo "r_${x}_$r_cnt :- pair($x,$y), like($x,$r,$y)." >> $tmpFile
+            done
+        done
+        for j in `seq $r_cnt`
+        do
+            echo -n "r_${x}_$j | " >> $tmpFile
+        done
+        echo >> $tmpFile
+    done
+    sed -i "s/ | $/.\n/" $tmpFile
+    cat $tmpFile >> $circ2dlpIn
+    echo -e ":- like(X,R,Y), ssex(X,Y).\n" >> $circ2dlpIn
+
     men=`seq $i`
-    women=`seq $(($i + 1)) $(($i * 2))`
+    women=`seq $((i + 1)) $((i * 2))`
     # 男生的喜好
     generateFact "$men" "$women" > $tmpFile
     cat $tmpFile >> $factFile
@@ -85,15 +107,15 @@ do
     unacceptCount=$(($i*$i*5/100))
     for ((j=1;j<=$unacceptCount;))
     do
-        x=$(($RANDOM % $i + 1))
-        y=$(($RANDOM % $i + 1 + $i))
+        x=$((RANDOM % i + 1))
+        y=$((RANDOM % i + 1 + i))
         if [ $x -eq $y ]
         then
             continue
         fi
         echo "unaccept($x,$y)." >> $factFile
         echo "unaccept($x,$y)." >> $circ2dlpIn
-        j=$(($j + 1))
+        j=$((j + 1))
     done
     cat $priFactTail >> $factFile
 done

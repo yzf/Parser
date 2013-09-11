@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
     const char* inputFileName = "res/input/sample.in";
     const char* outputFileName = "res/output/sample.out";
     
-    int n = 2;
+    int n = 1;
     FILE* in = fopen(inputFileName, "w+");
     for (int y = 1; y <= 2*n; ++ y) {
         for (int r = 1; r <= n; ++ r) {

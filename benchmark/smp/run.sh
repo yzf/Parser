@@ -25,8 +25,16 @@ then
 else
     title="circ2dlp"
     result=${result}_circ2dlp
+    vary=""
+    for x in `seq $((2*$1))`
+    do
+        for y in `seq $((2*$1**2))`
+        do
+            vary="$vary r_${x}_$y*"
+        done
+    done
     gringo $circ2dlpInputFile > $tmpFile
-    { circ2dlp $tmpFile -m "hate_1* : hate_2*" -v "pair*" | claspD 0 > $result;  } &
+    { circ2dlp $tmpFile -m "hate_1* : hate_2*" -v "pair* $vary" | claspD 0 > $result;  } &
 fi
 
 echo "Running $title ......"

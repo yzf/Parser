@@ -8,7 +8,7 @@
 #domain rank(R).
 
 person(1..size).
-rank(1..size).
+rank(1..(size / 2)).
 
 ssex(1..(size / 2),1..(size / 2)).
 ssex((size / 2 + 1).. size, (size / 2 + 1).. size).
