@@ -47,6 +47,7 @@ public:
     void removeImpl();
     Formulas* divideFormula() const;
     void convertToCNF();
+    void convertToSt();
 };
 
 

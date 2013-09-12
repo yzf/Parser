@@ -143,3 +143,7 @@ Formulas* Formula::divideFormula() const{
 void Formula::convertToCNF() {
     m_pFormula = Utils::convertDNFtoCNF(m_pFormula);
 }
+
+void Formula::convertToSt() {
+    m_pFormula = Utils::convertToSt(m_pFormula);
+}

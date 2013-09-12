@@ -201,3 +201,10 @@ void Formulas::removeImpl() {
         it->removeImpl();
     }
 }
+void Formulas::convertToSt() {
+    for (FORMULAS_ITERATOR it = m_dequeFormulas.begin(); 
+            it != m_dequeFormulas.end(); ++ it) {
+        it->convertToSt();
+
+    }
+}

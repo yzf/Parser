@@ -1079,3 +1079,58 @@ _formula* Utils::convertDNFtoCNF(_formula* _fml) {
     }
     return _fml;
 }
+/**
+ * stable语义的转换
+ * @param _fml
+ * @return 
+ */
+_formula* Utils::convertToSt(_formula* _fml) {
+    assert(_fml);
+    switch (_fml->formula_type) {
+        case ATOM:
+            //　内涵谓词
+            if (Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
+                const char* preName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
+                char name[64];
+                sprintf(name, "%s_st", preName);
+                int id = Vocabulary::instance().addSymbol(name, PREDICATE, 
+                                Vocabulary::instance().getPredicateArity(_fml->predicate_id));
+                _fml->predicate_id = id;
+            }
+            //　非内涵谓词，不用处理
+            break;
+        case CONJ:
+        case DISJ:
+            _fml->subformula_l = convertToSt(_fml->subformula_l);
+            _fml->subformula_r = convertToSt(_fml->subformula_r);
+            break;
+        case IMPL:
+        {
+            _formula* cur_l = copyFormula(_fml->subformula_l);
+            _formula* cur_r = copyFormula(_fml->subformula_r);
+            _formula* cur = copyFormula(_fml);
+            _fml->formula_type = CONJ;
+            _fml->subformula_l = cur;
+            _fml->subformula_r->formula_type = IMPL;
+            _fml->subformula_r->subformula_l = convertToSt(cur_l);
+            _fml->subformula_r->subformula_r = convertToSt(cur_r);
+        }
+            break;
+        case NEGA:
+        {
+            _formula* cur = copyFormula(_fml);
+            _formula* cur_l = copyFormula(_fml->subformula_l);
+            _fml->formula_type = CONJ;
+            _fml->subformula_l = compositeByConnective(NEGA, convertToSt(cur_l));
+            _fml->subformula_r = cur;
+        }   
+            break;
+        case EXIS:
+        case UNIV:
+            _fml->subformula_l = convertToSt(_fml->subformula_l);
+            break;
+        default:
+            assert(0);
+    }
+    return _fml;
+}

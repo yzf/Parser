@@ -117,7 +117,7 @@ public:
     int generateDomainMIN(const char* _domain);
     int generateDomainMAX(const char* _domain);
     int generateNewVariable(int _oriVariId);
- 
+
     void increaseMininalPredicatePriority();
     int addConstant(int _nNum);
 };
