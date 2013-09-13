@@ -1,0 +1,16 @@
+~block(X,Y).
+[!X][!Y]((pair(X,Y) -> pair(Y,X)) & (pair(Y,X) -> pair(X,Y))).
+ ssex(X,Y) -> (~pair(X,Y)).
+[?Y][?R](pair(X,Y) & like(X,R,Y)).
+(~eq(Y,Y_1)) -> (~(pair(X,Y) & pair(X,Y_1))).
+(pair(X,Z_1) & pair(Y,Z_2) & (~pair(X,Y)) & prefer(X,Y,Z_1) & prefer(Y,X,Z_2)) -> block(X,Y).
+(pair(X,Y) & like(X,R,Y) & gt_2(R)) -> hate_1(X).
+(pair(X,Y) & like(X,R,Y) & bt_1_2(R)) -> hate_2(X).
+unaccept(X,Y) & pair(X,Y) -> block(X,Y).
+
+{hate_1>hate_2;pair}
+
+<X@person;
+Y@person;Y_1@person;
+Z_1@person;Z_2@person;
+R@rank>

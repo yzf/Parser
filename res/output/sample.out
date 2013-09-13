@@ -1,470 +1,107 @@
 %MIN and MAX domain
-#domain min_adder(MIN_adder).
-#domain max_adder(MAX_adder).
-#domain min_gate(MIN_gate).
-#domain max_gate(MAX_gate).
+#domain min_i(MIN_i).
+#domain max_i(MAX_i).
+#domain min_e(MIN_e).
+#domain max_e(MAX_e).
 
 %Variable domain
-#domain adder(I).
-#domain gate(X).
-#domain const_1(CONST_1).
-const_1(1).
-#domain const_2(CONST_2).
-const_2(2).
-#domain const_4(CONST_4).
-const_4(4).
-#domain const_5(CONST_5).
-const_5(5).
-#domain const_3(CONST_3).
-const_3(3).
-#domain adder(J).
-#domain adder(NV_0).
-#domain gate(NV_1).
-#domain adder(NV_2).
-#domain gate(NV_3).
-#domain adder(NV_4).
-#domain gate(NV_5).
+#domain i(X).
+#domain e(Y).
+#domain i(Z).
+#domain i(NV_0).
+#domain i(NV_1).
 
 %Nega nega predicate define
-_inb_0_vary(I,X):- not inb_0_vary(I,X).
-_ina_0_vary(I,X):- not ina_0_vary(I,X).
-_inb_1_vary(I,X):- not inb_1_vary(I,X).
-_ina_1_vary(I,X):- not ina_1_vary(I,X).
-_inb_2_vary(I,X):- not inb_2_vary(I,X).
-_ina_2_vary(I,X):- not ina_2_vary(I,X).
-_out_0_vary(I,X):- not out_0_vary(I,X).
-_out_1_vary(I,X):- not out_1_vary(I,X).
-_out_2_vary(I,X):- not out_2_vary(I,X).
-_abo(I,X):- not abo(I,X).
+_cvr(Z):- not cvr(Z).
+_t_0(X,Y,Z):- not t_0(X,Y,Z).
 _r_0:- not r_0.
-_t_0(I,X):- not t_0(I,X).
-_abx(I,X):- not abx(I,X).
-_r_1:- not r_1.
-_t_1(I,X):- not t_1(I,X).
-_aba(I,X):- not aba(I,X).
-_r_2:- not r_2.
-_t_2(I,X):- not t_2(I,X).
+_t_1(Z):- not t_1(Z).
 
 %Extension predicate define
-_and(I,X):- not and(I,X).
-_ina(I,X):- not ina(I,X).
-_inb(I,X):- not inb(I,X).
-_out(I,X):- not out(I,X).
-_or(I,X):- not or(I,X).
-_xor(I,X):- not xor(I,X).
-_succ_adder(I,J):- not succ_adder(I,J).
-_succ_adder_gate(I,X,NV_0,NV_1):- not succ_adder_gate(I,X,NV_0,NV_1).
-_max_adder(I):- not max_adder(I).
-_max_gate(X):- not max_gate(X).
+_set(X,Y):- not set(X,Y).
+_succ_i(Z,NV_0):- not succ_i(Z,NV_0).
+_max_i(Z):- not max_i(Z).
 
 %Succ predicate definition
-succ_adder_gate(A,B1,A,B2):- succ_gate(B1,B2), adder(A), gate(B1), gate(B2).
-succ_adder_gate(A1,MAX_gate,A2,MIN_gate):- succ_adder(A1,A2), adder(A1), adder(A2).
-succ_gate(A1,A2):- A1==A2-1, gate(A1), gate(A2).
-succ_adder(A1,A2):- A1==A2-1, adder(A1), adder(A2).
+succ_i(A1,A2):- A1==A2-1, i(A1), i(A2).
 
-:- not aba(I,X), and(I,X), ina(I,X), inb(I,X), not out(I,X).
-r_0 | out_0_vary(I,X) | r_0 | aba_0_vary(I,X):- inb_0_vary(I,X), ina_0_vary(I,X), and(I,X).
-out_0_vary(I,X) | r_0 | aba_0_vary(I,X):- not r_0, ina_0_vary(I,X), not _inb_0_vary(I,X), and(I,X).
-r_0 | out_0_vary(I,X) | aba_0_vary(I,X):- inb_0_vary(I,X), not r_0, and(I,X), not _ina_0_vary(I,X).
-out_0_vary(I,X) | aba_0_vary(I,X):- not r_0, not r_0, not _inb_0_vary(I,X), and(I,X), not _ina_0_vary(I,X).
-r_1 | out_1_vary(I,X) | r_1 | aba_1_vary(I,X):- inb_1_vary(I,X), ina_1_vary(I,X), and(I,X).
-out_1_vary(I,X) | r_1 | aba_1_vary(I,X):- not r_1, ina_1_vary(I,X), not _inb_1_vary(I,X), and(I,X).
-r_1 | out_1_vary(I,X) | aba_1_vary(I,X):- inb_1_vary(I,X), not r_1, and(I,X), not _ina_1_vary(I,X).
-out_1_vary(I,X) | aba_1_vary(I,X):- not r_1, not r_1, not _inb_1_vary(I,X), and(I,X), not _ina_1_vary(I,X).
-r_2 | out_2_vary(I,X) | r_2 | aba(I,X):- inb_2_vary(I,X), ina_2_vary(I,X), and(I,X).
-out_2_vary(I,X) | r_2 | aba(I,X):- not r_2, ina_2_vary(I,X), not _inb_2_vary(I,X), and(I,X).
-r_2 | out_2_vary(I,X) | aba(I,X):- inb_2_vary(I,X), not r_2, and(I,X), not _ina_2_vary(I,X).
-out_2_vary(I,X) | aba(I,X):- not r_2, not r_2, not _inb_2_vary(I,X), and(I,X), not _ina_2_vary(I,X).
-:- not aba(I,X), and(I,X), ina(I,X), not inb(I,X), out(I,X).
-r_0 | r_0 | inb_0_vary(I,X) | aba_0_vary(I,X):- out_0_vary(I,X), ina_0_vary(I,X), and(I,X).
-r_0 | inb_0_vary(I,X) | aba_0_vary(I,X):- not r_0, ina_0_vary(I,X), not _out_0_vary(I,X), and(I,X).
-r_0 | inb_0_vary(I,X) | aba_0_vary(I,X):- out_0_vary(I,X), not r_0, and(I,X), not _ina_0_vary(I,X).
-inb_0_vary(I,X) | aba_0_vary(I,X):- not r_0, not r_0, not _out_0_vary(I,X), and(I,X), not _ina_0_vary(I,X).
-r_1 | r_1 | inb_1_vary(I,X) | aba_1_vary(I,X):- out_1_vary(I,X), ina_1_vary(I,X), and(I,X).
-r_1 | inb_1_vary(I,X) | aba_1_vary(I,X):- not r_1, ina_1_vary(I,X), not _out_1_vary(I,X), and(I,X).
-r_1 | inb_1_vary(I,X) | aba_1_vary(I,X):- out_1_vary(I,X), not r_1, and(I,X), not _ina_1_vary(I,X).
-inb_1_vary(I,X) | aba_1_vary(I,X):- not r_1, not r_1, not _out_1_vary(I,X), and(I,X), not _ina_1_vary(I,X).
-r_2 | r_2 | inb_2_vary(I,X) | aba(I,X):- out_2_vary(I,X), ina_2_vary(I,X), and(I,X).
-r_2 | inb_2_vary(I,X) | aba(I,X):- not r_2, ina_2_vary(I,X), not _out_2_vary(I,X), and(I,X).
-r_2 | inb_2_vary(I,X) | aba(I,X):- out_2_vary(I,X), not r_2, and(I,X), not _ina_2_vary(I,X).
-inb_2_vary(I,X) | aba(I,X):- not r_2, not r_2, not _out_2_vary(I,X), and(I,X), not _ina_2_vary(I,X).
-:- not aba(I,X), and(I,X), not ina(I,X), inb(I,X), out(I,X).
-r_0 | ina_0_vary(I,X) | r_0 | aba_0_vary(I,X):- out_0_vary(I,X), inb_0_vary(I,X), and(I,X).
-ina_0_vary(I,X) | r_0 | aba_0_vary(I,X):- not r_0, inb_0_vary(I,X), not _out_0_vary(I,X), and(I,X).
-r_0 | ina_0_vary(I,X) | aba_0_vary(I,X):- out_0_vary(I,X), not r_0, and(I,X), not _inb_0_vary(I,X).
-ina_0_vary(I,X) | aba_0_vary(I,X):- not r_0, not r_0, not _out_0_vary(I,X), and(I,X), not _inb_0_vary(I,X).
-r_1 | ina_1_vary(I,X) | r_1 | aba_1_vary(I,X):- out_1_vary(I,X), inb_1_vary(I,X), and(I,X).
-ina_1_vary(I,X) | r_1 | aba_1_vary(I,X):- not r_1, inb_1_vary(I,X), not _out_1_vary(I,X), and(I,X).
-r_1 | ina_1_vary(I,X) | aba_1_vary(I,X):- out_1_vary(I,X), not r_1, and(I,X), not _inb_1_vary(I,X).
-ina_1_vary(I,X) | aba_1_vary(I,X):- not r_1, not r_1, not _out_1_vary(I,X), and(I,X), not _inb_1_vary(I,X).
-r_2 | ina_2_vary(I,X) | r_2 | aba(I,X):- out_2_vary(I,X), inb_2_vary(I,X), and(I,X).
-ina_2_vary(I,X) | r_2 | aba(I,X):- not r_2, inb_2_vary(I,X), not _out_2_vary(I,X), and(I,X).
-r_2 | ina_2_vary(I,X) | aba(I,X):- out_2_vary(I,X), not r_2, and(I,X), not _inb_2_vary(I,X).
-ina_2_vary(I,X) | aba(I,X):- not r_2, not r_2, not _out_2_vary(I,X), and(I,X), not _inb_2_vary(I,X).
-:- not aba(I,X), and(I,X), not ina(I,X), not inb(I,X), out(I,X).
-r_0 | ina_0_vary(I,X) | inb_0_vary(I,X) | aba_0_vary(I,X):- out_0_vary(I,X), and(I,X).
-ina_0_vary(I,X) | inb_0_vary(I,X) | aba_0_vary(I,X):- not r_0, not _out_0_vary(I,X), and(I,X).
-r_1 | ina_1_vary(I,X) | inb_1_vary(I,X) | aba_1_vary(I,X):- out_1_vary(I,X), and(I,X).
-ina_1_vary(I,X) | inb_1_vary(I,X) | aba_1_vary(I,X):- not r_1, not _out_1_vary(I,X), and(I,X).
-r_2 | ina_2_vary(I,X) | inb_2_vary(I,X) | aba(I,X):- out_2_vary(I,X), and(I,X).
-ina_2_vary(I,X) | inb_2_vary(I,X) | aba(I,X):- not r_2, not _out_2_vary(I,X), and(I,X).
-:- not abo(I,X), or(I,X), ina(I,X), inb(I,X), not out(I,X).
-r_0 | out_0_vary(I,X) | r_0 | abo(I,X):- inb_0_vary(I,X), ina_0_vary(I,X), or(I,X).
-out_0_vary(I,X) | r_0 | abo(I,X):- not r_0, ina_0_vary(I,X), not _inb_0_vary(I,X), or(I,X).
-r_0 | out_0_vary(I,X) | abo(I,X):- inb_0_vary(I,X), not r_0, or(I,X), not _ina_0_vary(I,X).
-out_0_vary(I,X) | abo(I,X):- not r_0, not r_0, not _inb_0_vary(I,X), or(I,X), not _ina_0_vary(I,X).
-out_1_vary(I,X) | r_1 | r_1:- not abo(I,X), inb_1_vary(I,X), ina_1_vary(I,X), or(I,X).
-out_1_vary(I,X) | r_1:- not abo(I,X), not r_1, ina_1_vary(I,X), or(I,X), not _inb_1_vary(I,X).
-out_1_vary(I,X) | r_1:- not abo(I,X), inb_1_vary(I,X), not r_1, or(I,X), not _ina_1_vary(I,X).
-out_1_vary(I,X):- not abo(I,X), not r_1, not r_1, or(I,X), not _ina_1_vary(I,X), not _inb_1_vary(I,X).
-out_2_vary(I,X) | r_2 | r_2:- not abo(I,X), inb_2_vary(I,X), ina_2_vary(I,X), or(I,X).
-out_2_vary(I,X) | r_2:- not abo(I,X), not r_2, ina_2_vary(I,X), or(I,X), not _inb_2_vary(I,X).
-out_2_vary(I,X) | r_2:- not abo(I,X), inb_2_vary(I,X), not r_2, or(I,X), not _ina_2_vary(I,X).
-out_2_vary(I,X):- not abo(I,X), not r_2, not r_2, or(I,X), not _ina_2_vary(I,X), not _inb_2_vary(I,X).
-:- not abo(I,X), or(I,X), ina(I,X), not inb(I,X), not out(I,X).
-r_0 | out_0_vary(I,X) | inb_0_vary(I,X) | abo(I,X):- ina_0_vary(I,X), or(I,X).
-out_0_vary(I,X) | inb_0_vary(I,X) | abo(I,X):- not r_0, not _ina_0_vary(I,X), or(I,X).
-out_1_vary(I,X) | inb_1_vary(I,X) | r_1:- not abo(I,X), ina_1_vary(I,X), or(I,X).
-out_1_vary(I,X) | inb_1_vary(I,X):- not abo(I,X), not r_1, or(I,X), not _ina_1_vary(I,X).
-out_2_vary(I,X) | inb_2_vary(I,X) | r_2:- not abo(I,X), ina_2_vary(I,X), or(I,X).
-out_2_vary(I,X) | inb_2_vary(I,X):- not abo(I,X), not r_2, or(I,X), not _ina_2_vary(I,X).
-:- not abo(I,X), or(I,X), not ina(I,X), inb(I,X), not out(I,X).
-r_0 | ina_0_vary(I,X) | out_0_vary(I,X) | abo(I,X):- inb_0_vary(I,X), or(I,X).
-ina_0_vary(I,X) | out_0_vary(I,X) | abo(I,X):- not r_0, not _inb_0_vary(I,X), or(I,X).
-ina_1_vary(I,X) | out_1_vary(I,X) | r_1:- not abo(I,X), inb_1_vary(I,X), or(I,X).
-ina_1_vary(I,X) | out_1_vary(I,X):- not abo(I,X), not r_1, or(I,X), not _inb_1_vary(I,X).
-ina_2_vary(I,X) | out_2_vary(I,X) | r_2:- not abo(I,X), inb_2_vary(I,X), or(I,X).
-ina_2_vary(I,X) | out_2_vary(I,X):- not abo(I,X), not r_2, or(I,X), not _inb_2_vary(I,X).
-:- not abo(I,X), or(I,X), not ina(I,X), not inb(I,X), out(I,X).
-r_0 | ina_0_vary(I,X) | inb_0_vary(I,X) | abo(I,X):- out_0_vary(I,X), or(I,X).
-ina_0_vary(I,X) | inb_0_vary(I,X) | abo(I,X):- not r_0, not _out_0_vary(I,X), or(I,X).
-r_1 | ina_1_vary(I,X) | inb_1_vary(I,X):- out_1_vary(I,X), not abo(I,X), or(I,X).
-ina_1_vary(I,X) | inb_1_vary(I,X):- not r_1, not abo(I,X), not _out_1_vary(I,X), or(I,X).
-r_2 | ina_2_vary(I,X) | inb_2_vary(I,X):- out_2_vary(I,X), not abo(I,X), or(I,X).
-ina_2_vary(I,X) | inb_2_vary(I,X):- not r_2, not abo(I,X), not _out_2_vary(I,X), or(I,X).
-:- not abx(I,X), xor(I,X), ina(I,X), inb(I,X), out(I,X).
-r_0 | r_0 | r_0 | abx_0_vary(I,X):- inb_0_vary(I,X), out_0_vary(I,X), ina_0_vary(I,X), xor(I,X).
-r_0 | r_0 | abx_0_vary(I,X):- not r_0, out_0_vary(I,X), ina_0_vary(I,X), not _inb_0_vary(I,X), xor(I,X).
-r_0 | r_0 | abx_0_vary(I,X):- inb_0_vary(I,X), not r_0, ina_0_vary(I,X), xor(I,X), not _out_0_vary(I,X).
-r_0 | abx_0_vary(I,X):- not r_0, not r_0, ina_0_vary(I,X), not _inb_0_vary(I,X), xor(I,X), not _out_0_vary(I,X).
-r_0 | r_0 | abx_0_vary(I,X):- inb_0_vary(I,X), out_0_vary(I,X), not r_0, xor(I,X), not _ina_0_vary(I,X).
-r_0 | abx_0_vary(I,X):- not r_0, out_0_vary(I,X), not r_0, not _inb_0_vary(I,X), xor(I,X), not _ina_0_vary(I,X).
-r_0 | abx_0_vary(I,X):- inb_0_vary(I,X), not r_0, not r_0, xor(I,X), not _ina_0_vary(I,X), not _out_0_vary(I,X).
-abx_0_vary(I,X):- not r_0, not r_0, not r_0, not _inb_0_vary(I,X), xor(I,X), not _ina_0_vary(I,X), not _out_0_vary(I,X).
-r_1 | r_1 | r_1 | abx(I,X):- inb_1_vary(I,X), out_1_vary(I,X), ina_1_vary(I,X), xor(I,X).
-r_1 | r_1 | abx(I,X):- not r_1, out_1_vary(I,X), ina_1_vary(I,X), not _inb_1_vary(I,X), xor(I,X).
-r_1 | r_1 | abx(I,X):- inb_1_vary(I,X), not r_1, ina_1_vary(I,X), xor(I,X), not _out_1_vary(I,X).
-r_1 | abx(I,X):- not r_1, not r_1, ina_1_vary(I,X), not _inb_1_vary(I,X), xor(I,X), not _out_1_vary(I,X).
-r_1 | r_1 | abx(I,X):- inb_1_vary(I,X), out_1_vary(I,X), not r_1, xor(I,X), not _ina_1_vary(I,X).
-r_1 | abx(I,X):- not r_1, out_1_vary(I,X), not r_1, not _inb_1_vary(I,X), xor(I,X), not _ina_1_vary(I,X).
-r_1 | abx(I,X):- inb_1_vary(I,X), not r_1, not r_1, xor(I,X), not _ina_1_vary(I,X), not _out_1_vary(I,X).
-abx(I,X):- not r_1, not r_1, not r_1, not _inb_1_vary(I,X), xor(I,X), not _ina_1_vary(I,X), not _out_1_vary(I,X).
-r_2 | r_2 | r_2:- not abx(I,X), inb_2_vary(I,X), out_2_vary(I,X), ina_2_vary(I,X), xor(I,X).
-r_2 | r_2:- not abx(I,X), not r_2, out_2_vary(I,X), ina_2_vary(I,X), xor(I,X), not _inb_2_vary(I,X).
-r_2 | r_2:- not abx(I,X), inb_2_vary(I,X), not r_2, ina_2_vary(I,X), xor(I,X), not _out_2_vary(I,X).
-r_2:- not abx(I,X), not r_2, not r_2, ina_2_vary(I,X), xor(I,X), not _out_2_vary(I,X), not _inb_2_vary(I,X).
-r_2 | r_2:- not abx(I,X), inb_2_vary(I,X), out_2_vary(I,X), not r_2, xor(I,X), not _ina_2_vary(I,X).
-r_2:- not abx(I,X), not r_2, out_2_vary(I,X), not r_2, xor(I,X), not _ina_2_vary(I,X), not _inb_2_vary(I,X).
-r_2:- not abx(I,X), inb_2_vary(I,X), not r_2, not r_2, xor(I,X), not _ina_2_vary(I,X), not _out_2_vary(I,X).
-:- not abx(I,X), not r_2, not r_2, not r_2, xor(I,X), not _ina_2_vary(I,X), not _out_2_vary(I,X), not _inb_2_vary(I,X).
-:- not abx(I,X), xor(I,X), ina(I,X), not inb(I,X), not out(I,X).
-r_0 | out_0_vary(I,X) | inb_0_vary(I,X) | abx_0_vary(I,X):- ina_0_vary(I,X), xor(I,X).
-out_0_vary(I,X) | inb_0_vary(I,X) | abx_0_vary(I,X):- not r_0, not _ina_0_vary(I,X), xor(I,X).
-r_1 | out_1_vary(I,X) | inb_1_vary(I,X) | abx(I,X):- ina_1_vary(I,X), xor(I,X).
-out_1_vary(I,X) | inb_1_vary(I,X) | abx(I,X):- not r_1, not _ina_1_vary(I,X), xor(I,X).
-out_2_vary(I,X) | inb_2_vary(I,X) | r_2:- not abx(I,X), ina_2_vary(I,X), xor(I,X).
-out_2_vary(I,X) | inb_2_vary(I,X):- not abx(I,X), not r_2, xor(I,X), not _ina_2_vary(I,X).
-:- not abx(I,X), xor(I,X), not ina(I,X), inb(I,X), not out(I,X).
-r_0 | ina_0_vary(I,X) | out_0_vary(I,X) | abx_0_vary(I,X):- inb_0_vary(I,X), xor(I,X).
-ina_0_vary(I,X) | out_0_vary(I,X) | abx_0_vary(I,X):- not r_0, not _inb_0_vary(I,X), xor(I,X).
-r_1 | ina_1_vary(I,X) | out_1_vary(I,X) | abx(I,X):- inb_1_vary(I,X), xor(I,X).
-ina_1_vary(I,X) | out_1_vary(I,X) | abx(I,X):- not r_1, not _inb_1_vary(I,X), xor(I,X).
-ina_2_vary(I,X) | out_2_vary(I,X) | r_2:- not abx(I,X), inb_2_vary(I,X), xor(I,X).
-ina_2_vary(I,X) | out_2_vary(I,X):- not abx(I,X), not r_2, xor(I,X), not _inb_2_vary(I,X).
-:- not abx(I,X), xor(I,X), not ina(I,X), not inb(I,X), out(I,X).
-r_0 | ina_0_vary(I,X) | inb_0_vary(I,X) | abx_0_vary(I,X):- out_0_vary(I,X), xor(I,X).
-ina_0_vary(I,X) | inb_0_vary(I,X) | abx_0_vary(I,X):- not r_0, not _out_0_vary(I,X), xor(I,X).
-r_1 | ina_1_vary(I,X) | inb_1_vary(I,X) | abx(I,X):- out_1_vary(I,X), xor(I,X).
-ina_1_vary(I,X) | inb_1_vary(I,X) | abx(I,X):- not r_1, not _out_1_vary(I,X), xor(I,X).
-r_2 | ina_2_vary(I,X) | inb_2_vary(I,X):- out_2_vary(I,X), not abx(I,X), xor(I,X).
-ina_2_vary(I,X) | inb_2_vary(I,X):- not r_2, not abx(I,X), not _out_2_vary(I,X), xor(I,X).
-:- out(I,CONST_1), not ina(I,CONST_2).
-r_0 | ina_0_vary(I,CONST_2):- out_0_vary(I,CONST_1).
-ina_0_vary(I,CONST_2):- not r_0, not _out_0_vary(I,CONST_1).
-r_1 | ina_1_vary(I,CONST_2):- out_1_vary(I,CONST_1).
-ina_1_vary(I,CONST_2):- not r_1, not _out_1_vary(I,CONST_1).
-r_2 | ina_2_vary(I,CONST_2):- out_2_vary(I,CONST_1).
-ina_2_vary(I,CONST_2):- not r_2, not _out_2_vary(I,CONST_1).
-:- ina(I,CONST_2), not out(I,CONST_1).
-r_0 | out_0_vary(I,CONST_1):- ina_0_vary(I,CONST_2).
-out_0_vary(I,CONST_1):- not r_0, not _ina_0_vary(I,CONST_2).
-r_1 | out_1_vary(I,CONST_1):- ina_1_vary(I,CONST_2).
-out_1_vary(I,CONST_1):- not r_1, not _ina_1_vary(I,CONST_2).
-r_2 | out_2_vary(I,CONST_1):- ina_2_vary(I,CONST_2).
-out_2_vary(I,CONST_1):- not r_2, not _ina_2_vary(I,CONST_2).
-:- out(I,CONST_1), not ina(I,CONST_4).
-r_0 | ina_0_vary(I,CONST_4):- out_0_vary(I,CONST_1).
-ina_0_vary(I,CONST_4):- not r_0, not _out_0_vary(I,CONST_1).
-r_1 | ina_1_vary(I,CONST_4):- out_1_vary(I,CONST_1).
-ina_1_vary(I,CONST_4):- not r_1, not _out_1_vary(I,CONST_1).
-r_2 | ina_2_vary(I,CONST_4):- out_2_vary(I,CONST_1).
-ina_2_vary(I,CONST_4):- not r_2, not _out_2_vary(I,CONST_1).
-:- ina(I,CONST_4), not out(I,CONST_1).
-r_0 | out_0_vary(I,CONST_1):- ina_0_vary(I,CONST_4).
-out_0_vary(I,CONST_1):- not r_0, not _ina_0_vary(I,CONST_4).
-r_1 | out_1_vary(I,CONST_1):- ina_1_vary(I,CONST_4).
-out_1_vary(I,CONST_1):- not r_1, not _ina_1_vary(I,CONST_4).
-r_2 | out_2_vary(I,CONST_1):- ina_2_vary(I,CONST_4).
-out_2_vary(I,CONST_1):- not r_2, not _ina_2_vary(I,CONST_4).
-:- out(I,CONST_4), not ina(I,CONST_5).
-r_0 | ina_0_vary(I,CONST_5):- out_0_vary(I,CONST_4).
-ina_0_vary(I,CONST_5):- not r_0, not _out_0_vary(I,CONST_4).
-r_1 | ina_1_vary(I,CONST_5):- out_1_vary(I,CONST_4).
-ina_1_vary(I,CONST_5):- not r_1, not _out_1_vary(I,CONST_4).
-r_2 | ina_2_vary(I,CONST_5):- out_2_vary(I,CONST_4).
-ina_2_vary(I,CONST_5):- not r_2, not _out_2_vary(I,CONST_4).
-:- ina(I,CONST_5), not out(I,CONST_4).
-r_0 | out_0_vary(I,CONST_4):- ina_0_vary(I,CONST_5).
-out_0_vary(I,CONST_4):- not r_0, not _ina_0_vary(I,CONST_5).
-r_1 | out_1_vary(I,CONST_4):- ina_1_vary(I,CONST_5).
-out_1_vary(I,CONST_4):- not r_1, not _ina_1_vary(I,CONST_5).
-r_2 | out_2_vary(I,CONST_4):- ina_2_vary(I,CONST_5).
-out_2_vary(I,CONST_4):- not r_2, not _ina_2_vary(I,CONST_5).
-:- inb(I,CONST_4), not inb(I,CONST_2).
-r_0 | inb_0_vary(I,CONST_2):- inb_0_vary(I,CONST_4).
-inb_0_vary(I,CONST_2):- not r_0, not _inb_0_vary(I,CONST_4).
-r_1 | inb_1_vary(I,CONST_2):- inb_1_vary(I,CONST_4).
-inb_1_vary(I,CONST_2):- not r_1, not _inb_1_vary(I,CONST_4).
-r_2 | inb_2_vary(I,CONST_2):- inb_2_vary(I,CONST_4).
-inb_2_vary(I,CONST_2):- not r_2, not _inb_2_vary(I,CONST_4).
-:- inb(I,CONST_2), not inb(I,CONST_4).
-r_0 | inb_0_vary(I,CONST_4):- inb_0_vary(I,CONST_2).
-inb_0_vary(I,CONST_4):- not r_0, not _inb_0_vary(I,CONST_2).
-r_1 | inb_1_vary(I,CONST_4):- inb_1_vary(I,CONST_2).
-inb_1_vary(I,CONST_4):- not r_1, not _inb_1_vary(I,CONST_2).
-r_2 | inb_2_vary(I,CONST_4):- inb_2_vary(I,CONST_2).
-inb_2_vary(I,CONST_4):- not r_2, not _inb_2_vary(I,CONST_2).
-:- ina(I,CONST_1), not ina(I,CONST_3).
-r_0 | ina_0_vary(I,CONST_3):- ina_0_vary(I,CONST_1).
-ina_0_vary(I,CONST_3):- not r_0, not _ina_0_vary(I,CONST_1).
-r_1 | ina_1_vary(I,CONST_3):- ina_1_vary(I,CONST_1).
-ina_1_vary(I,CONST_3):- not r_1, not _ina_1_vary(I,CONST_1).
-r_2 | ina_2_vary(I,CONST_3):- ina_2_vary(I,CONST_1).
-ina_2_vary(I,CONST_3):- not r_2, not _ina_2_vary(I,CONST_1).
-:- ina(I,CONST_3), not ina(I,CONST_1).
-r_0 | ina_0_vary(I,CONST_1):- ina_0_vary(I,CONST_3).
-ina_0_vary(I,CONST_1):- not r_0, not _ina_0_vary(I,CONST_3).
-r_1 | ina_1_vary(I,CONST_1):- ina_1_vary(I,CONST_3).
-ina_1_vary(I,CONST_1):- not r_1, not _ina_1_vary(I,CONST_3).
-r_2 | ina_2_vary(I,CONST_1):- ina_2_vary(I,CONST_3).
-ina_2_vary(I,CONST_1):- not r_2, not _ina_2_vary(I,CONST_3).
-:- inb(I,CONST_1), not inb(I,CONST_3).
-r_0 | inb_0_vary(I,CONST_3):- inb_0_vary(I,CONST_1).
-inb_0_vary(I,CONST_3):- not r_0, not _inb_0_vary(I,CONST_1).
-r_1 | inb_1_vary(I,CONST_3):- inb_1_vary(I,CONST_1).
-inb_1_vary(I,CONST_3):- not r_1, not _inb_1_vary(I,CONST_1).
-r_2 | inb_2_vary(I,CONST_3):- inb_2_vary(I,CONST_1).
-inb_2_vary(I,CONST_3):- not r_2, not _inb_2_vary(I,CONST_1).
-:- inb(I,CONST_3), not inb(I,CONST_1).
-r_0 | inb_0_vary(I,CONST_1):- inb_0_vary(I,CONST_3).
-inb_0_vary(I,CONST_1):- not r_0, not _inb_0_vary(I,CONST_3).
-r_1 | inb_1_vary(I,CONST_1):- inb_1_vary(I,CONST_3).
-inb_1_vary(I,CONST_1):- not r_1, not _inb_1_vary(I,CONST_3).
-r_2 | inb_2_vary(I,CONST_1):- inb_2_vary(I,CONST_3).
-inb_2_vary(I,CONST_1):- not r_2, not _inb_2_vary(I,CONST_3).
-:- out(I,CONST_3), not inb(I,CONST_5).
-r_0 | inb_0_vary(I,CONST_5):- out_0_vary(I,CONST_3).
-inb_0_vary(I,CONST_5):- not r_0, not _out_0_vary(I,CONST_3).
-r_1 | inb_1_vary(I,CONST_5):- out_1_vary(I,CONST_3).
-inb_1_vary(I,CONST_5):- not r_1, not _out_1_vary(I,CONST_3).
-r_2 | inb_2_vary(I,CONST_5):- out_2_vary(I,CONST_3).
-inb_2_vary(I,CONST_5):- not r_2, not _out_2_vary(I,CONST_3).
-:- inb(I,CONST_5), not out(I,CONST_3).
-r_0 | out_0_vary(I,CONST_3):- inb_0_vary(I,CONST_5).
-out_0_vary(I,CONST_3):- not r_0, not _inb_0_vary(I,CONST_5).
-r_1 | out_1_vary(I,CONST_3):- inb_1_vary(I,CONST_5).
-out_1_vary(I,CONST_3):- not r_1, not _inb_1_vary(I,CONST_5).
-r_2 | out_2_vary(I,CONST_3):- inb_2_vary(I,CONST_5).
-out_2_vary(I,CONST_3):- not r_2, not _inb_2_vary(I,CONST_5).
-:- succ_adder(I,J), inb(J,CONST_4), not out(I,CONST_5).
-r_0 | out_0_vary(I,CONST_5):- inb_0_vary(J,CONST_4), succ_adder(I,J).
-out_0_vary(I,CONST_5):- not r_0, not _inb_0_vary(J,CONST_4), succ_adder(I,J).
-r_1 | out_1_vary(I,CONST_5):- inb_1_vary(J,CONST_4), succ_adder(I,J).
-out_1_vary(I,CONST_5):- not r_1, not _inb_1_vary(J,CONST_4), succ_adder(I,J).
-r_2 | out_2_vary(I,CONST_5):- inb_2_vary(J,CONST_4), succ_adder(I,J).
-out_2_vary(I,CONST_5):- not r_2, not _inb_2_vary(J,CONST_4), succ_adder(I,J).
-:- succ_adder(I,J), out(I,CONST_5), not inb(J,CONST_4).
-r_0 | inb_0_vary(J,CONST_4):- out_0_vary(I,CONST_5), succ_adder(I,J).
-inb_0_vary(J,CONST_4):- not r_0, not _out_0_vary(I,CONST_5), succ_adder(I,J).
-r_1 | inb_1_vary(J,CONST_4):- out_1_vary(I,CONST_5), succ_adder(I,J).
-inb_1_vary(J,CONST_4):- not r_1, not _out_1_vary(I,CONST_5), succ_adder(I,J).
-r_2 | inb_2_vary(J,CONST_4):- out_2_vary(I,CONST_5), succ_adder(I,J).
-inb_2_vary(J,CONST_4):- not r_2, not _out_2_vary(I,CONST_5), succ_adder(I,J).
-:- not inb(CONST_1,CONST_4).
-inb_0_vary(CONST_1,CONST_4).
-inb_1_vary(CONST_1,CONST_4).
-inb_2_vary(CONST_1,CONST_4).
-:- not ina(I,CONST_1).
-ina_0_vary(I,CONST_1).
-ina_1_vary(I,CONST_1).
-ina_2_vary(I,CONST_1).
-:- not inb(I,CONST_1).
-inb_0_vary(I,CONST_1).
-inb_1_vary(I,CONST_1).
-inb_2_vary(I,CONST_1).
-:- not out(I,CONST_2).
-out_0_vary(I,CONST_2).
-out_1_vary(I,CONST_2).
-out_2_vary(I,CONST_2).
-:- out(I,CONST_5).
-r_0:- out_0_vary(I,CONST_5).
-r_1:- out_1_vary(I,CONST_5).
-r_2:- out_2_vary(I,CONST_5).
-abo(I,X):- r_0, not _abo(I,X).
-:- not s_0(MIN_adder,MIN_gate).
-s_0(I,X):- succ_adder_gate(I,X,NV_0,NV_1), s_0(NV_0,NV_1).
-s_0(I,X):- not abo(I,X), not _abo(I,X).
-s_0(I,X):- not _r_0.
-s_0(I,X):- not abo(I,X), not _abo(I,X), not _r_0.
-r_0 | t_0(MIN_adder,MIN_gate):- abo(MIN_adder,MIN_gate).
-r_0 | t_0(MIN_adder,MIN_gate):- not abo(MIN_adder,MIN_gate).
-t_0(MIN_adder,MIN_gate):- not r_0, not _abo(MIN_adder,MIN_gate).
-t_0(MIN_adder,MIN_gate):- not abo(MIN_adder,MIN_gate), not r_0.
-r_0:- abo(I,X), t_0(MAX_adder,MAX_gate), not s_0(NV_0,NV_1), succ_adder_gate(I,X,NV_0,NV_1), s_0(I,X).
-r_0:- not abo(I,X), t_0(MAX_adder,MAX_gate), not s_0(NV_0,NV_1), succ_adder_gate(I,X,NV_0,NV_1), s_0(I,X).
-:- not r_0, t_0(MAX_adder,MAX_gate), not s_0(NV_0,NV_1), succ_adder_gate(I,X,NV_0,NV_1), s_0(I,X), not _abo(I,X).
-:- not abo(I,X), not r_0, t_0(MAX_adder,MAX_gate), not s_0(NV_0,NV_1), succ_adder_gate(I,X,NV_0,NV_1), s_0(I,X).
-:- not s_0(NV_0,NV_1), succ_adder_gate(I,X,NV_0,NV_1), s_0(I,X), not r_0, not _abo(I,X), not _t_0(MAX_adder,MAX_gate).
-:- not abo(I,X), not s_0(NV_0,NV_1), succ_adder_gate(I,X,NV_0,NV_1), s_0(I,X), not r_0, not _t_0(MAX_adder,MAX_gate).
-r_0:- abo(I,X), t_0(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_0(I,X).
-r_0:- not abo(I,X), t_0(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_0(I,X).
-:- not r_0, t_0(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_0(I,X), not _abo(I,X).
-:- not abo(I,X), not r_0, t_0(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_0(I,X).
-:- max_adder(I), max_gate(X), s_0(I,X), not r_0, not _abo(I,X), not _t_0(MAX_adder,MAX_gate).
-:- not abo(I,X), max_adder(I), max_gate(X), s_0(I,X), not r_0, not _t_0(MAX_adder,MAX_gate).
-t_0(MAX_adder,MAX_gate):- not abo(I,X), not s_0(NV_0,NV_1), succ_adder_gate(I,X,NV_0,NV_1), s_0(I,X), not _abo(I,X).
-t_0(MAX_adder,MAX_gate):- r_0, not s_0(NV_0,NV_1), succ_adder_gate(I,X,NV_0,NV_1), s_0(I,X).
-abo(I,X) | t_0(MAX_adder,MAX_gate):- not s_0(NV_0,NV_1), succ_adder_gate(I,X,NV_0,NV_1), s_0(I,X), not _abo(I,X), not _r_0.
-:- not abo(I,X), not t_0(MAX_adder,MAX_gate), not s_0(NV_0,NV_1), succ_adder_gate(I,X,NV_0,NV_1), s_0(I,X), not _abo(I,X).
-:- not t_0(MAX_adder,MAX_gate), not s_0(NV_0,NV_1), succ_adder_gate(I,X,NV_0,NV_1), s_0(I,X), not _r_0.
-t_0(MAX_adder,MAX_gate):- not abo(I,X), max_adder(I), max_gate(X), s_0(I,X), not _abo(I,X).
-t_0(MAX_adder,MAX_gate):- r_0, max_adder(I), max_gate(X), s_0(I,X).
-abo(I,X) | t_0(MAX_adder,MAX_gate):- max_adder(I), max_gate(X), s_0(I,X), not _abo(I,X), not _r_0.
-:- not abo(I,X), not t_0(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_0(I,X), not _abo(I,X).
-:- not t_0(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_0(I,X), not _r_0.
-r_0 | t_0(NV_0,NV_1):- abo(NV_0,NV_1), t_0(I,X), succ_adder_gate(I,X,NV_0,NV_1).
-r_0 | t_0(NV_0,NV_1):- not abo(NV_0,NV_1), t_0(I,X), succ_adder_gate(I,X,NV_0,NV_1).
-t_0(NV_0,NV_1):- not r_0, t_0(I,X), succ_adder_gate(I,X,NV_0,NV_1), not _abo(NV_0,NV_1).
-t_0(NV_0,NV_1):- not abo(NV_0,NV_1), not r_0, t_0(I,X), succ_adder_gate(I,X,NV_0,NV_1).
-:- succ_adder_gate(I,X,NV_0,NV_1), not r_0, not t_0(NV_0,NV_1), not _abo(NV_0,NV_1), not _t_0(I,X).
-:- not abo(NV_0,NV_1), succ_adder_gate(I,X,NV_0,NV_1), not r_0, not t_0(NV_0,NV_1), not _t_0(I,X).
-t_0(I,X):- not abo(NV_0,NV_1), succ_adder_gate(I,X,NV_0,NV_1), not _abo(NV_0,NV_1).
-t_0(I,X):- r_0, succ_adder_gate(I,X,NV_0,NV_1).
-abo(NV_0,NV_1) | t_0(I,X):- succ_adder_gate(I,X,NV_0,NV_1), not _abo(NV_0,NV_1), not _r_0.
-t_0(I,X):- t_0(NV_0,NV_1), succ_adder_gate(I,X,NV_0,NV_1).
-:- not abo(NV_0,NV_1), not t_0(I,X), succ_adder_gate(I,X,NV_0,NV_1), not _abo(NV_0,NV_1).
-:- not t_0(I,X), succ_adder_gate(I,X,NV_0,NV_1), not _r_0.
-:- not t_0(I,X), succ_adder_gate(I,X,NV_0,NV_1), not _t_0(NV_0,NV_1).
-abx(I,X):- r_1, not _abx(I,X).
-:- not s_1(MIN_adder,MIN_gate).
-s_1(I,X):- succ_adder_gate(I,X,NV_2,NV_3), s_1(NV_2,NV_3).
-s_1(I,X):- not abx(I,X), not _abx(I,X).
-s_1(I,X):- not _r_1.
-s_1(I,X):- not abx(I,X), not _abx(I,X), not _r_1.
-r_1 | t_1(MIN_adder,MIN_gate):- abx(MIN_adder,MIN_gate).
-r_1 | t_1(MIN_adder,MIN_gate):- not abx(MIN_adder,MIN_gate).
-t_1(MIN_adder,MIN_gate):- not r_1, not _abx(MIN_adder,MIN_gate).
-t_1(MIN_adder,MIN_gate):- not abx(MIN_adder,MIN_gate), not r_1.
-r_1:- abx(I,X), t_1(MAX_adder,MAX_gate), not s_1(NV_2,NV_3), succ_adder_gate(I,X,NV_2,NV_3), s_1(I,X).
-r_1:- not abx(I,X), t_1(MAX_adder,MAX_gate), not s_1(NV_2,NV_3), succ_adder_gate(I,X,NV_2,NV_3), s_1(I,X).
-:- not r_1, t_1(MAX_adder,MAX_gate), not s_1(NV_2,NV_3), succ_adder_gate(I,X,NV_2,NV_3), s_1(I,X), not _abx(I,X).
-:- not abx(I,X), not r_1, t_1(MAX_adder,MAX_gate), not s_1(NV_2,NV_3), succ_adder_gate(I,X,NV_2,NV_3), s_1(I,X).
-:- not s_1(NV_2,NV_3), succ_adder_gate(I,X,NV_2,NV_3), s_1(I,X), not r_1, not _abx(I,X), not _t_1(MAX_adder,MAX_gate).
-:- not abx(I,X), not s_1(NV_2,NV_3), succ_adder_gate(I,X,NV_2,NV_3), s_1(I,X), not r_1, not _t_1(MAX_adder,MAX_gate).
-r_1:- abx(I,X), t_1(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_1(I,X).
-r_1:- not abx(I,X), t_1(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_1(I,X).
-:- not r_1, t_1(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_1(I,X), not _abx(I,X).
-:- not abx(I,X), not r_1, t_1(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_1(I,X).
-:- max_adder(I), max_gate(X), s_1(I,X), not r_1, not _abx(I,X), not _t_1(MAX_adder,MAX_gate).
-:- not abx(I,X), max_adder(I), max_gate(X), s_1(I,X), not r_1, not _t_1(MAX_adder,MAX_gate).
-t_1(MAX_adder,MAX_gate):- not abx(I,X), not s_1(NV_2,NV_3), succ_adder_gate(I,X,NV_2,NV_3), s_1(I,X), not _abx(I,X).
-t_1(MAX_adder,MAX_gate):- r_1, not s_1(NV_2,NV_3), succ_adder_gate(I,X,NV_2,NV_3), s_1(I,X).
-abx(I,X) | t_1(MAX_adder,MAX_gate):- not s_1(NV_2,NV_3), succ_adder_gate(I,X,NV_2,NV_3), s_1(I,X), not _abx(I,X), not _r_1.
-:- not abx(I,X), not t_1(MAX_adder,MAX_gate), not s_1(NV_2,NV_3), succ_adder_gate(I,X,NV_2,NV_3), s_1(I,X), not _abx(I,X).
-:- not t_1(MAX_adder,MAX_gate), not s_1(NV_2,NV_3), succ_adder_gate(I,X,NV_2,NV_3), s_1(I,X), not _r_1.
-t_1(MAX_adder,MAX_gate):- not abx(I,X), max_adder(I), max_gate(X), s_1(I,X), not _abx(I,X).
-t_1(MAX_adder,MAX_gate):- r_1, max_adder(I), max_gate(X), s_1(I,X).
-abx(I,X) | t_1(MAX_adder,MAX_gate):- max_adder(I), max_gate(X), s_1(I,X), not _abx(I,X), not _r_1.
-:- not abx(I,X), not t_1(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_1(I,X), not _abx(I,X).
-:- not t_1(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_1(I,X), not _r_1.
-r_1 | t_1(NV_2,NV_3):- abx(NV_2,NV_3), t_1(I,X), succ_adder_gate(I,X,NV_2,NV_3).
-r_1 | t_1(NV_2,NV_3):- not abx(NV_2,NV_3), t_1(I,X), succ_adder_gate(I,X,NV_2,NV_3).
-t_1(NV_2,NV_3):- not r_1, t_1(I,X), succ_adder_gate(I,X,NV_2,NV_3), not _abx(NV_2,NV_3).
-t_1(NV_2,NV_3):- not abx(NV_2,NV_3), not r_1, t_1(I,X), succ_adder_gate(I,X,NV_2,NV_3).
-:- succ_adder_gate(I,X,NV_2,NV_3), not r_1, not t_1(NV_2,NV_3), not _abx(NV_2,NV_3), not _t_1(I,X).
-:- not abx(NV_2,NV_3), succ_adder_gate(I,X,NV_2,NV_3), not r_1, not t_1(NV_2,NV_3), not _t_1(I,X).
-t_1(I,X):- not abx(NV_2,NV_3), succ_adder_gate(I,X,NV_2,NV_3), not _abx(NV_2,NV_3).
-t_1(I,X):- r_1, succ_adder_gate(I,X,NV_2,NV_3).
-abx(NV_2,NV_3) | t_1(I,X):- succ_adder_gate(I,X,NV_2,NV_3), not _abx(NV_2,NV_3), not _r_1.
-t_1(I,X):- t_1(NV_2,NV_3), succ_adder_gate(I,X,NV_2,NV_3).
-:- not abx(NV_2,NV_3), not t_1(I,X), succ_adder_gate(I,X,NV_2,NV_3), not _abx(NV_2,NV_3).
-:- not t_1(I,X), succ_adder_gate(I,X,NV_2,NV_3), not _r_1.
-:- not t_1(I,X), succ_adder_gate(I,X,NV_2,NV_3), not _t_1(NV_2,NV_3).
-aba(I,X):- r_2, not _aba(I,X).
-:- not s_2(MIN_adder,MIN_gate).
-s_2(I,X):- succ_adder_gate(I,X,NV_4,NV_5), s_2(NV_4,NV_5).
-s_2(I,X):- not aba(I,X), not _aba(I,X).
-s_2(I,X):- not _r_2.
-s_2(I,X):- not aba(I,X), not _aba(I,X), not _r_2.
-r_2 | t_2(MIN_adder,MIN_gate):- aba(MIN_adder,MIN_gate).
-r_2 | t_2(MIN_adder,MIN_gate):- not aba(MIN_adder,MIN_gate).
-t_2(MIN_adder,MIN_gate):- not r_2, not _aba(MIN_adder,MIN_gate).
-t_2(MIN_adder,MIN_gate):- not aba(MIN_adder,MIN_gate), not r_2.
-r_2:- aba(I,X), t_2(MAX_adder,MAX_gate), not s_2(NV_4,NV_5), succ_adder_gate(I,X,NV_4,NV_5), s_2(I,X).
-r_2:- not aba(I,X), t_2(MAX_adder,MAX_gate), not s_2(NV_4,NV_5), succ_adder_gate(I,X,NV_4,NV_5), s_2(I,X).
-:- not r_2, t_2(MAX_adder,MAX_gate), not s_2(NV_4,NV_5), succ_adder_gate(I,X,NV_4,NV_5), s_2(I,X), not _aba(I,X).
-:- not aba(I,X), not r_2, t_2(MAX_adder,MAX_gate), not s_2(NV_4,NV_5), succ_adder_gate(I,X,NV_4,NV_5), s_2(I,X).
-:- not s_2(NV_4,NV_5), succ_adder_gate(I,X,NV_4,NV_5), s_2(I,X), not r_2, not _aba(I,X), not _t_2(MAX_adder,MAX_gate).
-:- not aba(I,X), not s_2(NV_4,NV_5), succ_adder_gate(I,X,NV_4,NV_5), s_2(I,X), not r_2, not _t_2(MAX_adder,MAX_gate).
-r_2:- aba(I,X), t_2(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_2(I,X).
-r_2:- not aba(I,X), t_2(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_2(I,X).
-:- not r_2, t_2(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_2(I,X), not _aba(I,X).
-:- not aba(I,X), not r_2, t_2(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_2(I,X).
-:- max_adder(I), max_gate(X), s_2(I,X), not r_2, not _aba(I,X), not _t_2(MAX_adder,MAX_gate).
-:- not aba(I,X), max_adder(I), max_gate(X), s_2(I,X), not r_2, not _t_2(MAX_adder,MAX_gate).
-t_2(MAX_adder,MAX_gate):- not aba(I,X), not s_2(NV_4,NV_5), succ_adder_gate(I,X,NV_4,NV_5), s_2(I,X), not _aba(I,X).
-t_2(MAX_adder,MAX_gate):- r_2, not s_2(NV_4,NV_5), succ_adder_gate(I,X,NV_4,NV_5), s_2(I,X).
-aba(I,X) | t_2(MAX_adder,MAX_gate):- not s_2(NV_4,NV_5), succ_adder_gate(I,X,NV_4,NV_5), s_2(I,X), not _aba(I,X), not _r_2.
-:- not aba(I,X), not t_2(MAX_adder,MAX_gate), not s_2(NV_4,NV_5), succ_adder_gate(I,X,NV_4,NV_5), s_2(I,X), not _aba(I,X).
-:- not t_2(MAX_adder,MAX_gate), not s_2(NV_4,NV_5), succ_adder_gate(I,X,NV_4,NV_5), s_2(I,X), not _r_2.
-t_2(MAX_adder,MAX_gate):- not aba(I,X), max_adder(I), max_gate(X), s_2(I,X), not _aba(I,X).
-t_2(MAX_adder,MAX_gate):- r_2, max_adder(I), max_gate(X), s_2(I,X).
-aba(I,X) | t_2(MAX_adder,MAX_gate):- max_adder(I), max_gate(X), s_2(I,X), not _aba(I,X), not _r_2.
-:- not aba(I,X), not t_2(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_2(I,X), not _aba(I,X).
-:- not t_2(MAX_adder,MAX_gate), max_adder(I), max_gate(X), s_2(I,X), not _r_2.
-r_2 | t_2(NV_4,NV_5):- aba(NV_4,NV_5), t_2(I,X), succ_adder_gate(I,X,NV_4,NV_5).
-r_2 | t_2(NV_4,NV_5):- not aba(NV_4,NV_5), t_2(I,X), succ_adder_gate(I,X,NV_4,NV_5).
-t_2(NV_4,NV_5):- not r_2, t_2(I,X), succ_adder_gate(I,X,NV_4,NV_5), not _aba(NV_4,NV_5).
-t_2(NV_4,NV_5):- not aba(NV_4,NV_5), not r_2, t_2(I,X), succ_adder_gate(I,X,NV_4,NV_5).
-:- succ_adder_gate(I,X,NV_4,NV_5), not r_2, not t_2(NV_4,NV_5), not _aba(NV_4,NV_5), not _t_2(I,X).
-:- not aba(NV_4,NV_5), succ_adder_gate(I,X,NV_4,NV_5), not r_2, not t_2(NV_4,NV_5), not _t_2(I,X).
-t_2(I,X):- not aba(NV_4,NV_5), succ_adder_gate(I,X,NV_4,NV_5), not _aba(NV_4,NV_5).
-t_2(I,X):- r_2, succ_adder_gate(I,X,NV_4,NV_5).
-aba(NV_4,NV_5) | t_2(I,X):- succ_adder_gate(I,X,NV_4,NV_5), not _aba(NV_4,NV_5), not _r_2.
-t_2(I,X):- t_2(NV_4,NV_5), succ_adder_gate(I,X,NV_4,NV_5).
-:- not aba(NV_4,NV_5), not t_2(I,X), succ_adder_gate(I,X,NV_4,NV_5), not _aba(NV_4,NV_5).
-:- not t_2(I,X), succ_adder_gate(I,X,NV_4,NV_5), not _r_2.
-:- not t_2(I,X), succ_adder_gate(I,X,NV_4,NV_5), not _t_2(NV_4,NV_5).
-abx_0_vary(I,X):- r_0.
-aba_0_vary(I,X):- r_0.
-ina_0_vary(I,X):- r_0.
-inb_0_vary(I,X):- r_0.
-out_0_vary(I,X):- r_0.
-aba_1_vary(I,X):- r_1.
-ina_1_vary(I,X):- r_1.
-inb_1_vary(I,X):- r_1.
-out_1_vary(I,X):- r_1.
-ina_2_vary(I,X):- r_2.
-inb_2_vary(I,X):- r_2.
-out_2_vary(I,X):- r_2.
+:- not s_0(X,Y,MIN_i).
+s_0(X,Y,Z):- succ_i(Z,NV_0), s_0(X,Y,NV_0).
+s_0(X,Y,Z):- not set(X,Y).
+s_0(X,Y,Z):- set(Z,Y), not _cvr(Z).
+w_0(X,Y,Z):- succ_i(Z,NV_0), w_0(X,Y,NV_0).
+w_0(X,Y,Z):- not set(X,Y).
+w_0(X,Y,Z):- set(Z,Y), not _cvr(Z).
+cvr(MIN_i) | t_0(X,Y,MIN_i):- set(X,Y).
+t_0(X,Y,MIN_i):- not set(MIN_i,Y), set(X,Y).
+cvr(NV_0) | t_0(X,Y,NV_0):- t_0(X,Y,Z), succ_i(Z,NV_0), set(X,Y).
+t_0(X,Y,NV_0):- t_0(X,Y,Z), succ_i(Z,NV_0), set(X,Y), not set(NV_0,Y).
+:- not cvr(NV_0), succ_i(Z,NV_0), not t_0(X,Y,NV_0), set(X,Y), not _t_0(X,Y,Z).
+:- not set(NV_0,Y), succ_i(Z,NV_0), not t_0(X,Y,NV_0), set(X,Y), not _t_0(X,Y,Z).
+t_0(X,Y,Z):- not set(X,Y), succ_i(Z,NV_0).
+t_0(X,Y,Z):- cvr(NV_0), set(NV_0,Y), succ_i(Z,NV_0).
+t_0(X,Y,Z):- t_0(X,Y,NV_0), succ_i(Z,NV_0).
+:- not set(X,Y), not t_0(X,Y,Z), succ_i(Z,NV_0).
+:- not t_0(X,Y,Z), succ_i(Z,NV_0), not _cvr(NV_0), set(NV_0,Y).
+:- not t_0(X,Y,Z), succ_i(Z,NV_0), not _t_0(X,Y,NV_0).
+cvr(Z):- t_0(X,Y,MAX_i), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z), set(X,Y).
+:- t_0(X,Y,MAX_i), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z), set(X,Y), not set(Z,Y).
+:- not cvr(Z), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z), set(X,Y), not _t_0(X,Y,MAX_i).
+:- not set(Z,Y), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z), set(X,Y), not _t_0(X,Y,MAX_i).
+cvr(Z):- t_0(X,Y,MAX_i), max_i(Z), w_0(X,Y,Z), set(X,Y).
+:- t_0(X,Y,MAX_i), max_i(Z), w_0(X,Y,Z), set(X,Y), not set(Z,Y).
+:- not cvr(Z), max_i(Z), w_0(X,Y,Z), set(X,Y), not _t_0(X,Y,MAX_i).
+:- not set(Z,Y), max_i(Z), w_0(X,Y,Z), set(X,Y), not _t_0(X,Y,MAX_i).
+t_0(X,Y,MAX_i):- not set(X,Y), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z).
+t_0(X,Y,MAX_i):- cvr(Z), set(Z,Y), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z).
+:- not set(X,Y), not t_0(X,Y,MAX_i), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z).
+:- not t_0(X,Y,MAX_i), not w_0(X,Y,NV_0), succ_i(Z,NV_0), w_0(X,Y,Z), not _cvr(Z), set(Z,Y).
+t_0(X,Y,MAX_i):- not set(X,Y), max_i(Z), w_0(X,Y,Z).
+t_0(X,Y,MAX_i):- cvr(Z), set(Z,Y), max_i(Z), w_0(X,Y,Z).
+:- not set(X,Y), not t_0(X,Y,MAX_i), max_i(Z), w_0(X,Y,Z).
+:- not t_0(X,Y,MAX_i), max_i(Z), w_0(X,Y,Z), not _cvr(Z), set(Z,Y).
+cvr(Z):- r_0, not _cvr(Z).
+:- not s_1(MIN_i).
+s_1(Z):- succ_i(Z,NV_1), s_1(NV_1).
+s_1(Z):- not cvr(Z), not _cvr(Z).
+s_1(Z):- not _r_0.
+s_1(Z):- not cvr(Z), not _cvr(Z), not _r_0.
+r_0 | t_1(MIN_i):- cvr(MIN_i).
+r_0 | t_1(MIN_i):- not cvr(MIN_i).
+t_1(MIN_i):- not r_0, not _cvr(MIN_i).
+t_1(MIN_i):- not cvr(MIN_i), not r_0.
+r_0:- cvr(Z), t_1(MAX_i), not s_1(NV_1), succ_i(Z,NV_1), s_1(Z).
+r_0:- not cvr(Z), t_1(MAX_i), not s_1(NV_1), succ_i(Z,NV_1), s_1(Z).
+:- not r_0, t_1(MAX_i), not s_1(NV_1), succ_i(Z,NV_1), s_1(Z), not _cvr(Z).
+:- not cvr(Z), not r_0, t_1(MAX_i), not s_1(NV_1), succ_i(Z,NV_1), s_1(Z).
+:- not s_1(NV_1), succ_i(Z,NV_1), s_1(Z), not r_0, not _cvr(Z), not _t_1(MAX_i).
+:- not cvr(Z), not s_1(NV_1), succ_i(Z,NV_1), s_1(Z), not r_0, not _t_1(MAX_i).
+r_0:- cvr(Z), t_1(MAX_i), max_i(Z), s_1(Z).
+r_0:- not cvr(Z), t_1(MAX_i), max_i(Z), s_1(Z).
+:- not r_0, t_1(MAX_i), max_i(Z), s_1(Z), not _cvr(Z).
+:- not cvr(Z), not r_0, t_1(MAX_i), max_i(Z), s_1(Z).
+:- max_i(Z), s_1(Z), not r_0, not _cvr(Z), not _t_1(MAX_i).
+:- not cvr(Z), max_i(Z), s_1(Z), not r_0, not _t_1(MAX_i).
+t_1(MAX_i):- not cvr(Z), not s_1(NV_1), succ_i(Z,NV_1), s_1(Z), not _cvr(Z).
+t_1(MAX_i):- r_0, not s_1(NV_1), succ_i(Z,NV_1), s_1(Z).
+cvr(Z) | t_1(MAX_i):- not s_1(NV_1), succ_i(Z,NV_1), s_1(Z), not _cvr(Z), not _r_0.
+:- not cvr(Z), not t_1(MAX_i), not s_1(NV_1), succ_i(Z,NV_1), s_1(Z), not _cvr(Z).
+:- not t_1(MAX_i), not s_1(NV_1), succ_i(Z,NV_1), s_1(Z), not _r_0.
+t_1(MAX_i):- not cvr(Z), max_i(Z), s_1(Z), not _cvr(Z).
+t_1(MAX_i):- r_0, max_i(Z), s_1(Z).
+cvr(Z) | t_1(MAX_i):- max_i(Z), s_1(Z), not _cvr(Z), not _r_0.
+:- not cvr(Z), not t_1(MAX_i), max_i(Z), s_1(Z), not _cvr(Z).
+:- not t_1(MAX_i), max_i(Z), s_1(Z), not _r_0.
+r_0 | t_1(NV_1):- cvr(NV_1), t_1(Z), succ_i(Z,NV_1).
+r_0 | t_1(NV_1):- not cvr(NV_1), t_1(Z), succ_i(Z,NV_1).
+t_1(NV_1):- not r_0, t_1(Z), succ_i(Z,NV_1), not _cvr(NV_1).
+t_1(NV_1):- not cvr(NV_1), not r_0, t_1(Z), succ_i(Z,NV_1).
+:- succ_i(Z,NV_1), not r_0, not t_1(NV_1), not _cvr(NV_1), not _t_1(Z).
+:- not cvr(NV_1), succ_i(Z,NV_1), not r_0, not t_1(NV_1), not _t_1(Z).
+t_1(Z):- not cvr(NV_1), succ_i(Z,NV_1), not _cvr(NV_1).
+t_1(Z):- r_0, succ_i(Z,NV_1).
+cvr(NV_1) | t_1(Z):- succ_i(Z,NV_1), not _cvr(NV_1), not _r_0.
+t_1(Z):- t_1(NV_1), succ_i(Z,NV_1).
+:- not cvr(NV_1), not t_1(Z), succ_i(Z,NV_1), not _cvr(NV_1).
+:- not t_1(Z), succ_i(Z,NV_1), not _r_0.
+:- not t_1(Z), succ_i(Z,NV_1), not _t_1(NV_1).
