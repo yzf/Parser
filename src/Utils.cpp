@@ -970,11 +970,14 @@ _formula* Utils::thetaT__Replace(_formula* _fml, _formula* _fatherFml) {
         case ATOM:
             if (NULL != _fatherFml && NEGA == _fatherFml->formula_type) {
                 // true 替换 负文字
-                _fatherFml->formula_type = ATOM;
-                _fatherFml->predicate_id = PRED_TRUE;
-                _fatherFml->parameters = NULL;
-                deleteFormula(_fml);
-                _fml = NULL;
+                if (Vocabulary::instance().isIntensionPredicate(_fml->predicate_id) ||
+                        Vocabulary::instance().isVaryPredicate(_fml->predicate_id)) {
+                    _fatherFml->formula_type = ATOM;
+                    _fatherFml->predicate_id = PRED_TRUE;
+                    _fatherFml->parameters = NULL;
+                    deleteFormula(_fml);
+                    _fml = NULL;
+                }
             }
             else {
                 if (Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {

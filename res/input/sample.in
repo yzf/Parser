@@ -1,14 +1,5 @@
-~~s_0(X,Y,MIN_i).
-(((succ_i(Z,NV_0)&s_0(X,Y,NV_0))|(~set(X,Y)|(~~cvr(Z)&set(Z,Y))))->s_0(X,Y,Z)).
-(((succ_i(Z,NV_0)&w_0(X,Y,NV_0))|((~~cvr(Z)&set(Z,Y))))->w_0(X,Y,Z)).
-(t_0(X,Y,MIN_i)|(~set(X,Y)|(cvr(MIN_i)&set(MIN_i,Y)))).
-(succ_i(Z,NV_0)->(t_0(X,Y,Z)->((~set(X,Y)|(cvr(NV_0)&set(NV_0,Y)))|t_0(X,Y,NV_0)))).
-(succ_i(Z,NV_0)->(((~set(X,Y)|(cvr(NV_0)&set(NV_0,Y)))|t_0(X,Y,NV_0))->t_0(X,Y,Z))).
-((w_0(X,Y,Z)&((~w_0(X,Y,NV_0)&succ_i(Z,NV_0))|max_i(Z)))->(t_0(X,Y,MAX_i)->(~set(X,Y)|(cvr(Z)&set(Z,Y))))).
-((w_0(X,Y,Z)&((~w_0(X,Y,NV_0)&succ_i(Z,NV_0))|max_i(Z)))->((~set(X,Y)|(cvr(Z)&set(Z,Y)))->t_0(X,Y,MAX_i))).
-(r_0->[!Z]((cvr(Z)|~cvr(Z)))).
-(([!Z]((cvr(Z)|~cvr(Z))))->r_0).
+[!X][!Y][?Z](set(X,Y)) -> (cvr(Z)&set(Z,Y)).
 
-{cvr,s_0,w_0,t_0,r_0;}
+{cvr;}
 
-<X@i;Y@e;Z@i;NV_0@i>
+<X@i;Y@e;Z@i>

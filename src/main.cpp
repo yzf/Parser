@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include "CircTranslator.h"
 #include "Optimization.h"
+#include "PriCircTranslator.h"
 
 
 using namespace std;
@@ -53,15 +54,17 @@ int main(int argc, char** argv) {
     yyparse();
     fclose(yyin);
     
-    Formula f = Formula(gformula, false);
-    Formulas* fmls = f.divideFormula();
-    printf("ori(op):\n");
-    fmls->output(stdout);
-    printf("st:\n");
-    fmls->convertToSt();
-    fmls->output(stdout);
-    fmls->output(fout);
+    Formula f = Formula(gformula, true);
+    PriCircTranslator* pct = new PriCircTranslator();
+    Formulas* fmls = pct->convert(f);
+    SMTranslator::instance().init(*fmls);
+    SMTranslator::instance().convert();
+    SMTranslator::instance().outputHengZhangFormulas(stdout);
+    SMTranslator::instance().outputCabalarFormulas(stdout);
+    SMTranslator::instance().outputFinalResult(fout);
+    SMTranslator::instance().destroy();
     delete fmls;
+    delete pct;
 
     fclose(fout);
     Vocabulary::instance().dumpVocabulary(stdout);
