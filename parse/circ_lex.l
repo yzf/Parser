@@ -17,13 +17,14 @@ variable			[A-Z][a-zA-Z0-9_]*
 predicate_function              [a-z][a-zA-Z0-9_]*
 integer                         [1-9][0-9]*
 
+
 %%
 {variable}	   		{
                                     yylval.s=strdup(yytext);
                                     return S_VARI;
                                 }
 
-{predicate_function}	   		{
+{predicate_function}	   	{
                                     yylval.s=strdup(yytext);
                                     if (1 == context_flag) { 
                                         return S_FUNC;

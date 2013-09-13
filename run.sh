@@ -23,29 +23,26 @@ else
     echo "error!!!"
     exit 1
 fi
-echo "begin to run $tranType..."
-echo
+echo -e "Begin to run $tranType ......\n"
 # 生成parser文件
+echo "Enter folder 'parse' ......"
 cd parse
-echo "generate parser file"
+echo "Generate parser file"
 ./generate.sh $tranType
-cd ..
+echo "Exit folder 'parse' ......"
+cd -
 
 # 生成主函数
-echo
-echo "generate $tranType main function..."
-echo
+echo -e "\nGenerate $tranType main function...\n"
 cat ${tranType}_main.cpp > src/main.cpp
 
 
 # 编译代码
-echo
-echo "run makefile"
-echo
+echo -e "Run makefile\n"
 make > /dev/null
-echo
 runner="/home/yzf/NetBeansProjects/alpha/build/Debug/GNU-Linux-x86/tests/TestFiles/f2"
 # 开始转化
+echo -e "\nRunning tests...\n"
 input=`ls res/input/$tranType/*.in`
 factDir="res/input/$tranType"
 outputDir="res/output/$tranType"
@@ -68,13 +65,12 @@ do
     # 执行ASP
     if [ -f $factFile -a -f $outFile ]
     then
-        echo "run: gringo $factFile $outFile | claspD 0 > $resultFile"
-        echo
+        echo -e "run: gringo $factFile $outFile | claspD 0 > $resultFile\n"
         gringo $factFile $outFile | claspD 0 > $resultFile
     fi
 done
 echo
-echo "run success!!"
+echo "Run finished!!"
 exit 0
 
 

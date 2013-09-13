@@ -59,6 +59,7 @@ public:
     void convertToNNF(bool _bIsSM = true);
     void convertToPNF();
     void removeImpl();
+    void convertToSt();
 };
 
 

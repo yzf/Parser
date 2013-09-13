@@ -73,26 +73,32 @@ circ            //整个输入文件
 	}
 ;
 
-predicates      //谓词部分：{内涵，内涵；可变，可变}
-        : LBRACE inten_preds SEMICO vary_preds RBRACE {
-        
+predicates      //谓词部分：{优先1>优先2_1,优先2_2>优先3；可变，可变}
+        : LBRACE minimal_preds SEMICO vary_preds RBRACE {
         }
 ;
-inten_preds     //内涵谓词：谓词，谓词
-        : inten_preds COMMA intent_pred {
-            
+minimal_preds     //极少化谓词： 优先1>优先2_1,优先2_2>优先3
+        : minimal_preds RR pri_preds {
+            Vocabulary::instance().increaseMininalPredicatePriority();
         } 
-        | intent_pred {
-        }
-        | {
+        | pri_preds {
+            Vocabulary::instance().increaseMininalPredicatePriority();
         }
 ;
-intent_pred
-        : S_PRED {           
+pri_preds       //相同优先级的极少化谓词： 优先i_1,优先i_2
+        : pri_preds COMMA pri_pred {
+        }
+        | pri_pred {
+        }
+;
+pri_pred
+        : S_PRED {
             Vocabulary::instance().addIntensionPredicate($1);
+            Vocabulary::instance().setMininalPredicatePriority($1);
             context_flag = 0;
         }
 ;
+
 vary_preds      //可变谓词：谓词，谓词
         : vary_preds COMMA vary_pred {
         }

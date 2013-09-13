@@ -9,16 +9,10 @@ then
     lexFile="sm_lex.l"
     parseFile="sm_parse.y"
 # 并行circ以及其优化
-elif [ "$1" = "circ" -o "$1" = "op" ]
+elif [ "$1" = "circ" -o "$1" = "op" -o "$1" = "pri" ]
 then
     lexFile="circ_lex.l"
     parseFile="circ_parse.y"
-# 优先级circ
-elif [ "$1" = "pri" ]
-then
-    lexFile="pri_lex.l"
-    parseFile="pri_parse.y"
-# 错误提示
 else
     echo "error!!!!"
     exit 1

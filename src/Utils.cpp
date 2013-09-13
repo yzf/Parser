@@ -970,11 +970,14 @@ _formula* Utils::thetaT__Replace(_formula* _fml, _formula* _fatherFml) {
         case ATOM:
             if (NULL != _fatherFml && NEGA == _fatherFml->formula_type) {
                 // true 替换 负文字
-                _fatherFml->formula_type = ATOM;
-                _fatherFml->predicate_id = PRED_TRUE;
-                _fatherFml->parameters = NULL;
-                deleteFormula(_fml);
-                _fml = NULL;
+                if (Vocabulary::instance().isIntensionPredicate(_fml->predicate_id) ||
+                        Vocabulary::instance().isVaryPredicate(_fml->predicate_id)) {
+                    _fatherFml->formula_type = ATOM;
+                    _fatherFml->predicate_id = PRED_TRUE;
+                    _fatherFml->parameters = NULL;
+                    deleteFormula(_fml);
+                    _fml = NULL;
+                }
             }
             else {
                 if (Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
@@ -1035,4 +1038,102 @@ string Utils::convertNumToString(int _num) {
     char num[10];
     sprintf(num, "%d", _num);
     return string(num);
+}
+
+_formula* Utils::convertDNFtoCNF(_formula* _fml) {
+    assert(_fml);
+    assert(_fml->formula_type == CONJ || _fml->formula_type == DISJ
+            || _fml->formula_type == ATOM);
+    switch (_fml->formula_type) {
+        case DISJ:
+            if (_fml->subformula_r->formula_type == CONJ) {
+                _formula* l = _fml->subformula_l;
+                _formula* rl = _fml->subformula_r->subformula_l;
+                _formula* rr = _fml->subformula_r->subformula_r;
+                free(_fml->subformula_r);
+                _fml->subformula_l = compositeByConnective(DISJ, l, rl);
+                _fml->subformula_r = compositeByConnective(DISJ, copyFormula(l), rr);
+                _fml->formula_type = CONJ;
+            }
+            if (_fml->subformula_l->formula_type == CONJ) {
+                _formula* ll = _fml->subformula_l->subformula_l;
+                _formula* lr = _fml->subformula_l->subformula_r;
+                _formula* r = _fml->subformula_r;
+                free(_fml->subformula_l);
+                _fml->subformula_l = compositeByConnective(DISJ, ll, r);
+                _fml->subformula_r = compositeByConnective(DISJ, lr, copyFormula(r));
+                _fml->formula_type = CONJ;
+            }
+            _fml->subformula_l = convertDNFtoCNF(_fml->subformula_l);
+            _fml->subformula_r = convertDNFtoCNF(_fml->subformula_r);
+            break;
+        case CONJ:
+            _fml->subformula_l = convertDNFtoCNF(_fml->subformula_l);
+            _fml->subformula_r = convertDNFtoCNF(_fml->subformula_r);
+            break;
+        case ATOM:
+            break;
+        default:
+            assert(0);
+    }
+    if (_fml->formula_type == DISJ && 
+            (_fml->subformula_l->formula_type == CONJ || _fml->subformula_r->formula_type == CONJ)) {
+        _fml = convertDNFtoCNF(_fml);
+    }
+    return _fml;
+}
+/**
+ * stable语义的转换
+ * @param _fml
+ * @return 
+ */
+_formula* Utils::convertToSt(_formula* _fml) {
+    assert(_fml);
+    switch (_fml->formula_type) {
+        case ATOM:
+            //　内涵谓词
+            if (Vocabulary::instance().isIntensionPredicate(_fml->predicate_id)) {
+                const char* preName = Vocabulary::instance().getNameById(_fml->predicate_id, PREDICATE);
+                char name[64];
+                sprintf(name, "%s_st", preName);
+                int id = Vocabulary::instance().addSymbol(name, PREDICATE, 
+                                Vocabulary::instance().getPredicateArity(_fml->predicate_id));
+                _fml->predicate_id = id;
+            }
+            //　非内涵谓词，不用处理
+            break;
+        case CONJ:
+        case DISJ:
+            _fml->subformula_l = convertToSt(_fml->subformula_l);
+            _fml->subformula_r = convertToSt(_fml->subformula_r);
+            break;
+        case IMPL:
+        {
+            _formula* cur_l = copyFormula(_fml->subformula_l);
+            _formula* cur_r = copyFormula(_fml->subformula_r);
+            _formula* cur = copyFormula(_fml);
+            _fml->formula_type = CONJ;
+            _fml->subformula_l = cur;
+            _fml->subformula_r->formula_type = IMPL;
+            _fml->subformula_r->subformula_l = convertToSt(cur_l);
+            _fml->subformula_r->subformula_r = convertToSt(cur_r);
+        }
+            break;
+        case NEGA:
+        {
+            _formula* cur = copyFormula(_fml);
+            _formula* cur_l = copyFormula(_fml->subformula_l);
+            _fml->formula_type = CONJ;
+            _fml->subformula_l = compositeByConnective(NEGA, convertToSt(cur_l));
+            _fml->subformula_r = cur;
+        }   
+            break;
+        case EXIS:
+        case UNIV:
+            _fml->subformula_l = convertToSt(_fml->subformula_l);
+            break;
+        default:
+            assert(0);
+    }
+    return _fml;
 }
