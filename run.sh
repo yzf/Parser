@@ -39,8 +39,8 @@ cat ${tranType}_main.cpp > src/main.cpp
 
 # 编译代码
 echo -e "Run makefile\n"
-make > /dev/null
-runner="/home/yzf/NetBeansProjects/alpha/build/Debug/GNU-Linux-x86/tests/TestFiles/f2"
+make > /dev/null 2>&1
+runner="build/Debug/GNU-Linux-x86/tests/TestFiles/f2"
 # 开始转化
 echo -e "\nRunning tests...\n"
 input=`ls res/input/$tranType/*.in`
