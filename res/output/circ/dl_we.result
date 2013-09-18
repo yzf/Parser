@@ -1,0 +1,22 @@
+claspD version 1.1.4. Reading...done
+Answer: 1
+w(1) e(3) e(2) m(1) ab(1) 
+Answer: 2
+w(1) e(3) e(2) m(2) m(1) ab(1) 
+Answer: 3
+w(1) e(3) e(2) m(3) m(1) ab(1) 
+Answer: 4
+w(1) e(3) e(2) m(3) m(2) m(1) ab(1) 
+Answer: 5
+w(1) e(3) m(1) ab(1) 
+Answer: 6
+w(1) e(3) m(3) m(1) ab(1) 
+Answer: 7
+w(1) e(2) m(1) ab(1) 
+Answer: 8
+w(1) e(2) m(2) m(1) ab(1) 
+Answer: 9
+w(1) m(1) ab(1) 
+
+Models     : 9     
+Time        : 0.000  (Parsing: 0.000)

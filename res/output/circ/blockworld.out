@@ -1,12 +1,11 @@
 %MIN and MAX domain
 #domain min_block(MIN_block).
 #domain max_block(MAX_block).
-#domain min_a(MIN_a).
-#domain max_a(MAX_a).
 
 %Variable domain
 #domain block(X).
-#domain a(Y).
+#domain const_1(CONST_1).
+const_1(1).
 #domain block(NV_0).
 
 %Nega nega predicate define
@@ -24,8 +23,8 @@ succ_block(A1,A2):- A1==A2-1, block(A1), block(A2).
 
 :- not ab(X), not ontable(X).
 ab(X) | ontable_vary(X).
-:- ontable(Y).
-r_0:- ontable_vary(Y).
+:- ontable(CONST_1).
+r_0:- ontable_vary(CONST_1).
 ab(X):- r_0, not _ab(X).
 :- not s_0(MIN_block).
 s_0(X):- succ_block(X,NV_0), s_0(NV_0).

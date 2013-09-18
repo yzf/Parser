@@ -1,0 +1,74 @@
+%MIN and MAX domain
+#domain min_a(MIN_a).
+#domain max_a(MAX_a).
+#domain min_b(MIN_b).
+#domain max_b(MAX_b).
+
+%Variable domain
+#domain a(X).
+#domain a(NV_0).
+
+%Nega nega predicate define
+_ab(X):- not ab(X).
+_r_0:- not r_0.
+_t_0(X):- not t_0(X).
+
+%Extension predicate define
+_m(X):- not m(X).
+_e(X):- not e(X).
+_w(X):- not w(X).
+_succ_a(X,NV_0):- not succ_a(X,NV_0).
+_max_a(X):- not max_a(X).
+
+%Succ predicate definition
+succ_a(A1,A2):- A1==A2-1, a(A1), a(A2).
+
+:- not ab(X), m(X), not e(X).
+ab(X):- m(X), not e(X).
+:- not m(X), w(X).
+:- e(X), w(X).
+ab(X):- r_0, not _ab(X).
+:- not s_0(MIN_a).
+s_0(X):- succ_a(X,NV_0), s_0(NV_0).
+s_0(X):- not ab(X), not _ab(X).
+s_0(X):- not _r_0.
+s_0(X):- not ab(X), not _ab(X), not _r_0.
+r_0 | t_0(MIN_a):- ab(MIN_a).
+r_0 | t_0(MIN_a):- not ab(MIN_a).
+t_0(MIN_a):- not r_0, not _ab(MIN_a).
+t_0(MIN_a):- not ab(MIN_a), not r_0.
+r_0:- ab(X), t_0(MAX_a), not s_0(NV_0), succ_a(X,NV_0), s_0(X).
+r_0:- not ab(X), t_0(MAX_a), not s_0(NV_0), succ_a(X,NV_0), s_0(X).
+:- not r_0, t_0(MAX_a), not s_0(NV_0), succ_a(X,NV_0), s_0(X), not _ab(X).
+:- not ab(X), not r_0, t_0(MAX_a), not s_0(NV_0), succ_a(X,NV_0), s_0(X).
+:- not s_0(NV_0), succ_a(X,NV_0), s_0(X), not r_0, not _ab(X), not _t_0(MAX_a).
+:- not ab(X), not s_0(NV_0), succ_a(X,NV_0), s_0(X), not r_0, not _t_0(MAX_a).
+r_0:- ab(X), t_0(MAX_a), max_a(X), s_0(X).
+r_0:- not ab(X), t_0(MAX_a), max_a(X), s_0(X).
+:- not r_0, t_0(MAX_a), max_a(X), s_0(X), not _ab(X).
+:- not ab(X), not r_0, t_0(MAX_a), max_a(X), s_0(X).
+:- max_a(X), s_0(X), not r_0, not _ab(X), not _t_0(MAX_a).
+:- not ab(X), max_a(X), s_0(X), not r_0, not _t_0(MAX_a).
+t_0(MAX_a):- not ab(X), not s_0(NV_0), succ_a(X,NV_0), s_0(X), not _ab(X).
+t_0(MAX_a):- r_0, not s_0(NV_0), succ_a(X,NV_0), s_0(X).
+ab(X) | t_0(MAX_a):- not s_0(NV_0), succ_a(X,NV_0), s_0(X), not _ab(X), not _r_0.
+:- not ab(X), not t_0(MAX_a), not s_0(NV_0), succ_a(X,NV_0), s_0(X), not _ab(X).
+:- not t_0(MAX_a), not s_0(NV_0), succ_a(X,NV_0), s_0(X), not _r_0.
+t_0(MAX_a):- not ab(X), max_a(X), s_0(X), not _ab(X).
+t_0(MAX_a):- r_0, max_a(X), s_0(X).
+ab(X) | t_0(MAX_a):- max_a(X), s_0(X), not _ab(X), not _r_0.
+:- not ab(X), not t_0(MAX_a), max_a(X), s_0(X), not _ab(X).
+:- not t_0(MAX_a), max_a(X), s_0(X), not _r_0.
+r_0 | t_0(NV_0):- ab(NV_0), t_0(X), succ_a(X,NV_0).
+r_0 | t_0(NV_0):- not ab(NV_0), t_0(X), succ_a(X,NV_0).
+t_0(NV_0):- not r_0, t_0(X), succ_a(X,NV_0), not _ab(NV_0).
+t_0(NV_0):- not ab(NV_0), not r_0, t_0(X), succ_a(X,NV_0).
+:- succ_a(X,NV_0), not r_0, not t_0(NV_0), not _ab(NV_0), not _t_0(X).
+:- not ab(NV_0), succ_a(X,NV_0), not r_0, not t_0(NV_0), not _t_0(X).
+t_0(X):- not ab(NV_0), succ_a(X,NV_0), not _ab(NV_0).
+t_0(X):- r_0, succ_a(X,NV_0).
+ab(NV_0) | t_0(X):- succ_a(X,NV_0), not _ab(NV_0), not _r_0.
+t_0(X):- t_0(NV_0), succ_a(X,NV_0).
+:- not ab(NV_0), not t_0(X), succ_a(X,NV_0), not _ab(NV_0).
+:- not t_0(X), succ_a(X,NV_0), not _r_0.
+:- not t_0(X), succ_a(X,NV_0), not _t_0(NV_0).

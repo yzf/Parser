@@ -1,0 +1,54 @@
+claspD version 1.1.4. Reading...done
+Answer: 1
+w(1) e(3) e(2) m(1) ab(1) 
+Answer: 2
+w(1) e(3) e(2) m(2) m(1) ab(1) 
+Answer: 3
+w(1) e(3) e(2) m(3) m(1) ab(1) 
+Answer: 4
+w(1) e(3) e(2) m(3) m(2) m(1) ab(1) 
+Answer: 5
+w(1) e(3) m(1) ab(1) 
+Answer: 6
+w(1) e(3) m(3) m(1) ab(1) 
+Answer: 7
+w(1) e(3) m(2) m(1) ab(1) ab(2) 
+Answer: 8
+w(1) e(3) m(2) m(1) w(2) ab(1) ab(2) 
+Answer: 9
+w(1) e(3) m(3) m(2) m(1) ab(1) ab(2) 
+Answer: 10
+w(1) e(3) m(3) m(2) m(1) w(2) ab(1) ab(2) 
+Answer: 11
+w(1) e(2) m(1) ab(1) 
+Answer: 12
+w(1) e(2) m(2) m(1) ab(1) 
+Answer: 13
+w(1) m(1) ab(1) 
+Answer: 14
+w(1) m(2) m(1) ab(1) ab(2) 
+Answer: 15
+w(1) m(2) m(1) w(2) ab(1) ab(2) 
+Answer: 16
+w(1) e(2) m(3) m(1) ab(1) ab(3) 
+Answer: 17
+w(1) e(2) m(3) m(1) w(3) ab(1) ab(3) 
+Answer: 18
+w(1) e(2) m(3) m(2) m(1) ab(1) ab(3) 
+Answer: 19
+w(1) e(2) m(3) m(2) m(1) w(3) ab(1) ab(3) 
+Answer: 20
+w(1) m(3) m(1) ab(1) ab(3) 
+Answer: 21
+w(1) m(3) m(1) w(3) ab(1) ab(3) 
+Answer: 22
+w(1) m(3) m(2) m(1) ab(1) ab(2) ab(3) 
+Answer: 23
+w(1) m(3) m(2) m(1) w(2) ab(1) ab(2) ab(3) 
+Answer: 24
+w(1) m(3) m(2) m(1) w(3) ab(1) ab(2) ab(3) 
+Answer: 25
+w(1) m(3) m(2) m(1) w(3) w(2) ab(1) ab(2) ab(3) 
+
+Models     : 25    
+Time        : 0.000  (Parsing: 0.000)

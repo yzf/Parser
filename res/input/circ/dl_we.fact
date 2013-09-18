@@ -7,16 +7,16 @@ min_b(11).
 max_b(11).
 
 w(1).
-:- e(1,11).
-r_0 :- e_vary(1,11).
-
+w_vary(1).
+:- e(1).
+r_0 :- e_vary(1).
 
 m(X) | _m(X) :- a(X).
 w(X) | _w(X) :- a(X).
-e(X,Y) | _e(X,Y) :- a(X), b(Y).
+e(X) | _e(X) :- a(X).
 
 #hide.
 #show m/1.
 #show w/1.
-#show e/2.
+#show e/1.
 #show ab/1.

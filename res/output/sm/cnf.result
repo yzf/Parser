@@ -5,4 +5,4 @@ Answer: 2
 true(5) true(4) true(3) true(2) true(1) false(2) false(1) 
 
 Models     : 2     
-Time        : 0.060  (Parsing: 0.040)
+Time        : 0.040  (Parsing: 0.020)
