@@ -12,16 +12,16 @@ CND_ARTIFACT_DIR_Debug=build/Debug/GNU-Linux-x86/tests/TestFiles
 CND_ARTIFACT_NAME_Debug=f2
 CND_ARTIFACT_PATH_Debug=build/Debug/GNU-Linux-x86/tests/TestFiles/f2
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux-x86/package
-CND_PACKAGE_NAME_Debug=alpha.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/alpha.tar
+CND_PACKAGE_NAME_Debug=parser.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/parser.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux-x86
 CND_ARTIFACT_DIR_Release=build/Release/GNU-Linux-x86/tests/TestFiles
 CND_ARTIFACT_NAME_Release=f2
 CND_ARTIFACT_PATH_Release=build/Release/GNU-Linux-x86/tests/TestFiles/f2
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux-x86/package
-CND_PACKAGE_NAME_Release=alpha.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/alpha.tar
+CND_PACKAGE_NAME_Release=parser.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/parser.tar
 #
 # include compiler specific variables
 #
