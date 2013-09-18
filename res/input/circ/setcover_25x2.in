@@ -1,4 +1,4 @@
-[!X][!Y][?Z](set(X,Y)) -> (cvr(Z)&set(Z,Y)).
+[!X][!Y][?Z](set(X,Y) -> (cvr(Z)&set(Z,Y))).
 
 {cvr;}
 
