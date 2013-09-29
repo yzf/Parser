@@ -110,7 +110,13 @@ void Rule::aspModify() {
         }
         
         bool flag = false;
-        if (headPart->formula_type == NEGA || 
+//        if ((headPart->formula_type == NEGA && (headPart->subformula_l->formula_type == NEGA)) 
+//                || 
+//                (cur->predicate_id >= 0 && 
+//                        ! Vocabulary::instance()
+//                                .isIntensionPredicate(cur->predicate_id))) {
+        if ((headPart->formula_type == NEGA) 
+                || 
                 (cur->predicate_id >= 0 && 
                         ! Vocabulary::instance()
                                 .isIntensionPredicate(cur->predicate_id))) {
@@ -161,6 +167,11 @@ void Rule::generateRuleString() {
     for (FORMULAS_ITERATOR it = m_pHeadFormulas->begin(); 
             it != m_pHeadFormulas->end(); ++ it) {
         _formula* headPart = it->getFormula();
+        
+        if (headPart->formula_type == NEGA) {
+            m_sRuleString += "_";
+            headPart = headPart->subformula_l;
+        }
         
         if (headPart->formula_type == ATOM && headPart->predicate_id != PRED_FALSE 
                 && headPart->predicate_id != PRED_TRUE) {

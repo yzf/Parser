@@ -35,6 +35,7 @@ void SMTranslator::init(const Formula& _originalFml) {
     destroy();
     m_pOriginalFormulas = _originalFml.divideFormula();
     m_pOriginalFormulas->convertToNNF();
+    m_vOriginalFormulas = Utils::convertFormulasToStrings(m_pOriginalFormulas);
     m_pNegaPredicates = new Formulas();
 }
 /**

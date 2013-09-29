@@ -2,53 +2,53 @@ claspD version 1.1.4. Reading...done
 Answer: 1
 w(1) e(3,11) e(2,11) m(3) m(2) m(1) ab(1) 
 Answer: 2
-w(1) e(3,11) e(2,11) m(3) m(1) ab(1) 
-Answer: 3
 w(1) e(3,11) e(2,11) m(2) m(1) ab(1) 
-Answer: 4
-w(1) e(3,11) e(2,11) m(1) ab(1) 
-Answer: 5
-w(1) e(3,11) m(3) m(1) ab(1) 
-Answer: 6
-w(1) e(3,11) m(1) ab(1) 
-Answer: 7
-w(1) e(3,11) m(3) m(2) m(1) ab(2) ab(1) 
-Answer: 8
-w(1) e(3,11) m(3) m(2) m(1) w(2) ab(2) ab(1) 
-Answer: 9
-w(1) e(3,11) m(2) m(1) ab(2) ab(1) 
-Answer: 10
-w(1) e(3,11) m(2) m(1) w(2) ab(2) ab(1) 
-Answer: 11
+Answer: 3
 w(1) e(2,11) m(3) m(2) m(1) ab(3) ab(1) 
-Answer: 12
+Answer: 4
 w(1) e(2,11) m(3) m(2) m(1) w(3) ab(3) ab(1) 
-Answer: 13
-w(1) e(2,11) m(3) m(1) ab(3) ab(1) 
-Answer: 14
-w(1) e(2,11) m(3) m(1) w(3) ab(3) ab(1) 
-Answer: 15
-w(1) m(3) m(1) ab(3) ab(1) 
-Answer: 16
-w(1) m(3) m(1) w(3) ab(3) ab(1) 
-Answer: 17
-w(1) m(3) m(2) m(1) ab(3) ab(2) ab(1) 
-Answer: 18
-w(1) m(3) m(2) m(1) w(2) ab(3) ab(2) ab(1) 
-Answer: 19
-w(1) m(3) m(2) m(1) w(3) ab(3) ab(2) ab(1) 
-Answer: 20
-w(1) m(3) m(2) m(1) w(3) w(2) ab(3) ab(2) ab(1) 
-Answer: 21
-w(1) m(2) m(1) ab(2) ab(1) 
-Answer: 22
-w(1) m(2) m(1) w(2) ab(2) ab(1) 
-Answer: 23
-w(1) m(1) ab(1) 
-Answer: 24
-w(1) e(2,11) m(1) ab(1) 
-Answer: 25
+Answer: 5
 w(1) e(2,11) m(2) m(1) ab(1) 
+Answer: 6
+w(1) e(2,11) m(3) m(1) ab(3) ab(1) 
+Answer: 7
+w(1) e(2,11) m(3) m(1) w(3) ab(3) ab(1) 
+Answer: 8
+w(1) e(3,11) e(2,11) m(3) m(1) ab(1) 
+Answer: 9
+w(1) e(3,11) e(2,11) m(1) ab(1) 
+Answer: 10
+w(1) e(2,11) m(1) ab(1) 
+Answer: 11
+w(1) m(3) m(1) ab(3) ab(1) 
+Answer: 12
+w(1) m(3) m(1) w(3) ab(3) ab(1) 
+Answer: 13
+w(1) e(3,11) m(3) m(1) ab(1) 
+Answer: 14
+w(1) e(3,11) m(1) ab(1) 
+Answer: 15
+w(1) m(1) ab(1) 
+Answer: 16
+w(1) m(3) m(2) m(1) ab(3) ab(2) ab(1) 
+Answer: 17
+w(1) m(3) m(2) m(1) w(2) ab(3) ab(2) ab(1) 
+Answer: 18
+w(1) m(3) m(2) m(1) w(3) ab(3) ab(2) ab(1) 
+Answer: 19
+w(1) m(3) m(2) m(1) w(3) w(2) ab(3) ab(2) ab(1) 
+Answer: 20
+w(1) e(3,11) m(3) m(2) m(1) ab(2) ab(1) 
+Answer: 21
+w(1) e(3,11) m(3) m(2) m(1) w(2) ab(2) ab(1) 
+Answer: 22
+w(1) e(3,11) m(2) m(1) ab(2) ab(1) 
+Answer: 23
+w(1) e(3,11) m(2) m(1) w(2) ab(2) ab(1) 
+Answer: 24
+w(1) m(2) m(1) ab(2) ab(1) 
+Answer: 25
+w(1) m(2) m(1) w(2) ab(2) ab(1) 
 
 Models     : 25    
 Time        : 0.000  (Parsing: 0.000)

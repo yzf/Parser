@@ -10,10 +10,6 @@
 #domain atom(NV_0).
 
 %Nega nega predicate define
-_ok:- not ok.
-_false(Y):- not false(Y).
-_true(Y):- not true(Y).
-_t_0(X,Y):- not t_0(X,Y).
 
 %Extension predicate define
 _posd(X,Y):- not posd(X,Y).
@@ -30,107 +26,107 @@ true(Y) | false(Y).
 s_0(X,Y):- succ_atom(Y,NV_0), s_0(X,NV_0).
 s_0(X,Y):- not true(Y), posd(X,Y).
 s_0(X,Y):- not false(Y), negd(X,Y).
-s_0(X,Y):- not _ok.
-s_0(X,Y):- not true(Y), posd(X,Y), not _ok.
-s_0(X,Y):- not true(Y), posd(X,Y), not _ok.
-s_0(X,Y):- not false(Y), negd(X,Y), not _ok.
-s_0(X,Y):- not false(Y), negd(X,Y), not _ok.
+_ok | s_0(X,Y).
+s_0(X,Y) | _ok:- not true(Y), posd(X,Y).
+s_0(X,Y) | _ok:- not true(Y), posd(X,Y).
+s_0(X,Y) | _ok:- not false(Y), negd(X,Y).
+s_0(X,Y) | _ok:- not false(Y), negd(X,Y).
 ok | t_0(X,MIN_atom):- not negd(X,MIN_atom), not posd(X,MIN_atom).
 ok | t_0(X,MIN_atom):- false(MIN_atom), not posd(X,MIN_atom).
-ok | t_0(X,MIN_atom):- not posd(X,MIN_atom), not negd(X,MIN_atom), not _false(MIN_atom).
+_false(MIN_atom) | ok | t_0(X,MIN_atom):- not posd(X,MIN_atom), not negd(X,MIN_atom).
 ok | t_0(X,MIN_atom):- not negd(X,MIN_atom), true(MIN_atom).
 ok | t_0(X,MIN_atom):- false(MIN_atom), true(MIN_atom).
-ok | t_0(X,MIN_atom):- true(MIN_atom), not negd(X,MIN_atom), not _false(MIN_atom).
-ok | t_0(X,MIN_atom):- not negd(X,MIN_atom), not posd(X,MIN_atom), not _true(MIN_atom).
-ok | t_0(X,MIN_atom):- false(MIN_atom), not posd(X,MIN_atom), not _true(MIN_atom).
-ok | t_0(X,MIN_atom):- not negd(X,MIN_atom), not _false(MIN_atom), not posd(X,MIN_atom), not _true(MIN_atom).
+_false(MIN_atom) | ok | t_0(X,MIN_atom):- true(MIN_atom), not negd(X,MIN_atom).
+_true(MIN_atom) | ok | t_0(X,MIN_atom):- not negd(X,MIN_atom), not posd(X,MIN_atom).
+_true(MIN_atom) | ok | t_0(X,MIN_atom):- false(MIN_atom), not posd(X,MIN_atom).
+_false(MIN_atom) | _true(MIN_atom) | ok | t_0(X,MIN_atom):- not negd(X,MIN_atom), not posd(X,MIN_atom).
 t_0(X,MIN_atom):- not negd(X,MIN_atom), not posd(X,MIN_atom), not ok.
-t_0(X,MIN_atom):- not posd(X,MIN_atom), not ok, not _false(MIN_atom).
-t_0(X,MIN_atom):- not negd(X,MIN_atom), not ok, not _true(MIN_atom).
-t_0(X,MIN_atom):- not ok, not _false(MIN_atom), not _true(MIN_atom).
+_false(MIN_atom) | t_0(X,MIN_atom):- not posd(X,MIN_atom), not ok.
+t_0(X,MIN_atom) | _true(MIN_atom):- not negd(X,MIN_atom), not ok.
+_false(MIN_atom) | t_0(X,MIN_atom) | _true(MIN_atom):- not ok.
 ok:- not negd(X,Y), t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not posd(X,Y).
 ok:- false(Y), t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not posd(X,Y).
-ok:- t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not posd(X,Y), not negd(X,Y), not _false(Y).
+_false(Y) | ok:- t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not posd(X,Y), not negd(X,Y).
 ok:- not negd(X,Y), t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), true(Y).
 ok:- false(Y), t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), true(Y).
-ok:- t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), true(Y), not negd(X,Y), not _false(Y).
-ok:- not negd(X,Y), t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not posd(X,Y), not _true(Y).
-ok:- false(Y), t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not posd(X,Y), not _true(Y).
-ok:- t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not negd(X,Y), not _false(Y), not posd(X,Y), not _true(Y).
+_false(Y) | ok:- t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), true(Y), not negd(X,Y).
+_true(Y) | ok:- not negd(X,Y), t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not posd(X,Y).
+_true(Y) | ok:- false(Y), t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not posd(X,Y).
+_false(Y) | _true(Y) | ok:- t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not negd(X,Y), not posd(X,Y).
 :- not negd(X,Y), not posd(X,Y), not ok, t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y).
-:- not posd(X,Y), not ok, t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not _false(Y).
-:- not negd(X,Y), not ok, t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not _true(Y).
-:- not ok, t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not _false(Y), not _true(Y).
-:- not negd(X,Y), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not posd(X,Y), not ok, not _t_0(X,MAX_atom).
-:- not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not posd(X,Y), not ok, not _false(Y), not _t_0(X,MAX_atom).
-:- not negd(X,Y), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not ok, not _true(Y), not _t_0(X,MAX_atom).
-:- not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not ok, not _false(Y), not _true(Y), not _t_0(X,MAX_atom).
+_false(Y):- not posd(X,Y), not ok, t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y).
+_true(Y):- not negd(X,Y), not ok, t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y).
+_false(Y) | _true(Y):- not ok, t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y).
+_t_0(X,MAX_atom):- not negd(X,Y), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not posd(X,Y), not ok.
+_false(Y) | _t_0(X,MAX_atom):- not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not posd(X,Y), not ok.
+_true(Y) | _t_0(X,MAX_atom):- not negd(X,Y), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not ok.
+_false(Y) | _true(Y) | _t_0(X,MAX_atom):- not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not ok.
 ok:- not negd(X,Y), t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), not posd(X,Y).
 ok:- false(Y), t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), not posd(X,Y).
-ok:- t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), not posd(X,Y), not negd(X,Y), not _false(Y).
+_false(Y) | ok:- t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), not posd(X,Y), not negd(X,Y).
 ok:- not negd(X,Y), t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), true(Y).
 ok:- false(Y), t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), true(Y).
-ok:- t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), true(Y), not negd(X,Y), not _false(Y).
-ok:- not negd(X,Y), t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), not posd(X,Y), not _true(Y).
-ok:- false(Y), t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), not posd(X,Y), not _true(Y).
-ok:- t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), not negd(X,Y), not _false(Y), not posd(X,Y), not _true(Y).
+_false(Y) | ok:- t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), true(Y), not negd(X,Y).
+_true(Y) | ok:- not negd(X,Y), t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), not posd(X,Y).
+_true(Y) | ok:- false(Y), t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), not posd(X,Y).
+_false(Y) | _true(Y) | ok:- t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), not negd(X,Y), not posd(X,Y).
 :- not negd(X,Y), not posd(X,Y), not ok, t_0(X,MAX_atom), max_atom(Y), s_0(X,Y).
-:- not posd(X,Y), not ok, t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), not _false(Y).
-:- not negd(X,Y), not ok, t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), not _true(Y).
-:- not ok, t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), not _false(Y), not _true(Y).
-:- not negd(X,Y), max_atom(Y), s_0(X,Y), not posd(X,Y), not ok, not _t_0(X,MAX_atom).
-:- max_atom(Y), s_0(X,Y), not posd(X,Y), not ok, not _false(Y), not _t_0(X,MAX_atom).
-:- not negd(X,Y), max_atom(Y), s_0(X,Y), not ok, not _true(Y), not _t_0(X,MAX_atom).
-:- max_atom(Y), s_0(X,Y), not ok, not _false(Y), not _true(Y), not _t_0(X,MAX_atom).
+_false(Y):- not posd(X,Y), not ok, t_0(X,MAX_atom), max_atom(Y), s_0(X,Y).
+_true(Y):- not negd(X,Y), not ok, t_0(X,MAX_atom), max_atom(Y), s_0(X,Y).
+_false(Y) | _true(Y):- not ok, t_0(X,MAX_atom), max_atom(Y), s_0(X,Y).
+_t_0(X,MAX_atom):- not negd(X,Y), max_atom(Y), s_0(X,Y), not posd(X,Y), not ok.
+_false(Y) | _t_0(X,MAX_atom):- max_atom(Y), s_0(X,Y), not posd(X,Y), not ok.
+_true(Y) | _t_0(X,MAX_atom):- not negd(X,Y), max_atom(Y), s_0(X,Y), not ok.
+_false(Y) | _true(Y) | _t_0(X,MAX_atom):- max_atom(Y), s_0(X,Y), not ok.
 t_0(X,MAX_atom):- not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not true(Y), posd(X,Y).
 t_0(X,MAX_atom):- not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not false(Y), negd(X,Y).
 t_0(X,MAX_atom):- ok, not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y).
-true(Y) | t_0(X,MAX_atom):- posd(X,Y), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not _ok.
-t_0(X,MAX_atom):- not true(Y), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), posd(X,Y), not _ok.
-false(Y) | t_0(X,MAX_atom):- negd(X,Y), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not _ok.
-t_0(X,MAX_atom):- not false(Y), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), negd(X,Y), not _ok.
+true(Y) | t_0(X,MAX_atom) | _ok:- posd(X,Y), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y).
+t_0(X,MAX_atom) | _ok:- not true(Y), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), posd(X,Y).
+false(Y) | t_0(X,MAX_atom) | _ok:- negd(X,Y), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y).
+t_0(X,MAX_atom) | _ok:- not false(Y), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), negd(X,Y).
 :- not true(Y), not t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), posd(X,Y).
 :- not false(Y), not t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), negd(X,Y).
-:- not t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y), not _ok.
+_ok:- not t_0(X,MAX_atom), not s_0(X,NV_0), succ_atom(Y,NV_0), s_0(X,Y).
 t_0(X,MAX_atom):- max_atom(Y), s_0(X,Y), not true(Y), posd(X,Y).
 t_0(X,MAX_atom):- max_atom(Y), s_0(X,Y), not false(Y), negd(X,Y).
 t_0(X,MAX_atom):- ok, max_atom(Y), s_0(X,Y).
-true(Y) | t_0(X,MAX_atom):- posd(X,Y), max_atom(Y), s_0(X,Y), not _ok.
-t_0(X,MAX_atom):- not true(Y), max_atom(Y), s_0(X,Y), posd(X,Y), not _ok.
-false(Y) | t_0(X,MAX_atom):- negd(X,Y), max_atom(Y), s_0(X,Y), not _ok.
-t_0(X,MAX_atom):- not false(Y), max_atom(Y), s_0(X,Y), negd(X,Y), not _ok.
+true(Y) | t_0(X,MAX_atom) | _ok:- posd(X,Y), max_atom(Y), s_0(X,Y).
+t_0(X,MAX_atom) | _ok:- not true(Y), max_atom(Y), s_0(X,Y), posd(X,Y).
+false(Y) | t_0(X,MAX_atom) | _ok:- negd(X,Y), max_atom(Y), s_0(X,Y).
+t_0(X,MAX_atom) | _ok:- not false(Y), max_atom(Y), s_0(X,Y), negd(X,Y).
 :- not true(Y), not t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), posd(X,Y).
 :- not false(Y), not t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), negd(X,Y).
-:- not t_0(X,MAX_atom), max_atom(Y), s_0(X,Y), not _ok.
+_ok:- not t_0(X,MAX_atom), max_atom(Y), s_0(X,Y).
 ok | t_0(X,NV_0):- not negd(X,NV_0), t_0(X,Y), succ_atom(Y,NV_0), not posd(X,NV_0).
 ok | t_0(X,NV_0):- false(NV_0), t_0(X,Y), succ_atom(Y,NV_0), not posd(X,NV_0).
-ok | t_0(X,NV_0):- t_0(X,Y), succ_atom(Y,NV_0), not posd(X,NV_0), not negd(X,NV_0), not _false(NV_0).
+_false(NV_0) | ok | t_0(X,NV_0):- t_0(X,Y), succ_atom(Y,NV_0), not posd(X,NV_0), not negd(X,NV_0).
 ok | t_0(X,NV_0):- not negd(X,NV_0), t_0(X,Y), succ_atom(Y,NV_0), true(NV_0).
 ok | t_0(X,NV_0):- false(NV_0), t_0(X,Y), succ_atom(Y,NV_0), true(NV_0).
-ok | t_0(X,NV_0):- t_0(X,Y), succ_atom(Y,NV_0), true(NV_0), not negd(X,NV_0), not _false(NV_0).
-ok | t_0(X,NV_0):- not negd(X,NV_0), t_0(X,Y), succ_atom(Y,NV_0), not posd(X,NV_0), not _true(NV_0).
-ok | t_0(X,NV_0):- false(NV_0), t_0(X,Y), succ_atom(Y,NV_0), not posd(X,NV_0), not _true(NV_0).
-ok | t_0(X,NV_0):- t_0(X,Y), succ_atom(Y,NV_0), not negd(X,NV_0), not _false(NV_0), not posd(X,NV_0), not _true(NV_0).
+_false(NV_0) | ok | t_0(X,NV_0):- t_0(X,Y), succ_atom(Y,NV_0), true(NV_0), not negd(X,NV_0).
+_true(NV_0) | ok | t_0(X,NV_0):- not negd(X,NV_0), t_0(X,Y), succ_atom(Y,NV_0), not posd(X,NV_0).
+_true(NV_0) | ok | t_0(X,NV_0):- false(NV_0), t_0(X,Y), succ_atom(Y,NV_0), not posd(X,NV_0).
+_false(NV_0) | _true(NV_0) | ok | t_0(X,NV_0):- t_0(X,Y), succ_atom(Y,NV_0), not negd(X,NV_0), not posd(X,NV_0).
 t_0(X,NV_0):- not negd(X,NV_0), not posd(X,NV_0), not ok, t_0(X,Y), succ_atom(Y,NV_0).
-t_0(X,NV_0):- not posd(X,NV_0), not ok, t_0(X,Y), succ_atom(Y,NV_0), not _false(NV_0).
-t_0(X,NV_0):- not negd(X,NV_0), not ok, t_0(X,Y), succ_atom(Y,NV_0), not _true(NV_0).
-t_0(X,NV_0):- not ok, t_0(X,Y), succ_atom(Y,NV_0), not _false(NV_0), not _true(NV_0).
-:- not negd(X,NV_0), succ_atom(Y,NV_0), not posd(X,NV_0), not ok, not t_0(X,NV_0), not _t_0(X,Y).
-:- succ_atom(Y,NV_0), not posd(X,NV_0), not ok, not t_0(X,NV_0), not _false(NV_0), not _t_0(X,Y).
-:- not negd(X,NV_0), succ_atom(Y,NV_0), not t_0(X,NV_0), not ok, not _true(NV_0), not _t_0(X,Y).
-:- succ_atom(Y,NV_0), not t_0(X,NV_0), not ok, not _false(NV_0), not _true(NV_0), not _t_0(X,Y).
+_false(NV_0) | t_0(X,NV_0):- not posd(X,NV_0), not ok, t_0(X,Y), succ_atom(Y,NV_0).
+_true(NV_0) | t_0(X,NV_0):- not negd(X,NV_0), not ok, t_0(X,Y), succ_atom(Y,NV_0).
+_false(NV_0) | _true(NV_0) | t_0(X,NV_0):- not ok, t_0(X,Y), succ_atom(Y,NV_0).
+_t_0(X,Y):- not negd(X,NV_0), succ_atom(Y,NV_0), not posd(X,NV_0), not ok, not t_0(X,NV_0).
+_false(NV_0) | _t_0(X,Y):- succ_atom(Y,NV_0), not posd(X,NV_0), not ok, not t_0(X,NV_0).
+_true(NV_0) | _t_0(X,Y):- not negd(X,NV_0), succ_atom(Y,NV_0), not t_0(X,NV_0), not ok.
+_false(NV_0) | _true(NV_0) | _t_0(X,Y):- succ_atom(Y,NV_0), not t_0(X,NV_0), not ok.
 t_0(X,Y):- succ_atom(Y,NV_0), not true(NV_0), posd(X,NV_0).
 t_0(X,Y):- succ_atom(Y,NV_0), not false(NV_0), negd(X,NV_0).
 t_0(X,Y):- ok, succ_atom(Y,NV_0).
-true(NV_0) | t_0(X,Y):- posd(X,NV_0), succ_atom(Y,NV_0), not _ok.
-t_0(X,Y):- not true(NV_0), succ_atom(Y,NV_0), posd(X,NV_0), not _ok.
-false(NV_0) | t_0(X,Y):- negd(X,NV_0), succ_atom(Y,NV_0), not _ok.
-t_0(X,Y):- not false(NV_0), succ_atom(Y,NV_0), negd(X,NV_0), not _ok.
+true(NV_0) | t_0(X,Y) | _ok:- posd(X,NV_0), succ_atom(Y,NV_0).
+t_0(X,Y) | _ok:- not true(NV_0), succ_atom(Y,NV_0), posd(X,NV_0).
+false(NV_0) | t_0(X,Y) | _ok:- negd(X,NV_0), succ_atom(Y,NV_0).
+t_0(X,Y) | _ok:- not false(NV_0), succ_atom(Y,NV_0), negd(X,NV_0).
 t_0(X,Y):- t_0(X,NV_0), succ_atom(Y,NV_0).
 :- not true(NV_0), not t_0(X,Y), succ_atom(Y,NV_0), posd(X,NV_0).
 :- not false(NV_0), not t_0(X,Y), succ_atom(Y,NV_0), negd(X,NV_0).
-:- not t_0(X,Y), succ_atom(Y,NV_0), not _ok.
-:- not t_0(X,Y), succ_atom(Y,NV_0), not _t_0(X,NV_0).
+_ok:- not t_0(X,Y), succ_atom(Y,NV_0).
+_t_0(X,NV_0):- not t_0(X,Y), succ_atom(Y,NV_0).
 true(Y):- ok, un(Y).
 false(Y):- ok, un(Y).
 :- not ok.
