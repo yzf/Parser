@@ -97,7 +97,7 @@ typedef union YYSTYPE
 {
 
 /* Line 2068 of yacc.c  */
-#line 27 "circ_parse.y"
+#line 27 "sm_parse.y"
 
     int num;
     char* s;

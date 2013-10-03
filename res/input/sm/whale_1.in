@@ -1,0 +1,9 @@
+[!X]([?Y]((~mammal(X)|((habitat(X,Y)&land(Y))|~~abm(X))))).
+[!X]([?Y]((~mammal(X)|((habitat(X,Y)&land(Y))|abm(X))))).
+[!X]([!Y]((~whale(X)|(mammal(X)&(~habitat(X,Y)|~land(Y)))))).
+(r_0->[!X]((abm(X)|~abm(X)))).
+(([!X]((abm(X)|~abm(X))))->r_0).
+
+{abm,r_0}
+
+<X@i;Y@e>

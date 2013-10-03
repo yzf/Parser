@@ -481,8 +481,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "circ_lex.l"
-#line 2 "circ_lex.l"
+#line 1 "sm_lex.l"
+#line 2 "sm_lex.l"
 #include "parse.h"
 
 extern "C" {
@@ -680,7 +680,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 21 "circ_lex.l"
+#line 20 "sm_lex.l"
 
 #line 686 "../src/lex.cpp"
 
@@ -767,21 +767,24 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 22 "circ_lex.l"
+#line 21 "sm_lex.l"
 {
                                     yylval.s=strdup(yytext);
+                                    printf("Vari: %s\n",yytext);
                                     return S_VARI;
                                 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 27 "circ_lex.l"
+#line 27 "sm_lex.l"
 {
                                     yylval.s=strdup(yytext);
                                     if (1 == context_flag) { 
+                                        printf("Func: %s\n",yytext);
                                         return S_FUNC;
                                     } 
                                     else {
+                                        printf("Pred: %s\n",yytext);
                                         context_flag = 1;
                                         return S_PRED;
                                     }
@@ -789,7 +792,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 37 "circ_lex.l"
+#line 39 "sm_lex.l"
 {
                                     yylval.num=atoi(yytext);
                                     return INTEGER;
@@ -797,132 +800,132 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 41 "circ_lex.l"
+#line 43 "sm_lex.l"
 {return S_NEGA;			}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 42 "circ_lex.l"
+#line 44 "sm_lex.l"
 {return S_CONJ;			}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 43 "circ_lex.l"
+#line 45 "sm_lex.l"
 {return S_DISJ;			}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 44 "circ_lex.l"
+#line 46 "sm_lex.l"
 {return S_IMPL;			}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 45 "circ_lex.l"
+#line 47 "sm_lex.l"
 {return S_UNIV;			}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 46 "circ_lex.l"
+#line 48 "sm_lex.l"
 {return S_EXIS;			}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 47 "circ_lex.l"
+#line 49 "sm_lex.l"
 {return PERIOD;			}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 48 "circ_lex.l"
+#line 50 "sm_lex.l"
 {return LPAREN;			}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 49 "circ_lex.l"
+#line 51 "sm_lex.l"
 {return RPAREN;			}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 50 "circ_lex.l"
+#line 52 "sm_lex.l"
 {return LBRACKET;		}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 51 "circ_lex.l"
+#line 53 "sm_lex.l"
 {return RBRACKET;		}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 52 "circ_lex.l"
+#line 54 "sm_lex.l"
 {return COMMA;			}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 53 "circ_lex.l"
+#line 55 "sm_lex.l"
 {return EQUAL;			}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 54 "circ_lex.l"
+#line 56 "sm_lex.l"
 {return MARCO;			}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 55 "circ_lex.l"
+#line 57 "sm_lex.l"
 {return LBRACE;                 }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 56 "circ_lex.l"
+#line 58 "sm_lex.l"
 {return RBRACE;                 }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 57 "circ_lex.l"
+#line 59 "sm_lex.l"
 {return LL;                     }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 58 "circ_lex.l"
+#line 60 "sm_lex.l"
 {return RR;                     }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 59 "circ_lex.l"
+#line 61 "sm_lex.l"
 {return SEMICO;                 }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 60 "circ_lex.l"
+#line 62 "sm_lex.l"
 {return AT;                     }
 	YY_BREAK
 case 24:
 /* rule 24 can match eol */
 YY_RULE_SETUP
-#line 61 "circ_lex.l"
+#line 63 "sm_lex.l"
 {/* skip blankspace */	}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 63 "circ_lex.l"
+#line 65 "sm_lex.l"
 {BEGIN COMMENT;                 }
 	YY_BREAK
 case 26:
 /* rule 26 can match eol */
 YY_RULE_SETUP
-#line 64 "circ_lex.l"
+#line 66 "sm_lex.l"
 {BEGIN INITIAL;                 }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 65 "circ_lex.l"
+#line 67 "sm_lex.l"
 {}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 67 "circ_lex.l"
+#line 69 "sm_lex.l"
 ECHO;
 	YY_BREAK
-#line 926 "../src/lex.cpp"
+#line 929 "../src/lex.cpp"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(COMMENT):
 	yyterminate();
@@ -1921,7 +1924,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 67 "circ_lex.l"
+#line 69 "sm_lex.l"
 
 
 

@@ -1,0 +1,47 @@
+%MIN and MAX domain
+#domain min_i(MIN_i).
+#domain max_i(MAX_i).
+#domain min_e(MIN_e).
+#domain max_e(MAX_e).
+
+%Variable domain
+#domain i(X).
+#domain const_1(CONST_1).
+const_1(1).
+#domain const_2(CONST_2).
+const_2(2).
+#domain e(Y).
+
+%Nega nega predicate define
+_land_vary(CONST_1):- not land_vary(CONST_1).
+_habitat_vary(X,CONST_1):- not habitat_vary(X,CONST_1).
+_abm(X):- not abm(X).
+
+%Extension predicate define
+_mammal(X):- not mammal(X).
+_habitat(X,CONST_1):- not habitat(X,CONST_1).
+_land(CONST_1):- not land(CONST_1).
+_whale(X):- not whale(X).
+
+%Succ predicate definition
+
+:- not abm(X), not abm(X), mammal(X), not habitat(X,CONST_1), not habitat(X,CONST_2), mammal(X).
+:- not abm(X), not abm(X), mammal(X), not habitat(X,CONST_1), not land(CONST_2), mammal(X).
+:- not abm(X), not abm(X), mammal(X), not land(CONST_1), not habitat(X,CONST_2), mammal(X).
+:- not abm(X), not abm(X), mammal(X), not land(CONST_1), not land(CONST_2), mammal(X).
+habitat_vary(X,CONST_2) | habitat_vary(X,CONST_1) | abm(X) | abm(X):- mammal(X), mammal(X).
+land_vary(CONST_2) | habitat_vary(X,CONST_1) | abm(X) | abm(X):- mammal(X), mammal(X).
+habitat_vary(X,CONST_2) | land_vary(CONST_1) | abm(X) | abm(X):- mammal(X), mammal(X).
+land_vary(CONST_2) | land_vary(CONST_1) | abm(X) | abm(X):- mammal(X), mammal(X).
+:- not mammal(X), whale(X).
+:- habitat(X,Y), land(Y), whale(X).
+:- not mammal(X), whale(X).
+r_0 | r_0:- land_vary(Y), habitat_vary(X,Y), whale(X).
+r_0:- not r_0, habitat_vary(X,Y), not _land_vary(Y), whale(X).
+r_0:- land_vary(Y), not r_0, whale(X), not _habitat_vary(X,Y).
+:- not r_0, not r_0, not _land_vary(Y), whale(X), not _habitat_vary(X,Y).
+abm(CONST_1):- r_0, not _abm(CONST_1).
+r_0:- abm(CONST_1).
+r_0:- not abm(CONST_1).
+habitat_vary(X,Y):- r_0.
+land_vary(Y):- r_0.

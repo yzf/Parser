@@ -1,0 +1,34 @@
+i(1..1).
+e(1..1).
+
+min_i(1).
+max_i(1).
+
+min_e(1).
+max_e(1).
+
+land(1).
+land_vary(1).
+
+mammal(X) | _mammal(X) :- i(X).
+whale(X) | _whale(X) :- i(X).
+land(Y) | _land(Y) :- e(Y).
+habitat(X,Y) | _habitat(X,Y) :- i(X), e(Y).
+
+#hide.
+#show mammal/1.
+#show whale/1.
+#show habitat/2.
+#show land/1.
+#show abm/1.
+#show _mammal/1.
+#show _whale/1.
+#show _habitat/2.
+#show _land/1.
+#show _abm/1.
+
+
+
+
+
+

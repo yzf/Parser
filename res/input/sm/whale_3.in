@@ -1,0 +1,14 @@
+[!X]([?Y]((~mammal(X)|((habitat(X,Y)&land(Y))|~~abm(X))))).
+[!X]([?Y]((~mammal(X)|((habitat_vary(X,Y)&land_vary(Y))|abm(X))))).
+[!X]([!Y]((~whale(X)|(mammal(X)&(~habitat(X,Y)|~land(Y)))))).
+[!X]([!Y](((whale_vary(X)->r_0)|(mammal(X)&((habitat_vary(X,Y)->r_0)|(land_vary(Y)->r_0)))))).
+(r_0->[!X]((abm(X)|~abm(X)))).
+(([!X]((abm(X)|~abm(X))))->r_0).
+[!X]([!Y]((r_0->habitat_vary(X,Y)))).
+[!Y]((r_0->land_vary(Y))).
+[!X]((r_0->whale_vary(X))).
+
+
+{abm,habitat_vary,land_vary,whale_vary,r_0}
+
+<X@i;Y@e>

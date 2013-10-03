@@ -1,21 +1,30 @@
 a(1..3).
-b(11..11).
+b(11..12).
 
 min_a(1).
 max_a(3).
 min_b(11).
-max_b(11).
+max_b(12).
 
 w(1).
 w_vary(1).
-
+:- e(1, 11).
+r_0 :- e_vary(1,11).
+:- e(1, 12).
+r_0 :- e_vary(1,12).
 
 m(X) | _m(X) :- a(X).
 w(X) | _w(X) :- a(X).
 e(X,Y) | _e(X,Y) :- a(X), b(Y).
 
-#hide.
+
 #show m/1.
 #show w/1.
 #show e/2.
 #show ab/1.
+#hide t_2/1.
+#hide s_2/1.
+#hide _succ_a/2.
+#hide a/1.
+#hide b/1.
+

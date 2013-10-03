@@ -137,6 +137,12 @@
           <itemPath>res/input/sm/setcover_25x4.in</itemPath>
           <itemPath>res/input/sm/setcover_25x5.fact</itemPath>
           <itemPath>res/input/sm/setcover_25x5.in</itemPath>
+          <itemPath>res/input/sm/whale_1.fact</itemPath>
+          <itemPath>res/input/sm/whale_1.in</itemPath>
+          <itemPath>res/input/sm/whale_2.fact</itemPath>
+          <itemPath>res/input/sm/whale_2.in</itemPath>
+          <itemPath>res/input/sm/whale_3.fact</itemPath>
+          <itemPath>res/input/sm/whale_3.in</itemPath>
         </logicalFolder>
         <itemPath>res/input/sample.fact</itemPath>
         <itemPath>res/input/sample.in</itemPath>
@@ -217,6 +223,30 @@
         <logicalFolder name="pri" displayName="pri" projectFiles="true">
         </logicalFolder>
         <logicalFolder name="sm" displayName="sm" projectFiles="true">
+          <itemPath>res/output/sm/2clique.out</itemPath>
+          <itemPath>res/output/sm/2clique.result</itemPath>
+          <itemPath>res/output/sm/cnf.out</itemPath>
+          <itemPath>res/output/sm/cnf.result</itemPath>
+          <itemPath>res/output/sm/dnf.out</itemPath>
+          <itemPath>res/output/sm/dnf.result</itemPath>
+          <itemPath>res/output/sm/setcover.out</itemPath>
+          <itemPath>res/output/sm/setcover.result</itemPath>
+          <itemPath>res/output/sm/setcover_25x1.out</itemPath>
+          <itemPath>res/output/sm/setcover_25x1.result</itemPath>
+          <itemPath>res/output/sm/setcover_25x2.out</itemPath>
+          <itemPath>res/output/sm/setcover_25x2.result</itemPath>
+          <itemPath>res/output/sm/setcover_25x3.out</itemPath>
+          <itemPath>res/output/sm/setcover_25x3.result</itemPath>
+          <itemPath>res/output/sm/setcover_25x4.out</itemPath>
+          <itemPath>res/output/sm/setcover_25x4.result</itemPath>
+          <itemPath>res/output/sm/setcover_25x5.out</itemPath>
+          <itemPath>res/output/sm/setcover_25x5.result</itemPath>
+          <itemPath>res/output/sm/whale_1.out</itemPath>
+          <itemPath>res/output/sm/whale_1.result</itemPath>
+          <itemPath>res/output/sm/whale_2.out</itemPath>
+          <itemPath>res/output/sm/whale_2.result</itemPath>
+          <itemPath>res/output/sm/whale_3.out</itemPath>
+          <itemPath>res/output/sm/whale_3.result</itemPath>
         </logicalFolder>
         <itemPath>res/output/sample.out</itemPath>
       </logicalFolder>
@@ -569,6 +599,18 @@
       </item>
       <item path="res/input/sm/setcover_25x5.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/sm/whale_1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_3.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_3.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/output/circ/blockworld.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/circ/blockworld.result" ex="false" tool="3" flavor2="0">
@@ -748,6 +790,54 @@
       <item path="res/output/op/whale_3.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sample.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/2clique.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/2clique.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/cnf.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/cnf.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/dnf.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/dnf.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x1.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x2.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x3.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x3.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x4.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x4.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x5.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x5.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_1.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_2.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_3.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_3.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -1081,6 +1171,18 @@
       </item>
       <item path="res/input/sm/setcover_25x5.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/sm/whale_1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_3.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_3.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/output/circ/blockworld.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/circ/blockworld.result" ex="false" tool="3" flavor2="0">
@@ -1260,6 +1362,54 @@
       <item path="res/output/op/whale_3.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sample.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/2clique.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/2clique.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/cnf.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/cnf.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/dnf.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/dnf.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x1.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x2.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x3.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x3.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x4.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x4.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x5.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x5.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_1.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_2.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_3.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_3.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
       </item>
