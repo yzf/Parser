@@ -54,15 +54,17 @@ int main(int argc, char** argv) {
     fclose(yyin);
     
     Formula f = Formula(gformula, false);
-
-    SMTranslator::instance().init(f);
+    
+    CircTranslator circTranslator;
+    Formulas* fmls = circTranslator.convert(f);
+    SMTranslator::instance().init(*fmls);
     SMTranslator::instance().convert();
-    SMTranslator::instance().outputOriginalFormulas(stdout);
     SMTranslator::instance().outputHengZhangFormulas(stdout);
     SMTranslator::instance().outputCabalarFormulas(stdout);
     SMTranslator::instance().outputFinalResult(fout);
     SMTranslator::instance().destroy();
-
+    delete fmls;
+    
     fclose(fout);
     Vocabulary::instance().dumpVocabulary(stdout);
     

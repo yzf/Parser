@@ -1,0 +1,6 @@
+mammal(X)->(([?Y](habitat(X,Y)&land(Y)))|abm(X)).
+whale(X)->(mammal(X)&(~([?Y](habitat(X,Y)&land(Y))))).
+
+{abm;habitat,land,whale}
+
+<X@i;Y@e>

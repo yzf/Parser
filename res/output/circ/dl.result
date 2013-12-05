@@ -1,54 +1,516 @@
 claspD version 1.1.4. Reading...done
 Answer: 1
-w(1) e(3) e(2) m(1) ab(1) 
+e(2,12) e(2,11) e(1,12) e(1,11) 
 Answer: 2
-w(1) e(3) e(2) m(2) m(1) ab(1) 
+w(1) e(2,12) e(2,11) e(1,12) e(1,11) 
 Answer: 3
-w(1) e(3) e(2) m(3) m(1) ab(1) 
+w(2) e(2,12) e(2,11) e(1,12) e(1,11) 
 Answer: 4
-w(1) e(3) e(2) m(3) m(2) m(1) ab(1) 
+w(2) w(1) e(2,12) e(2,11) e(1,12) e(1,11) 
 Answer: 5
-w(1) e(3) m(1) ab(1) 
+m(1) e(2,12) e(2,11) e(1,12) e(1,11) 
 Answer: 6
-w(1) e(3) m(3) m(1) ab(1) 
+m(1) w(1) e(2,12) e(2,11) e(1,12) e(1,11) 
 Answer: 7
-w(1) e(3) m(2) m(1) ab(1) ab(2) 
+m(1) w(2) e(2,12) e(2,11) e(1,12) e(1,11) 
 Answer: 8
-w(1) e(3) m(2) m(1) w(2) ab(1) ab(2) 
+m(1) w(2) w(1) e(2,12) e(2,11) e(1,12) e(1,11) 
 Answer: 9
-w(1) e(3) m(3) m(2) m(1) ab(1) ab(2) 
+m(2) e(2,12) e(2,11) e(1,12) e(1,11) 
 Answer: 10
-w(1) e(3) m(3) m(2) m(1) w(2) ab(1) ab(2) 
+m(2) w(1) e(2,12) e(2,11) e(1,12) e(1,11) 
 Answer: 11
-w(1) e(2) m(1) ab(1) 
+m(2) w(2) e(2,12) e(2,11) e(1,12) e(1,11) 
 Answer: 12
-w(1) e(2) m(2) m(1) ab(1) 
+m(2) w(2) w(1) e(2,12) e(2,11) e(1,12) e(1,11) 
 Answer: 13
-w(1) m(1) ab(1) 
+m(2) m(1) e(2,12) e(2,11) e(1,12) e(1,11) 
 Answer: 14
-w(1) m(2) m(1) ab(1) ab(2) 
+m(2) m(1) w(1) e(2,12) e(2,11) e(1,12) e(1,11) 
 Answer: 15
-w(1) m(2) m(1) w(2) ab(1) ab(2) 
+m(2) m(1) w(2) e(2,12) e(2,11) e(1,12) e(1,11) 
 Answer: 16
-w(1) e(2) m(3) m(1) ab(1) ab(3) 
+m(2) m(1) w(2) w(1) e(2,12) e(2,11) e(1,12) e(1,11) 
 Answer: 17
-w(1) e(2) m(3) m(1) w(3) ab(1) ab(3) 
+e(2,12) e(2,11) e(1,12) 
 Answer: 18
-w(1) e(2) m(3) m(2) m(1) ab(1) ab(3) 
+w(1) e(2,12) e(2,11) e(1,12) 
 Answer: 19
-w(1) e(2) m(3) m(2) m(1) w(3) ab(1) ab(3) 
+w(2) e(2,12) e(2,11) e(1,12) 
 Answer: 20
-w(1) m(3) m(1) ab(1) ab(3) 
+w(2) w(1) e(2,12) e(2,11) e(1,12) 
 Answer: 21
-w(1) m(3) m(1) w(3) ab(1) ab(3) 
+m(1) e(2,12) e(2,11) e(1,12) 
 Answer: 22
-w(1) m(3) m(2) m(1) ab(1) ab(2) ab(3) 
+m(1) w(1) e(2,12) e(2,11) e(1,12) 
 Answer: 23
-w(1) m(3) m(2) m(1) w(2) ab(1) ab(2) ab(3) 
+m(1) w(2) e(2,12) e(2,11) e(1,12) 
 Answer: 24
-w(1) m(3) m(2) m(1) w(3) ab(1) ab(2) ab(3) 
+m(1) w(2) w(1) e(2,12) e(2,11) e(1,12) 
 Answer: 25
-w(1) m(3) m(2) m(1) w(3) w(2) ab(1) ab(2) ab(3) 
+m(2) e(2,12) e(2,11) e(1,12) 
+Answer: 26
+m(2) w(1) e(2,12) e(2,11) e(1,12) 
+Answer: 27
+m(2) w(2) e(2,12) e(2,11) e(1,12) 
+Answer: 28
+m(2) w(2) w(1) e(2,12) e(2,11) e(1,12) 
+Answer: 29
+m(2) m(1) e(2,12) e(2,11) e(1,12) 
+Answer: 30
+m(2) m(1) w(1) e(2,12) e(2,11) e(1,12) 
+Answer: 31
+m(2) m(1) w(2) e(2,12) e(2,11) e(1,12) 
+Answer: 32
+m(2) m(1) w(2) w(1) e(2,12) e(2,11) e(1,12) 
+Answer: 33
+e(2,12) e(1,12) e(1,11) 
+Answer: 34
+w(1) e(2,12) e(1,12) e(1,11) 
+Answer: 35
+w(2) e(2,12) e(1,12) e(1,11) 
+Answer: 36
+w(2) w(1) e(2,12) e(1,12) e(1,11) 
+Answer: 37
+m(1) e(2,12) e(1,12) e(1,11) 
+Answer: 38
+m(1) w(1) e(2,12) e(1,12) e(1,11) 
+Answer: 39
+m(1) w(2) e(2,12) e(1,12) e(1,11) 
+Answer: 40
+m(1) w(2) w(1) e(2,12) e(1,12) e(1,11) 
+Answer: 41
+m(2) e(2,12) e(1,12) e(1,11) 
+Answer: 42
+m(2) w(1) e(2,12) e(1,12) e(1,11) 
+Answer: 43
+m(2) w(2) e(2,12) e(1,12) e(1,11) 
+Answer: 44
+m(2) w(2) w(1) e(2,12) e(1,12) e(1,11) 
+Answer: 45
+m(2) m(1) e(2,12) e(1,12) e(1,11) 
+Answer: 46
+m(2) m(1) w(1) e(2,12) e(1,12) e(1,11) 
+Answer: 47
+m(2) m(1) w(2) e(2,12) e(1,12) e(1,11) 
+Answer: 48
+m(2) m(1) w(2) w(1) e(2,12) e(1,12) e(1,11) 
+Answer: 49
+e(2,12) e(1,12) 
+Answer: 50
+w(1) e(2,12) e(1,12) 
+Answer: 51
+w(2) e(2,12) e(1,12) 
+Answer: 52
+w(2) w(1) e(2,12) e(1,12) 
+Answer: 53
+m(1) e(2,12) e(1,12) 
+Answer: 54
+m(1) w(1) e(2,12) e(1,12) 
+Answer: 55
+m(1) w(2) e(2,12) e(1,12) 
+Answer: 56
+m(1) w(2) w(1) e(2,12) e(1,12) 
+Answer: 57
+m(2) e(2,12) e(1,12) 
+Answer: 58
+m(2) w(1) e(2,12) e(1,12) 
+Answer: 59
+m(2) w(2) e(2,12) e(1,12) 
+Answer: 60
+m(2) w(2) w(1) e(2,12) e(1,12) 
+Answer: 61
+m(2) m(1) e(2,12) e(1,12) 
+Answer: 62
+m(2) m(1) w(1) e(2,12) e(1,12) 
+Answer: 63
+m(2) m(1) w(2) e(2,12) e(1,12) 
+Answer: 64
+m(2) m(1) w(2) w(1) e(2,12) e(1,12) 
+Answer: 65
+e(2,12) e(2,11) e(1,11) 
+Answer: 66
+w(1) e(2,12) e(2,11) e(1,11) 
+Answer: 67
+w(2) e(2,12) e(2,11) e(1,11) 
+Answer: 68
+w(2) w(1) e(2,12) e(2,11) e(1,11) 
+Answer: 69
+m(1) e(2,12) e(2,11) e(1,11) 
+Answer: 70
+m(1) w(1) e(2,12) e(2,11) e(1,11) 
+Answer: 71
+m(1) w(2) e(2,12) e(2,11) e(1,11) 
+Answer: 72
+m(1) w(2) w(1) e(2,12) e(2,11) e(1,11) 
+Answer: 73
+m(2) e(2,12) e(2,11) e(1,11) 
+Answer: 74
+m(2) w(1) e(2,12) e(2,11) e(1,11) 
+Answer: 75
+m(2) w(2) e(2,12) e(2,11) e(1,11) 
+Answer: 76
+m(2) w(2) w(1) e(2,12) e(2,11) e(1,11) 
+Answer: 77
+m(2) m(1) e(2,12) e(2,11) e(1,11) 
+Answer: 78
+m(2) m(1) w(1) e(2,12) e(2,11) e(1,11) 
+Answer: 79
+m(2) m(1) w(2) e(2,12) e(2,11) e(1,11) 
+Answer: 80
+m(2) m(1) w(2) w(1) e(2,12) e(2,11) e(1,11) 
+Answer: 81
+e(2,12) e(1,11) 
+Answer: 82
+w(1) e(2,12) e(1,11) 
+Answer: 83
+w(2) e(2,12) e(1,11) 
+Answer: 84
+w(2) w(1) e(2,12) e(1,11) 
+Answer: 85
+m(1) e(2,12) e(1,11) 
+Answer: 86
+m(1) w(1) e(2,12) e(1,11) 
+Answer: 87
+m(1) w(2) e(2,12) e(1,11) 
+Answer: 88
+m(1) w(2) w(1) e(2,12) e(1,11) 
+Answer: 89
+m(2) e(2,12) e(1,11) 
+Answer: 90
+m(2) w(1) e(2,12) e(1,11) 
+Answer: 91
+m(2) w(2) e(2,12) e(1,11) 
+Answer: 92
+m(2) w(2) w(1) e(2,12) e(1,11) 
+Answer: 93
+m(2) m(1) e(2,12) e(1,11) 
+Answer: 94
+m(2) m(1) w(1) e(2,12) e(1,11) 
+Answer: 95
+m(2) m(1) w(2) e(2,12) e(1,11) 
+Answer: 96
+m(2) m(1) w(2) w(1) e(2,12) e(1,11) 
+Answer: 97
+e(2,11) e(1,12) e(1,11) 
+Answer: 98
+w(1) e(2,11) e(1,12) e(1,11) 
+Answer: 99
+w(2) e(2,11) e(1,12) e(1,11) 
+Answer: 100
+w(2) w(1) e(2,11) e(1,12) e(1,11) 
+Answer: 101
+m(1) e(2,11) e(1,12) e(1,11) 
+Answer: 102
+m(1) w(1) e(2,11) e(1,12) e(1,11) 
+Answer: 103
+m(1) w(2) e(2,11) e(1,12) e(1,11) 
+Answer: 104
+m(1) w(2) w(1) e(2,11) e(1,12) e(1,11) 
+Answer: 105
+m(2) e(2,11) e(1,12) e(1,11) 
+Answer: 106
+m(2) w(1) e(2,11) e(1,12) e(1,11) 
+Answer: 107
+m(2) w(2) e(2,11) e(1,12) e(1,11) 
+Answer: 108
+m(2) w(2) w(1) e(2,11) e(1,12) e(1,11) 
+Answer: 109
+m(2) m(1) e(2,11) e(1,12) e(1,11) 
+Answer: 110
+m(2) m(1) w(1) e(2,11) e(1,12) e(1,11) 
+Answer: 111
+m(2) m(1) w(2) e(2,11) e(1,12) e(1,11) 
+Answer: 112
+m(2) m(1) w(2) w(1) e(2,11) e(1,12) e(1,11) 
+Answer: 113
+e(2,11) e(1,12) 
+Answer: 114
+w(1) e(2,11) e(1,12) 
+Answer: 115
+w(2) e(2,11) e(1,12) 
+Answer: 116
+w(2) w(1) e(2,11) e(1,12) 
+Answer: 117
+m(1) e(2,11) e(1,12) 
+Answer: 118
+m(1) w(1) e(2,11) e(1,12) 
+Answer: 119
+m(1) w(2) e(2,11) e(1,12) 
+Answer: 120
+m(1) w(2) w(1) e(2,11) e(1,12) 
+Answer: 121
+m(2) e(2,11) e(1,12) 
+Answer: 122
+m(2) w(1) e(2,11) e(1,12) 
+Answer: 123
+m(2) w(2) e(2,11) e(1,12) 
+Answer: 124
+m(2) w(2) w(1) e(2,11) e(1,12) 
+Answer: 125
+m(2) m(1) e(2,11) e(1,12) 
+Answer: 126
+m(2) m(1) w(1) e(2,11) e(1,12) 
+Answer: 127
+m(2) m(1) w(2) e(2,11) e(1,12) 
+Answer: 128
+m(2) m(1) w(2) w(1) e(2,11) e(1,12) 
+Answer: 129
+e(2,11) e(1,11) 
+Answer: 130
+w(1) e(2,11) e(1,11) 
+Answer: 131
+w(2) e(2,11) e(1,11) 
+Answer: 132
+w(2) w(1) e(2,11) e(1,11) 
+Answer: 133
+m(1) e(2,11) e(1,11) 
+Answer: 134
+m(1) w(1) e(2,11) e(1,11) 
+Answer: 135
+m(1) w(2) e(2,11) e(1,11) 
+Answer: 136
+m(1) w(2) w(1) e(2,11) e(1,11) 
+Answer: 137
+m(2) e(2,11) e(1,11) 
+Answer: 138
+m(2) w(1) e(2,11) e(1,11) 
+Answer: 139
+m(2) w(2) e(2,11) e(1,11) 
+Answer: 140
+m(2) w(2) w(1) e(2,11) e(1,11) 
+Answer: 141
+m(2) m(1) e(2,11) e(1,11) 
+Answer: 142
+m(2) m(1) w(1) e(2,11) e(1,11) 
+Answer: 143
+m(2) m(1) w(2) e(2,11) e(1,11) 
+Answer: 144
+m(2) m(1) w(2) w(1) e(2,11) e(1,11) 
+Answer: 145
+e(2,12) e(2,11) ab(1) 
+Answer: 146
+e(2,12) ab(1) 
+Answer: 147
+e(2,11) ab(1) 
+Answer: 148
+w(1) e(2,12) e(2,11) ab(1) 
+Answer: 149
+w(1) e(2,12) ab(1) 
+Answer: 150
+w(1) e(2,11) ab(1) 
+Answer: 151
+w(2) e(2,12) e(2,11) ab(1) 
+Answer: 152
+w(2) e(2,12) ab(1) 
+Answer: 153
+w(2) e(2,11) ab(1) 
+Answer: 154
+w(2) w(1) e(2,12) e(2,11) ab(1) 
+Answer: 155
+w(2) w(1) e(2,12) ab(1) 
+Answer: 156
+w(2) w(1) e(2,11) ab(1) 
+Answer: 157
+m(1) e(2,12) e(2,11) ab(1) 
+Answer: 158
+m(1) e(2,12) ab(1) 
+Answer: 159
+m(1) e(2,11) ab(1) 
+Answer: 160
+m(1) w(1) e(2,12) e(2,11) ab(1) 
+Answer: 161
+m(1) w(1) e(2,12) ab(1) 
+Answer: 162
+m(1) w(1) e(2,11) ab(1) 
+Answer: 163
+m(1) w(2) e(2,12) e(2,11) ab(1) 
+Answer: 164
+m(1) w(2) e(2,12) ab(1) 
+Answer: 165
+m(1) w(2) e(2,11) ab(1) 
+Answer: 166
+m(1) w(2) w(1) e(2,12) e(2,11) ab(1) 
+Answer: 167
+m(1) w(2) w(1) e(2,12) ab(1) 
+Answer: 168
+m(1) w(2) w(1) e(2,11) ab(1) 
+Answer: 169
+m(2) e(2,12) e(2,11) ab(1) 
+Answer: 170
+m(2) e(2,12) ab(1) 
+Answer: 171
+m(2) e(2,11) ab(1) 
+Answer: 172
+m(2) w(1) e(2,12) e(2,11) ab(1) 
+Answer: 173
+m(2) w(1) e(2,12) ab(1) 
+Answer: 174
+m(2) w(1) e(2,11) ab(1) 
+Answer: 175
+m(2) w(2) e(2,12) e(2,11) ab(1) 
+Answer: 176
+m(2) w(2) e(2,12) ab(1) 
+Answer: 177
+m(2) w(2) e(2,11) ab(1) 
+Answer: 178
+m(2) w(2) w(1) e(2,12) e(2,11) ab(1) 
+Answer: 179
+m(2) w(2) w(1) e(2,12) ab(1) 
+Answer: 180
+m(2) w(2) w(1) e(2,11) ab(1) 
+Answer: 181
+m(2) m(1) e(2,12) e(2,11) ab(1) 
+Answer: 182
+m(2) m(1) e(2,12) ab(1) 
+Answer: 183
+m(2) m(1) e(2,11) ab(1) 
+Answer: 184
+m(2) m(1) w(1) e(2,12) e(2,11) ab(1) 
+Answer: 185
+m(2) m(1) w(1) e(2,12) ab(1) 
+Answer: 186
+m(2) m(1) w(1) e(2,11) ab(1) 
+Answer: 187
+m(2) m(1) w(2) e(2,12) e(2,11) ab(1) 
+Answer: 188
+m(2) m(1) w(2) e(2,12) ab(1) 
+Answer: 189
+m(2) m(1) w(2) e(2,11) ab(1) 
+Answer: 190
+m(2) m(1) w(2) w(1) e(2,12) e(2,11) ab(1) 
+Answer: 191
+m(2) m(1) w(2) w(1) e(2,12) ab(1) 
+Answer: 192
+m(2) m(1) w(2) w(1) e(2,11) ab(1) 
+Answer: 193
+e(1,12) e(1,11) ab(2) 
+Answer: 194
+e(1,12) ab(2) 
+Answer: 195
+w(1) e(1,12) e(1,11) ab(2) 
+Answer: 196
+w(1) e(1,12) ab(2) 
+Answer: 197
+w(2) e(1,12) e(1,11) ab(2) 
+Answer: 198
+w(2) e(1,12) ab(2) 
+Answer: 199
+w(2) w(1) e(1,12) e(1,11) ab(2) 
+Answer: 200
+w(2) w(1) e(1,12) ab(2) 
+Answer: 201
+m(1) e(1,12) e(1,11) ab(2) 
+Answer: 202
+m(1) e(1,12) ab(2) 
+Answer: 203
+m(1) w(1) e(1,12) e(1,11) ab(2) 
+Answer: 204
+m(1) w(1) e(1,12) ab(2) 
+Answer: 205
+m(1) w(2) e(1,12) e(1,11) ab(2) 
+Answer: 206
+m(1) w(2) e(1,12) ab(2) 
+Answer: 207
+m(1) w(2) w(1) e(1,12) e(1,11) ab(2) 
+Answer: 208
+m(1) w(2) w(1) e(1,12) ab(2) 
+Answer: 209
+m(2) e(1,12) e(1,11) ab(2) 
+Answer: 210
+m(2) e(1,12) ab(2) 
+Answer: 211
+m(2) w(1) e(1,12) e(1,11) ab(2) 
+Answer: 212
+m(2) w(1) e(1,12) ab(2) 
+Answer: 213
+m(2) w(2) e(1,12) e(1,11) ab(2) 
+Answer: 214
+m(2) w(2) e(1,12) ab(2) 
+Answer: 215
+m(2) w(2) w(1) e(1,12) e(1,11) ab(2) 
+Answer: 216
+m(2) w(2) w(1) e(1,12) ab(2) 
+Answer: 217
+m(2) m(1) e(1,12) e(1,11) ab(2) 
+Answer: 218
+m(2) m(1) e(1,12) ab(2) 
+Answer: 219
+m(2) m(1) w(1) e(1,12) e(1,11) ab(2) 
+Answer: 220
+m(2) m(1) w(1) e(1,12) ab(2) 
+Answer: 221
+m(2) m(1) w(2) e(1,12) e(1,11) ab(2) 
+Answer: 222
+m(2) m(1) w(2) e(1,12) ab(2) 
+Answer: 223
+m(2) m(1) w(2) w(1) e(1,12) e(1,11) ab(2) 
+Answer: 224
+m(2) m(1) w(2) w(1) e(1,12) ab(2) 
+Answer: 225
+ab(2) ab(1) 
+Answer: 226
+w(1) ab(2) ab(1) 
+Answer: 227
+w(2) ab(2) ab(1) 
+Answer: 228
+w(2) w(1) ab(2) ab(1) 
+Answer: 229
+m(1) ab(2) ab(1) 
+Answer: 230
+m(1) w(1) ab(2) ab(1) 
+Answer: 231
+m(1) w(2) ab(2) ab(1) 
+Answer: 232
+m(1) w(2) w(1) ab(2) ab(1) 
+Answer: 233
+m(2) ab(2) ab(1) 
+Answer: 234
+m(2) w(1) ab(2) ab(1) 
+Answer: 235
+m(2) w(2) ab(2) ab(1) 
+Answer: 236
+m(2) w(2) w(1) ab(2) ab(1) 
+Answer: 237
+m(2) m(1) ab(2) ab(1) 
+Answer: 238
+m(2) m(1) w(1) ab(2) ab(1) 
+Answer: 239
+m(2) m(1) w(2) ab(2) ab(1) 
+Answer: 240
+m(2) m(1) w(2) w(1) ab(2) ab(1) 
+Answer: 241
+e(1,11) ab(2) 
+Answer: 242
+w(1) e(1,11) ab(2) 
+Answer: 243
+w(2) e(1,11) ab(2) 
+Answer: 244
+w(2) w(1) e(1,11) ab(2) 
+Answer: 245
+m(1) e(1,11) ab(2) 
+Answer: 246
+m(1) w(1) e(1,11) ab(2) 
+Answer: 247
+m(1) w(2) e(1,11) ab(2) 
+Answer: 248
+m(1) w(2) w(1) e(1,11) ab(2) 
+Answer: 249
+m(2) e(1,11) ab(2) 
+Answer: 250
+m(2) w(1) e(1,11) ab(2) 
+Answer: 251
+m(2) w(2) e(1,11) ab(2) 
+Answer: 252
+m(2) w(2) w(1) e(1,11) ab(2) 
+Answer: 253
+m(2) m(1) e(1,11) ab(2) 
+Answer: 254
+m(2) m(1) w(1) e(1,11) ab(2) 
+Answer: 255
+m(2) m(1) w(2) e(1,11) ab(2) 
+Answer: 256
+m(2) m(1) w(2) w(1) e(1,11) ab(2) 
 
-Models     : 25    
+Models     : 256   
 Time        : 0.000  (Parsing: 0.000)

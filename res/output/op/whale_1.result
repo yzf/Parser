@@ -1,14 +1,14 @@
 claspD version 1.1.4. Reading...done
 Answer: 1
-land(1) mammal(1) _whale(1) _habitat(1,1) abm(1) 
+land(1) mammal(1) _whale(1) habitat(1,1) _abm(1) 
 Answer: 2
-land(1) mammal(1) whale(1) _habitat(1,1) abm(1) 
+land(1) _mammal(1) _whale(1) habitat(1,1) _abm(1) 
 Answer: 3
 land(1) _mammal(1) _whale(1) _habitat(1,1) _abm(1) 
 Answer: 4
-land(1) _mammal(1) _whale(1) habitat(1,1) _abm(1) 
+land(1) mammal(1) _whale(1) _habitat(1,1) abm(1) 
 Answer: 5
-land(1) mammal(1) _whale(1) habitat(1,1) _abm(1) 
+land(1) mammal(1) whale(1) _habitat(1,1) abm(1) 
 
 Models     : 5     
 Time        : 0.000  (Parsing: 0.000)

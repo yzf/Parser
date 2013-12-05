@@ -1,0 +1,19 @@
+#const size=2.
+
+block(1..size).
+min_block(1).
+max_block(size).
+
+heavyblock(1).
+:- heavyblock(2).
+
+ab_0(X) | _ab_0(X) :- block(X).
+ab_2(X) | _ab_2(X) :- block(X).
+ontable(X) | _ontable(X) :- block(X).
+
+#hide.
+#show ab_0/1.
+#show ab_1/1.
+#show ab_2/1.
+#show ontable/1.
+#show heavyblock/1.

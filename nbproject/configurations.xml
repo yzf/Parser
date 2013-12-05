@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="89">
+<configurationDescriptor version="90">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -61,16 +61,6 @@
           <itemPath>res/input/circ/dl_we.in</itemPath>
           <itemPath>res/input/circ/setcover.fact</itemPath>
           <itemPath>res/input/circ/setcover.in</itemPath>
-          <itemPath>res/input/circ/setcover_25x1.fact</itemPath>
-          <itemPath>res/input/circ/setcover_25x1.in</itemPath>
-          <itemPath>res/input/circ/setcover_25x2.fact</itemPath>
-          <itemPath>res/input/circ/setcover_25x2.in</itemPath>
-          <itemPath>res/input/circ/setcover_25x3.fact</itemPath>
-          <itemPath>res/input/circ/setcover_25x3.in</itemPath>
-          <itemPath>res/input/circ/setcover_25x4.fact</itemPath>
-          <itemPath>res/input/circ/setcover_25x4.in</itemPath>
-          <itemPath>res/input/circ/setcover_25x5.fact</itemPath>
-          <itemPath>res/input/circ/setcover_25x5.in</itemPath>
           <itemPath>res/input/circ/whale_1.fact</itemPath>
           <itemPath>res/input/circ/whale_1.in</itemPath>
           <itemPath>res/input/circ/whale_2.fact</itemPath>
@@ -177,22 +167,6 @@
           <itemPath>res/output/circ/dl_we.result</itemPath>
           <itemPath>res/output/circ/setcover.out</itemPath>
           <itemPath>res/output/circ/setcover.result</itemPath>
-          <itemPath>res/output/circ/setcover_25x1.out</itemPath>
-          <itemPath>res/output/circ/setcover_25x1.result</itemPath>
-          <itemPath>res/output/circ/setcover_25x2.out</itemPath>
-          <itemPath>res/output/circ/setcover_25x2.result</itemPath>
-          <itemPath>res/output/circ/setcover_25x3.out</itemPath>
-          <itemPath>res/output/circ/setcover_25x3.result</itemPath>
-          <itemPath>res/output/circ/setcover_25x4.out</itemPath>
-          <itemPath>res/output/circ/setcover_25x4.result</itemPath>
-          <itemPath>res/output/circ/setcover_25x5.out</itemPath>
-          <itemPath>res/output/circ/setcover_25x5.result</itemPath>
-          <itemPath>res/output/circ/whale_1.out</itemPath>
-          <itemPath>res/output/circ/whale_1.result</itemPath>
-          <itemPath>res/output/circ/whale_2.out</itemPath>
-          <itemPath>res/output/circ/whale_2.result</itemPath>
-          <itemPath>res/output/circ/whale_3.out</itemPath>
-          <itemPath>res/output/circ/whale_3.result</itemPath>
         </logicalFolder>
         <logicalFolder name="op" displayName="op" projectFiles="true">
           <itemPath>res/output/op/blockworld.out</itemPath>
@@ -310,7 +284,6 @@
   <confs>
     <conf name="Debug" type="1">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>GNU|GNU</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
@@ -454,26 +427,6 @@
       <item path="res/input/circ/setcover.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/circ/setcover.in" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x1.fact" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x1.in" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x2.fact" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x2.in" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x3.fact" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x3.in" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x4.fact" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x4.in" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x5.fact" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x5.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/circ/whale_1.fact" ex="false" tool="3" flavor2="0">
       </item>
@@ -694,53 +647,6 @@
       </item>
       <item path="res/output/circ/setcover.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/circ/setcover_25x1.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x1.result"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x2.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x2.result"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x3.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x3.result"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x4.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x4.result"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x5.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x5.result"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="res/output/circ/whale_1.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/whale_1.result" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/whale_2.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/whale_2.result" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/whale_3.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/whale_3.result" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="res/output/op/blockworld.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/op/blockworld.result" ex="false" tool="3" flavor2="0">
@@ -880,7 +786,6 @@
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
@@ -1027,26 +932,6 @@
       </item>
       <item path="res/input/circ/setcover.in" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/input/circ/setcover_25x1.fact" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x1.in" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x2.fact" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x2.in" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x3.fact" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x3.in" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x4.fact" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x4.in" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x5.fact" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/input/circ/setcover_25x5.in" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="res/input/circ/whale_1.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/circ/whale_1.in" ex="false" tool="3" flavor2="0">
@@ -1265,53 +1150,6 @@
       <item path="res/output/circ/setcover.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/circ/setcover.result" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x1.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x1.result"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x2.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x2.result"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x3.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x3.result"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x4.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x4.result"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x5.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/setcover_25x5.result"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="res/output/circ/whale_1.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/whale_1.result" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/whale_2.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/whale_2.result" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/whale_3.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/whale_3.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/op/blockworld.out" ex="false" tool="3" flavor2="0">
       </item>

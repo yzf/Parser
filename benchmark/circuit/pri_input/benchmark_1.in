@@ -48,9 +48,9 @@ succ_adder(I,J) -> (out(I,5) -> inb(J,4)).
 inb(1,4).
 
 ina(1,1).
-inb(1,1).
+~inb(1,1).
 out(1,2).
-~out(1,5).
+out(1,5).
 
 {abo>abx>aba;ina,inb,out}
 
