@@ -54,23 +54,23 @@ out(1,5).
 ina(2,1).
 inb(2,1).
 out(2,2).
-out(2,5).
+~out(2,5).
 ina(3,1).
 inb(3,1).
 out(3,2).
 out(3,5).
 ina(4,1).
-~inb(4,1).
+inb(4,1).
 out(4,2).
 out(4,5).
 ina(5,1).
 inb(5,1).
 out(5,2).
-~out(5,5).
+out(5,5).
 ina(6,1).
 inb(6,1).
 out(6,2).
-~out(6,5).
+out(6,5).
 ina(7,1).
 inb(7,1).
 ~out(7,2).
@@ -95,14 +95,14 @@ ina(12,1).
 inb(12,1).
 out(12,2).
 out(12,5).
-~ina(13,1).
+ina(13,1).
 inb(13,1).
 out(13,2).
 out(13,5).
 ina(14,1).
 inb(14,1).
 out(14,2).
-out(14,5).
+~out(14,5).
 
 {abo>abx>aba;ina,inb,out}
 

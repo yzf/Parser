@@ -39,9 +39,9 @@ do
     circInputFile="${circ2dlpBenchmarkInputFilePrefix}${i}.lp"
     # 出错的加法器的个数
     errorCount=$(($RANDOM % $i + 1))
-    if [ $errorCount -gt 20 ]
+    if [ $errorCount -gt 5 ]
     then
-        errorCount=20
+        errorCount=5
     fi
 
     #  生成circ2dlp的输入
