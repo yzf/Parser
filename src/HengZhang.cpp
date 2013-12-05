@@ -210,6 +210,9 @@ _formula* HengZhang::generateFormulaLeft_4() {
     _formula* lrl = Utils::compositeByConnective(CONJ, _s_x_z, succ_y_z);
     _formula* lr = Utils::compositeByConnective(DISJ, lrl, max_y);
     _formula* l = Utils::compositeByConnective(CONJ, s_x_y, lr);
+//    _formula* lrl = Utils::compositeByConnective(CONJ, succ_y_z, s_x_y);
+//    _formula* ll = Utils::compositeByConnective(CONJ, lrl, _s_x_z);
+//    _formula* l = Utils::compositeByConnective(DISJ, ll, max_y);
     return l;
 }
 /**

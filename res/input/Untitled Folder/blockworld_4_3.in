@@ -1,0 +1,6 @@
+~ab_1(X)->ontable(X).
+heavyblock(X)&~ab_2(X)->~ontable(X).
+
+{ab_2;ontable,ab_1}
+
+<X@block>

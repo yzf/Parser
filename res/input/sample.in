@@ -1,5 +1,5 @@
-[!X][!Y][?Z](set(X,Y)) -> (cvr(Z)&set(Z,Y)).
+[!X]((ab(X)|[?Y]e(X,Y))).
 
-{cvr;}
+{ab;}
 
-<X@i;Y@e;Z@i>
+<X@a;Y@b>

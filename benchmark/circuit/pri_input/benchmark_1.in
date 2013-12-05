@@ -1,0 +1,57 @@
+% 组件SD
+% 与门逻辑
+(and(I,X)&ina(I,X)&inb(I,X)&~aba(I,X)) -> out(I,X).
+(and(I,X)&ina(I,X)&~inb(I,X)&~aba(I,X)) -> ~out(I,X).
+(and(I,X)&~ina(I,X)&inb(I,X)&~aba(I,X)) -> ~out(I,X).
+(and(I,X)&~ina(I,X)&~inb(I,X)&~aba(I,X)) -> ~out(I,X).
+
+% 或门逻辑
+(or(I,X)&ina(I,X)&inb(I,X)&~abo(I,X)) -> out(I,X).
+(or(I,X)&ina(I,X)&~inb(I,X)&~abo(I,X)) -> out(I,X).
+(or(I,X)&~ina(I,X)&inb(I,X)&~abo(I,X)) -> out(I,X).
+(or(I,X)&~ina(I,X)&~inb(I,X)&~abo(I,X)) -> ~out(I,X).
+
+% 异或门逻辑
+(xor(I,X)&ina(I,X)&inb(I,X)&~abx(I,X)) -> ~out(I,X).
+(xor(I,X)&ina(I,X)&~inb(I,X)&~abx(I,X)) -> out(I,X).
+(xor(I,X)&~ina(I,X)&inb(I,X)&~abx(I,X)) -> out(I,X).
+(xor(I,X)&~ina(I,X)&~inb(I,X)&~abx(I,X)) -> ~out(I,X).
+
+% 单个全加器电路结构逻辑
+out(I,1) -> ina(I,2).
+ina(I,2) -> out(I,1).
+
+out(I,1) -> ina(I,4).
+ina(I,4) -> out(I,1).
+
+out(I,4) -> ina(I,5).
+ina(I,5) -> out(I,4).
+
+inb(I,4) -> inb(I,2).
+inb(I,2) -> inb(I,4).
+
+ina(I,1) -> ina(I,3).
+ina(I,3) -> ina(I,1).
+
+inb(I,1) -> inb(I,3).
+inb(I,3) -> inb(I,1).
+
+out(I,3) -> inb(I,5).
+inb(I,5) -> out(I,3).
+
+% 串行进位加法器逻辑
+succ_adder(I,J) -> (inb(J,4) -> out(I,5)).
+succ_adder(I,J) -> (out(I,5) -> inb(J,4)).
+
+% 组件OBS观察值
+
+inb(1,4).
+
+ina(1,1).
+~inb(1,1).
+out(1,2).
+out(1,5).
+
+{abo>abx>aba;ina,inb,out}
+
+<I@adder;X@gate;J@adder>

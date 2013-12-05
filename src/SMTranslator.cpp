@@ -34,7 +34,9 @@ SMTranslator& SMTranslator::instance() {
 void SMTranslator::init(const Formula& _originalFml) {
     destroy();
     m_pOriginalFormulas = _originalFml.divideFormula();
+    m_pOriginalFormulas->convertToPNF();
     m_pOriginalFormulas->convertToNNF();
+    m_vOriginalFormulas = Utils::convertFormulasToStrings(m_pOriginalFormulas);
     m_pNegaPredicates = new Formulas();
 }
 /**
@@ -50,6 +52,7 @@ void SMTranslator::init(const Formulas& _originalFmls) {
         m_pOriginalFormulas->joinBack(*tmp);
         delete tmp;
     }
+    m_pOriginalFormulas->convertToPNF();
     m_pOriginalFormulas->convertToNNF();
     m_vOriginalFormulas = Utils::convertFormulasToStrings(m_pOriginalFormulas);
     m_pNegaPredicates = new Formulas();

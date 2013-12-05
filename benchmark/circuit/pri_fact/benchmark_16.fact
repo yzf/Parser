@@ -1,0 +1,36 @@
+#const adder_size = 16.
+#const gate_size = 5.
+#domain adder(I).
+#domain gate(X).
+
+gate(1..gate_size).
+adder(1..adder_size).
+
+min_gate(1).
+max_gate(gate_size).
+min_adder(1).
+max_adder(adder_size).
+
+ina(I,X) | _ina(I,X).
+inb(I,X) | _inb(I,X).
+out(I,X) | _out(I,X).
+
+% 组件COMP的一阶语句
+xor(I,1).
+xor(I,2).
+and(I,3).
+and(I,4).
+or(I,5).
+
+#hide.
+#show abo/2.
+#show abx/2.
+#show aba/2.
+#show or/2.
+#show and/2.
+#show xor/2.
+#show ina/2.
+#show inb/2.
+#show out/2.
+#show adder/1.
+#show gate/1.

@@ -1,0 +1,16 @@
+claspD version 1.1.4. Reading...done
+Answer: 1
+heavyblock(1) ab_0(2) ab_0(1) ab_2(1) ontable(2) ontable(1) 
+Answer: 2
+heavyblock(1) ab_0(2) ab_0(1) ab_2(2) ab_2(1) ontable(2) ontable(1) 
+Answer: 3
+heavyblock(1) ab_0(2) ontable(2) ab_1(1) 
+Answer: 4
+heavyblock(1) ab_0(2) ab_2(2) ontable(2) ab_1(1) 
+Answer: 5
+heavyblock(1) ab_0(2) ab_0(1) ontable(2) ab_1(1) 
+Answer: 6
+heavyblock(1) ab_0(2) ab_0(1) ab_2(2) ontable(2) ab_1(1) 
+
+Models     : 6     
+Time        : 0.000  (Parsing: 0.000)

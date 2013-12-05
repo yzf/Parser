@@ -1,0 +1,22 @@
+claspD version 1.1.4. Reading...done
+Answer: 1
+ontable(2) ab_1(1) 
+Answer: 2
+ab_2(1) ontable(2) ab_1(1) 
+Answer: 3
+ab_2(1) ontable(2) heavy(1) ab_1(1) 
+Answer: 4
+ab_2(2) ontable(2) ab_1(1) 
+Answer: 5
+ab_2(2) ontable(2) heavy(2) ab_1(1) 
+Answer: 6
+ab_2(2) ab_2(1) ontable(2) ab_1(1) 
+Answer: 7
+ab_2(2) ab_2(1) ontable(2) heavy(1) ab_1(1) 
+Answer: 8
+ab_2(2) ab_2(1) ontable(2) heavy(2) ab_1(1) 
+Answer: 9
+ab_2(2) ab_2(1) ontable(2) heavy(2) heavy(1) ab_1(1) 
+
+Models     : 9     
+Time        : 0.000  (Parsing: 0.000)

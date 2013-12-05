@@ -28,16 +28,20 @@ Formulas* Cabalar::convert(const Formulas& _originalFmls) {
         Formula curFml = pTmpFormulas->popFront();
         curFml.removeUniversalQuantifier();
         
-        Formulas* pBforeTrans = new Formulas();
-        pBforeTrans->pushBack(curFml);
+        Formulas* pBeforeTrans = new Formulas();
+        pBeforeTrans->pushBack(curFml);
         Formulas* pAfterTrans = CabalarUtils::transform(Utils::copyFormula(curFml.getFormula()));
-        if (*pBforeTrans == *pAfterTrans) {
+        printf("\nbefore:\n");
+        pBeforeTrans->output(stdout);
+        printf("after:\n");
+        pAfterTrans->output(stdout);
+        if (*pBeforeTrans == *pAfterTrans) {
             pFinalFormulas->pushBack(curFml);
         }
         else {
             pTmpFormulas->joinFront(*pAfterTrans);
         }
-        delete pBforeTrans;
+        delete pBeforeTrans;
         delete pAfterTrans;
     }
     delete pTmpFormulas;

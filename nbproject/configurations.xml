@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="89">
+<configurationDescriptor version="90">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -37,26 +37,70 @@
           <itemPath>res/input/circ/blockworld.in</itemPath>
           <itemPath>res/input/circ/blockworld_2.fact</itemPath>
           <itemPath>res/input/circ/blockworld_2.in</itemPath>
+          <itemPath>res/input/circ/blockworld_3_1.fact</itemPath>
+          <itemPath>res/input/circ/blockworld_3_1.in</itemPath>
+          <itemPath>res/input/circ/blockworld_3_2.fact</itemPath>
+          <itemPath>res/input/circ/blockworld_3_2.in</itemPath>
+          <itemPath>res/input/circ/blockworld_4_1.fact</itemPath>
+          <itemPath>res/input/circ/blockworld_4_1.in</itemPath>
+          <itemPath>res/input/circ/blockworld_4_2.fact</itemPath>
+          <itemPath>res/input/circ/blockworld_4_2.in</itemPath>
+          <itemPath>res/input/circ/blockworld_4_3.fact</itemPath>
+          <itemPath>res/input/circ/blockworld_4_3.in</itemPath>
+          <itemPath>res/input/circ/blockworld_5_1.fact</itemPath>
+          <itemPath>res/input/circ/blockworld_5_1.in</itemPath>
+          <itemPath>res/input/circ/blockworld_5_2.fact</itemPath>
+          <itemPath>res/input/circ/blockworld_5_2.in</itemPath>
+          <itemPath>res/input/circ/blockworld_5_3.fact</itemPath>
+          <itemPath>res/input/circ/blockworld_5_3.in</itemPath>
+          <itemPath>res/input/circ/dl.fact</itemPath>
+          <itemPath>res/input/circ/dl.in</itemPath>
+          <itemPath>res/input/circ/dl_e.fact</itemPath>
+          <itemPath>res/input/circ/dl_e.in</itemPath>
+          <itemPath>res/input/circ/dl_we.fact</itemPath>
+          <itemPath>res/input/circ/dl_we.in</itemPath>
           <itemPath>res/input/circ/setcover.fact</itemPath>
           <itemPath>res/input/circ/setcover.in</itemPath>
-          <itemPath>res/input/circ/test_1.fact</itemPath>
-          <itemPath>res/input/circ/test_1.in</itemPath>
+          <itemPath>res/input/circ/whale_1.fact</itemPath>
+          <itemPath>res/input/circ/whale_1.in</itemPath>
+          <itemPath>res/input/circ/whale_2.fact</itemPath>
+          <itemPath>res/input/circ/whale_2.in</itemPath>
+          <itemPath>res/input/circ/whale_3.fact</itemPath>
+          <itemPath>res/input/circ/whale_3.in</itemPath>
         </logicalFolder>
         <logicalFolder name="op" displayName="op" projectFiles="true">
           <itemPath>res/input/op/blockworld.fact</itemPath>
           <itemPath>res/input/op/blockworld.in</itemPath>
           <itemPath>res/input/op/blockworld_2.fact</itemPath>
           <itemPath>res/input/op/blockworld_2.in</itemPath>
+          <itemPath>res/input/op/dl.fact</itemPath>
+          <itemPath>res/input/op/dl.in</itemPath>
           <itemPath>res/input/op/setcover.fact</itemPath>
           <itemPath>res/input/op/setcover.in</itemPath>
-          <itemPath>res/input/op/test_1.fact</itemPath>
-          <itemPath>res/input/op/test_1.in</itemPath>
+          <itemPath>res/input/op/setcover_25x1.fact</itemPath>
+          <itemPath>res/input/op/setcover_25x1.in</itemPath>
+          <itemPath>res/input/op/setcover_25x2.fact</itemPath>
+          <itemPath>res/input/op/setcover_25x2.in</itemPath>
+          <itemPath>res/input/op/setcover_25x3.fact</itemPath>
+          <itemPath>res/input/op/setcover_25x3.in</itemPath>
+          <itemPath>res/input/op/setcover_25x4.fact</itemPath>
+          <itemPath>res/input/op/setcover_25x4.in</itemPath>
+          <itemPath>res/input/op/setcover_25x5.fact</itemPath>
+          <itemPath>res/input/op/setcover_25x5.in</itemPath>
+          <itemPath>res/input/op/whale_1.fact</itemPath>
+          <itemPath>res/input/op/whale_1.in</itemPath>
+          <itemPath>res/input/op/whale_2.fact</itemPath>
+          <itemPath>res/input/op/whale_2.in</itemPath>
+          <itemPath>res/input/op/whale_3.fact</itemPath>
+          <itemPath>res/input/op/whale_3.in</itemPath>
         </logicalFolder>
         <logicalFolder name="pri" displayName="pri" projectFiles="true">
           <itemPath>res/input/pri/blockworld.fact</itemPath>
           <itemPath>res/input/pri/blockworld.in</itemPath>
           <itemPath>res/input/pri/blockworld_2.fact</itemPath>
           <itemPath>res/input/pri/blockworld_2.in</itemPath>
+          <itemPath>res/input/pri/blockworld_5.fact</itemPath>
+          <itemPath>res/input/pri/blockworld_5.in</itemPath>
           <itemPath>res/input/pri/circuit.fact</itemPath>
           <itemPath>res/input/pri/circuit.in</itemPath>
           <itemPath>res/input/pri/setcover.fact</itemPath>
@@ -73,6 +117,22 @@
           <itemPath>res/input/sm/dnf.in</itemPath>
           <itemPath>res/input/sm/setcover.fact</itemPath>
           <itemPath>res/input/sm/setcover.in</itemPath>
+          <itemPath>res/input/sm/setcover_25x1.fact</itemPath>
+          <itemPath>res/input/sm/setcover_25x1.in</itemPath>
+          <itemPath>res/input/sm/setcover_25x2.fact</itemPath>
+          <itemPath>res/input/sm/setcover_25x2.in</itemPath>
+          <itemPath>res/input/sm/setcover_25x3.fact</itemPath>
+          <itemPath>res/input/sm/setcover_25x3.in</itemPath>
+          <itemPath>res/input/sm/setcover_25x4.fact</itemPath>
+          <itemPath>res/input/sm/setcover_25x4.in</itemPath>
+          <itemPath>res/input/sm/setcover_25x5.fact</itemPath>
+          <itemPath>res/input/sm/setcover_25x5.in</itemPath>
+          <itemPath>res/input/sm/whale_1.fact</itemPath>
+          <itemPath>res/input/sm/whale_1.in</itemPath>
+          <itemPath>res/input/sm/whale_2.fact</itemPath>
+          <itemPath>res/input/sm/whale_2.in</itemPath>
+          <itemPath>res/input/sm/whale_3.fact</itemPath>
+          <itemPath>res/input/sm/whale_3.in</itemPath>
         </logicalFolder>
         <itemPath>res/input/sample.fact</itemPath>
         <itemPath>res/input/sample.in</itemPath>
@@ -83,32 +143,58 @@
           <itemPath>res/output/circ/blockworld.result</itemPath>
           <itemPath>res/output/circ/blockworld_2.out</itemPath>
           <itemPath>res/output/circ/blockworld_2.result</itemPath>
+          <itemPath>res/output/circ/blockworld_3_1.out</itemPath>
+          <itemPath>res/output/circ/blockworld_3_1.result</itemPath>
+          <itemPath>res/output/circ/blockworld_3_2.out</itemPath>
+          <itemPath>res/output/circ/blockworld_3_2.result</itemPath>
+          <itemPath>res/output/circ/blockworld_4_1.out</itemPath>
+          <itemPath>res/output/circ/blockworld_4_1.result</itemPath>
+          <itemPath>res/output/circ/blockworld_4_2.out</itemPath>
+          <itemPath>res/output/circ/blockworld_4_2.result</itemPath>
+          <itemPath>res/output/circ/blockworld_4_3.out</itemPath>
+          <itemPath>res/output/circ/blockworld_4_3.result</itemPath>
+          <itemPath>res/output/circ/blockworld_5_1.out</itemPath>
+          <itemPath>res/output/circ/blockworld_5_1.result</itemPath>
+          <itemPath>res/output/circ/blockworld_5_2.out</itemPath>
+          <itemPath>res/output/circ/blockworld_5_2.result</itemPath>
+          <itemPath>res/output/circ/blockworld_5_3.out</itemPath>
+          <itemPath>res/output/circ/blockworld_5_3.result</itemPath>
+          <itemPath>res/output/circ/dl.out</itemPath>
+          <itemPath>res/output/circ/dl.result</itemPath>
+          <itemPath>res/output/circ/dl_e.out</itemPath>
+          <itemPath>res/output/circ/dl_e.result</itemPath>
+          <itemPath>res/output/circ/dl_we.out</itemPath>
+          <itemPath>res/output/circ/dl_we.result</itemPath>
           <itemPath>res/output/circ/setcover.out</itemPath>
           <itemPath>res/output/circ/setcover.result</itemPath>
-          <itemPath>res/output/circ/test_1.out</itemPath>
-          <itemPath>res/output/circ/test_1.result</itemPath>
         </logicalFolder>
         <logicalFolder name="op" displayName="op" projectFiles="true">
           <itemPath>res/output/op/blockworld.out</itemPath>
           <itemPath>res/output/op/blockworld.result</itemPath>
           <itemPath>res/output/op/blockworld_2.out</itemPath>
           <itemPath>res/output/op/blockworld_2.result</itemPath>
+          <itemPath>res/output/op/dl.out</itemPath>
+          <itemPath>res/output/op/dl.result</itemPath>
           <itemPath>res/output/op/setcover.out</itemPath>
           <itemPath>res/output/op/setcover.result</itemPath>
-          <itemPath>res/output/op/test_1.out</itemPath>
-          <itemPath>res/output/op/test_1.result</itemPath>
+          <itemPath>res/output/op/setcover_25x1.out</itemPath>
+          <itemPath>res/output/op/setcover_25x1.result</itemPath>
+          <itemPath>res/output/op/setcover_25x2.out</itemPath>
+          <itemPath>res/output/op/setcover_25x2.result</itemPath>
+          <itemPath>res/output/op/setcover_25x3.out</itemPath>
+          <itemPath>res/output/op/setcover_25x3.result</itemPath>
+          <itemPath>res/output/op/setcover_25x4.out</itemPath>
+          <itemPath>res/output/op/setcover_25x4.result</itemPath>
+          <itemPath>res/output/op/setcover_25x5.out</itemPath>
+          <itemPath>res/output/op/setcover_25x5.result</itemPath>
+          <itemPath>res/output/op/whale_1.out</itemPath>
+          <itemPath>res/output/op/whale_1.result</itemPath>
+          <itemPath>res/output/op/whale_2.out</itemPath>
+          <itemPath>res/output/op/whale_2.result</itemPath>
+          <itemPath>res/output/op/whale_3.out</itemPath>
+          <itemPath>res/output/op/whale_3.result</itemPath>
         </logicalFolder>
         <logicalFolder name="pri" displayName="pri" projectFiles="true">
-          <itemPath>res/output/pri/blockworld.out</itemPath>
-          <itemPath>res/output/pri/blockworld.result</itemPath>
-          <itemPath>res/output/pri/blockworld_2.out</itemPath>
-          <itemPath>res/output/pri/blockworld_2.result</itemPath>
-          <itemPath>res/output/pri/circuit.out</itemPath>
-          <itemPath>res/output/pri/circuit.result</itemPath>
-          <itemPath>res/output/pri/setcover.out</itemPath>
-          <itemPath>res/output/pri/setcover.result</itemPath>
-          <itemPath>res/output/pri/smp.out</itemPath>
-          <itemPath>res/output/pri/smp.result</itemPath>
         </logicalFolder>
         <logicalFolder name="sm" displayName="sm" projectFiles="true">
           <itemPath>res/output/sm/2clique.out</itemPath>
@@ -119,6 +205,22 @@
           <itemPath>res/output/sm/dnf.result</itemPath>
           <itemPath>res/output/sm/setcover.out</itemPath>
           <itemPath>res/output/sm/setcover.result</itemPath>
+          <itemPath>res/output/sm/setcover_25x1.out</itemPath>
+          <itemPath>res/output/sm/setcover_25x1.result</itemPath>
+          <itemPath>res/output/sm/setcover_25x2.out</itemPath>
+          <itemPath>res/output/sm/setcover_25x2.result</itemPath>
+          <itemPath>res/output/sm/setcover_25x3.out</itemPath>
+          <itemPath>res/output/sm/setcover_25x3.result</itemPath>
+          <itemPath>res/output/sm/setcover_25x4.out</itemPath>
+          <itemPath>res/output/sm/setcover_25x4.result</itemPath>
+          <itemPath>res/output/sm/setcover_25x5.out</itemPath>
+          <itemPath>res/output/sm/setcover_25x5.result</itemPath>
+          <itemPath>res/output/sm/whale_1.out</itemPath>
+          <itemPath>res/output/sm/whale_1.result</itemPath>
+          <itemPath>res/output/sm/whale_2.out</itemPath>
+          <itemPath>res/output/sm/whale_2.result</itemPath>
+          <itemPath>res/output/sm/whale_3.out</itemPath>
+          <itemPath>res/output/sm/whale_3.result</itemPath>
         </logicalFolder>
         <itemPath>res/output/sample.out</itemPath>
       </logicalFolder>
@@ -182,7 +284,6 @@
   <confs>
     <conf name="Debug" type="1">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>GNU|GNU</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
@@ -279,13 +380,65 @@
       </item>
       <item path="res/input/circ/blockworld_2.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/circ/blockworld_3_1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_3_1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_3_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_3_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_4_1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_4_1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_4_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_4_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_4_3.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_4_3.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_5_1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_5_1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_5_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_5_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_5_3.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_5_3.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/dl.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/dl.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/dl_e.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/dl_e.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/dl_we.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/dl_we.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/input/circ/setcover.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/circ/setcover.in" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/input/circ/test_1.fact" ex="false" tool="3" flavor2="0">
+      <item path="res/input/circ/whale_1.fact" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/input/circ/test_1.in" ex="false" tool="3" flavor2="0">
+      <item path="res/input/circ/whale_1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/whale_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/whale_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/whale_3.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/whale_3.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/op/blockworld.fact" ex="false" tool="3" flavor2="0">
       </item>
@@ -295,13 +448,45 @@
       </item>
       <item path="res/input/op/blockworld_2.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/op/dl.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/dl.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/input/op/setcover.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/op/setcover.in" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/input/op/test_1.fact" ex="false" tool="3" flavor2="0">
+      <item path="res/input/op/setcover_25x1.fact" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/input/op/test_1.in" ex="false" tool="3" flavor2="0">
+      <item path="res/input/op/setcover_25x1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover_25x2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover_25x2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover_25x3.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover_25x3.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover_25x4.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover_25x4.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover_25x5.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover_25x5.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/whale_1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/whale_1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/whale_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/whale_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/whale_3.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/whale_3.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/pri/blockworld.fact" ex="false" tool="3" flavor2="0">
       </item>
@@ -310,6 +495,10 @@
       <item path="res/input/pri/blockworld_2.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/pri/blockworld_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/pri/blockworld_5.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/pri/blockworld_5.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/pri/circuit.fact" ex="false" tool="3" flavor2="0">
       </item>
@@ -343,6 +532,38 @@
       </item>
       <item path="res/input/sm/setcover.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/sm/setcover_25x1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x3.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x3.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x4.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x4.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x5.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x5.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_3.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_3.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/output/circ/blockworld.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/circ/blockworld.result" ex="false" tool="3" flavor2="0">
@@ -354,13 +575,77 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="res/output/circ/blockworld_3_1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_3_1.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_3_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_3_2.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_4_1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_4_1.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_4_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_4_2.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_4_3.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_4_3.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_5_1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_5_1.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_5_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_5_2.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_5_3.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_5_3.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="res/output/circ/dl.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/dl.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/dl_e.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/dl_e.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/dl_we.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/dl_we.result" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/output/circ/setcover.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/circ/setcover.result" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/test_1.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/test_1.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/op/blockworld.out" ex="false" tool="3" flavor2="0">
       </item>
@@ -370,33 +655,45 @@
       </item>
       <item path="res/output/op/blockworld_2.result" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/output/op/dl.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/dl.result" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/output/op/setcover.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/op/setcover.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/op/test_1.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x1.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/op/test_1.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x1.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/blockworld.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x2.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/blockworld.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x2.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/blockworld_2.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x3.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/blockworld_2.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x3.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/circuit.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x4.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/circuit.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x4.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/setcover.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x5.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/setcover.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x5.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/smp.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/whale_1.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/smp.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/whale_1.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/whale_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/whale_2.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/whale_3.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/whale_3.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sample.out" ex="false" tool="3" flavor2="0">
       </item>
@@ -415,6 +712,38 @@
       <item path="res/output/sm/setcover.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sm/setcover.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x1.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x2.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x3.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x3.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x4.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x4.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x5.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x5.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_1.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_2.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_3.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_3.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -457,7 +786,6 @@
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
-        <remote-sources-mode>LOCAL_SOURCES</remote-sources-mode>
         <compilerSet>default</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
@@ -556,13 +884,65 @@
       </item>
       <item path="res/input/circ/blockworld_2.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/circ/blockworld_3_1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_3_1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_3_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_3_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_4_1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_4_1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_4_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_4_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_4_3.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_4_3.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_5_1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_5_1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_5_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_5_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_5_3.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/blockworld_5_3.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/dl.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/dl.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/dl_e.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/dl_e.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/dl_we.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/dl_we.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/input/circ/setcover.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/circ/setcover.in" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/input/circ/test_1.fact" ex="false" tool="3" flavor2="0">
+      <item path="res/input/circ/whale_1.fact" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/input/circ/test_1.in" ex="false" tool="3" flavor2="0">
+      <item path="res/input/circ/whale_1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/whale_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/whale_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/whale_3.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/circ/whale_3.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/op/blockworld.fact" ex="false" tool="3" flavor2="0">
       </item>
@@ -572,13 +952,45 @@
       </item>
       <item path="res/input/op/blockworld_2.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/op/dl.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/dl.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/input/op/setcover.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/op/setcover.in" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/input/op/test_1.fact" ex="false" tool="3" flavor2="0">
+      <item path="res/input/op/setcover_25x1.fact" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/input/op/test_1.in" ex="false" tool="3" flavor2="0">
+      <item path="res/input/op/setcover_25x1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover_25x2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover_25x2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover_25x3.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover_25x3.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover_25x4.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover_25x4.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover_25x5.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/setcover_25x5.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/whale_1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/whale_1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/whale_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/whale_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/whale_3.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/op/whale_3.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/pri/blockworld.fact" ex="false" tool="3" flavor2="0">
       </item>
@@ -587,6 +999,10 @@
       <item path="res/input/pri/blockworld_2.fact" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/pri/blockworld_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/pri/blockworld_5.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/pri/blockworld_5.in" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/input/pri/circuit.fact" ex="false" tool="3" flavor2="0">
       </item>
@@ -620,6 +1036,38 @@
       </item>
       <item path="res/input/sm/setcover.in" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/input/sm/setcover_25x1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x3.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x3.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x4.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x4.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x5.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/setcover_25x5.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_1.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_1.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_2.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_2.in" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_3.fact" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/input/sm/whale_3.in" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/output/circ/blockworld.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/circ/blockworld.result" ex="false" tool="3" flavor2="0">
@@ -631,13 +1079,77 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="res/output/circ/blockworld_3_1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_3_1.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_3_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_3_2.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_4_1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_4_1.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_4_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_4_2.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_4_3.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_4_3.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_5_1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_5_1.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_5_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_5_2.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_5_3.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/blockworld_5_3.result"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="res/output/circ/dl.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/dl.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/dl_e.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/dl_e.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/dl_we.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/circ/dl_we.result" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/output/circ/setcover.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/circ/setcover.result" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/test_1.out" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="res/output/circ/test_1.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/op/blockworld.out" ex="false" tool="3" flavor2="0">
       </item>
@@ -647,33 +1159,45 @@
       </item>
       <item path="res/output/op/blockworld_2.result" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="res/output/op/dl.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/dl.result" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="res/output/op/setcover.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/op/setcover.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/op/test_1.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x1.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/op/test_1.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x1.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/blockworld.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x2.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/blockworld.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x2.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/blockworld_2.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x3.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/blockworld_2.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x3.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/circuit.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x4.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/circuit.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x4.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/setcover.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x5.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/setcover.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/setcover_25x5.result" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/smp.out" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/whale_1.out" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="res/output/pri/smp.result" ex="false" tool="3" flavor2="0">
+      <item path="res/output/op/whale_1.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/whale_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/whale_2.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/whale_3.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/op/whale_3.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sample.out" ex="false" tool="3" flavor2="0">
       </item>
@@ -692,6 +1216,38 @@
       <item path="res/output/sm/setcover.out" ex="false" tool="3" flavor2="0">
       </item>
       <item path="res/output/sm/setcover.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x1.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x2.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x3.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x3.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x4.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x4.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x5.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/setcover_25x5.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_1.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_1.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_2.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_2.result" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_3.out" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/output/sm/whale_3.result" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Cabalar.cpp" ex="false" tool="1" flavor2="0">
       </item>

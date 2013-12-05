@@ -1,0 +1,80 @@
+%MIN and MAX domain
+#domain min_block(MIN_block).
+#domain max_block(MAX_block).
+
+%Variable domain
+#domain block(X).
+#domain block(NV_0).
+
+%Nega nega predicate define
+_ontable_vary(X):- not ontable_vary(X).
+_ab_1(X):- not ab_1(X).
+_r_0:- not r_0.
+_t_0(X):- not t_0(X).
+
+%Extension predicate define
+_ab_0(X):- not ab_0(X).
+_ontable(X):- not ontable(X).
+_heavyblock(X):- not heavyblock(X).
+_ab_2(X):- not ab_2(X).
+_succ_block(X,NV_0):- not succ_block(X,NV_0).
+_max_block(X):- not max_block(X).
+
+%Succ predicate definition
+succ_block(A1,A2):- A1==A2-1, block(A1), block(A2).
+
+:- not ab_0(X), ontable(X).
+r_0 | ab_0_vary(X):- ontable_vary(X).
+ab_0_vary(X):- not r_0, not _ontable_vary(X).
+:- not ab_1(X), not ontable(X).
+ab_1(X) | ontable_vary(X).
+:- heavyblock(X), not ab_2(X), ontable(X).
+r_0:- ontable_vary(X), heavyblock(X), not ab_2(X).
+:- not r_0, not _ontable_vary(X), heavyblock(X), not ab_2(X).
+ab_1(X):- r_0, not _ab_1(X).
+:- not s_0(MIN_block).
+s_0(X):- succ_block(X,NV_0), s_0(NV_0).
+s_0(X):- not ab_1(X), not _ab_1(X).
+s_0(X):- not _r_0.
+s_0(X):- not ab_1(X), not _ab_1(X), not _r_0.
+r_0 | t_0(MIN_block):- ab_1(MIN_block).
+r_0 | t_0(MIN_block):- not ab_1(MIN_block).
+t_0(MIN_block):- not r_0, not _ab_1(MIN_block).
+t_0(MIN_block):- not ab_1(MIN_block), not r_0.
+r_0:- ab_1(X), t_0(MAX_block), not s_0(NV_0), succ_block(X,NV_0), s_0(X).
+r_0:- not ab_1(X), t_0(MAX_block), not s_0(NV_0), succ_block(X,NV_0), s_0(X).
+:- not r_0, t_0(MAX_block), not s_0(NV_0), succ_block(X,NV_0), s_0(X), not _ab_1(X).
+:- not ab_1(X), not r_0, t_0(MAX_block), not s_0(NV_0), succ_block(X,NV_0), s_0(X).
+:- not s_0(NV_0), succ_block(X,NV_0), s_0(X), not r_0, not _ab_1(X), not _t_0(MAX_block).
+:- not ab_1(X), not s_0(NV_0), succ_block(X,NV_0), s_0(X), not r_0, not _t_0(MAX_block).
+r_0:- ab_1(X), t_0(MAX_block), max_block(X), s_0(X).
+r_0:- not ab_1(X), t_0(MAX_block), max_block(X), s_0(X).
+:- not r_0, t_0(MAX_block), max_block(X), s_0(X), not _ab_1(X).
+:- not ab_1(X), not r_0, t_0(MAX_block), max_block(X), s_0(X).
+:- max_block(X), s_0(X), not r_0, not _ab_1(X), not _t_0(MAX_block).
+:- not ab_1(X), max_block(X), s_0(X), not r_0, not _t_0(MAX_block).
+t_0(MAX_block):- not ab_1(X), not s_0(NV_0), succ_block(X,NV_0), s_0(X), not _ab_1(X).
+t_0(MAX_block):- r_0, not s_0(NV_0), succ_block(X,NV_0), s_0(X).
+ab_1(X) | t_0(MAX_block):- not s_0(NV_0), succ_block(X,NV_0), s_0(X), not _ab_1(X), not _r_0.
+:- not ab_1(X), not t_0(MAX_block), not s_0(NV_0), succ_block(X,NV_0), s_0(X), not _ab_1(X).
+:- not t_0(MAX_block), not s_0(NV_0), succ_block(X,NV_0), s_0(X), not _r_0.
+t_0(MAX_block):- not ab_1(X), max_block(X), s_0(X), not _ab_1(X).
+t_0(MAX_block):- r_0, max_block(X), s_0(X).
+ab_1(X) | t_0(MAX_block):- max_block(X), s_0(X), not _ab_1(X), not _r_0.
+:- not ab_1(X), not t_0(MAX_block), max_block(X), s_0(X), not _ab_1(X).
+:- not t_0(MAX_block), max_block(X), s_0(X), not _r_0.
+r_0 | t_0(NV_0):- ab_1(NV_0), t_0(X), succ_block(X,NV_0).
+r_0 | t_0(NV_0):- not ab_1(NV_0), t_0(X), succ_block(X,NV_0).
+t_0(NV_0):- not r_0, t_0(X), succ_block(X,NV_0), not _ab_1(NV_0).
+t_0(NV_0):- not ab_1(NV_0), not r_0, t_0(X), succ_block(X,NV_0).
+:- succ_block(X,NV_0), not r_0, not t_0(NV_0), not _ab_1(NV_0), not _t_0(X).
+:- not ab_1(NV_0), succ_block(X,NV_0), not r_0, not t_0(NV_0), not _t_0(X).
+t_0(X):- not ab_1(NV_0), succ_block(X,NV_0), not _ab_1(NV_0).
+t_0(X):- r_0, succ_block(X,NV_0).
+ab_1(NV_0) | t_0(X):- succ_block(X,NV_0), not _ab_1(NV_0), not _r_0.
+t_0(X):- t_0(NV_0), succ_block(X,NV_0).
+:- not ab_1(NV_0), not t_0(X), succ_block(X,NV_0), not _ab_1(NV_0).
+:- not t_0(X), succ_block(X,NV_0), not _r_0.
+:- not t_0(X), succ_block(X,NV_0), not _t_0(NV_0).
+ab_0_vary(X):- r_0.
+ontable_vary(X):- r_0.

@@ -57,6 +57,9 @@ int main(int argc, char** argv) {
 
     SMTranslator::instance().init(f);
     SMTranslator::instance().convert();
+    SMTranslator::instance().outputOriginalFormulas(stdout);
+    SMTranslator::instance().outputHengZhangFormulas(stdout);
+    SMTranslator::instance().outputCabalarFormulas(stdout);
     SMTranslator::instance().outputFinalResult(fout);
     SMTranslator::instance().destroy();
 
